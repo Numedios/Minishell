@@ -1,0 +1,4 @@
+valgrind -suppressions=readline_leaks.txt ./minishell
+strace -f bash
+    // Track les commandes de bash
+   // pour quitter control + c

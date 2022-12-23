@@ -1,0 +1,75 @@
+< in1 cat | cat > out > out2 > out3 | ls >> out4 | echo bonjours < out5 | < in2  cat > out6 < in3
+
+va cat dans in1
+va renvoyer dans la sortie du pipe suivant 
+qui va cat dans la sortie out puis out2 puis out3 ce qui va creer les 3 fichier mais va ecrire que dans out3
+puis rien rediriger dans le pipe suivant qui va ls dans l'entree standars et rediriger en mode ajout dans out4 
+puis rien rediriger dans le pipe suivant qui va echo bonjours dans out5 et va renvoyer dans le pipe suivant
+va verifier si in2 et in3 existe et ecrire le contenue de in3 dans out6
+
+
+M* = ""
+{
+	input = {file = "", operator = ""} ->
+    output = {file = "", operator = ""} ->
+    delimiter =
+    command =
+    args =
+    next =
+}
+
+M1 = "< in1 cat |"
+{
+    input = {file = "in1", operator = "<"}
+    output = {file = 1, operator = NULL}
+    command = cat
+    args = NULL
+    next = M2
+}
+
+M2 = " cat > out > out2 > out3 |"
+{
+    input = {file = 0, operator = NULL}
+    output = {file = ["out","out2","out3"], operator = ">"}
+    command = cat
+    args = NULL
+    next = M3
+}
+
+M3 = " ls >> out4 |"
+{
+    input = {file = 0, operator = NULL}
+    output = {file = "out4", operator = ">>"}
+    command = ls
+    args = NULL
+    next = M4
+}
+
+M4 = " echo bonjours < out5 |"
+{
+    input = {file = 0, operator = NULL}
+    output = {file = "out5", operator = ">"}
+    command = echo
+    args = bonjours
+    next = M4
+}
+
+M5 = "< in2  cat > out6 < in3"
+{
+    input = {file = "in3", operator = "<"}
+    output = {file = "out6", operator = ">"}
+    command = cat
+    args = NULL
+    next = NULL
+}
+
+
+
+
+reconnaitre les redirection directement et savoir quoi faire
+
+< va lire dans le fichier qui suis (verifier que le fichier suivant et bien ouvrable)
+> va ecrire dans le fichier qui suis si il n'existe pas le creer si il existe suprimer sont contenue et ecrire
+>> va ecrire dans le fichier qui suis si il n'existe pas le creer si il existe ajoute a la fin 
+<< va lire dans le here_doc a definir 
+
