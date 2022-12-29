@@ -19,7 +19,7 @@ char    *find_command(t_split_elem *lst)
     {
         if (!(ft_strcmp(prev->arg, "<") || ft_strcmp(prev->arg, "<<") || ft_strcmp(prev->arg, ">") || ft_strcmp(prev->arg, ">>"))) // si l' prev est pas un < ou << ou > ou >>
             if (!(ft_strcmp((lst)->arg, "<") || ft_strcmp((lst)->arg, "<<") || ft_strcmp((lst)->arg, ">") || ft_strcmp((lst)->arg, ">>"))) // si *lst differend de > >> < << 
-                    return ((lst)->arg);
+                    return (ft_strdup((lst)->arg));
         prev = lst;
         lst = (lst)->next;
     }
@@ -41,7 +41,7 @@ t_split_elem    *find_argument(t_split_elem *lst)
             if (!(ft_strcmp((lst)->arg, "<") || ft_strcmp((lst)->arg, "<<") || ft_strcmp((lst)->arg, ">") || ft_strcmp((lst)->arg, ">>"))) // si *lst differend de > >> < << 
             {   
                 if (i != 0)
-                    add_end_split_elem(&res, create_split_elem(lst->arg));
+                    add_end_split_elem(&res, create_split_elem_dup(lst->arg));
                 i++;
             }
         prev = lst;

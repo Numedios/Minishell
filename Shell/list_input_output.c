@@ -9,8 +9,8 @@ t_input_output  *create_input_output(char *name, char *operator)
     new = malloc(sizeof(*new));
     if (!new)
         return (NULL);
-    new -> file_name = name;
-    new -> operator = operator;
+    new -> file_name = ft_strdup(name);
+    new -> operator = ft_strdup(operator);
     new -> next = NULL;
     return (new);
 }

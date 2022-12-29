@@ -30,10 +30,22 @@ void	ft_print_input_output(t_input_output *list)
 	while (list != NULL)
 	{
 		// printf("file = %s operator = %s ||", list->file_name, list->operator);
-		printf("lst->name = %s  lst->operator = %s  lst = %p  lst->next= %p  \n", list->file_name, list->operator, list, list->next);
+		printf("lst->name = %s  lst->operator = %s   \n", list->file_name, list->operator);
 		list = list -> next;
 	}
 	printf("\n");
+}
+
+void ft_print_maillons(t_maillons	*maillons)
+{
+	printf("maillons\n{\n");
+	printf("  maillons -> commande = %s\n", maillons -> command);
+	printf("  maillons ->args\n  {\n");
+	ft_print_split_elem(maillons -> args);
+	printf("  }\n");
+	printf("  maillons -> outputs\n  {\n");
+	ft_print_input_output(maillons ->output);
+	printf("  }\n}\n\n");
 }
 
 /*

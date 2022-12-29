@@ -33,7 +33,7 @@ typedef struct  maillons
     t_input_output  *output;
     char        *command;
     t_split_elem        *args;
-    struct t_maillons  *next;
+    struct maillons  *next;
 }       t_maillons;
 
 
@@ -60,7 +60,7 @@ char	**ft_split(char *str, char *sep);
 /* split_list.c */
 
 char	*create_word_list(char *str, char *sep);
-t_split_elem	**ft_split_list(char *str, char *sep);
+t_split_elem	*ft_split_list(char *str, char *sep);
 
 /* find_output.c */
 
@@ -78,12 +78,18 @@ t_input_output  *find_input_output(t_split_elem *lst);
 
 /* free.c */
 
+void    free_split_elem(t_split_elem *lst);
 void    ft_free_tab(char **tab);
 void    ft_free_split_arg(t_split_elem  **lst);
+void    free_input_output(t_input_output *lst);
+void    free_inputs_outputs(t_input_output **lst);
+void    free_maillon(t_maillons *lst);
+void    free_maillons(t_maillons **lst);
 
 /* list_split_elem.c */
 
 t_split_elem	*create_split_elem(char	*str);
+t_split_elem	*create_split_elem_dup(char	*str);
 t_split_elem	*lstlast_split_elem(t_split_elem *lst);
 void	add_end_split_elem(t_split_elem	**list, t_split_elem *add);
 void    free_split_elem(t_split_elem *lst);
@@ -105,7 +111,9 @@ void	create_split_arg(t_split_elem **lst);
 
 /* create_maillons.c */
 
-t_maillons  *create_maillons(t_split_elem **split, t_maillons *maillons);
+t_maillons  *create_maillons(t_split_elem **split);
+t_maillons  *lstlast_maillons(t_maillons *lst);
+void    add_end_maillons(t_maillons **lst, t_maillons *add);
 
 /* quote.c */
 
@@ -130,5 +138,6 @@ void    pwd();
 void    ft_print_tab(char **tab);
 void	ft_print_split_elem(t_split_elem *list);
 void	ft_print_input_output(t_input_output *list);
+void ft_print_maillons(t_maillons	*maillons);
 
 #endif

@@ -12,6 +12,18 @@ t_split_elem	*create_split_elem(char	*str)
 	return (new);
 }
 
+t_split_elem	*create_split_elem_dup(char	*str)
+{
+	t_split_elem	*new;
+
+	new = malloc(sizeof(*new));
+	if (!new)
+		return (NULL);
+	new -> arg = ft_strdup(str); // maybe mettre un dump
+	new -> next = NULL;
+	return (new);
+}
+
 t_split_elem	*lstlast_split_elem(t_split_elem *lst)
 {
 	while (lst)
@@ -35,15 +47,6 @@ void	add_end_split_elem(t_split_elem	**list, t_split_elem *add)
 	}
 	search = lstlast_split_elem(*list);
 	search -> next = add;
-}
-
-void free_split_elem(t_split_elem *lst)
-{
-	if (lst)
-		if (lst -> arg)
-			free(lst -> arg);
-	//lst-> next = NULL;
-	free(lst);
 }
 
 /*void ft_strjoin_list(t_split_elem *list, t_split_elem **add, t_split_elem **first)

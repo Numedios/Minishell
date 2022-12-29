@@ -50,7 +50,7 @@ int main(int argc, char **argv, char **env)
 {
 	char			*line;
 	char			**split_pipe;
-	t_split_elem	**split_arg;
+	t_split_elem	*split_arg;
 	t_maillons		*maillons;
 	int				i;
 
@@ -65,11 +65,14 @@ int main(int argc, char **argv, char **env)
 		split_arg = ft_split_list(split_pipe[i], WHITE_SPACE);
 		if (!split_arg)
 			break;
-		create_split_arg(split_arg);
-		create_maillons(split_arg, maillons);
+		create_split_arg(&split_arg);
+		add_end_maillons(&maillons, create_maillons(&split_arg));
+		//ft_print_split_elem(split_arg);
+		ft_print_maillons(maillons);
+		ft_free_split_arg(&split_arg);
 		i++;
-		ft_free_split_arg(split_arg);
 	}
+	free_maillons(&maillons);
 	ft_free_tab(split_pipe);
 	return (1);
 }
