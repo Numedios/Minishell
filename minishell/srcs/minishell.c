@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 16:18:12 by zakariyaham       #+#    #+#             */
-/*   Updated: 2022/12/26 19:34:26 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2022/12/29 13:01:21 by zakariyaham      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int ft_strlen(char *str);
 int str_cmp(char *s1, char *s2);
 int parse (char *line);
 int quote_close(char *str);
-//ajouter la pre_check des quote ferme ou ouverte 
+//ajouter la pre_check des quote ferme ou ouverte
 void handle_sig(int sig)
 {
 	if (sig == SIGINT)//ctrl+c
@@ -121,7 +121,11 @@ int check_1(char *line)
 			printf("bash: syntax error near unexpected token `;;'\n");
 			return (0);
 		}
-		if(line[i] == '"' && line[i + 1] == '"')
+		while (line[i] == '"' && line[i + 1] == '"' && line[i+ 2]== '"')
+			i++;
+		while (line[i] == '\'' && line[i + 1] == '\'' && line[i+ 2]== '\'')
+			i++;
+		if((line[i] == '"' && line[i + 1] == '"') || (line[i] == '\'' && line[i + 1] == '\''))
 		{
 			line[i] = ' ';
 			line[i + 1] = ' ';
@@ -129,6 +133,7 @@ int check_1(char *line)
 		}
 		i++;
 	}
+	return(0);
 }
 
 int parse (char *line)
