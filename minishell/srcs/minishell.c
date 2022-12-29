@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
+/*   By: zheylkoss <zheylkoss@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 16:18:12 by zakariyaham       #+#    #+#             */
-/*   Updated: 2022/12/29 13:01:21 by zakariyaham      ###   ########.fr       */
+/*   Updated: 2022/12/29 22:58:28 by zheylkoss        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,56 @@ int ft_strlen(char *str);
 int str_cmp(char *s1, char *s2);
 int parse (char *line);
 int quote_close(char *str);
-//ajouter la pre_check des quote ferme ou ouverte
+int ft_strlen_const(const char *str);
+
+char	*ft_strdup(const char *s)
+{
+	char	*s_copy;
+	size_t	s_len;
+
+	s_len = 0;
+	if (s == NULL)
+		return (NULL);
+	s_len = ft_strlen_const(s);
+	s_copy = malloc((s_len + 1) * sizeof(char));
+	if (s_copy == NULL)
+		return (NULL);
+	s_len = 0;
+	while (s[s_len])
+	{
+		s_copy[s_len] = s[s_len];
+		s_len++;
+	}
+	s_copy[s_len] = '\0';
+	return (s_copy);
+}
+
+char **	my_env(char **env)
+{
+	int i;
+	char **env_copy;
+
+	i = 0;
+	if (env[i] == NULL)
+		return (NULL);
+	while(env[i])
+		i++;
+	env_copy = malloc ((i + 1) * sizeof(char*));
+	if (env_copy == NULL)
+		return (NULL);
+	i = 0;
+	while (env[i])
+	{
+		env_copy[i] = ft_strdup(env[i]);
+		if (env_copy[i] == NULL)
+			return (NULL);
+		i++;
+	}
+	return (env_copy);
+}
+
+
+
 void handle_sig(int sig)
 {
 	if (sig == SIGINT)//ctrl+c
@@ -49,11 +98,12 @@ if (command == NULL)  // si l'utilisateur appuie sur ctrl-D
 }
 */
 
-int main(void)
+int main(int argc, char **argv, char **env)
 {
 	struct sigaction sa;
 	char *command;  // utiliser readline pour lire une ligne de commande
-
+	char **new_env;
+	
 	sa.sa_handler = handle_sig;
 	sigemptyset(&sa.sa_mask);// utiliser sigaddset(&sa.sa_mask, SIGTSTP); si on souhaite bloque un signal en particulier
 	sa.sa_flags = 0;
@@ -72,6 +122,7 @@ int main(void)
 		perror("sigaction failed");
 		return (1);
 	}
+	new_env = my_env(env);//ne pas oublier de free a la fin le new env
 	while (1)
 	{
 		command = readline("Minishell >");  // utiliser readline pour lire une ligne de commande
@@ -83,6 +134,12 @@ int main(void)
 		if (command != NULL)  // si l'utilisateur appuie sur ctrl-D
 		{
 			parse(command);  // utiliser readline pour lire une ligne de commande
+			if (command[0] == 'e')
+			{
+				do_env(new_env);
+				unset("FOO", new_env);
+				do_env(new_env);
+			}
 			command = NULL;
 		}
 	}
@@ -169,6 +226,16 @@ int parse (char *line)
 
 
 int ft_strlen(char *str)
+{
+    int i;
+
+    i = 0;
+    while (str[i])
+        i++;
+    return (i);
+}
+
+int ft_strlen_const(const char *str)
 {
     int i;
 
