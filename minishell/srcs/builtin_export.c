@@ -69,7 +69,7 @@ char **do_export(char *tab, char **env_copy)//checker si la variable existe deja
     while (env_copy[i])
     {
         new_env[i] = ft_strdup(env_copy[i]);
-        free(env_copy[i]);
+        free(env_copy[i]);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
         i++;
     }
     free(env_copy);

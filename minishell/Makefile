@@ -6,14 +6,14 @@
 #    By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/23 16:21:54 by zakariyaham       #+#    #+#              #
-#    Updated: 2022/12/30 15:19:33 by zhamdouc         ###   ########.fr        #
+#    Updated: 2022/12/30 15:50:52 by zhamdouc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = Minishell
 
 SRC_PATH = ./srcs/
-SRC =   minishell.c cd.c echo.c env.c exit.c pwd.c unset.c export.c
+SRC =   minishell.c builtin_cd.c builtin_echo.c builtin_env.c builtin_exit.c builtin_pwd.c builtin_unset.c builtin_export.c
 SRCS = $(addprefix ${SRC_PATH}, ${SRC})
 
 OBJ_PATH	= obj/
