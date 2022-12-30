@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+         #
+#    By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/23 16:21:54 by zakariyaham       #+#    #+#              #
-#    Updated: 2022/12/23 16:22:38 by zakariyaham      ###   ########.fr        #
+#    Updated: 2022/12/30 15:50:52 by zhamdouc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = Minishell
 
 SRC_PATH = ./srcs/
-SRC =   minishell.c
+SRC =   minishell.c builtin_cd.c builtin_echo.c builtin_env.c builtin_exit.c builtin_pwd.c builtin_unset.c builtin_export.c
 SRCS = $(addprefix ${SRC_PATH}, ${SRC})
 
 OBJ_PATH	= obj/
@@ -24,10 +24,10 @@ DEPS = $(addprefix ${OBJ_PATH}, ${SRC:.c=.d})
 
 INC = -I./includes/
 
-FLAGS = -Wall -Werror -Wextra -MMD -MP -g3
+FLAGS =  -MMD -MP -lreadline -g3
 
 ${NAME} : ${OBJS}
-	gcc ${FLAGS} $(OBJS) -o ${NAME}
+	gcc $(OBJS) -o ${NAME} ${FLAGS}
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@mkdir -p ${OBJ_PATH}
