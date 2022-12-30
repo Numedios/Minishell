@@ -1,4 +1,4 @@
-#include "../../includes/minishell.h"
+#include "../includes/minishell.h"
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -19,7 +19,7 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	return (0);
 }
 //mettre env en variable globale, malloc env dans une nouvelle variable pour pouvoir le manipuler comme on le souhaite
-void    unset(char *tab, char **env_copy)
+void    do_unset(char *tab, char **env_copy)
 {
     int i;
     int n;

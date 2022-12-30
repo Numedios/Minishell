@@ -1,11 +1,11 @@
-#include "../../includes/minishell.h"
+#include "../includes/minishell.h"
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <readline/readline.h>
 
-int echo (char *string, int i)//envoyer i = 1 pour l'option "-n"
+int do_echo (char *string, int i)//envoyer i = 1 pour l'option "-n"
 {
     if (i == 0)
     {

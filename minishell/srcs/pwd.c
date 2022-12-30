@@ -1,11 +1,11 @@
-#include "../../includes/minishell.h"
+#include "../includes/minishell.h"
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <readline/readline.h>
 
-int pwd(void)
+int do_pwd(void)
 {
     char    cwd[1024];
 

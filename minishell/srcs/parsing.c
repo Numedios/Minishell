@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:39:06 by zhamdouc          #+#    #+#             */
-/*   Updated: 2022/12/26 17:52:46 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2022/12/30 14:56:31 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int str_cmp(char *s1, char *s2)
     return (1);
 }
 
-int main(int argc, char **argv)
-{
-    parse(argv[1]);
-}
+// int main(int argc, char **argv)
+// {
+//     parse(argv[1]);
+// }

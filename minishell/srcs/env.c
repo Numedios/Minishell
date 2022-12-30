@@ -1,4 +1,4 @@
-#include "../../includes/minishell.h"
+#include "../includes/minishell.h"
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -6,7 +6,7 @@
 #include <readline/readline.h>
 
 //possibilite de creer sa propre env
-void    env(char **env)
+void    do_env(char **env)
 {
     int i;
 

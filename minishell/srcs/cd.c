@@ -1,11 +1,11 @@
-#include "../../includes/minishell.h"
+#include "../includes/minishell.h"
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <readline/readline.h>
 
-int cd(char *path)
+int do_cd(char *path)
 {
     if (chdir(path) != 0)
     {
@@ -14,7 +14,3 @@ int cd(char *path)
     }
     return (0);
 }
-
-
-
-

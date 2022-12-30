@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zheylkoss <zheylkoss@student.42.fr>        +#+  +:+       +#+        */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 16:18:12 by zakariyaham       #+#    #+#             */
-/*   Updated: 2022/12/29 22:58:28 by zheylkoss        ###   ########.fr       */
+/*   Updated: 2022/12/30 15:21:04 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ int main(int argc, char **argv, char **env)
 			if (command[0] == 'e')
 			{
 				do_env(new_env);
-				unset("FOO", new_env);
+				new_env = do_export("FOO=bar", new_env);
 				do_env(new_env);
 			}
 			command = NULL;
