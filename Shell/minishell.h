@@ -30,12 +30,19 @@ typedef struct input_output
 
 typedef struct  maillons
 {
-    t_input_output  *output;
+    struct input_output  *output;
     char        *command;
-    t_split_elem        *args;
+    struct split_elem        *args;
     struct maillons  *next;
 }       t_maillons;
 
+typedef struct garbage
+{
+    char    **split;
+    struct split_elem    *split__lst;
+    struct input_output  *output;
+    struct maillons     *maillons;
+}       t_garbage;
 
 # define BUFFER_SIZE 5
 
@@ -54,6 +61,8 @@ char    *ft_strdup(char *str);
 
 int		check_sep(char c, char *sep);
 int		count_words(char *str, char *sep);
+char	*create_word_quote(char *str, char *sep);
+char	*create_word_all(char *str, char *sep);
 char	*create_word(char *str, char *sep);
 char	**ft_split(char *str, char *sep);
 
@@ -103,6 +112,7 @@ void    add_end_input_output(t_input_output **list, t_input_output *add);
 
 /* create_split_argc */
 
+int	just_quote(char *str);
 int	chek_sep_str(char *str, char *sep);
 void	create_word_sep(t_split_elem **lst, char *str, int len);
 t_split_elem	**split_redirection(char *str, char *sep);
@@ -132,6 +142,10 @@ void    cd(char **arg);
 /* builtins_pwd.c */
 
 void    pwd();
+
+/* garbage_collector.c  */
+
+void	initialize_garbage(t_garbage *garbage);
 
 /* supp.c */
 

@@ -20,7 +20,8 @@ SRC = main.c \
 		builtins_echo.c \
 		builtins_cd.c  \
 		builtins_pwd.c \
-		builtins_env.c 
+		builtins_env.c  \
+		garbage_collector.c
 
 OBJ = $(SRC:.c=.o)
 

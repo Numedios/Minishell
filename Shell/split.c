@@ -35,6 +35,49 @@ int count_words(char *str, char *sep)
 	return (word);
 }
 
+char	*create_word_quote(char *str, char *sep)
+{
+	char	*word;
+	char	quote;
+	int		i;
+
+	i = 1;
+	quote = *str;
+	while (str && str[i] && str[i] != quote )
+		i++;
+	while (str && str[i] && check_sep(str[i], sep))
+		i++;
+	word = malloc(sizeof(char) * (i + 2));
+	if (!word)
+		return (NULL);
+	i = 0;
+	while (i == 0 || (str && str[i] && str[i] != quote))
+	{
+		word[i] = str[i];
+		i++;
+	}
+	word[i] = quote;
+	i++;
+	while (str && str[i] && check_sep(str[i], sep))
+	{
+		word[i] = str[i];
+		i++;
+	}
+	word[i] = '\0';
+	return(word);
+}
+
+char	*create_word_all(char *str, char *sep)
+{
+	char *word;
+
+	if (*str == '\"' || *str == '\'')
+		word = create_word_quote(str, sep);
+	else
+		word = create_word(str,sep);
+	return (word);
+}
+
 char	*create_word(char *str, char *sep)
 {
 	char	*word;

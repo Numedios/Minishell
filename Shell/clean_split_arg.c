@@ -48,6 +48,7 @@ void	create_word_sep(t_split_elem **lst, char *str, int len)
 t_split_elem	**split_redirection(char *str, char *sep)
 {
 	t_split_elem **add;
+	char	quote;
 	int	i;
 
 	add = malloc(sizeof(*add));
@@ -69,12 +70,27 @@ t_split_elem	**split_redirection(char *str, char *sep)
 			str++;
 		}
 		if (*str && check_sep(*str, "<>"))
-			add_end_split_elem(add, create_split_elem(create_word(str, sep)));
+		{
+			add_end_split_elem(add, create_split_elem(create_word_all(str, sep)));
+		}
 		while (*str && check_sep(*str, "<>"))
+		{
+			if (*str == '\"' || *str == '\'')
+			{
+				quote = *str;
+				str++;
+				while (*str && *str != quote)
+					str++;
+			}
 			str++;
+		}
 	}
+	//ft_print_split_elem(*add);
 	return (add);
 }
+
+// " a <b> c">d
+
 
 /*
 *	ajoute add dans lst
@@ -90,6 +106,8 @@ void	add_el(t_split_elem *lst, t_split_elem **start, t_split_elem *prev)
 	t_split_elem	**add;
 	
 	add = split_redirection((lst) -> arg, "<>");
+	if (!add)
+		return ;
 	del = NULL;
 	if (lst == *start)
 	{
@@ -113,23 +131,63 @@ void	add_el(t_split_elem *lst, t_split_elem **start, t_split_elem *prev)
 		free(add);
 }
 
+
+/*
+* renvoie 1 si le mot ne contient que des caractere entre cote du debut a la fin "sdad asdas das das d"
+* renvoie 0 sinon
+*
+*
+*/
+
+int	just_quote(char *str)
+{
+	int	i;
+	char	quote;
+
+	i = 0;
+	if (str[i] && (str[i] == '\'' || str[i] == '\"'))
+	{
+		quote = str[i];
+		i++;
+		while (str && str[i] && str[i] != quote)
+			i++;
+		i++;
+		if (str[i])
+			return (0);
+	}
+	else
+		return (0);
+	return (1);
+}
+
+/*
+* separe les redirection colle
+* transforme les >>out2 en >> out2
+*
+*
+*/
+
 void	create_split_arg(t_split_elem **lst) // rename avec create
 {
 	t_split_elem	**add;
 	t_split_elem	*stock;
 	t_split_elem	*prev;
 
+	printf("lst = %s\n", (*lst) -> arg);
 	stock = *lst;
 	prev = *lst;
 	while (*lst)
 	{
 		if (chek_sep_str((*lst)->arg, "<>") && !ft_strcmp((*lst)->arg, ">") && !ft_strcmp((*lst)->arg, ">>") &&  !ft_strcmp((*lst)->arg, "<") && !ft_strcmp((*lst)->arg, "<<"))
 		{
-			add_el(*lst, &stock, prev);
-			*lst = stock;
+			if (!just_quote(((*lst)->arg)))
+			{
+				add_el(*lst, &stock, prev);
+				*lst = stock;
+			}
 		}
 		prev = *lst;
-		*lst = (*lst) -> next;
+		*lst = (*lst)->next;
 	}
 	*lst = stock;
 }

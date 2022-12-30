@@ -46,16 +46,22 @@ int main(int argc, char **argv, char **env)
 */
 
 
+
 int main(int argc, char **argv, char **env)
 {
 	char			*line;
 	char			**split_pipe;
 	t_split_elem	*split_arg;
-	t_maillons		*maillons;
+	t_maillons		*maillons; // utile pour toi zak faire le parsing dessus
 	int				i;
 
 	i = 0;
 	line = rl_gets();
+	if (!quote_close(line))
+	{
+		dprintf(2, "Quote non fermer\n");
+		exit (0);
+	}
 	split_pipe = ft_split(line , "|");
 	maillons = NULL;
 	if (!split_pipe)
@@ -65,10 +71,13 @@ int main(int argc, char **argv, char **env)
 		split_arg = ft_split_list(split_pipe[i], WHITE_SPACE);
 		if (!split_arg)
 			break;
-		create_split_arg(&split_arg);
-		add_end_maillons(&maillons, create_maillons(&split_arg));
 		//ft_print_split_elem(split_arg);
+		//create_split_arg(&split_arg);
+		//ft_print_split_elem(split_arg);
+		/*add_end_maillons(&maillons, create_maillons(&split_arg));
 		ft_print_maillons(maillons);
+		//ft_free_split_arg(&split_arg);
+		printf("\n***********************\n\n");*/
 		ft_free_split_arg(&split_arg);
 		i++;
 	}
@@ -76,5 +85,19 @@ int main(int argc, char **argv, char **env)
 	ft_free_tab(split_pipe);
 	return (1);
 }
+/*
+int main(int argc, char **argv, char **env)
+{
+	char			*line;
+	
+	line = rl_gets();
+	if (just_quote(line))
+		printf("1 ne contient que des cotes");
+	else
+		printf("0 ne contient pas des cotes");
+}*/
 
+
+
+// asas<"SAs<>SA<><A S><"asas
 // > in >> in2 cat -e < out <out2 << out3 -l
