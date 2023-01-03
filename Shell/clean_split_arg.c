@@ -71,7 +71,8 @@ t_split_elem	**split_redirection(char *str, char *sep)
 		}
 		if (*str && check_sep(*str, "<>"))
 		{
-			add_end_split_elem(add, create_split_elem(create_word_all(str, sep)));
+			add_end_split_elem(add, create_split_elem(create_word_all2(str, "<>")));
+			i++;
 		}
 		while (*str && check_sep(*str, "<>"))
 		{
@@ -144,7 +145,17 @@ int	just_quote(char *str)
 	int	i;
 	char	quote;
 
+	
+	if (!str)
+		return (0);
 	i = 0;
+	while (str[i] && (str[i] != '>' && str[i] != '<') && ((str[i] != '\'' && str[i] != '\"')))
+		i++;
+	if (str[i] == '>' || str[i] == '<')
+		return (0);
+	i = 0;
+	while (str[i] && (str[i] != '\'' && str[i] != '\"'))
+		i++;
 	if (str[i] && (str[i] == '\'' || str[i] == '\"'))
 	{
 		quote = str[i];
@@ -152,11 +163,15 @@ int	just_quote(char *str)
 		while (str && str[i] && str[i] != quote)
 			i++;
 		i++;
-		if (str[i])
+		while (str[i] && (str[i] != '>' && str[i] != '<') && ((str[i] != '\'' && str[i] != '\"')))
+			i++;
+		if (str[i] && (str[i] == '>' || str[i] == '<'))
 			return (0);
 	}
 	else
 		return (0);
+	if (str[i])
+		return(just_quote(&str[i]));
 	return (1);
 }
 
@@ -173,7 +188,6 @@ void	create_split_arg(t_split_elem **lst) // rename avec create
 	t_split_elem	*stock;
 	t_split_elem	*prev;
 
-	printf("lst = %s\n", (*lst) -> arg);
 	stock = *lst;
 	prev = *lst;
 	while (*lst)
@@ -186,12 +200,15 @@ void	create_split_arg(t_split_elem **lst) // rename avec create
 				*lst = stock;
 			}
 		}
+		///ft_print_split_elem(*lst);
 		prev = *lst;
 		*lst = (*lst)->next;
 	}
 	*lst = stock;
 }
 
+
+// 12>30\"ab<cd\"abbb>e>f
 // 1>2>3 4 5 | 1 2>3 4 5
 
 /*
@@ -209,3 +226,73 @@ void	create_split_arg(t_split_elem **lst) // rename avec create
 			printf("prev a la fin \n");
 			ft_print_split_elem(prev);
 		*/
+
+
+/*
+	while(str && *str)
+	{
+		if (*str == '\"' || *str == '\'')
+		{
+			quote = *str;
+			str++;
+			while (*str && *str != quote)
+			str++;
+		}
+		if (*str == '<' || *str == '>')
+		{
+			if (*str == str[1])
+				{
+					create_word_sep(add, str, 2);
+					str++;
+				}
+			else	
+				create_word_sep(add, str, 1);
+			str++;
+		}
+		if (*str && check_sep(*str, "<>"))
+		{
+			add_end_split_elem(add, create_split_elem(create_word_all(str, sep)));
+		}
+		while (*str && check_sep(*str, "<>"))
+		{
+			if (*str == '\"' || *str == '\'')
+			{
+				printf("str = %c\n", *str);
+				quote = *str;
+				str++;
+				while (*str && *str != quote)
+					str++;
+			}
+			str++;
+		}
+	}
+*/
+
+/*
+	while(str && *str)
+	{
+		if (*str == '<' || *str == '>')
+		{
+			if (*str == str[1])
+				{
+					create_word_sep(add, str, 2);
+					str++;
+				}
+			else	
+				create_word_sep(add, str, 1);
+			str++;
+		}
+		while (*str && check_sep(*str, "<>"))
+		{
+			if (*str == '\"' || *str == '\'')
+			{
+				quote = *str;
+				str++;
+				while (*str && *str != quote)
+					str++;
+			}
+			printf("str = %c\n", *str);
+			str++;
+		}
+	}
+*/

@@ -62,6 +62,7 @@ char    *ft_strdup(char *str);
 int		check_sep(char c, char *sep);
 int		count_words(char *str, char *sep);
 char	*create_word_quote(char *str, char *sep);
+char	*create_word_all2(char *str, char *sep);
 char	*create_word_all(char *str, char *sep);
 char	*create_word(char *str, char *sep);
 char	**ft_split(char *str, char *sep);
@@ -153,5 +154,6 @@ void    ft_print_tab(char **tab);
 void	ft_print_split_elem(t_split_elem *list);
 void	ft_print_input_output(t_input_output *list);
 void ft_print_maillons(t_maillons	*maillons);
+char	*create_word_and_quote2(char *str, char *sep);
 
 #endif

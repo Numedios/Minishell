@@ -16,7 +16,7 @@ t_split_elem	*ft_split_list(char *str, char *sep)
 			str++;
 		if (*str && check_sep(*str, sep))
 		{
-			res = create_word_all(str, sep);
+			res = create_word_all2(str, sep);
 			elem = create_split_elem(res);
 			add_end_split_elem(&lst, elem);
 		}

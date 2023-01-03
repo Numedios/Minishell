@@ -46,7 +46,6 @@ int main(int argc, char **argv, char **env)
 */
 
 
-
 int main(int argc, char **argv, char **env)
 {
 	char			*line;
@@ -57,6 +56,7 @@ int main(int argc, char **argv, char **env)
 
 	i = 0;
 	line = rl_gets();
+	//line = "12>30\"ab<cd\"abbb>e>f";
 	if (!quote_close(line))
 	{
 		dprintf(2, "Quote non fermer\n");
@@ -72,12 +72,12 @@ int main(int argc, char **argv, char **env)
 		if (!split_arg)
 			break;
 		//ft_print_split_elem(split_arg);
-		//create_split_arg(&split_arg);
-		//ft_print_split_elem(split_arg);
-		/*add_end_maillons(&maillons, create_maillons(&split_arg));
+		create_split_arg(&split_arg);
+		ft_print_split_elem(split_arg);
+		add_end_maillons(&maillons, create_maillons(&split_arg));
 		ft_print_maillons(maillons);
 		//ft_free_split_arg(&split_arg);
-		printf("\n***********************\n\n");*/
+		printf("\n***********************\n\n");
 		ft_free_split_arg(&split_arg);
 		i++;
 	}
@@ -85,16 +85,16 @@ int main(int argc, char **argv, char **env)
 	ft_free_tab(split_pipe);
 	return (1);
 }
+
 /*
 int main(int argc, char **argv, char **env)
 {
 	char			*line;
-	
+	char	*word;
+
 	line = rl_gets();
-	if (just_quote(line))
-		printf("1 ne contient que des cotes");
-	else
-		printf("0 ne contient pas des cotes");
+	word = create_word_and_quote2(line, "<>"); // utiliser la version 2 plutot que la version 1ft_lo
+	printf("word = %s\n", word);
 }*/
 
 
