@@ -5,7 +5,8 @@
 #include <unistd.h>
 #include <readline/readline.h>
 
-
+//possibilite de devoir faire un parsing pour ne pas accepter les option, et checker toutes les erreurs possible pour chaque builtin
+//new_env = do_export("FOO=bar", new_env);
 char	*ft_strchr(const char *s, int c)
 {
 	int				i;

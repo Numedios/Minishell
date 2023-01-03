@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 16:18:12 by zakariyaham       #+#    #+#             */
-/*   Updated: 2022/12/30 15:21:04 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/01/03 16:40:16 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int parse (char *line);
 int quote_close(char *str);
 int ft_strlen_const(const char *str);
 
-char	*ft_strdup(const char *s)
+char	*ft_strdup_const(const char *s)
 {
 	char	*s_copy;
 	size_t	s_len;
@@ -77,10 +77,6 @@ void handle_sig(int sig)
 	{
 		printf("\nMinishell >");
 	}
-	if (sig == SIGQUIT)
-	{
-		return ;
-	}
 	if (sig == SIGTSTP)//ctrl+z
 	{
 		exit(0);
@@ -98,30 +94,105 @@ if (command == NULL)  // si l'utilisateur appuie sur ctrl-D
 }
 */
 
+// void setup_signal_handlers(void)
+// {
+// 	struct sigaction sa;
+
+// 	signal(SIGQUIT, SIG_IGN);
+// 	sa.sa_handler = handle_sig;
+// 	sigemptyset(&sa.sa_mask);// utiliser sigaddset(&sa.sa_mask, SIGTSTP); si on souhaite bloque un signal en particulier
+// 	sigaddset(&sa.sa_mask, SIGQUIT);
+// 	sa.sa_flags = 0;
+// 	if (sigaction(SIGINT, &sa, NULL) == -1)
+// 	{
+// 		perror("sigaction failed");
+// 		exit (1);
+// 	}
+// 	if (sigaction(SIGTSTP, &sa, NULL) == -1)
+// 	{
+// 		perror("sigaction failed");
+// 		exit (1);
+// 	}
+// }
+
+void setup_signal_handlers(void)
+{
+  // Définissez handle_sig() comme le gestionnaire de signal pour SIGINT.
+  if (signal(SIGINT, handle_sig) == SIG_ERR)
+  {
+    perror("signal failed");
+    exit (1);
+  }
+
+  // Définissez SIG_IGN comme le gestionnaire de signal pour SIGQUIT.
+  if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
+  {
+    perror("signal failed");
+    exit (1);
+  }
+
+  // Définissez handle_sig() comme le gestionnaire de signal pour SIGTSTP.
+  if (signal(SIGTSTP, handle_sig) == SIG_ERR)
+  {
+    perror("signal failed");
+    exit (1);
+  }
+}
+
 int main(int argc, char **argv, char **env)
 {
-	struct sigaction sa;
+	char			*line;
+	char			**split_pipe;
+	t_split_elem	*split_arg;
+	t_maillons		*maillons; // utile pour toi zak faire le parsing dessus
+	int				i;
+	char **new_env;
+
+	setup_signal_handlers();
+	new_env = my_env(env);//ne pas oublier de free a la fin le new env
+	i = 0;
+	line = rl_gets();
+	if (line == NULL)  // si l'utilisateur appuie sur ctrl-D
+	{
+		printf("\n");
+		exit(0);
+	}
+	parse(line);
+	if (!quote_close(line))
+	{
+		dprintf(2, "Quote non fermer\n");
+		exit (0);
+	}
+	split_pipe = ft_split(line , "|");
+	maillons = NULL;
+	if (!split_pipe)
+		return (0);
+	while (split_pipe[i])
+	{
+		split_arg = ft_split_list(split_pipe[i], WHITE_SPACE);
+		if (!split_arg)
+			break;
+		//ft_print_split_elem(split_arg);
+		//create_split_arg(&split_arg);
+		//ft_print_split_elem(split_arg);
+		/*add_end_maillons(&maillons, create_maillons(&split_arg));
+		ft_print_maillons(maillons);
+		//ft_free_split_arg(&split_arg);
+		printf("\n***********************\n\n");*/
+		ft_free_split_arg(&split_arg);
+		i++;
+	}
+	free_maillons(&maillons);
+	ft_free_tab(split_pipe);
+	return (1);
+}
+/*
+int main(int argc, char **argv, char **env)
+{
 	char *command;  // utiliser readline pour lire une ligne de commande
 	char **new_env;
 	
-	sa.sa_handler = handle_sig;
-	sigemptyset(&sa.sa_mask);// utiliser sigaddset(&sa.sa_mask, SIGTSTP); si on souhaite bloque un signal en particulier
-	sa.sa_flags = 0;
-	if (sigaction(SIGINT, &sa, NULL) == -1)
-	{
-		perror("sigaction failed");
-		return (1);
-	}
-	if (sigaction(SIGQUIT, &sa, NULL) == -1)
-	{
-		perror("sigaction failed");
-		return (1);
-	}
-	if (sigaction(SIGTSTP, &sa, NULL) == -1)
-	{
-		perror("sigaction failed");
-		return (1);
-	}
+	setup_signal_handlers();
 	new_env = my_env(env);//ne pas oublier de free a la fin le new env
 	while (1)
 	{
@@ -145,6 +216,7 @@ int main(int argc, char **argv, char **env)
 	}
 	return (0);
 }
+*/
 
 int check_1(char *line)
 {
