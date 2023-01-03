@@ -53,7 +53,6 @@ int main(int argc, char **argv, char **env)
 	t_split_elem	*split_arg;
 	t_maillons		*maillons; // utile pour toi zak faire le parsing dessus
 	int				i;
-	char *command;  // utiliser readline pour lire une ligne de commande
 	char **new_env;
 	
 	setup_signal_handlers();

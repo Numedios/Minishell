@@ -6,11 +6,14 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:39:06 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/01/03 17:50:14 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/01/03 18:46:10 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int parenthesis_close_2(char *str);
+int parenthesis_close_1 (char *str);
 
 int check_1(char *line)
 {
@@ -19,6 +22,11 @@ int check_1(char *line)
 	i = 0;
 	while (line[i])
 	{
+		if((line[i] == '"' && line[i + 1] == '"') || (line[i] == '\'' && line[i + 1] == '\''))
+		{
+			line[i] = ' ';
+			line[i + 1] = ' ';
+		}
 		if(line[i] == '>' && line[i + 1] == '>' && line[i + 2] == '>')
 		{
 			printf("bash: syntax error near unexpected token `newline'\n");
@@ -29,12 +37,17 @@ int check_1(char *line)
 			printf("bash: syntax error near unexpected token `newline'\n");
 			return (1);
 		}
-		if(line[i] == '|' && line[i + 1] == '|')
+		if(line[i] == '|' && line[i + 1] == '|' && line[i + 2] == '|')
 		{
-			printf("bash: syntax error near unexpected token `||'\n");
+			printf("bash: syntax error near unexpected token `|'\n");
 			return (1);
 		}
-		if(line[i] == '&' && line[i + 1] == '&')
+		if(line[i] == '|' && line[i + 1] == ' ' && line[i + 2] == '|')
+		{
+			printf("bash: syntax error near unexpected token `|'\n");
+			return (1);
+		}
+		if(line[i] == '&' && line[i + 1] == '&' && line[i + 2] == '&')
 		{
 			printf("bash: syntax error near unexpected token `&&'\n");
 			return (1);
@@ -48,12 +61,6 @@ int check_1(char *line)
 			i++;
 		while (line[i] == '\'' && line[i + 1] == '\'' && line[i+ 2]== '\'')
 			i++;
-		if((line[i] == '"' && line[i + 1] == '"') || (line[i] == '\'' && line[i + 1] == '\''))
-		{
-			line[i] = ' ';
-			line[i + 1] = ' ';
-			i++;
-		}
 		i++;
 	}
 	return(0);
@@ -66,6 +73,8 @@ int parse (char *line)
 		printf("quote not close\n");
 		return (1);
 	}
+	if (parenthesis_close_2(line) == 1 || parenthesis_close_1(line) == 1)
+		return (1);
 	if (line[0] == ';')
 	{
 		printf("bash: syntax error near unexpected token `;'\n");
@@ -87,7 +96,7 @@ int parse (char *line)
         printf("bash: syntax error near unexpected token `newline'\n");
         return (1);
     }
-	printf("%s\n", line);
+	//printf("%s\n", line);
     return (0);
 }
 
@@ -119,24 +128,90 @@ int str_cmp(char *s1, char *s2)
 
 int quote_close_2(char *str)
 {
-        char    c;
-		int i;
+	char    c;
+	int i;
 
-		i = 0;
-        if (!str)
-                return (0);
-        while(str && str[i])
+	i = 0;
+	if (!str)
+			return (0);
+	while(str && str[i])
+	{
+		if (str[i] == '\'' || str[i] == '\"')
 		{
-				if (str[i] == '\'' || str[i] == '\"')
-				{
-						c = str[i];
-						i++;
-						while (str[i] && str[i] != c)
-								i++;
-						if (str[i] != c)
-								return (0);
-				}
+				c = str[i];
 				i++;
+				while (str[i] && str[i] != c)
+						i++;
+				if (str[i] != c)
+						return (0);
 		}
-        return (1);
+		i++;
+	}
+	return (1);
+}
+
+int parenthesis_close_1 (char *str)
+{
+	int i;
+	int count_1;
+	
+	i = 0;
+	count_1 = 0;
+
+	while (str && str[i])
+	{
+		if (str[i] == '(')
+			count_1++;
+		i++;
+	}
+	i = 0;
+	while (str && str[i])
+	{
+		if (str[i] == ')')
+			count_1--;
+		i++;
+	}
+	if (count_1 < 0)
+	{
+		printf("bash: syntax error near unexpected token `)'\n");
+		return (1);
+	}
+	return (0);
+}
+
+int parenthesis_close_2 (char *str)
+{
+	char    c;
+	int i;
+	int count;
+
+	i = 0;
+	count = 0;
+	if (!str)
+			return (0);
+	while(str && str[i])
+	{
+		while (str[i] == '(')
+		{
+			i++;
+			count++;
+		}
+		if (count > 0)
+		{
+			while(str[i] == ')' || str[i] == ' ')
+			{
+				if (str[i] == ')')
+					count--;
+				i++;
+			}
+			if (count <= 0)
+			{
+				printf("bash: syntax error near unexpected token `)'\n");
+				return (1);
+			}
+			return(0);
+		}
+		i++;
+	}
+	return (0);
 }
