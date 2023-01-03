@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 16:18:12 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/01/03 16:40:16 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/01/03 17:09:40 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char **	my_env(char **env)
 	i = 0;
 	while (env[i])
 	{
-		env_copy[i] = ft_strdup(env[i]);
+		env_copy[i] = ft_strdup_const(env[i]);
 		if (env_copy[i] == NULL)
 			return (NULL);
 		i++;
@@ -141,54 +141,6 @@ void setup_signal_handlers(void)
 
 int main(int argc, char **argv, char **env)
 {
-	char			*line;
-	char			**split_pipe;
-	t_split_elem	*split_arg;
-	t_maillons		*maillons; // utile pour toi zak faire le parsing dessus
-	int				i;
-	char **new_env;
-
-	setup_signal_handlers();
-	new_env = my_env(env);//ne pas oublier de free a la fin le new env
-	i = 0;
-	line = rl_gets();
-	if (line == NULL)  // si l'utilisateur appuie sur ctrl-D
-	{
-		printf("\n");
-		exit(0);
-	}
-	parse(line);
-	if (!quote_close(line))
-	{
-		dprintf(2, "Quote non fermer\n");
-		exit (0);
-	}
-	split_pipe = ft_split(line , "|");
-	maillons = NULL;
-	if (!split_pipe)
-		return (0);
-	while (split_pipe[i])
-	{
-		split_arg = ft_split_list(split_pipe[i], WHITE_SPACE);
-		if (!split_arg)
-			break;
-		//ft_print_split_elem(split_arg);
-		//create_split_arg(&split_arg);
-		//ft_print_split_elem(split_arg);
-		/*add_end_maillons(&maillons, create_maillons(&split_arg));
-		ft_print_maillons(maillons);
-		//ft_free_split_arg(&split_arg);
-		printf("\n***********************\n\n");*/
-		ft_free_split_arg(&split_arg);
-		i++;
-	}
-	free_maillons(&maillons);
-	ft_free_tab(split_pipe);
-	return (1);
-}
-/*
-int main(int argc, char **argv, char **env)
-{
 	char *command;  // utiliser readline pour lire une ligne de commande
 	char **new_env;
 	
@@ -216,7 +168,7 @@ int main(int argc, char **argv, char **env)
 	}
 	return (0);
 }
-*/
+
 
 int check_1(char *line)
 {

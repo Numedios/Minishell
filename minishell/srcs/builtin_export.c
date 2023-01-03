@@ -7,6 +7,7 @@
 
 //possibilite de devoir faire un parsing pour ne pas accepter les option, et checker toutes les erreurs possible pour chaque builtin
 //new_env = do_export("FOO=bar", new_env);
+//gerer le cas "+="
 char	*ft_strchr(const char *s, int c)
 {
 	int				i;
@@ -69,12 +70,12 @@ char **do_export(char *tab, char **env_copy)//checker si la variable existe deja
     i = 0;
     while (env_copy[i])
     {
-        new_env[i] = ft_strdup(env_copy[i]);
+        new_env[i] = ft_strdup_const(env_copy[i]);
         free(env_copy[i]);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
         i++;
     }
     free(env_copy);
-    new_env[i] = ft_strdup(tab);
+    new_env[i] = ft_strdup_const(tab);
     new_env[i + 1] = NULL;
     return (new_env);
 }
