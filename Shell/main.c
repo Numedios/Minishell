@@ -74,8 +74,9 @@ int main(int argc, char **argv, char **env)
 		//ft_print_split_elem(split_arg);
 		create_split_arg(&split_arg);
 		ft_print_split_elem(split_arg);
+		ft_print_split_elem(split_arg);
 		add_end_maillons(&maillons, create_maillons(&split_arg));
-		ft_print_maillons(maillons);
+		// ft_print_maillons(maillons);
 		//ft_free_split_arg(&split_arg);
 		printf("\n***********************\n\n");
 		ft_free_split_arg(&split_arg);
