@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:39:06 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/01/04 17:40:26 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/01/04 19:20:29 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 int parenthesis_close_2(char *str);
 int parenthesis_close_1 (char *str);
 //test : fkfs;sf      '''ho"''''l"a'''    'ho"''l"a'
+//si rien apres pipe = probleme 
+// pour chaque if du parsinf check meme en skipant tout les espace qui separes les char 
 int check_2(char *line)
 {
 	int i;
@@ -87,6 +89,16 @@ int check_1(char *line)
 			}
 			i++;
 		}
+		if(line[i] == '<' && line[i + 1] == '>')
+		{
+			printf("bash: syntax error near unexpected token `newline'\n");
+			return (1);
+		}
+		if(line[i] == '>' && line[i + 1] == '<')
+		{
+			printf("bash: syntax error near unexpected token `<'\n");
+			return (1);
+		}
 		if(line[i] == '>' && line[i + 1] == '>' && line[i + 2] == '>')
 		{
 			printf("bash: syntax error near unexpected token `newline'\n");
@@ -97,12 +109,22 @@ int check_1(char *line)
 			printf("bash: syntax error near unexpected token `newline'\n");
 			return (1);
 		}
+		if(line[i] == '<' && line[i + 1] == ' ' && line[i + 2] == '>')
+		{
+			printf("bash: syntax error near unexpected token `>'\n");
+			return (1);
+		}
+		if(line[i] == '<' && line[i + 1] == '>' && line[i + 2] == '>')
+		{
+			printf("bash: syntax error near unexpected token `>'\n");
+			return (1);
+		}
 		if(line[i] == '|' && line[i + 1] == '|' && line[i + 2] == '|')
 		{
 			printf("bash: syntax error near unexpected token `|'\n");
 			return (1);
 		}
-		if(line[i] == '|' && line[i + 1] == ' ' && line[i + 2] == '|')
+		if(line[i] == '|' && line[i + 1] == ' ' && line[i + 2] == '|')//while space
 		{
 			printf("bash: syntax error near unexpected token `|'\n");
 			return (1);
