@@ -2,7 +2,7 @@
 
 //possibilite de devoir faire un parsing pour ne pas accepter les option, et checker toutes les erreurs possible pour chaque builtin
 //new_env = do_export("FOO=bar", new_env);
-//gerer le cas "+=" et "-="
+//gerer le cas "+="
 //que faire si on utilise export sans rien derriere
 char	*ft_strchr(const char *s, int c)
 {
@@ -50,7 +50,7 @@ char **do_export(char *tab, char **env_copy)//checker si la variable existe deja
     char **new_env;
     
     i = 0;
-    if (ft_strchr(tab, '=') == NULL)
+    if (ft_strchr(tab, '=') == NULL)//pas d'espace avant le "="
     {
         printf("export: `%s': not a valid identifier\n", tab);
         return (env_copy);

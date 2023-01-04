@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:39:06 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/01/03 18:46:10 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/01/04 17:40:26 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,78 @@
 
 int parenthesis_close_2(char *str);
 int parenthesis_close_1 (char *str);
+//test : fkfs;sf      '''ho"''''l"a'''    'ho"''l"a'
+int check_2(char *line)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (line && line[i])
+	{
+		while ((line[i] == '"' && line[i + 1] != '"') || (line[i] == '\'' && line[i + 1] != '\''))//ne fonctionne pas quand je met line[i + 1] doit etre different de '\0', pour ce test '''ho"''''l"a'''
+		{
+			if(line[i] == '"' && line[i + 1] != '"')
+			{
+				i++;
+				if (!line[i])
+					return (0);
+				while (line[i] != '"')
+					i++;
+			}
+			if((line[i] == '\'' && line[i + 1] != '\''))
+			{
+				i++;
+				if (!line[i])
+					return (0);
+				while (line[i] != '\'')
+					i++;
+			}
+			i++;
+		}
+		if((line[i] == '"' && line[i + 1] == '"') || (line[i] == '\'' && line[i + 1] == '\''))
+		{
+			j = i;
+			while (line && line[j])
+			{
+				line[j] = line[j + 2];
+				line [j + 1] = line [j + 3]; 
+				j++;
+			}
+			i = 0;
+		}
+		else
+			i++;
+	}
+}
 
 int check_1(char *line)
 {
 	int i;
+	int j;
 
 	i = 0;
-	while (line[i])
+	while (line && line[i])
 	{
-		if((line[i] == '"' && line[i + 1] == '"') || (line[i] == '\'' && line[i + 1] == '\''))
+		while ((line[i] == '"' && line[i + 1] != '"') || (line[i] == '\'' && line[i + 1] != '\''))
 		{
-			line[i] = ' ';
-			line[i + 1] = ' ';
+			if(line[i] == '"' && line[i + 1] != '"')
+			{
+				i++;
+				if (!line[i])
+					return (0);
+				while (line[i] != '"')
+					i++;
+			}
+			if((line[i] == '\'' && line[i + 1] != '\''))
+			{
+				i++;
+				if (!line[i])
+					return (0);
+				while (line[i] != '\'')
+					i++;
+			}
+			i++;
 		}
 		if(line[i] == '>' && line[i + 1] == '>' && line[i + 2] == '>')
 		{
@@ -82,6 +142,7 @@ int parse (char *line)
 	}
 	if (check_1(line) == 1)
         return (1);
+	check_2(line);
     if (ft_strlen(line) == 1)
     {
         if (line[0] == '>' || line[0] == '<')
@@ -96,7 +157,6 @@ int parse (char *line)
         printf("bash: syntax error near unexpected token `newline'\n");
         return (1);
     }
-	//printf("%s\n", line);
     return (0);
 }
 

@@ -6,11 +6,11 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 17:27:55 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/01/03 17:46:30 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/01/04 17:38:10 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
+//verifier que le 
 #include "minishell.h"
 
 char	*ft_strdup_const(const char *s)
