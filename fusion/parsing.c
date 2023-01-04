@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:39:06 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/01/04 19:20:29 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/01/04 19:53:23 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int parenthesis_close_1 (char *str);
 //test : fkfs;sf      '''ho"''''l"a'''    'ho"''l"a'
 //si rien apres pipe = probleme 
 // pour chaque if du parsinf check meme en skipant tout les espace qui separes les char 
+
+
 int check_2(char *line)
 {
 	int i;
@@ -61,6 +63,124 @@ int check_2(char *line)
 	}
 }
 
+int	check_error_2_space(char *line, char c, char c_bis, int i)
+{
+	if (line[i] == c)
+	{
+		i++;
+		while (line[i] == ' ')
+			i++;
+		if (line[i] == c_bis)
+			return (2);
+		else 
+			return (0);
+	}
+	return (0);
+}
+
+int	check_error_space(char *line, char c, int i)
+{
+	if (line[i] == c)
+	{
+		i++;
+		while(line[i] == ' ')
+			i++;
+		if (line[i] == c)
+			return (2);
+		else 
+			return (0);
+	}
+	return (0);
+}
+
+int check_1(char *line)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (line && line[i])
+	{
+		while ((line[i] == '"' && line[i + 1] != '"') || (line[i] == '\'' && line[i + 1] != '\''))
+		{
+			if(line[i] == '"' && line[i + 1] != '"')
+			{
+				i++;
+				if (!line[i])
+					return (0);
+				while (line[i] != '"')
+					i++;
+			}
+			if((line[i] == '\'' && line[i + 1] != '\''))
+			{
+				i++;
+				if (!line[i])
+					return (0);
+				while (line[i] != '\'')
+					i++;
+			}
+			i++;
+		}
+		if(check_error_2_space(line, '<', '>', i) == 2)
+		{
+			printf("bash: syntax error near unexpected token `newline'\n");
+			return (1);
+		}
+		if(check_error_2_space(line, '>', '<', i) == 2)
+		{
+			printf("bash: syntax error near unexpected token `<'\n");
+			return (1);
+		}
+		if(line[i] == '>' && line[i + 1] == '>' && line[i + 2] == '>')
+		{
+			printf("bash: syntax error near unexpected token `newline'\n");
+			return (1);
+		}
+		if(line[i] == '<' && line[i + 1] == '<' && line[i + 2] == '<')
+		{
+			printf("bash: syntax error near unexpected token `newline'\n");
+			return (1);
+		}
+		if(line[i] == '<' && line[i + 1] == ' ' && line[i + 2] == '>')
+		{
+			printf("bash: syntax error near unexpected token `>'\n");
+			return (1);
+		}
+		if(line[i] == '<' && line[i + 1] == '>' && line[i + 2] == '>')
+		{
+			printf("bash: syntax error near unexpected token `>'\n");
+			return (1);
+		}
+		if(line[i] == '|' && line[i + 1] == '|' && line[i + 2] == '|')
+		{
+			printf("bash: syntax error near unexpected token `|'\n");
+			return (1);
+		}
+		if(line[i] == '|' && line[i + 1] == ' ' && line[i + 2] == '|')//while space
+		{
+			printf("bash: syntax error near unexpected token `|'\n");
+			return (1);
+		}
+		if(line[i] == '&' && line[i + 1] == '&' && line[i + 2] == '&')
+		{
+			printf("bash: syntax error near unexpected token `&&'\n");
+			return (1);
+		}
+		if(line[i] == ';' && line[i + 1] == ';')
+		{
+			printf("bash: syntax error near unexpected token `;;'\n");
+			return (1);
+		}
+		while (line[i] == '"' && line[i + 1] == '"' && line[i+ 2]== '"')
+			i++;
+		while (line[i] == '\'' && line[i + 1] == '\'' && line[i+ 2]== '\'')
+			i++;
+		i++;
+	}
+	return(0);
+}
+
+/*
 int check_1(char *line)
 {
 	int i;
@@ -147,6 +267,7 @@ int check_1(char *line)
 	}
 	return(0);
 }
+*/
 
 int parse (char *line)
 {
