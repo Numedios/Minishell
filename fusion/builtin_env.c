@@ -1,6 +1,7 @@
 #include "minishell.h"
 
 //possibilite de creer sa propre env
+//comparer toutes les lignes pour savoir laquelle imprimer en premier
 void    do_env(char **env)
 {
     int i;
