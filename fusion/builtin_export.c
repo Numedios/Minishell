@@ -5,29 +5,18 @@
 //gerer le cas "+="
 //que faire si on utilise export sans rien derriere (imprimer env)
 
-int	skip_quote (char *line, int i)//existe deja dans un autre fichier, a ajouter dans le .h et le retirer d'ici
+int str_len_env(char *str)
 {
-	while ((line[i] == '"' && line[i + 1] != '"') || (line[i] == '\'' && line[i + 1] != '\''))//ne fonctionne pas quand je met line[i + 1] doit etre different de '\0', pour ce test '''ho"''''l"a'''
-	{
-		if(line[i] == '"' && line[i + 1] != '"')
-		{
-			i++;
-			if (!line[i])
-				return (-1);
-			while (line[i] != '"')
-				i++;
-		}
-		if((line[i] == '\'' && line[i + 1] != '\''))
-		{
-			i++;
-			if (!line[i])
-				return (-1);
-			while (line[i] != '\'')
-				i++;
-		}
-		i++;
-	}
-	return (i);
+    int i;
+
+    i = 0;
+    while (str && str[i])
+    {
+        if(str[i] == '+' || str[i] == '=')
+            return (i);
+        i++;
+    }
+    return (i);
 }
 
 char	*ft_strchr(const char *s, int c)
@@ -53,15 +42,16 @@ char	*ft_strchr(const char *s, int c)
 
 int check_if_tab_exist (char *tab, char **env)
 {
-    int len;
+    int len_tab;
+    int len_env;
     int i;
 
-    len = 0;
-    len = ft_strlen(tab);
+    len_tab = ft_strlen(tab);
     i = 0;
     while (env[i])
     {
-        if (ft_strncmp(env[i], tab, len) != 0)
+        len_env = ft_strlen(env[i]);
+        if (len_tab != len_env || ft_strncmp(env[i], tab, len_tab) != 0)
             i++;
         else
             return(1);
@@ -90,19 +80,19 @@ int parse_value(char *tab, int i)//return 1 si tout se passe bien autre en cas d
     }
     else 
         i++;
-    while (tab && tab[i])
-    {
-        i = skip_quote(tab, i);
-        if (i == -1)
-            return (1);
-        i++;
-    }
     if (tab && (tab[i] == '\0' || tab[i] == ' ' || tab[i] == '\t' || tab[i] == '\n' || tab[i] == '\v' || tab[i] == '\f' || tab[i] == '\r'))
     {
         if(a == 3)
             return (5);
         else
             return (4);
+    }
+    while (tab && tab[i])
+    {
+        i = skip_quote(tab, i);
+        if (i == -1)
+            return (1);
+        i++;
     }
     // if (!tab)
     //     return (4);
@@ -119,7 +109,7 @@ int parse_export(char *tab)//ne pas commencer par un nombre pas de caractere spe
     while (tab && tab[i] == ' ')
         i++;
     if (!tab)
-        return (2)
+        return (2);
     if (ft_isdigit(tab[i]) == 2)
         return (1);
     while (tab && tab[i])
@@ -143,19 +133,6 @@ int parse_export(char *tab)//ne pas commencer par un nombre pas de caractere spe
     
 }
 
-int str_len_env(char *str)
-{
-    int i;
-
-    i = 0;
-    while (str && str[i])
-    {
-        if(str[i] == '+' || str[i] == '=')
-            return (i);
-        i++;
-    }
-    return (i);
-}
 
 
 int what_to_do(char *tab, char **env)//il faut retourner la bonne ligne et faire un if tel que
@@ -167,13 +144,17 @@ int what_to_do(char *tab, char **env)//il faut retourner la bonne ligne et faire
 
     j = 0;
     i = 0;
-    len_tab = str_len_env;
-    len_env = str_len_env;
+    len_tab = str_len_env(tab);
     while (env && env[j])
     {
+        len_env = str_len_env(env[j]);
         while(tab[i] == env[j][i])
+        {
+            if (env[j][i] == '=' || env[j][i] == '+')
+                break ;
             i++;
-        if (i == len_env && len_env = len_tab)
+        }
+        if (i == len_env && len_env == len_tab && (tab[i] == '=' || tab[i] == '+'))
             return (j);
         j++;
         i = 0;
@@ -181,7 +162,7 @@ int what_to_do(char *tab, char **env)//il faut retourner la bonne ligne et faire
     return (-1);
 }
 
-void replace_value(int j, int a, char *tab, char **env)
+char **replace_value(int j, int a, char *tab, char **env)
 {
     int i;
 
@@ -210,7 +191,7 @@ void replace_value(int j, int a, char *tab, char **env)
         return (env);
 }
 
-int new_value (int i, int a, char *tab, char **env)
+char **new_value (int i, int a, char *tab, char **env)
 {
    int j;
 
@@ -280,7 +261,7 @@ char **do_export(char *tab, char **env_copy)//checker si la variable existe deja
     {
         while (env_copy[i])
             i++;
-        new_env = malloc ((i + 1) * sizeof(char*));//il faut ajouter une ligne de plus pour la nouvelle variable
+        new_env = malloc ((i + 2) * sizeof(char*));//il faut ajouter une ligne de plus pour la nouvelle variable
         i = 0;
         while (env_copy[i])
         {
@@ -290,7 +271,7 @@ char **do_export(char *tab, char **env_copy)//checker si la variable existe deja
         }
         free(env_copy);
         //pour la nouvelle ligne faire un cas pour chaque a
-        env_copy = new_value(i, a, tab, env_copy);
+        new_env = new_value(i, a, tab, new_env);
         //new_env[i] = ft_strdup_const(tab);
         new_env[i + 1] = NULL;
         return (new_env);

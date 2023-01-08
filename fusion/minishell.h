@@ -71,7 +71,9 @@ int str_cmp(char *s1, char *s2);
 int parse (char *line);
 int quote_close_2(char *str);
 int ft_strlen_const(const char *str);
-
+char	*ft_strjoin(char const *s1, char const *s2);
+int	skip_quote (char *line, int i);
+int print_tab(char **tab);
 
 /* libft.c */
 

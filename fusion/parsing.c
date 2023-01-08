@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:39:06 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/01/06 14:01:17 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/01/08 17:42:46 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,30 +44,6 @@ int after_pipe(char *line)
 	return (0);
 }
 
-int	skip_quote (char *line, int i)//pour remettre bien enlever le dernier return et mettre les autres a return(0)
-{
-	while ((line[i] == '"' && line[i + 1] != '"') || (line[i] == '\'' && line[i + 1] != '\''))//ne fonctionne pas quand je met line[i + 1] doit etre different de '\0', pour ce test '''ho"''''l"a'''
-	{
-		if(line[i] == '"' && line[i + 1] != '"')
-		{
-			i++;
-			if (!line[i])
-				return (-1);
-			while (line[i] != '"')
-				i++;
-		}
-		if((line[i] == '\'' && line[i + 1] != '\''))
-		{
-			i++;
-			if (!line[i])
-				return (-1);
-			while (line[i] != '\'')
-				i++;
-		}
-		i++;
-	}
-	return (i);
-}
 
 int check_parenthesis(char *line)//(")"0 ;;; (")" 0) -> est ce qu'il traiter les "()" comment les guillemets
 {
