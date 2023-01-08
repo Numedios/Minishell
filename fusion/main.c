@@ -68,8 +68,6 @@ int main(int argc, char **argv, char **env)
 		}
 		if (parse(line) == 0)
 		{
-			new_env = do_export(line, new_env);
-			print_tab(new_env);
 			//line = "12>30\"ab<cd\"abbb>e>f";
 			if (!quote_close(line))
 			{
