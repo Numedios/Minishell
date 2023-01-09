@@ -126,7 +126,9 @@ int parse_export(char *tab)//ne pas commencer par un nombre pas de caractere spe
         if (tab[i] == ' ' || tab[i] == '\t' || tab[i] == '\n' || tab[i] == '\v' || tab[i] == '\f' || tab[i] == '\r')
             return (1);
         if (tab[i] == '-' || tab[i] == '!' || tab[i] == '@' || tab[i] == '#' || tab[i] == '$' || tab[i] == '%' || tab[i] == '^' || tab[i] == '&' || tab[i] == '*' || tab[i] == '(' || tab[i] == ')' || tab[i] == '{' || tab[i] == '}' || tab[i] == '[' || tab[i] == ']' || tab[i] == '|' || tab[i] == ';' || tab[i] == ':' || tab[i] == '<' || tab[i] == '>' || tab[i] == '?' || tab[i] == '/'|| tab[i] == '~' || tab[i] == '\\')
+        {
             return (1);
+        }
         i++;
     }
     return (a);

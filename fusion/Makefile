@@ -26,7 +26,9 @@ SRC = main.c \
 		builtin_unset.c  \
 		parsing.c  \
 		utils_zak.c  \
-		garbage_collector.c
+		garbage_collector.c \
+		signals.c\
+		replace_dollar.c
 
 OBJ = $(SRC:.c=.o)
 

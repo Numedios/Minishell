@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_zak.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zheylkoss <zheylkoss@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 17:27:55 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/01/08 17:46:04 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/01/09 15:19:15 by zheylkoss        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,42 +102,3 @@ char	*ft_strdup_const(const char *s)
 	s_copy[s_len] = '\0';
 	return (s_copy);
 }
-
-
-
-void handle_sig(int sig)
-{
-	if (sig == SIGINT)//ctrl+c
-	{
-		printf("\nMinishell >");
-	}
-	if (sig == SIGTSTP)//ctrl+z
-	{
-		exit(0);
-	}
-}
-
-void setup_signal_handlers(void)
-{
-  // Définissez handle_sig() comme le gestionnaire de signal pour SIGINT.
-  if (signal(SIGINT, handle_sig) == SIG_ERR)
-  {
-    perror("signal failed");
-    exit (1);
-  }
-
-  // Définissez SIG_IGN comme le gestionnaire de signal pour SIGQUIT.
-  if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
-  {
-    perror("signal failed");
-    exit (1);
-  }
-
-  // Définissez handle_sig() comme le gestionnaire de signal pour SIGTSTP.
-  if (signal(SIGTSTP, handle_sig) == SIG_ERR)
-  {
-    perror("signal failed");
-    exit (1);
-  }
-}
-
