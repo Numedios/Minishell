@@ -8,7 +8,7 @@ void handle_sig(int sig)//il faut free si exit
         // rl_on_new_line_with_prompt();devoir defenir un prompte au prealable peut etre pour eviter que le prompt ne s'affiche qu'une fois qu'on a touche a un lettre
         write(1, "\n", 1);
         rl_replace_line("", 0);
-		// printf("\nMinishell >");
+        rl_redisplay();
 	}
 	if (sig == SIGTSTP)//il faudra l'enlever
 	{

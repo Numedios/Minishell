@@ -45,6 +45,12 @@ typedef struct garbage
     struct maillons     *maillons;
 }       t_garbage;
 
+typedef struct index
+{
+    int         j;
+   	int         a;
+}       t_index;
+
 # define BUFFER_SIZE 5
 
 /* main.c */

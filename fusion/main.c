@@ -68,6 +68,7 @@ int main(int argc, char **argv, char **env)
 		}
 		if (parse(line) == 0)
 		{
+			replace_dollar(line,new_env);
 			//line = "12>30\"ab<cd\"abbb>e>f";
 			if (!quote_close(line))
 			{
@@ -94,6 +95,9 @@ int main(int argc, char **argv, char **env)
 				ft_free_split_arg(&split_arg);
 				i++;
 			}
+			//parse maillon
+			
+			//pipex
 			free_maillons(&maillons);
 			ft_free_tab(split_pipe);
 		}

@@ -2,7 +2,7 @@
 //si il y a juste un dollar ecrire dolalr
 //test a faire : echo $'hola'       echo $"hola"    echo $      echo $hol (hol n'existe pas)        echo $$SYSTEMD_EXEC_PID
 
-char *do_replace(char *tab, char **new_env, int skip, int j, int a)
+char *do_replace(char *tab, char **new_env, int skip, t_index index)
 {
     int len_tab;
     int len_value;
@@ -17,21 +17,21 @@ char *do_replace(char *tab, char **new_env, int skip, int j, int a)
     pos_tab = 0;
     len_tab = ft_strlen(tab);
     new_len = len_tab - skip;
-    len_value = ft_strlen(&new_env[j][str_len_env(new_env[j])]);
+    len_value = ft_strlen(&new_env[index.j][str_len_env(new_env[index.j])]);
     new_tab = malloc (sizeof(char) * (new_len + len_value));
-    while (pos < (a - 1))
+    while (pos < (index.a - 1))
     {
         new_tab[pos] = tab[pos];
         pos++;
         pos_tab++;
     }
     i = 0;
-    pos_new_env = str_len_env(new_env[j]);
-    while(new_env[j][pos_new_env] == '=' || new_env[j][pos_new_env] == '+')
+    pos_new_env = str_len_env(new_env[index.j]);
+    while(new_env[index.j][pos_new_env] == '=' || new_env[index.j][pos_new_env] == '+')
         pos_new_env++;
     while (i < (len_value - 1))
     {
-        new_tab[pos] = new_env[j][pos_new_env];
+        new_tab[pos] = new_env[index.j][pos_new_env];
         i++;
         pos++;
         pos_new_env++;
@@ -67,29 +67,30 @@ int research (int skip, int a, char *tab, char **new_env)// 1 veut dire qu'on a 
 
 char *found_it(char *tab, char **new_env, int i, int *skip)
 {
-    int a;
-    int j;
+    // int a;
+    // int j;
+    t_index index;
 
 
-    a = i;
+    index.a = i;
     while (tab[i])
     {
         if (tab[i] == '"' || tab[i] == ' ' || tab[i] == '-' || tab[i] == '!' || tab[i] == '@' || tab[i] == '#' || tab[i] == '$' || tab[i] == '%' || tab[i] == '^' || tab[i] == '&' || tab[i] == '*' || tab[i] == '(' || tab[i] == ')' || tab[i] == '{' || tab[i] == '}' || tab[i] == '[' || tab[i] == ']' || tab[i] == '|' || tab[i] == ';' || tab[i] == ':' || tab[i] == '<' || tab[i] == '>' || tab[i] == '?' || tab[i] == '/'|| tab[i] == '~' || tab[i] == '\\')
         {
-            j = research(*skip, a, tab, new_env);
-            if (j != -1)
+            index.j = research(*skip, index.a, tab, new_env);
+            if (index.j != -1)
             {
-                tab = do_replace(tab, new_env, *skip, j, a);
+                tab = do_replace(tab, new_env, *skip, index);
             }
             return (tab);//verifier le cas ou le dollars n'est pas retrouve il faut faire avanceer i et continuer de chercher si il y a un autre dollar dans les guillemet par exemple
         }
         (*skip)++;
         i++;
     }
-    j = research(*skip, a, tab, new_env);
-    if (j != -1)
+    index.j = research(*skip, index.a, tab, new_env);
+    if (index.j != -1)
     {
-        tab = do_replace(tab, new_env, *skip, j, a);
+        tab = do_replace(tab, new_env, *skip, index);
     }
     return (tab);
 }
@@ -105,7 +106,7 @@ int replace_dollar(char *tab, char **new_env)//peu etre possible de pas renvoyer
         if (tab[i] == '"')
         {
             i++;
-            while (tab && tab[i] != '"')
+            while (tab[i] && tab[i] != '"' && tab[i] != '\'')
             {
                 while (tab[i] == '$' && tab[i + 1] == '$')
                     i++;
@@ -119,19 +120,19 @@ int replace_dollar(char *tab, char **new_env)//peu etre possible de pas renvoyer
                 i++;
             }
         }
-        if (tab[i] == '\'')
+        if (tab[i] && tab[i] == '\'')
         {
             i++;
             while (tab[i] && tab[i] != '\'')
                 i++;
         }
-        while (tab[i] == '$' && tab[i + 1] == '$')
+        while (tab[i] && tab[i] == '$' && tab[i + 1] == '$')
                     i++;
-        if (tab[i] == '$')
+        if (tab[i] && tab[i] == '$')
         {
             skip++;
             tab = found_it(tab, new_env, (i + 1), &skip);
-            i = skip + i;
+            //i = skip + i;
             skip = 0;
         }
         i++;
