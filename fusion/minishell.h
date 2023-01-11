@@ -12,6 +12,7 @@
 #include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+#include <limits.h>
 
 # define WHITE_SPACE "\t\n\v\f\r "
 
