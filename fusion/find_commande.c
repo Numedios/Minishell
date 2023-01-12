@@ -23,6 +23,7 @@ char    *find_command(t_split_elem *lst)
         prev = lst;
         lst = (lst)->next;
     }
+    return(NULL);
 }
 
 
@@ -116,5 +117,3 @@ char    *find_command(t_split_elem **lst)
     }
     *lst =first;
 }*/
-
-

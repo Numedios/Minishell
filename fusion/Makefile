@@ -28,7 +28,11 @@ SRC = main.c \
 		utils_zak.c  \
 		garbage_collector.c \
 		signals.c\
-		replace_dollar.c
+		replace_dollar.c\
+		clear_maillons.c \
+		list_maillons.c \
+		parsing_input.c \
+		pipex.c 
 
 OBJ = $(SRC:.c=.o)
 

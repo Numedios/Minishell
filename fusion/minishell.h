@@ -28,6 +28,7 @@ typedef struct input_output
     char				*file_name;
     char				*operator;
     struct input_output	*next;
+    struct input_output	*prev;
 }			t_input_output;
 
 typedef struct  maillons
@@ -36,6 +37,7 @@ typedef struct  maillons
     char        *command;
     struct split_elem        *args;
     struct maillons  *next;
+     struct maillons  *prev;
 }       t_maillons;
 
 typedef struct garbage
@@ -125,6 +127,7 @@ void    free_split_elem(t_split_elem *lst);
 void    ft_free_tab(char **tab);
 void    ft_free_split_arg(t_split_elem  **lst);
 void    free_input_output(t_input_output *lst);
+void    free_input_output_middle(t_input_output **lst, t_input_output **first);
 void    free_inputs_outputs(t_input_output **lst);
 void    free_maillon(t_maillons *lst);
 void    free_maillons(t_maillons **lst);
@@ -140,9 +143,14 @@ void ft_strjoin_list(t_split_elem *list, t_split_elem **add, t_split_elem **firs
 
 /* list_input_output.c */
 
-t_input_output  *create_input_output(char *name, char *operator);
+t_input_output  *create_input_output(char *name, char *operator, t_input_output *prev);
 t_input_output  *lstlast_input_output(t_input_output *lst);
 void    add_end_input_output(t_input_output **list, t_input_output *add);
+
+
+/* list_mailllons.c */
+
+int ft_strlen_maillons(t_maillons *lst);
 
 /* create_split_argc */
 
@@ -153,9 +161,15 @@ t_split_elem	**split_redirection(char *str, char *sep);
 void redirection(t_split_elem *lst);
 void	create_split_arg(t_split_elem **lst);
 
+/* clear_maillons.c */
+
+char    *find_name_sep(t_maillons *lst, char sep);
+int find_if_have_output(t_maillons *lst, char sep);
+void    find_maillon_without_cmd(t_maillons **maillons);
+
 /* create_maillons.c */
 
-t_maillons  *create_maillons(t_split_elem **split);
+t_maillons  *create_maillons(t_split_elem **split, t_maillons *prev);
 t_maillons  *lstlast_maillons(t_maillons *lst);
 void    add_end_maillons(t_maillons **lst, t_maillons *add);
 
@@ -164,14 +178,22 @@ void    add_end_maillons(t_maillons **lst, t_maillons *add);
 int quote_close(char *str);
 void	change_quote(char *str);
 
+/* parsing_input_output.c */
+
+int check_output(t_input_output *output);
+int check_input(t_input_output *output);
+int check_input_output(t_input_output **input_output);
+
 /* bultins_echo.c */
 
 int check_option_n(char *str, int *space);
 void echo(char **arg);
 
-/* bultins_echo.c */
-
 void    cd(char **arg);
+
+/* pipex.c */
+
+int pipex(t_maillons *maillons, char **env);
 
 /* builtins_pwd.c */
 
@@ -183,6 +205,7 @@ void	initialize_garbage(t_garbage *garbage);
 
 /* supp.c */
 
+void ft_print_maillon(t_maillons	*maillons);
 void    ft_print_tab(char **tab);
 void	ft_print_split_elem(t_split_elem *list);
 void	ft_print_input_output(t_input_output *list);

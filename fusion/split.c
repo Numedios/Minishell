@@ -357,6 +357,7 @@ char **ft_split(char *str, char *sep)
 	int i;
 	int j;
 	char **res;
+	char quote;
 
 	i = 0;
 	j = 0;
@@ -369,11 +370,20 @@ char **ft_split(char *str, char *sep)
 			str++;
 		if (*str && check_sep(*str, sep))
 		{
-			res[i] = create_word(str, sep);
+			res[i] = create_word_all2(str, sep);
 			i++;
 		}
 		while (*str && check_sep(*str, sep))
+		{
+			if (*str == '\"' || *str == '\'')
+			{
+				quote = *str;
+				str++;
+				while (*str != quote)
+					str++;
+			}
 			str++;
+		}
 	}
 	res[i] = 0;
 	return (res);

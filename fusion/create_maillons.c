@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-t_maillons  *create_maillons(t_split_elem **split)
+t_maillons  *create_maillons(t_split_elem **split, t_maillons *prev)
 {
     t_maillons  *new;
 
@@ -9,6 +9,8 @@ t_maillons  *create_maillons(t_split_elem **split)
     new -> args = find_argument(*split);
     new -> output = find_input_output(*split); 
     new -> next = NULL;
+    new -> prev = prev;
+    
     /*printf("la commande est %s\n", new->command);
     printf("les arg sont :  ");
     ft_print_split_elem(new ->args);

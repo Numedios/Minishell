@@ -9,11 +9,11 @@ char *rl_gets()
 	static char *line_read = (char *)NULL;
 	/* If the buffer has already been allocated, return the memory
 	   to the free pool. */
-	if (line_read)
-	{
-		free(line_read);
+	//if (line_read)
+	//{
+	//	free(line_read);
 		line_read = (char *)NULL;
-	}
+	//}
 
 	/* Get a line from the user. */
 		line_read = readline("Minishell > ");
@@ -52,13 +52,17 @@ int main(int argc, char **argv, char **env)
 	char			**split_pipe;
 	t_split_elem	*split_arg;
 	t_maillons		*maillons; // utile pour toi zak faire le parsing dessus
+	t_maillons		*maillon; 
+	t_maillons		*prev;
 	int				i;
 	char **new_env;
 	
+	prev = NULL;
+	maillon = NULL;
 	setup_signal_handlers();
-	new_env = my_env(env);//ne pas oublier de free a la fin le new env
-	while (1)
-	{
+	//new_env = my_env(env);//ne pas oublier de free a la fin le new env
+	//while (1)
+	//{
 		i = 0;
 		line = rl_gets();
 		if (line == NULL)  // si l'utilisateur appuie sur ctrl-D
@@ -68,14 +72,13 @@ int main(int argc, char **argv, char **env)
 		}
 		if (parse(line) == 0)
 		{
-			replace_dollar(line,new_env);
-			//line = "12>30\"ab<cd\"abbb>e>f";
+			//line = "cat >a | cat | >a";
 			if (!quote_close(line))
 			{
 				dprintf(2, "Quote non fermer\n");
 				exit (0);
 			}
-			split_pipe = ft_split(line , "|");
+			split_pipe = ft_split(line , "|"); // gerer le cas ou les pipes se trouve dans des parenthese
 			maillons = NULL;
 			if (!split_pipe)
 				return (0);
@@ -86,34 +89,52 @@ int main(int argc, char **argv, char **env)
 					break;
 				//ft_print_split_elem(split_arg);
 				create_split_arg(&split_arg);
-				ft_print_split_elem(split_arg);
-				ft_print_split_elem(split_arg);
-				add_end_maillons(&maillons, create_maillons(&split_arg));
-				// ft_print_maillons(maillons);
-				//ft_free_split_arg(&split_arg);
-				printf("\n***********************\n\n");
+				maillon = create_maillons(&split_arg, prev);
+				add_end_maillons(&maillons, maillon);
+				prev = maillon;
 				ft_free_split_arg(&split_arg);
 				i++;
 			}
-			//parse maillon
-			
-			//pipex
+			check_input_output(&(maillons->output));
+			pipex(maillons, env);
+			ft_print_maillons(maillons);
+			//find_maillon_without_cmd(&maillons);
+			//ft_print_maillons(maillons);
+			//printf("\n\nLen = %d\n\n", ft_strlen_maillons(maillons));
 			free_maillons(&maillons);
 			ft_free_tab(split_pipe);
 		}
-	}
+	//}
 	return (1);
 }
 
+// cat > A > B < sadsadas < 48787 > C
+
+// in1 cat cat out3
+//  dev/stdin ls >> a 
+// out5 echo "bonjour" -> pipe
+// in3 cat out6
+//  in3 pwd cat out6 
+
+/*
+*
+*
+* si 
+*
+*
+*/
 /*
 int main(int argc, char **argv, char **env)
 {
-	char			*line;
-	char	*word;
+	char			**line;
+	char	**word;
 
-	line = rl_gets();
-	word = create_word_and_quote2(line, "<>"); // utiliser la version 2 plutot que la version 1ft_lo
-	printf("word = %s\n", word);
+	word = ft_split("bonjours aurevoir", " ");
+	line = word;
+	//ft_free_tab(line);
+	printf("line = %p // word = %p\n", line[0], word[0]);
+	//free(word);
+	printf("line = %p // word = %p\n", line[1], word[1]);
 }*/
 
 

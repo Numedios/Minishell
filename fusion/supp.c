@@ -36,17 +36,50 @@ void	ft_print_input_output(t_input_output *list)
 	printf("\n");
 }
 
+void ft_print_maillon(t_maillons	*maillons)
+{
+	if (maillons)
+	{
+		printf("maillons\n{\n");
+		if (maillons -> command)
+			printf("  maillons -> commande = %s\n", maillons -> command);
+		printf("  maillons ->args\n  {\n    ");
+		if (maillons -> args)
+			ft_print_split_elem(maillons -> args);
+		printf("  }\n");
+		printf("  maillons -> outputs\n  {\n");
+		if (maillons -> output)
+			ft_print_input_output(maillons ->output);
+		printf("  }\n}\n\n");
+	}
+	else 
+		printf("(null)\n");
+}
+
 void ft_print_maillons(t_maillons	*maillons)
 {
-	printf("maillons\n{\n");
-	printf("  maillons -> commande = %s\n", maillons -> command);
-	printf("  maillons ->args\n  {\n    ");
-	ft_print_split_elem(maillons -> args);
-	printf("  }\n");
-	printf("  maillons -> outputs\n  {\n");
-	ft_print_input_output(maillons ->output);
-	printf("  }\n}\n\n");
+	if (maillons)
+	{
+		while (maillons)
+		{
+			printf("maillons\n{\n");
+			if (maillons -> command)
+				printf("  maillons -> commande = %s\n", maillons -> command);
+			printf("  maillons ->args\n  {\n    ");
+			if (maillons -> args)
+				ft_print_split_elem(maillons -> args);
+			printf("  }\n");
+			printf("  maillons -> outputs\n  {\n");
+			if (maillons -> output)
+				ft_print_input_output(maillons ->output);
+			printf("  }\n}\n\n");
+			maillons = maillons -> next;
+		}
+	}
+	else 
+		printf("(null)\n");
 }
+
 
 /*
 * 	inutile actuellement a supp
