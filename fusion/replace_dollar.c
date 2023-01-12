@@ -1,7 +1,7 @@
 #include"minishell.h"
 //si il y a juste un dollar ecrire dolalr
 //test a faire : echo $'hola'       echo $"hola"    echo $      echo $hol (hol n'existe pas)        echo $$SYSTEMD_EXEC_PID
-
+//$"HOME" doit devenir HOME
 char *do_replace(char *tab, char **new_env, int skip, t_index index)
 {
     int len_tab;
@@ -48,7 +48,7 @@ char *do_replace(char *tab, char **new_env, int skip, t_index index)
     return (new_tab);
 }
 
-int research (int skip, int a, char *tab, char **new_env)// 1 veut dire qu'on a trouve
+int research (int skip, int a, char *tab, char **new_env)// -1 veut dire qu'on a trouve
 {
     int len_env;
     int i;
@@ -65,32 +65,32 @@ int research (int skip, int a, char *tab, char **new_env)// 1 veut dire qu'on a 
     return (-1);
 }
 
-char *found_it(char *tab, char **new_env, int i, int *skip)
+char *found_it(char *tab, char **new_env, t_index *index, int *skip)
 {
-    // int a;
-    // int j;
-    t_index index;
+    // t_index index;
+    int i;
 
 
-    index.a = i;
+    // index.a = i;
+    i = index->a;
     while (tab[i])
     {
         if (tab[i] == '"' || tab[i] == ' ' || tab[i] == '-' || tab[i] == '!' || tab[i] == '@' || tab[i] == '#' || tab[i] == '$' || tab[i] == '%' || tab[i] == '^' || tab[i] == '&' || tab[i] == '*' || tab[i] == '(' || tab[i] == ')' || tab[i] == '{' || tab[i] == '}' || tab[i] == '[' || tab[i] == ']' || tab[i] == '|' || tab[i] == ';' || tab[i] == ':' || tab[i] == '<' || tab[i] == '>' || tab[i] == '?' || tab[i] == '/'|| tab[i] == '~' || tab[i] == '\\')
         {
-            index.j = research(*skip, index.a, tab, new_env);
-            if (index.j != -1)
+            index->j = research(*skip, index->a, tab, new_env);
+            if (index->j != -1)
             {
-                tab = do_replace(tab, new_env, *skip, index);
+                tab = do_replace(tab, new_env, *skip, (*index));
             }
             return (tab);//verifier le cas ou le dollars n'est pas retrouve il faut faire avanceer i et continuer de chercher si il y a un autre dollar dans les guillemet par exemple
         }
         (*skip)++;
         i++;
     }
-    index.j = research(*skip, index.a, tab, new_env);
-    if (index.j != -1)
+    index->j = research(*skip, index->a, tab, new_env);
+    if (index->j != -1)
     {
-        tab = do_replace(tab, new_env, *skip, index);
+        tab = do_replace(tab, new_env, *skip, (*index));
     }
     return (tab);
 }
@@ -98,8 +98,11 @@ int replace_dollar(char *tab, char **new_env)//peu etre possible de pas renvoyer
 {
     int i;
     int skip;
+    // int exist;
+    t_index index;
 
     i = 0;
+    // exist = 0;
     skip = 0;
     while (tab && tab[i])
     {
@@ -113,7 +116,8 @@ int replace_dollar(char *tab, char **new_env)//peu etre possible de pas renvoyer
                 while (tab[i] == '$')
                 {
                     skip++;
-                    tab = found_it(tab, new_env, (i + 1), &skip);
+                    index.a = i + 1;
+                    tab = found_it(tab, new_env, &index, &skip);
                     // i = skip + i;
                     skip = 0;
                 }
@@ -128,10 +132,13 @@ int replace_dollar(char *tab, char **new_env)//peu etre possible de pas renvoyer
         }
         while (tab[i] && tab[i] == '$' && tab[i + 1] == '$')
                     i++;
-        if (tab[i] && tab[i] == '$')
+        while (tab[i] && tab[i] == '$')
         {
             skip++;
-            tab = found_it(tab, new_env, (i + 1), &skip);
+            index.a = i + 1;
+            tab = found_it(tab, new_env, &index, &skip);
+            if (index.j == -1)
+                break;
             //i = skip + i;
             skip = 0;
         }
