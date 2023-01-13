@@ -97,7 +97,8 @@ int main(int argc, char **argv, char **env)
 			}
 			cmd_to_path(maillons, env);
 			check_inputs_outputs(maillons);
-			pipex(maillons, env);
+			pipex_2(maillons, env);
+			//pipex(maillons, env);
 			//ft_print_maillons(maillons);
 			//find_maillon_without_cmd(&maillons);
 			free_maillons(&maillons);

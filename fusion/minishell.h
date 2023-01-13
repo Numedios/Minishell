@@ -54,7 +54,33 @@ typedef struct index
    	int         a;
 }       t_index;
 
+typedef struct two_pipe
+{
+	char	*the_path;
+	char	**cmd1;
+	char	**cmd2;
+	int		fd_in;
+	int		fd_out;
+	char	**cmd_path;
+	char	*path;
+	int		pipe_fd[2];
+	int		i;
+	int		status;
+}       two_pipe;
+
 # define BUFFER_SIZE 5
+
+/*      pipe_of_zak     */
+int pipex_2(t_maillons  *maillons, char **env);
+int find_stdin_2(t_maillons *maillons, int * fd_in, two_pipe *two_pipe);
+int find_stdout_2(t_maillons *maillons, int *fd_out, two_pipe *two_pipe);
+int	check_access(char *command, two_pipe *two_pipe);
+char	*get_the_path(char **envp, char *cmd, two_pipe *two_pipe);
+void	init(two_pipe *two_pipe);
+int	dup_fd(int new_stdin, int new_stdout);
+char	*ft_strnstr(const char *big, const char *little, size_t len);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+void	free_all(two_pipe *two_pipe);
 
 /* main.c */
 

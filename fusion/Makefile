@@ -36,8 +36,13 @@ SRC = main.c \
 		split_pipex.c \
 		cmd_to_path.c \
 		utils_parsing.c
+	
+PIPEX_SRC = pipe_of_zak/pipe_de_2.c \
+				pipe_of_zak/security.c  \
+				pipe_of_zak/utils_pipex.c \
+				pipe_of_zak/utils_pipex_2.c  \
 
-OBJ = $(SRC:.c=.o)
+OBJ = $(SRC:.c=.o) $(PIPEX_SRC:.c=.o)
 
 all : $(NAME)
 
@@ -48,6 +53,8 @@ $(NAME) : $(OBJ)
 
 %.o : $(SRCPATH)%.c
 	@$(CC) $(CFLAGS) -c $^ 
+%.o : $(SRCPATH)pipe_of_zak/%.c
+	@$(CC) $(CFLAGS) -c $^
 
 bonus : all
 
