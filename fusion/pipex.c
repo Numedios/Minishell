@@ -1,35 +1,4 @@
 #include "minishell.h"
-/*
-
-int pipex(t_maillons *maillons)
-{
-    while (maillons)
-    {
-        exec_pipex()
-        //next
-    }
-}
-
-int exec_pipex(maillons)
-{
-    //si "<" Existe
-        dup(filenmae, STDIN);
-    else 
-        //STDIN
-    si ">" existe 
-        dup(filename, STDOUT)
-    else
-        //STDOUT
-    si le maillon precedent a un > ou na pas de commande
-        dup("/dev/null", STDIN)
-
-    on lance pipex
-    
-
-}
-
-*/
-
 
 int	dup_fd(int new_stdin, int new_stdout)
 {
@@ -72,17 +41,16 @@ int	*create_pipes(int len)
 
 int find_stdin(t_maillons *maillons, int * fd_in)
 {
-	dprintf(2, "res = %d\n", find_if_have_output(maillons, '<'));
-    if (find_if_have_output(maillons, '<') == 1)
+    if (find_if_have_output(maillons -> output, '<') == 1)
     {
-		(*fd_in) = open(find_name_sep(maillons, '<'),  O_RDWR, O_DSYNC, !O_DIRECTORY);
+		(*fd_in) = open(find_name_sep(maillons -> output, '<'),  O_RDWR, O_DSYNC, !O_DIRECTORY);
 		return ((*fd_in));
 	}
 	else if (!(maillons-> prev))
 	{
-		return (STDIN_FILENO);
+		return (-3);
 	}
-	else if (find_if_have_output(maillons -> prev, '>') || !(maillons->prev->command))
+	else if (find_if_have_output(maillons -> output -> prev, '>') || !(maillons->prev->command))
 	{
 		(*fd_in) = open("/dev/null",  O_RDWR, O_DSYNC, !O_DIRECTORY);
 		return ((*fd_in));
@@ -96,18 +64,18 @@ int find_stdin(t_maillons *maillons, int * fd_in)
 
 int find_stdout(t_maillons *maillons, int *fd_out)
 {
-    if (find_if_have_output(maillons, '>'))
+    if (find_if_have_output(maillons -> output, '>'))
     {
-		(*fd_out) = open(find_name_sep(maillons, '>'),  O_RDWR, O_DSYNC, !O_DIRECTORY);
+		dprintf(2, "jai trouver la bonne sortie\n");
+		(*fd_out) = open(find_name_sep(maillons -> output, '>'),  O_RDWR, O_DSYNC, !O_DIRECTORY);
 		return ((*fd_out));
 	}
 	else if (!(maillons-> next))
 	{
-		return (STDOUT_FILENO);
+		return (-3);
 	}
 	else
 	{
-		printf("adsadsa\n");
 		// return pipes[1] du maillons d'avant
 	}
 	return (-1);
@@ -117,14 +85,12 @@ int find_stdout(t_maillons *maillons, int *fd_out)
 int pipex_one(t_maillons  *maillons, char **env)
 {
     pid_t	pid;
-	char *a[2];
+	char *a[3];
     int fd_in;
     int fd_out;
 
     fd_in = -3;
     fd_out = -3;
-	a[0] = ft_strdup("cat");
-	a[1] = 0;
     pid = fork();
     if (pid == -1)
 			return (perror("fork"), 1);
@@ -132,12 +98,15 @@ int pipex_one(t_maillons  *maillons, char **env)
 	{
 		find_stdin(maillons, &fd_in);
 		find_stdout(maillons, &fd_out);
-		dup_fd(fd_in, fd_out);
+		//if (fd_in != -3)
+		//	dup2(fd_in, STDIN_FILENO);
+		//if (fd_in != -3)
+		dup2(fd_out, STDOUT_FILENO);
         if(fd_in != -3)
             close(fd_in);
         if(fd_out != -3)
             close(fd_out);
-		if (execve("/usr/bin/cat", a , env) == -1)
+		if (execve(maillons ->command, maillons -> args , env) == -1)
 		{
 			perror("execve");
 			exit (1);
@@ -145,7 +114,6 @@ int pipex_one(t_maillons  *maillons, char **env)
 		return (1);
 	}
 	waitpid(-1 , NULL, 0);
-	free(a[0]);
 	return(0);
 }
 

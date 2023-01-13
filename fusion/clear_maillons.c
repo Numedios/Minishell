@@ -98,32 +98,33 @@ void free_maillon_middle(t_maillons **lst, t_maillons **first)
 * 0 sinon 
 */
 
-int find_if_have_output(t_maillons *lst, char sep)
+int find_if_have_output(t_input_output *lst, char sep)
 {
     int i;
 
     i = 0;
-    while (lst && lst -> output)
+    while (lst && lst)
     {
-        if (lst ->output ->operator[0] == sep)
+        if (lst ->operator[0] == sep)
         {
             return (1);
         }
-        lst -> output = lst ->output ->next;
+        lst = lst ->next;
     }
+
     return (0);
 }
 
-char    *find_name_sep(t_maillons *lst, char sep)
+char    *find_name_sep(t_input_output *lst, char sep)
 {
     int i;
 
     i = 0;
-    while (lst && lst -> output)
+    while (lst && lst)
     {
-        if (lst ->output ->operator[0] == sep)
-            return (lst->output -> file_name);
-        lst -> output = lst ->output ->next;
+        if (lst->operator[0] == sep)
+            return (lst->file_name);
+        lst = lst ->next;
     }
     return (NULL);
 }
@@ -144,7 +145,7 @@ void    find_maillon_without_cmd(t_maillons **maillons)
             tmp = ((*maillons) -> prev);
             free_maillon_middle(&(*maillons), &first);
             *maillons = tmp;
-            while (*maillons && !find_if_have_output(*maillons,'>'))
+            while (*maillons && !find_if_have_output((*maillons) -> output,'>'))
             {
                 tmp = (*maillons)->prev;
                 free_maillon_middle(&(*maillons), &first);

@@ -44,8 +44,6 @@ int check_input(t_input_output *output)
 }
 
 
-
-
 int check_input_output(t_input_output **input_output)
 {
     t_input_output *input;
@@ -97,5 +95,15 @@ int check_input_output(t_input_output **input_output)
         *input_output = (*input_output) -> next;
     }
     *input_output = first;
+    return (1);
+}
+
+int check_inputs_outputs(t_maillons *maillons)
+{
+    while (maillons)
+    {
+        check_input_output(&(maillons) -> output);
+        maillons = (maillons)->next;
+    }
     return (1);
 }

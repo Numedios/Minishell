@@ -35,7 +35,7 @@ typedef struct  maillons
 {
     struct input_output  *output;
     char        *command;
-    struct split_elem        *args;
+    char        **args;
     struct maillons  *next;
      struct maillons  *prev;
 }       t_maillons;
@@ -115,7 +115,7 @@ char	*find_output(char **tab);
 /* find_command.c */
 
 char    *find_command(t_split_elem *lst);
-t_split_elem    *find_argument(t_split_elem *lst);
+char    **find_argument(t_split_elem *lst);
 
 /* find_input_output.c */
 
@@ -163,8 +163,8 @@ void	create_split_arg(t_split_elem **lst);
 
 /* clear_maillons.c */
 
-char    *find_name_sep(t_maillons *lst, char sep);
-int find_if_have_output(t_maillons *lst, char sep);
+char    *find_name_sep(t_input_output *lst, char sep);
+int find_if_have_output(t_input_output *lst, char sep);
 void    find_maillon_without_cmd(t_maillons **maillons);
 
 /* create_maillons.c */
@@ -183,6 +183,7 @@ void	change_quote(char *str);
 int check_output(t_input_output *output);
 int check_input(t_input_output *output);
 int check_input_output(t_input_output **input_output);
+int check_inputs_outputs(t_maillons *maillons);
 
 /* bultins_echo.c */
 
@@ -195,9 +196,22 @@ void    cd(char **arg);
 
 int pipex(t_maillons *maillons, char **env);
 
+/*split_pipex.c */
+
+char	**split_pipex(char *path, char sep);
+int	ft_strcmp_pipex(char *str, char *search);
+
+/* cmd_to_path.c */
+
+int cmd_to_path(t_maillons *maillons, char **env);
+
 /* builtins_pwd.c */
 
 void    pwd();
+
+/*utils_parsing.c */
+
+char	*ft_strjoin_pipex(char *path, char *add);
 
 /* garbage_collector.c  */
 

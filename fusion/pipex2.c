@@ -121,6 +121,7 @@ int pipex_one(t_maillons  *maillons, char **env)
     int fd_in;
     int fd_out;
 
+	dprintf(2, "a\n");
     fd_in = -3;
     fd_out = -3;
 	a[0] = ft_strdup("cat");

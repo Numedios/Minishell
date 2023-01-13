@@ -32,6 +32,8 @@ int ft_strcmp(char *str, char *str2)
     return (1);
 }
 
+
+
 char    *ft_strdup(char *str)
 {
     char    *res;

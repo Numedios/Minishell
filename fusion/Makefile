@@ -32,7 +32,10 @@ SRC = main.c \
 		clear_maillons.c \
 		list_maillons.c \
 		parsing_input.c \
-		pipex.c 
+		pipex.c \
+		split_pipex.c \
+		cmd_to_path.c \
+		utils_parsing.c
 
 OBJ = $(SRC:.c=.o)
 

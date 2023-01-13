@@ -95,12 +95,11 @@ int main(int argc, char **argv, char **env)
 				ft_free_split_arg(&split_arg);
 				i++;
 			}
-			check_input_output(&(maillons->output));
+			cmd_to_path(maillons, env);
+			check_inputs_outputs(maillons);
 			pipex(maillons, env);
-			ft_print_maillons(maillons);
-			//find_maillon_without_cmd(&maillons);
 			//ft_print_maillons(maillons);
-			//printf("\n\nLen = %d\n\n", ft_strlen_maillons(maillons));
+			//find_maillon_without_cmd(&maillons);
 			free_maillons(&maillons);
 			ft_free_tab(split_pipe);
 		}

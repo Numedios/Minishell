@@ -7,7 +7,7 @@ void ft_print_tab(char **tab)
 	i = 0;
 	while (tab && tab[i])
 	{
-		printf("%s\n", tab[i]);
+		dprintf(2, "%s\n", tab[i]);
 		i++;
 	}
 }
@@ -45,7 +45,7 @@ void ft_print_maillon(t_maillons	*maillons)
 			printf("  maillons -> commande = %s\n", maillons -> command);
 		printf("  maillons ->args\n  {\n    ");
 		if (maillons -> args)
-			ft_print_split_elem(maillons -> args);
+			ft_print_tab(maillons -> args);
 		printf("  }\n");
 		printf("  maillons -> outputs\n  {\n");
 		if (maillons -> output)
@@ -67,7 +67,7 @@ void ft_print_maillons(t_maillons	*maillons)
 				printf("  maillons -> commande = %s\n", maillons -> command);
 			printf("  maillons ->args\n  {\n    ");
 			if (maillons -> args)
-				ft_print_split_elem(maillons -> args);
+				ft_print_tab(maillons -> args);
 			printf("  }\n");
 			printf("  maillons -> outputs\n  {\n");
 			if (maillons -> output)
