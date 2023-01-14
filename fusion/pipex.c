@@ -39,21 +39,32 @@ int	*create_pipes(int len)
 	return (pipes);
 }
 
-int find_stdin(t_maillons *maillons, int * fd_in)
+int find_stdin(t_maillons *maillons)
 {
-    if (find_if_have_output(maillons -> output, '<') == 1)
+	int res;
+
+	res = -1;
+    if (find_if_have_output(maillons -> output, "<") == 1)
     {
-		(*fd_in) = open(find_name_sep(maillons -> output, '<'),  O_RDWR, O_DSYNC, !O_DIRECTORY);
-		return ((*fd_in));
+		dprintf(2, "entrer est %s\n",  find_name_sep(maillons -> output, "<"));
+		res = open(find_name_sep(maillons -> output, "<"),  O_RDWR, O_DSYNC, !O_DIRECTORY);
+		return (res);
 	}
+	else if (find_if_have_output(maillons -> output, "<<") == 1)
+    {
+		dprintf(2, "entrer est %s\n",  find_name_sep(maillons -> output, "<<"));
+		res = heredoc(find_name_sep(maillons -> output, "<<"));
+		return (res);
+	}
+
 	else if (!(maillons-> prev))
 	{
-		return (-3);
+		return res;
 	}
-	else if (find_if_have_output(maillons -> output -> prev, '>') || !(maillons->prev->command))
+	else if (find_if_have_output(maillons -> output -> prev, ">") || !(maillons->prev->command))
 	{
-		(*fd_in) = open("/dev/null",  O_RDWR, O_DSYNC, !O_DIRECTORY);
-		return ((*fd_in));
+		res = open("/dev/null",  O_RDWR, O_DSYNC, !O_DIRECTORY);
+		return (res);
 	}
 	else
 	{
@@ -62,23 +73,31 @@ int find_stdin(t_maillons *maillons, int * fd_in)
 	return (-1);
 }
 
-int find_stdout(t_maillons *maillons, int *fd_out)
+int find_stdout(t_maillons *maillons)
 {
-    if (find_if_have_output(maillons -> output, '>'))
+	int res;
+
+	res = -1;
+    if (find_if_have_output(maillons -> output, ">"))
     {
-		dprintf(2, "jai trouver la bonne sortie\n");
-		(*fd_out) = open(find_name_sep(maillons -> output, '>'),  O_RDWR, O_DSYNC, !O_DIRECTORY);
-		return ((*fd_out));
+		dprintf(2, "Sortie est %s\n",  find_name_sep(maillons -> output, ">"));
+		res = open(find_name_sep(maillons -> output, ">"), O_WRONLY | O_CREAT | O_TRUNC, 0644, !O_DIRECTORY);
+		return (res);
+	}
+	else if (find_if_have_output(maillons -> output, ">>"))
+	{
+		res = open(find_name_sep(maillons -> output, ">>"),  O_WRONLY | O_CREAT | O_APPEND, 0644, !O_DIRECTORY);
+		return (res);
 	}
 	else if (!(maillons-> next))
 	{
-		return (-3);
+		return (res);
 	}
 	else
 	{
 		// return pipes[1] du maillons d'avant
 	}
-	return (-1);
+	return (res);
 }
 
 
@@ -89,23 +108,23 @@ int pipex_one(t_maillons  *maillons, char **env)
     int fd_in;
     int fd_out;
 
-    fd_in = -3;
-    fd_out = -3;
     pid = fork();
     if (pid == -1)
 			return (perror("fork"), 1);
 	if (pid == 0)
 	{
-		find_stdin(maillons, &fd_in);
-		find_stdout(maillons, &fd_out);
-		//if (fd_in != -3)
-		//	dup2(fd_in, STDIN_FILENO);
-		//if (fd_in != -3)
-		dup2(fd_out, STDOUT_FILENO);
-        if(fd_in != -3)
+		fd_in = find_stdin(maillons);
+		fd_out = find_stdout(maillons);
+        if(fd_in != -1)
+		{
+			dup2(fd_in, STDIN_FILENO);
             close(fd_in);
-        if(fd_out != -3)
-            close(fd_out);
+		}
+        if(fd_out != -1)
+		{
+			dup2(fd_out, STDOUT_FILENO);
+		    close(fd_out);
+		}
 		if (execve(maillons ->command, maillons -> args , env) == -1)
 		{
 			perror("execve");
@@ -127,29 +146,9 @@ int pipex(t_maillons *maillons, char **env)
     len = ft_strlen_maillons(maillons); // nombre de maillons
     if (len == 1)
 	{
-
         pipex_one(maillons, env);
         //ajoute le cas here_doc
 	}
-    else 
-    {
-        
-        //pipex_2(maillons, env);
-        //2 possibilie pour pipe normal
-            //on envoie a pipe la somme des pipes dont on connait le debut est la fin : infile cm1 cm cm cm cm outfile  Des qu'un infile ou un outfile interfere on arrete et on execute
-            
-            
-            /*
-            on envoie pipe par pipe : infile cm1  cm2 outfile
-            exexmple : < a cat > b | < c ls > d
-            on envoie a pipe : < a cat > b
-            */
-
-
-
-        //cas here_doc
-    }
-    //pipes = create_pipes(len); // crer (len -1) pipe
     return (0);
 
 

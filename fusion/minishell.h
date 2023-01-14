@@ -179,8 +179,8 @@ void	create_split_arg(t_split_elem **lst);
 
 /* clear_maillons.c */
 
-char    *find_name_sep(t_input_output *lst, char sep);
-int find_if_have_output(t_input_output *lst, char sep);
+char    *find_name_sep(t_input_output *lst, char *sep);
+int find_if_have_output(t_input_output *lst, char *sep);
 void    find_maillon_without_cmd(t_maillons **maillons);
 
 /* create_maillons.c */
@@ -221,9 +221,21 @@ int	ft_strcmp_pipex(char *str, char *search);
 
 int cmd_to_path(t_maillons *maillons, char **env);
 
+/* create_heredoc.c*/
+
+int	*create_heredoc(char *str);
+int heredoc(char *stop);
+
 /* builtins_pwd.c */
 
 void    pwd();
+
+/* get_next_line */
+
+int		check_end(char *line);
+char	*ft_strjoin_gnl(char *line, char *buf);
+void	get_line(char *line, char *buffer);
+char	*get_next_line(int fd);
 
 /*utils_parsing.c */
 

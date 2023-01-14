@@ -35,7 +35,10 @@ SRC = main.c \
 		pipex.c \
 		split_pipex.c \
 		cmd_to_path.c \
-		utils_parsing.c
+		utils_parsing.c \
+		create_heredoc.c \
+		get_next_line.c \
+		get_next_line_utils.c
 	
 PIPEX_SRC = pipe_of_zak/pipe_de_2.c \
 				pipe_of_zak/security.c  \
