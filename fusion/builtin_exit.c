@@ -3,15 +3,11 @@
 //si deux argument afficher une erreur specifique
 //pas de char
 //utiliser une variable globale pour les codes erreurs
-int do_exit(int statut)
-{
-    exit(statut);
-}
-
 long long    ft_atoll_capped(const char *nptr, int *flag)
 {
     int                j;
     long long        nb;
+    long long print;
 
     if (nptr == NULL)
         return (0);
@@ -27,8 +23,10 @@ long long    ft_atoll_capped(const char *nptr, int *flag)
     }
     while (*nptr >= '0' && *nptr <= '9')
     {
+        print = LLONG_MAX;
         if (j > 0 && (LLONG_MAX - *nptr + '0') / 10 < nb)
             return (++*flag, 0);
+        print = ((LLONG_MAX + *nptr - '0') / 10);
         if (j < 0 && (LLONG_MAX + *nptr - '0') / 10 > -nb)
             return (++*flag, 0);
         nb = nb * 10 + *nptr - '0';
@@ -36,6 +34,34 @@ long long    ft_atoll_capped(const char *nptr, int *flag)
     }
     return (nb * j);
 }
+
+int do_exit(char* statut)
+{
+    long long exit_code;
+    int flag;
+
+    flag = 0;
+    while (statut && statut[flag])//erreur il y a une lettree
+    {
+        while (statut[flag] == 32 || (statut[flag] >= 9 && statut[flag] <= 13))
+            flag++;
+        if (statut[flag] == '-' || statut[flag] == '+')
+            flag++;
+        if (statut[flag] >= '0' && statut[flag] <= '9')
+            flag++;
+        else
+        {
+            exit(2);
+        }
+    }
+    flag = 0;
+    exit_code = ft_atoll_capped(statut, &flag);
+    if (flag == 0)
+        exit(exit_code);
+    else
+        exit(2);
+}
+
 
 
 //attention au here_doc, surtout quand on fait CTRL+C dans le premier ca doit tout ferme

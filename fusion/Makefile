@@ -40,7 +40,6 @@ SRC = main.c \
 PIPEX_SRC = pipe_of_zak/pipe_de_2.c \
 				pipe_of_zak/security.c  \
 				pipe_of_zak/utils_pipex.c \
-				pipe_of_zak/utils_pipex_2.c  \
 
 OBJ = $(SRC:.c=.o) $(PIPEX_SRC:.c=.o)
 

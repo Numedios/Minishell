@@ -2,16 +2,15 @@
 
 void	init(two_pipe *two_pipe)
 {
-    two_pipe->the_path = NULL;
-    two_pipe->cmd1 = NULL;
-    two_pipe->cmd2 = NULL;
-    two_pipe->cmd_path = NULL;
-    two_pipe->path = NULL;
     two_pipe->status = 0;
     two_pipe->i = 0;
     two_pipe->fd_in = -3;
     two_pipe->fd_out = -3;
-    
+	if (pipe(two_pipe->pipe_fd) < 0)
+	{
+		write(2,"pipe_fd\n", 8);
+		exit ;
+	}
 }
 /*
 void	write_error(char *argv, t_vare *vare, char *tab)
