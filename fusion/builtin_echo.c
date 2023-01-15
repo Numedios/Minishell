@@ -37,7 +37,7 @@ int check_option_n(char *str, int *space)
 * gestion cas d'erreur a faire --> tout free et message d'erreur
 */
 
-void echo(char **arg)
+void do_echo(char **arg)
 {
     int space;
     int i;

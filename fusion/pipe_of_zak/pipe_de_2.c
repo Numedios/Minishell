@@ -25,6 +25,16 @@ int	child1(two_pipe *two_pipe, char **env, int *pipe_fd, t_maillons *maillons)
         close(two_pipe->fd_out);
 	if (maillons -> command == NULL)
 		return (1);
+	if (check_if_builtin(maillons->args, env) == 0)
+	{
+		dprintf(2, "yes !\n");
+		exit(0);
+	}
+	if (check_echo(maillons->args) == 0)
+	{
+		dprintf(2, "yes1\n");
+		exit(0);
+	}
 	if (execve(maillons -> command, maillons -> args , env) < 0)
 	{
 		write(2,"execve!\n", 8);
@@ -56,6 +66,16 @@ int	child2(two_pipe *two_pipe, char **env, int *pipe_fd, t_maillons *maillons)
 	}
 	if (maillons -> command == NULL)
 		return ( 1);
+	if (check_if_builtin(maillons->args, env) == 0)
+	{
+		dprintf(2, "yes 2!\n");
+		exit(0);
+	}
+	if (check_echo(maillons->args) == 0)
+	{
+		dprintf(2, "yes3\n");
+		exit(0);
+	}
 	if (execve(maillons-> command , maillons-> args , env) < 0)
 	{
 		write(2,"execve!\n", 8);

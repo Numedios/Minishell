@@ -40,5 +40,6 @@ char **	my_env(char **env)
 			return (NULL);
 		i++;
 	}
+	env_copy[i] = NULL;
 	return (env_copy);
 }

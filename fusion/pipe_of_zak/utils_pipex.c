@@ -2,10 +2,10 @@
 
 int find_stdin_2(t_maillons *maillons, int * fd_in, two_pipe *two_pipe)
 {
-	dprintf(2, "res = %d\n", find_if_have_output(maillons -> output, '<'));
-    if (find_if_have_output(maillons -> output, '<') == 1)
+	dprintf(2, "res = %d\n", find_if_have_output(maillons -> output, "<"));
+    if (find_if_have_output(maillons -> output, "<") == 1)
     {
-		(*fd_in) = open(find_name_sep(maillons -> output, '<'),  O_RDWR, O_DSYNC, !O_DIRECTORY);
+		(*fd_in) = open(find_name_sep(maillons -> output, "<"),  O_RDWR, O_DSYNC, !O_DIRECTORY);
 		if ((*fd_in) == -1)
 		{
 			dup2(two_pipe->pipe_fd[0], STDIN_FILENO);
@@ -17,7 +17,7 @@ int find_stdin_2(t_maillons *maillons, int * fd_in, two_pipe *two_pipe)
 	{
 		return (0);
 	}
-	else if (find_if_have_output(maillons -> prev -> output, '>') || !(maillons->prev->command))
+	else if (find_if_have_output(maillons -> prev -> output, ">") || !(maillons->prev->command))
 	{
 		dprintf(2,"je suis rentre\n");
 		dup2(two_pipe->pipe_fd[0], STDIN_FILENO);
@@ -26,11 +26,9 @@ int find_stdin_2(t_maillons *maillons, int * fd_in, two_pipe *two_pipe)
 	}
 	else
 	{
-		dprintf(2,"oups\n");
 		dup2(two_pipe->pipe_fd[0], STDIN_FILENO);
 		return (0);
 	}
-	dprintf(2,"oups\n");
 	return (-1);
 }
 
@@ -41,9 +39,9 @@ int find_stdout_2(t_maillons *maillons, int *fd_out, two_pipe *two_pipe)
 		(*fd_out) = open("/dev/null",  O_RDWR, O_DSYNC, !O_DIRECTORY);
 		return ((*fd_out));
 	}
-    if (find_if_have_output(maillons -> output, '>'))
+    if (find_if_have_output(maillons -> output, ">"))
     {
-		(*fd_out) = open(find_name_sep(maillons -> output, '>'),  O_RDWR, O_DSYNC, !O_DIRECTORY);
+		(*fd_out) = open(find_name_sep(maillons -> output, ">"),  O_RDWR, O_DSYNC, !O_DIRECTORY);
 		return ((*fd_out));
 	}
 	else if (!(maillons-> next))

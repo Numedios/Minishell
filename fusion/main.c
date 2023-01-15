@@ -60,7 +60,7 @@ int main(int argc, char **argv, char **env)
 	prev = NULL;
 	maillon = NULL;
 	setup_signal_handlers();
-	//new_env = my_env(env);//ne pas oublier de free a la fin le new env
+	new_env = my_env(env);//ne pas oublier de free a la fin le new env
 	//while (1)
 	//{
 		i = 0;
@@ -97,11 +97,13 @@ int main(int argc, char **argv, char **env)
 			}
 			cmd_to_path(maillons, env);
 			check_inputs_outputs(maillons);
-			pipex(maillons, env);
+			//pipex(maillons, env);
+			pipex_2(maillons, new_env);
 			//ft_print_maillons(maillons);
 			find_maillon_without_cmd(&maillons);
 			free_maillons(&maillons);
 			ft_free_tab(split_pipe);
+			ft_free_tab(new_env);
 		}
 	//}
 	return (1);

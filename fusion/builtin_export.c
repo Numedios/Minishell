@@ -200,7 +200,6 @@ char **new_value (int i, int a, char *tab, char **env)
     j = 0;
     if (a == 0)
     {
-        free(env[i]);
         env[i] = ft_strdup(tab);
         return (env);
     }
@@ -214,7 +213,6 @@ char **new_value (int i, int a, char *tab, char **env)
     }
     if (a == 4)//a verifier
     {
-        free(env[i]);
         env[i] = ft_strdup(tab);//ca depend comment je recois tab
         return (env);
     }
@@ -228,7 +226,7 @@ char **do_export(char *tab, char **env_copy)//checker si la variable existe deja
     int a;
     int j;
     char **new_env;
-    
+
     i = 0;
     a = 0; 
     if (ft_strchr(tab, '=') == NULL)//pas d'espace avant le "="
@@ -261,11 +259,11 @@ char **do_export(char *tab, char **env_copy)//checker si la variable existe deja
     }
     else
     {
-        while (env_copy[i])
+        while (env_copy && env_copy[i])
             i++;
         new_env = malloc ((i + 2) * sizeof(char*));//il faut ajouter une ligne de plus pour la nouvelle variable
         i = 0;
-        while (env_copy[i])
+        while (env_copy && env_copy[i])
         {
             new_env[i] = ft_strdup_const(env_copy[i]);
             free(env_copy[i]);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 

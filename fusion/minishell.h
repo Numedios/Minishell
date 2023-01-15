@@ -79,7 +79,6 @@ int		main(int argc, char **argv, char **env);
 
 /* zak */
 int do_cd(char *path);
-int do_echo(char *string, int i);
 void    do_env(char **env);
 char **	my_env(char **env);
 int do_exit(char *statut);
@@ -101,6 +100,8 @@ int	skip_quote (char *line, int i);
 int print_tab(char **tab);
 int str_len_env(char *str);
 int replace_dollar(char *tab, char **new_env);
+int	check_if_builtin (char **args, char **env);
+int check_echo (char **args);
 
 /* libft.c */
 
@@ -204,7 +205,7 @@ int check_inputs_outputs(t_maillons *maillons);
 /* bultins_echo.c */
 
 int check_option_n(char *str, int *space);
-void echo(char **arg);
+void do_echo(char **arg);
 
 void    cd(char **arg);
 
