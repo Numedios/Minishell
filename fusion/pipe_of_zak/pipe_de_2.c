@@ -3,7 +3,7 @@
 //que faire si le fichier in n'exise pas ??
 // maillons -> command = /usr/bin/ls\
 //maillons -> args = a commmand et les options
-int	child1(two_pipe *two_pipe, char **env, int *pipe_fd, t_maillons *maillons)
+int	child1(two_pipe *two_pipe, char **env, t_maillons *maillons)
 {
 	if (find_stdin_2(maillons, &two_pipe->fd_in, two_pipe) != 0)
 		dup2(two_pipe->fd_in, STDIN_FILENO);
@@ -30,7 +30,7 @@ int	child1(two_pipe *two_pipe, char **env, int *pipe_fd, t_maillons *maillons)
 		dprintf(2, "yes !\n");
 		exit(0);
 	}
-	if (check_echo(maillons->args) == 0)
+	if (check_echo(maillons->args, 0 , 0) == 0)
 	{
 		dprintf(2, "yes1\n");
 		exit(0);
@@ -43,7 +43,7 @@ int	child1(two_pipe *two_pipe, char **env, int *pipe_fd, t_maillons *maillons)
 	return (1);
 }
 
-int	child2(two_pipe *two_pipe, char **env, int *pipe_fd, t_maillons *maillons)
+int	child2(two_pipe *two_pipe, char **env, t_maillons *maillons)
 {
 	if (find_stdout_2(maillons, &two_pipe->fd_out, two_pipe) != 0)
 		dup2(two_pipe->fd_out, STDOUT_FILENO);
@@ -71,7 +71,7 @@ int	child2(two_pipe *two_pipe, char **env, int *pipe_fd, t_maillons *maillons)
 		dprintf(2, "yes 2!\n");
 		exit(0);
 	}
-	if (check_echo(maillons->args) == 0)
+	if (check_echo(maillons->args, 0, 0) == 0)
 	{
 		dprintf(2, "yes3\n");
 		exit(0);
@@ -90,16 +90,15 @@ int	loop(two_pipe *two_pipe, char **env, t_maillons *maillons, pid_t pid)
 	int	n;
 
 	n = 0;
-	
 	if (two_pipe->i == 0 && pid == 0)
 	{
-		n = child1(two_pipe, env, two_pipe->pipe_fd, maillons);
+		n = child1(two_pipe, env, maillons);
 		if (n == 1)
 			return (1);
 	}
 	if (two_pipe->i == 1 && pid == 0)
 	{
-		n = child2(two_pipe, env, two_pipe->pipe_fd, maillons->next);
+		n = child2(two_pipe, env, maillons->next);
 		if (n == 1)
 			return (1);
 	}

@@ -72,42 +72,64 @@ int find_stdout_2(t_maillons *maillons, int *fd_out, two_pipe *two_pipe);
 void	init(two_pipe *two_pipe);
 int	dup_fd(int new_stdin, int new_stdout);
 
+/*  security */
+int	check_if_builtin (char **args, char **env);
+int check_echo (char **args,int cmp, int i);
+
 /* main.c */
 
 char	*rl_gets();
 int		main(int argc, char **argv, char **env);
 
-/* zak */
+/* zak */\
+/*  built in cd */
 int do_cd(char *path);
+
+/*  built in env */
 void    do_env(char **env);
 char **	my_env(char **env);
+
+/*  built in exit */
 int do_exit(char *statut);
+
+/*  built in export */
 char	*ft_strchr(const char *s, int c);
 int check_if_tab_exist (char *tab, char **env);
 char **do_export(char *tab, char **env_copy);
+int str_len_env(char *str);
+
+/*  built in pwd */
 int do_pwd(void);
+
+/*  built in unset */
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
 void    do_unset(char *tab, char **env_copy);
+
+/*  signals */
 void setup_signal_handlers(void);
 void handle_sig(int sig);
+
+/*  utils parsing_bis */
 char	*ft_strdup_const(const char *s);
+char	*ft_strjoin(char const *s1, char const *s2);
+int	skip_quote (char *line, int i);
+int print_tab(char **tab);
+
+/*  parsing */
 int str_cmp(char *s1, char *s2);
 int parse (char *line);
 int quote_close_2(char *str);
 int ft_strlen_const(const char *str);
-char	*ft_strjoin(char const *s1, char const *s2);
-int	skip_quote (char *line, int i);
-int print_tab(char **tab);
-int str_len_env(char *str);
+
+/*  replace dollar */
 int replace_dollar(char *tab, char **new_env);
-int	check_if_builtin (char **args, char **env);
-int check_echo (char **args);
 
 /* libft.c */
 
 int ft_strlen(char *str);
 int		ft_strcmp(char *str, char *str2);
 char    *ft_strdup(char *str);
+void	ft_putstr_fd(char *s, int fd);
 
 /* split.c */
 

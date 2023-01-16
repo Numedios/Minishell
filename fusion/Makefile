@@ -25,7 +25,7 @@ SRC = main.c \
 		builtin_exit.c  \
 		builtin_unset.c  \
 		parsing.c  \
-		utils_zak.c  \
+		utils_parsing_bis.c  \
 		garbage_collector.c \
 		signals.c\
 		replace_dollar.c\

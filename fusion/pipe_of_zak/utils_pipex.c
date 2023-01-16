@@ -21,7 +21,6 @@ int find_stdin_2(t_maillons *maillons, int * fd_in, two_pipe *two_pipe)
 	{
 		dprintf(2,"je suis rentre\n");
 		dup2(two_pipe->pipe_fd[0], STDIN_FILENO);
-	//	(*fd_in) = open("/dev/null",  O_RDWR, O_DSYNC, !O_DIRECTORY);
 		return ((*fd_in));
 	}
 	else

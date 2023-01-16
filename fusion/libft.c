@@ -1,5 +1,17 @@
 #include "minishell.h"
 
+void	ft_putstr_fd(char *s, int fd)
+{
+	int			len;
+	const void	*buf;
+
+	if (s == NULL)
+		return ;
+	len = ft_strlen(s);
+	buf = s;
+	write(fd, buf, len);
+}
+
 int ft_strlen(char *str)
 {
     int i;

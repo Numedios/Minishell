@@ -19,7 +19,6 @@ void	init(two_pipe *two_pipe)
 int	check_if_builtin (char **args, char **env)
 {
 	int	cmp;
-	char *tab;
 	int i;
 	
 	cmp = 0;
@@ -53,12 +52,8 @@ int	check_if_builtin (char **args, char **env)
 	return (1);
 }
 
-int check_echo (char **args)
+int check_echo(char **args, int cmp, int i)
 {
-	int	cmp;
-	char *tab;
-	int i;
-	
 	cmp = 0;
 	i = 0;
 	while (args[cmp])
