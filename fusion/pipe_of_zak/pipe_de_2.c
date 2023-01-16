@@ -3,6 +3,7 @@
 //que faire si le fichier in n'exise pas ??
 // maillons -> command = /usr/bin/ls\
 //maillons -> args = a commmand et les options
+//probleme avec le heredoc en premiere commande
 int	child1(two_pipe *two_pipe, char **env, t_maillons *maillons)
 {
 	if (find_stdin_2(maillons, &two_pipe->fd_in, two_pipe) != 0)
@@ -124,7 +125,7 @@ int pipex_2(t_maillons  *maillons, char **env)
 	}
 	close(two_pipe.pipe_fd[1]);
 	close(two_pipe.pipe_fd[0]);
-	waitpid(pid[0], &two_pipe.status, 0);
-	waitpid(pid[1], &two_pipe.status, 0);
+	waitpid(pid[0], NULL, 0);
+	waitpid(pid[1], NULL, 0);
 	return (0);
 }

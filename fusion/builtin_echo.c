@@ -4,7 +4,7 @@
 * renvoie 1 et change space ( si space == 1) si str est valable comme  option -n 
 * 0 sinon 
 */
-
+// rajouter echo $? qui imprime le code erreur 
 int check_option_n(char *str, int *space)
 {
     int i;

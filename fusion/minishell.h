@@ -63,6 +63,18 @@ typedef struct two_pipe
 	int		status;
 }       two_pipe;
 
+typedef struct for_dollar
+{
+	int len_tab;
+    int len_value;
+    int new_len;
+    char *new_tab;
+    int i;
+    int pos;
+    int pos_new_env;
+    int pos_tab;
+}       for_dollar;
+
 # define BUFFER_SIZE 5
 
 /*      pipe_of_zak     */
@@ -122,7 +134,7 @@ int quote_close_2(char *str);
 int ft_strlen_const(const char *str);
 
 /*  replace dollar */
-int replace_dollar(char *tab, char **new_env);
+char *replace_dollar(char *tab, char **new_env);
 
 /* libft.c */
 

@@ -57,6 +57,7 @@ int main(int argc, char **argv, char **env)
 	t_maillons		*prev;
 	int				i;
 	char **new_env;
+	char *tab;
 	
 	prev = NULL;
 	maillon = NULL;
@@ -74,7 +75,10 @@ int main(int argc, char **argv, char **env)
 		}
 		if (parse(line) == 0)
 		{
+			line = replace_dollar(line, new_env);
+			dprintf(2,"line = %s\n", line);
 			//line = "cat >a | cat | >a";
+			exit(0);
 			if (!quote_close(line))
 			{
 				dprintf(2, "Quote non fermer\n");
