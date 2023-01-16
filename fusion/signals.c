@@ -1,9 +1,12 @@
 #include"minishell.h"
 
+extern int exit_code ;
+
 void handle_sig(int sig)//il faut free si exit 
 {
 	if (sig == SIGINT)//ctrl+c
 	{
+    	exit_code = 130;
         rl_on_new_line();
         // rl_on_new_line_with_prompt();devoir defenir un prompte au prealable peut etre pour eviter que le prompt ne s'affiche qu'une fois qu'on a touche a un lettre
         write(1, "\n", 1);

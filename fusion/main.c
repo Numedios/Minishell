@@ -45,6 +45,7 @@ int main(int argc, char **argv, char **env)
 }
 */
 
+int	exit_code;
 
 int main(int argc, char **argv, char **env)
 {
@@ -59,6 +60,7 @@ int main(int argc, char **argv, char **env)
 	
 	prev = NULL;
 	maillon = NULL;
+	exit_code = 0;
 	setup_signal_handlers();
 	new_env = my_env(env);//ne pas oublier de free a la fin le new env
 	//while (1)

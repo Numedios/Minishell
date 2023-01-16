@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zheylkoss <zheylkoss@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:39:06 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/01/08 17:42:46 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/01/16 01:51:40 by zheylkoss        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int parenthesis_close_1 (char *str);
 //comment gerer les "()"
 // remplacer prinf par ft_putstr_fd pour ecrire sur la sortie d'erreur
 //pour $HOLA il fonctionne tout seul ou avec "$HOLA", on ne peut pas declarer une variable globale en commencant par un chiffre ou $, pas de caractere speciale, mais on peut mettre un chiffre dedans
+
+extern	int exit_code;
 
 int after_pipe(char *line)
 {
@@ -36,7 +38,8 @@ int after_pipe(char *line)
 			if (line[i] == '\0')
 			{
 				printf("minishell: syntax error near unexpected token `|'\n");
-				return (1);
+				exit_code = 2;
+				return (exit_code);
 			}
 		}
 		i++;
