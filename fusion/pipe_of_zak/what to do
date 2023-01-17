@@ -1,1 +1,4 @@
 faire une fonction qui clean tout
+ctrl + C pendant un heredoc cancel toute la ligne
+retirer les $ qui n'ont pas trouve de valeur 
+gerer les & dans les hereoc 

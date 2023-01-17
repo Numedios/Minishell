@@ -64,24 +64,22 @@ int main(int argc, char **argv, char **env)
 	exit_code = 0;
 	setup_signal_handlers();
 	new_env = my_env(env);//ne pas oublier de free a la fin le new env
-	//while (1)
-	//{
+	while (1)
+	{
 		i = 0;
 		line = rl_gets();
 		if (line == NULL)  // si l'utilisateur appuie sur ctrl-D
 		{
+			ft_free_tab(new_env);
 			printf("\n");
 			exit(0);
 		}
 		if (parse(line) == 0)
 		{
-			line = replace_dollar(line, new_env);
-			dprintf(2,"line = %s\n", line);
-			//line = "cat >a | cat | >a";
-			exit(0);
 			if (!quote_close(line))
 			{
 				dprintf(2, "Quote non fermer\n");
+				ft_free_tab(new_env);
 				exit (0);
 			}
 			split_pipe = ft_split(line , "|"); // gerer le cas ou les pipes se trouve dans des parenthese
@@ -109,9 +107,8 @@ int main(int argc, char **argv, char **env)
 			find_maillon_without_cmd(&maillons);
 			free_maillons(&maillons);
 			ft_free_tab(split_pipe);
-			ft_free_tab(new_env);
 		}
-	//}
+	}
 	return (1);
 }
 

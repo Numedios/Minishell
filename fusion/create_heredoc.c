@@ -49,6 +49,7 @@ int heredoc(char *stop)
 	{
 		write(1, "here_doc> ", 10);
 		str = get_next_line(1);
+		//
 		if (ft_strcmp(comp, str))
 		{
 			free(str);

@@ -121,6 +121,8 @@ int pipex_2(t_maillons  *maillons, char **env)
 			return ( 1);
 		if (loop(&two_pipe, env, maillons, pid[two_pipe.i]) != 0)
 			break ;
+		// if (find_if_have_output(maillons -> output, "<<") == 1)
+		// 	waitpid(pid[0], NULL, 0);
 		two_pipe.i++;
 	}
 	close(two_pipe.pipe_fd[1]);

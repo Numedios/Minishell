@@ -95,7 +95,7 @@ int		main(int argc, char **argv, char **env);
 
 /* zak */\
 /*  built in cd */
-int do_cd(char *path);
+int do_cd(char **new_env, char *path);
 
 /*  built in env */
 void    do_env(char **env);

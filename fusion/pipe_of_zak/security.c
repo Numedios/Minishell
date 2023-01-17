@@ -30,7 +30,7 @@ int	check_if_builtin (char **args, char **env)
 		cmp++;
 	}
 	if (str_cmp(args[0], "cd") == 1 && cmp == 2)
-		return(do_cd(args[1]), 0);
+		return(do_cd(env, args[1]), 0);
 	if (str_cmp(args[0], "env") == 1)
 		return (do_env(env), 0);
 	if (str_cmp(args[0], "pwd") == 1)

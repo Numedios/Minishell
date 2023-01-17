@@ -19,7 +19,7 @@ void    do_env(char **env)
     }
 }
 
-char **	my_env(char **env)
+char	**my_env(char **env)
 {
 	int i;
 	char **env_copy;
