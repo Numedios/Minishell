@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 19:09:08 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/01/16 19:47:52 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/01/18 19:02:37 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 //si il y a juste un dollar ecrire dolalr
 //test a faire : echo $'hola'       echo $"hola"    echo $      echo $hol (hol n'existe pas)        echo $$SYSTEMD_EXEC_PID
 //$"HOME" doit devenir HOME
+
+extern int exit_code[2];
 
 void	new_in_old(for_dollar *var, t_index *index, char **new_env, int *skip)
 {
@@ -60,12 +62,55 @@ char	*do_replace(char *tab, char **new_env, int skip, t_index index)
 	return (var.new_tab);
 }
 
+void	new_in_old_interrogation(for_dollar *var)
+{
+	var->pos_tab = var->pos_tab + 2;
+	while(var->value[var->i])
+	{
+		var->new_tab[var->pos] = var->value[var->i];
+		var->pos++;
+		var->i++;
+	}
+}
+
+char	*replace_interrogation(char *tab, char **new_env, int skip, t_index index)
+{
+	for_dollar	var;
+
+	var.pos = 0;
+	var.pos_tab = 0;
+	var.value = ft_itoa(exit_code[0]);
+	var.len_tab = ft_strlen(var.value);
+	var.new_len = var.len_tab - skip;
+	var.len_value = ft_strlen(var.value);
+	var.new_tab = malloc (sizeof(char) * (var.new_len + var.len_value));
+	while (var.pos < (index.a - 1))
+	{
+		var.new_tab[var.pos] = tab[var.pos];
+		var.pos++;
+		var.pos_tab++;
+	}
+	var.i = 0;
+	new_in_old_interrogation(&var);
+	while (tab && tab[var.pos_tab])
+	{
+		var.new_tab[var.pos] = tab[var.pos_tab];
+		var.pos++;
+		var.pos_tab++;
+	}
+	var.new_tab[var.pos] = '\0';
+	free(tab);
+	return (var.new_tab);
+}
+
 int	research(int skip, int a, char *tab, char **new_env)// -1 veut dire qu'on a trouve
 {
 	int	len_env;
 	int	i;
 
 	i = 0;
+	if (skip == 1 && tab[a] == '?')//skip == 1 car le if de la fonction d'avant check les ?
+		return (0);
 	while (new_env[i])
 	{
 		len_env = str_len_env(new_env[i]);
@@ -92,7 +137,10 @@ char *found_it(char *tab, char **new_env, t_index *index, int *skip)
 			index->j = research(*skip, index->a, tab, new_env);
 			if (index->j != -1)
 			{
-				tab = do_replace(tab, new_env, *skip, (*index));
+				if (index->j == 0)
+					tab = replace_interrogation(tab, new_env, *skip, (*index));
+				else
+					tab = do_replace(tab, new_env, *skip, (*index));
 			}
 			return (tab);//verifier le cas ou le dollars n'est pas retrouve il faut faire avanceer i et continuer de chercher si il y a un autre dollar dans les guillemet par exemple
 		}
@@ -102,7 +150,10 @@ char *found_it(char *tab, char **new_env, t_index *index, int *skip)
 	index->j = research(*skip, index->a, tab, new_env);
 	if (index->j != -1)
 	{
-		tab = do_replace(tab, new_env, *skip, (*index));
+		if (index->j == 0)
+			tab = replace_interrogation(tab, new_env, *skip, (*index));
+		else
+			tab = do_replace(tab, new_env, *skip, (*index));
 	}
 	return (tab);
 }
@@ -132,7 +183,7 @@ char *found_dollar_inquote(char *tab, int *i, char ** new_env, t_index *index)//
 	return (tab);
 }
 
-char *one_dolla_or_more(char *tab, int *i, char ** new_env, t_index *index)
+char *one_dollar_or_more(char *tab, int *i, char ** new_env, t_index *index)
 {
 	int skip;
 
@@ -169,7 +220,7 @@ char *replace_dollar(char *tab, char **new_env)//peu etre possible de pas renvoy
 		}
 		while (tab[i] && tab[i] == '$' && tab[i + 1] == '$')
 					i++;
-		tab = one_dolla_or_more(tab, &i, new_env, &index);
+		tab = one_dollar_or_more(tab, &i, new_env, &index);
 		i++;
 	}
 	return (tab);

@@ -45,7 +45,7 @@ int main(int argc, char **argv, char **env)
 }
 */
 
-int	exit_code;
+int	exit_code[2];
 
 int main(int argc, char **argv, char **env)
 {
@@ -61,7 +61,7 @@ int main(int argc, char **argv, char **env)
 	
 	prev = NULL;
 	maillon = NULL;
-	exit_code = 0;
+	exit_code[0] = 0;
 	setup_signal_handlers();
 	new_env = my_env(env);//ne pas oublier de free a la fin le new env
 	while (1)
@@ -70,10 +70,13 @@ int main(int argc, char **argv, char **env)
 		line = rl_gets();
 		if (line == NULL)  // si l'utilisateur appuie sur ctrl-D
 		{
+			write(2, "exit\n", 5);
 			ft_free_tab(new_env);
-			printf("\n");
 			exit(0);
 		}
+		line  = replace_dollar(line, new_env);
+		line = delete_dollar(line);
+		printf("line = %s\n", line);
 		if (parse(line) == 0)
 		{
 			if (!quote_close(line))

@@ -69,6 +69,7 @@ typedef struct for_dollar
     int len_value;
     int new_len;
     char *new_tab;
+    char *value;
     int i;
     int pos;
     int pos_new_env;
@@ -83,6 +84,9 @@ int find_stdin_2(t_maillons *maillons, int * fd_in, two_pipe *two_pipe);
 int find_stdout_2(t_maillons *maillons, int *fd_out, two_pipe *two_pipe);
 void	init(two_pipe *two_pipe);
 int	dup_fd(int new_stdin, int new_stdout);
+
+/*  ft_itoa */
+char	*ft_itoa(int n);
 
 /*  security */
 int	check_if_builtin (char **args, char **env);
@@ -135,6 +139,9 @@ int ft_strlen_const(const char *str);
 
 /*  replace dollar */
 char *replace_dollar(char *tab, char **new_env);
+
+/*  replace dollar 2 */
+char *delete_dollar(char *line);
 
 /* libft.c */
 

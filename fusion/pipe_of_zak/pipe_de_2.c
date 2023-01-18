@@ -4,6 +4,9 @@
 // maillons -> command = /usr/bin/ls\
 //maillons -> args = a commmand et les options
 //probleme avec le heredoc en premiere commande
+
+extern int	exit_code[2];
+//gerer les enfants avec exit_code[1] = 2; si exit_code[1] == 3 alors exit(0) ou faire un if dans les enfants pour directement exit si exit_code[1] == 3;
 int	child1(two_pipe *two_pipe, char **env, t_maillons *maillons)
 {
 	if (find_stdin_2(maillons, &two_pipe->fd_in, two_pipe) != 0)
@@ -90,6 +93,7 @@ int	loop(two_pipe *two_pipe, char **env, t_maillons *maillons, pid_t pid)
 {
 	int	n;
 
+	exit_code[1] = 2;
 	n = 0;
 	if (two_pipe->i == 0 && pid == 0)
 	{
@@ -123,11 +127,21 @@ int pipex_2(t_maillons  *maillons, char **env)
 			break ;
 		// if (find_if_have_output(maillons -> output, "<<") == 1)
 		// 	waitpid(pid[0], NULL, 0);
+		if (exit_code[1] == 3)
+		{
+			exit_code[1] = 0;
+			break ;
+		}
+		exit_code[1] = 0;
 		two_pipe.i++;
 	}
 	close(two_pipe.pipe_fd[1]);
 	close(two_pipe.pipe_fd[0]);
-	waitpid(pid[0], NULL, 0);
+	waitpid(pid[0], &two_pipe.status, 0);
+	if (WIFEXITED(two_pipe.status))
+		exit_code[0] = WEXITSTATUS(two_pipe.status);
 	waitpid(pid[1], NULL, 0);
+	if (WIFEXITED(two_pipe.status))
+		exit_code[0] = WEXITSTATUS(two_pipe.status);
 	return (0);
 }
