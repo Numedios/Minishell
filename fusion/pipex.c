@@ -8,37 +8,6 @@ int	dup_fd(int new_stdin, int new_stdout)
 	return (1);
 }
 
-void	create_pipe(int *pipes, int i)
-{
-	int	pipe_fd[2];
-
-	if (pipe(pipe_fd) == -1)
-	{
-		perror("pipe");
-		exit (1);
-	}
-	pipes[i] = pipe_fd[0];
-	pipes[i + 1] = pipe_fd[1];
-}
-
-int	*create_pipes(int len)
-{
-	int	*pipes;
-	int	i;
-
-	i = 0;
-	pipes = malloc(sizeof(int *) * (len * 2));
-	while (i < len * 2)
-	{
-		create_pipe(pipes, i);
-		if (!pipes[i] || !pipes[i + 1])
-			return (NULL);
-		i = i + 2;
-	}
-	i = 0;
-	return (pipes);
-}
-
 int find_stdin(t_maillons *maillons)
 {
 	int res;
@@ -46,14 +15,14 @@ int find_stdin(t_maillons *maillons)
 	res = -1;
     if (find_if_have_output(maillons -> output, "<") == 1)
     {
-		dprintf(2, "entrer est %s\n",  find_name_sep(maillons -> output, "<"));
+		//dprintf(2, "entrer est %s\n",  find_name_sep(maillons -> output, "<"));
 		res = open(find_name_sep(maillons -> output, "<"),  O_RDWR, O_DSYNC, !O_DIRECTORY);
 		return (res);
 	}
 	else if (find_if_have_output(maillons -> output, "<<") == 1)
     {
-		dprintf(2, "entrer est %s\n",  find_name_sep(maillons -> output, "<<"));
-		res = heredoc(find_name_sep(maillons -> output, "<<"));
+		//dprintf(2, "entrer est %s\n",  find_name_sep(maillons -> output, "<<"));
+		res = maillons -> heredoc;
 		return (res);
 	}
 
@@ -66,10 +35,6 @@ int find_stdin(t_maillons *maillons)
 		res = open("/dev/null",  O_RDWR, O_DSYNC, !O_DIRECTORY);
 		return (res);
 	}
-	else
-	{
-		// return pipes[0] du maillons d'avant
-	}
 	return (-1);
 }
 
@@ -80,7 +45,7 @@ int find_stdout(t_maillons *maillons)
 	res = -1;
     if (find_if_have_output(maillons -> output, ">"))
     {
-		dprintf(2, "Sortie est %s\n",  find_name_sep(maillons -> output, ">"));
+		//dprintf(2, "Sortie est %s\n",  find_name_sep(maillons -> output, ">"));
 		res = open(find_name_sep(maillons -> output, ">"), O_WRONLY | O_CREAT | O_TRUNC, 0644, !O_DIRECTORY);
 		return (res);
 	}
@@ -93,20 +58,16 @@ int find_stdout(t_maillons *maillons)
 	{
 		return (res);
 	}
-	else
-	{
-		// return pipes[1] du maillons d'avant
-	}
 	return (res);
 }
 
 
-int pipex_one(t_maillons  *maillons, char **env)
+int pipex_one(t_maillons  *maillons, char **env, t_garbage *garbage)
 {
     pid_t	pid;
-	char *a[3];
     int fd_in;
     int fd_out;
+
 
     pid = fork();
     if (pid == -1)
@@ -138,21 +99,27 @@ int pipex_one(t_maillons  *maillons, char **env)
 
 
 
-int pipex(t_maillons *maillons, char **env)
+int pipex(t_maillons *maillons, char **env, t_garbage *garbage)
 {
     int *pipes;
     int len;
 
+	//ft_print_garbage(garbage);
     len = ft_strlen_maillons(maillons); // nombre de maillons
+	if (len == 0)
+		return(0);
+
     if (len == 1)
 	{
-        pipex_one(maillons, env);
-        //ajoute le cas here_doc
+        pipex_one(maillons, env, garbage);
+	}
+	if (len != 1)
+	{
+		pipex_multiple(maillons, env, len, garbage);
 	}
     return (0);
-
-
 }
+
 /*
 int pipex_one(t_maillons  *maillons, char **env)
 {
@@ -170,7 +137,7 @@ int pipex_one(t_maillons  *maillons, char **env)
 			return (perror("fork"), 1);
 	if (pid == 0)
 	{
-			
+
 		dup_fd(find_stdin(maillons, &fd_in), find_stdout(maillons, &fd_out));
         if(fd_in != -3)
             close(fd_in);

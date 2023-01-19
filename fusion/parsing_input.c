@@ -3,7 +3,7 @@
 
 /*
 *
-* creer le fichier si il existe et renvoie 1 
+* creer le fichier si il existe et renvoie 1
 * si le open a echouer renvoie -1
 *
 */
@@ -57,17 +57,13 @@ int check_input_output(t_input_output **input_output)
     {
         if (ft_strcmp((*input_output)->operator, ">") || ft_strcmp((*input_output)->operator, ">>"))
         {
-            //printf("here output \n");
             if (output)
-            {
-                //printf("supp output\n");
                 free_input_output_middle(&output, &first);
-            }
             output = (*input_output);
             if  (check_output(output) == -1)
             {
                 printf("%s ne s'est pas crer \n", (*input_output)-> file_name);
-                // tout free et exit ou renvoyer -1 et gerer sa apres 
+                // tout free et exit ou renvoyer -1 et gerer sa apres
                 //exit(0);
                 *input_output = first;
                 return (0);
@@ -75,12 +71,8 @@ int check_input_output(t_input_output **input_output)
         }
         else if (ft_strcmp((*input_output)->operator, "<") || ft_strcmp((*input_output)->operator, "<<"))
         {
-           // printf("here input \n");
             if (input)
-            {
-                //printf("supp input\n");
                 free_input_output_middle(&input, &first);
-            }
             input = (*input_output);
              if  (check_input(input) == -1)
             {

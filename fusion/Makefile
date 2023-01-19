@@ -33,6 +33,8 @@ SRC = main.c \
 		list_maillons.c \
 		parsing_input.c \
 		pipex.c \
+		pipex2.c \
+		utils_pipex.c \
 		split_pipex.c \
 		cmd_to_path.c \
 		utils_parsing.c \
@@ -40,8 +42,8 @@ SRC = main.c \
 		get_next_line.c \
 		get_next_line_utils.c\
 		replace_dollar_2.c \
-		ft_itoa.c 
-	
+		ft_itoa.c
+
 PIPEX_SRC = pipe_of_zak/pipe_de_2.c \
 				pipe_of_zak/security.c  \
 				pipe_of_zak/utils_pipex.c \
@@ -56,7 +58,7 @@ $(NAME) : $(OBJ)
 	@echo "\033[32mDone\033[0m"
 
 %.o : $(SRCPATH)%.c
-	@$(CC) $(CFLAGS) -c $^ 
+	@$(CC) $(CFLAGS) -c $^
 %.o : $(SRCPATH)pipe_of_zak/%.c
 	@$(CC) $(CFLAGS) -c $^
 

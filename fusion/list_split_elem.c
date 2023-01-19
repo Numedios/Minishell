@@ -60,7 +60,7 @@ void	add_end_split_elem(t_split_elem	**list, t_split_elem *add)
 	ft_print_split_elem(*add);
 
 	stock = (list) -> next;
-	
+
 	*first = *add;
 	free_split_elem(list);
 	list = *add;
@@ -72,7 +72,7 @@ void	add_end_split_elem(t_split_elem	**list, t_split_elem *add)
 	}
 	list -> next = stock;
 	*first = *add;
-	
+
 	printf(" Voila la list a la fin\n");
 	ft_print_split_elem(list);
 	printf(" Voila add a la fin\n");

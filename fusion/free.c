@@ -68,7 +68,7 @@ void    free_input_output(t_input_output *lst)
         (*lst) -> prev -> next = (*lst)->next;
         (*lst) -> next -> prev = (*lst) -> prev;
     }
-    else 
+    else
     {
         (*lst) -> next -> prev = NULL;
         if (*first)
@@ -81,7 +81,7 @@ void    free_input_output(t_input_output *lst)
         if ((*lst) -> operator)
             free((*lst) -> operator);
     }
-   
+
     free(*lst);
     *lst = *tmp;
     free(tmp);
@@ -146,8 +146,10 @@ void    free_maillon(t_maillons *lst)
         if (lst -> output)
             free_inputs_outputs(&lst->output);
         free(lst);
+        //if (lst -> heredoc != -1)
+       //     close(lst->heredoc);
     }
-    
+
 }
 
 void    free_maillons(t_maillons **lst)

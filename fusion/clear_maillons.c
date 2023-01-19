@@ -15,7 +15,7 @@ void free_maillon_middle(t_maillons **lst, t_maillons **first)
         if ((*lst) -> next)
             (*lst) -> next -> prev = (*lst) -> prev;
     }
-    else 
+    else
     {
         if ((*lst) -> next)
             (*lst) -> next -> prev = NULL;
@@ -36,10 +36,10 @@ void free_maillon_middle(t_maillons **lst, t_maillons **first)
     t_maillons **tmp; // tmp sert a stocker l'element suivant l'endroit ou l'on se trouve
 
     tmp = malloc(sizeof(t_maillons *));
-    *tmp = (*lst) ->next; // on stock l'element suivant 
+    *tmp = (*lst) ->next; // on stock l'element suivant
     if ((*lst)->prev) // si il existe un element precedent
     {
-        (*lst) -> prev -> next = (*lst)->next; // l'ellement avant prend comme suivant le suivant de l'element 
+        (*lst) -> prev -> next = (*lst)->next; // l'ellement avant prend comme suivant le suivant de l'element
         if ((*lst) -> next) // si il y a un suivant
             (*lst) -> next -> prev = (*lst) -> prev; // le suivant  prend comme prend comme prev le prev de l'element
     }
@@ -68,7 +68,7 @@ void free_maillon_middle(t_maillons **lst, t_maillons **first)
 *
 */
 
-void free_maillon_middle(t_maillons **lst, t_maillons **first) 
+void free_maillon_middle(t_maillons **lst, t_maillons **first)
 {
   // Sauvegarder les pointeurs sur les éléments précédent et suivant
   t_maillons *prev = (*lst)->prev;
@@ -95,7 +95,7 @@ void free_maillon_middle(t_maillons **lst, t_maillons **first)
 /*
 *
 * return 1 si il y a le separateur souhaiter
-* 0 sinon 
+* 0 sinon
 */
 
 int find_if_have_output(t_input_output *lst, char *sep)
@@ -133,7 +133,7 @@ void    find_maillon_without_cmd(t_maillons **maillons)
 {
     t_maillons *first;
     t_maillons *tmp;
-  
+
 
     tmp = NULL;
     first = *maillons;
@@ -160,7 +160,7 @@ void    find_maillon_without_cmd(t_maillons **maillons)
     }
     ft_print_maillon(*maillons);
     *maillons = first;
-    
+
 }
 
 // > a | 1| 2 | 3 > a | b | >c | 4 | 5  >a | b | d |e | >4 | 6 >a| >a

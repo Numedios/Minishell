@@ -1,9 +1,9 @@
 #include "minishell.h"
 
-/* 
-* renvoie 1 si c n'est pas un separateur renvoie 0 sinon 
+/*
+* renvoie 1 si c n'est pas un separateur renvoie 0 sinon
 * renvoie 0 sinon
-* 
+*
 */
 
 int check_sep(char c, char *sep)
@@ -112,7 +112,7 @@ char	*create_word(char *str, char *sep)
 }
 
 /*
-* renvoie la taille de str par rapport a des mot contenant des cote 
+* renvoie la taille de str par rapport a des mot contenant des cote
 * exemple 12"34" renvera 6
 * exemple 12"34"78 renvera 8
 *
@@ -312,7 +312,7 @@ int	check_word_quote(char *str, char *sep)
 
 /*
 * appele la fonction adequate pour decouper en fonction de la presence de quote ou non
-* 
+*
 *
 */
 

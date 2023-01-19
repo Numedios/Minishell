@@ -16,6 +16,12 @@
 
 # define WHITE_SPACE "\t\n\v\f\r "
 
+typedef struct s_pipes
+{
+	int	*pipe;
+    int len;
+}	t_pipes;
+
 typedef struct  split_elem
 {
     char				*arg;
@@ -33,19 +39,20 @@ typedef struct input_output
 
 typedef struct  maillons
 {
+    int heredoc;
     struct input_output  *output;
     char        *command;
     char        **args;
     struct maillons  *next;
-     struct maillons  *prev;
+    struct maillons  *prev;
 }       t_maillons;
 
 typedef struct garbage
 {
-    char    **split;
-    struct split_elem    *split__lst;
-    struct input_output  *output;
+    char    **split_pipe;
+    struct split_elem    *split_lst;
     struct maillons     *maillons;
+    struct s_pipes  *pipes;
 }       t_garbage;
 
 typedef struct index
@@ -97,7 +104,6 @@ int check_echo (char **args,int cmp, int i);
 char	*rl_gets();
 int		main(int argc, char **argv, char **env);
 
-/* zak */\
 /*  built in cd */
 int do_cd(char **new_env, char *path);
 
@@ -252,7 +258,18 @@ void    cd(char **arg);
 
 /* pipex.c */
 
-int pipex(t_maillons *maillons, char **env);
+int pipex(t_maillons *maillons, char **env, t_garbage *garbage);
+
+/* pipex2.c */
+
+int	pipex_multiple(t_maillons	*maillons, char **env, int len);
+
+/* utils_pipex.c */
+
+void	free_all_pipes(int argc, t_pipes pipes);
+void	create_pipe(int *pipes, int i);
+int	*create_pipes(int len);
+t_pipes	create_all_pipes(int len);
 
 /*split_pipex.c */
 
@@ -265,8 +282,9 @@ int cmd_to_path(t_maillons *maillons, char **env);
 
 /* create_heredoc.c*/
 
-int	*create_heredoc(char *str);
+void    create_heredoc(int *pipe_fd);
 int heredoc(char *stop);
+void find_all_heredoc(t_maillons *maillons);
 
 /* builtins_pwd.c */
 
@@ -295,5 +313,6 @@ void	ft_print_split_elem(t_split_elem *list);
 void	ft_print_input_output(t_input_output *list);
 void ft_print_maillons(t_maillons	*maillons);
 char	*create_word_and_quote2(char *str, char *sep);
+void ft_print_garbage(t_garbage	*garbage);
 
 #endif

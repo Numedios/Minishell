@@ -5,7 +5,7 @@ t_input_output  *create_input_output(char *name, char *operator, t_input_output 
     t_input_output  *new;
 
 
-   
+
     new = malloc(sizeof(*new));
     if (!new)
         return (NULL);

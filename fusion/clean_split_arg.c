@@ -40,7 +40,7 @@ void	create_word_sep(t_split_elem **lst, char *str, int len)
 }
 
 /*
-* 
+*
 *
 *
 */
@@ -65,7 +65,7 @@ t_split_elem	**split_redirection(char *str, char *sep)
 					create_word_sep(add, str, 2);
 					str++;
 				}
-			else	
+			else
 				create_word_sep(add, str, 1);
 			str++;
 		}
@@ -95,7 +95,7 @@ t_split_elem	**split_redirection(char *str, char *sep)
 
 /*
 *	ajoute add dans lst
-*	
+*
 *
 *
 */
@@ -105,7 +105,7 @@ void	add_el(t_split_elem *lst, t_split_elem **start, t_split_elem *prev)
 	t_split_elem	*tmp;
 	t_split_elem     *del;
 	t_split_elem	**add;
-	
+
 	add = split_redirection((lst) -> arg, "<>");
 	if (!add)
 		return ;
@@ -116,7 +116,7 @@ void	add_el(t_split_elem *lst, t_split_elem **start, t_split_elem *prev)
 		*start = *add;
 	}
 	else
-	{	
+	{
 		del = prev->next;
 		prev->next = *add;
 	}
@@ -145,7 +145,7 @@ int	just_quote(char *str)
 	int	i;
 	char	quote;
 
-	
+
 	if (!str)
 		return (0);
 	i = 0;
@@ -245,7 +245,7 @@ void	create_split_arg(t_split_elem **lst) // rename avec create
 					create_word_sep(add, str, 2);
 					str++;
 				}
-			else	
+			else
 				create_word_sep(add, str, 1);
 			str++;
 		}
@@ -278,7 +278,7 @@ void	create_split_arg(t_split_elem **lst) // rename avec create
 					create_word_sep(add, str, 2);
 					str++;
 				}
-			else	
+			else
 				create_word_sep(add, str, 1);
 			str++;
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbelabba <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 16:58:40 by sbelabba          #+#    #+#             */
-/*   Updated: 2022/12/06 15:49:27 by sbelabba         ###   ########.fr       */
+/*   Updated: 2023/01/19 22:33:37 by zakariyaham      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*ft_strjoin_gnl(char *line, char *buf)
 {
 	char	*res;
 	int		i;
-	int		j;	
+	int		j;
 
 	i = 0;
 	j = 0;
