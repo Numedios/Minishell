@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   create_heredoc.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/22 19:36:28 by zakariyaham       #+#    #+#             */
+/*   Updated: 2023/01/22 19:59:55 by zakariyaham      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 /*
 char	*ft_strjoin(char *line, char *buf)
@@ -23,10 +35,10 @@ char	*ft_strjoin(char *line, char *buf)
 	return (res);
 }*/
 
-void create_heredoc(int *pipe_fd)
+void	create_heredoc(int *pipe_fd)
 {
 
-    //pipe_fd = malloc(sizeof(int) * 2);
+	//pipe_fd = malloc(sizeof(int) * 2);
 	if (pipe(pipe_fd) == -1)
 	{
 		perror("pipe");
@@ -35,15 +47,15 @@ void create_heredoc(int *pipe_fd)
 
 }
 
-int heredoc(char *stop)
+int	heredoc(char *stop)
 {
-    int		pipe_fd[2];
+	int		pipe_fd[2];
 	char	*str;
 	char	*comp;
 
 	create_heredoc(pipe_fd);
 	comp = ft_strjoin(stop, "\n");
-    str = NULL;
+	str = NULL;
 	while (1)
 	{
 		write(1, "> ", 2);
@@ -59,17 +71,17 @@ int heredoc(char *stop)
 			free(str);
 		}
 	}
-    close(pipe_fd[1]);
+	close(pipe_fd[1]);
 	free(comp);
-    return (pipe_fd[0]);
+	return (pipe_fd[0]);
 }
 
-void find_all_heredoc(t_maillons *maillons)
+void	find_all_heredoc(t_maillons *maillons)
 {
 	t_input_output	*tmp;
 
 	while (maillons)
-    {
+	{
 		tmp = maillons->output;
 		while (maillons->output)
 		{

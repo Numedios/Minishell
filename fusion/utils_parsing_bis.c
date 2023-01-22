@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_zak.c                                        :+:      :+:    :+:   */
+/*   utils_parsing_bis.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zheylkoss <zheylkoss@student.42.fr>        +#+  +:+       +#+        */
+/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 17:27:55 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/01/09 15:19:15 by zheylkoss        ###   ########.fr       */
+/*   Updated: 2023/01/22 20:30:55 by zakariyaham      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//verifier que le 
+//verifier que le
 #include "minishell.h"
 
-int print_tab(char **tab)
+int	print_tab(char **tab)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (tab && tab[i])
@@ -27,11 +27,11 @@ int print_tab(char **tab)
 }
 
 
-int	skip_quote (char *line, int i)//existe deja dans un autre fichier, a ajouter dans le .h et le retirer d'ici
+int	skip_quote(char *line, int i)//existe deja dans un autre fichier, a ajouter dans le .h et le retirer d'ici
 {
 	while ((line[i] == '"' && line[i + 1] != '"') || (line[i] == '\'' && line[i + 1] != '\''))//ne fonctionne pas quand je met line[i + 1] doit etre different de '\0', pour ce test '''ho"''''l"a'''
 	{
-		if(line[i] == '"' && line[i + 1] != '"')
+		if (line[i] == '"' && line[i + 1] != '"')
 		{
 			i++;
 			if (!line[i])
@@ -39,7 +39,7 @@ int	skip_quote (char *line, int i)//existe deja dans un autre fichier, a ajouter
 			while (line[i] != '"')
 				i++;
 		}
-		if((line[i] == '\'' && line[i + 1] != '\''))
+		if ((line[i] == '\'' && line[i + 1] != '\''))
 		{
 			i++;
 			if (!line[i])

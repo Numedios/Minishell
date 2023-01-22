@@ -54,7 +54,7 @@ t_pipes	create_all_pipes(int len)
 	pipes.len = len;
 	if (!pipes.pipe)
 	{
-        // free le reste maillons ect
+		// free le reste maillons ect
 		free_all_pipes(len * 2, pipes);
 		unlink("here_doc");
 		exit (1);

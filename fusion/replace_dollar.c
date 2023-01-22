@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   replace_dollar.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 19:09:08 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/01/18 19:02:37 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/01/22 20:26:50 by zakariyaham      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 //test a faire : echo $'hola'       echo $"hola"    echo $      echo $hol (hol n'existe pas)        echo $$SYSTEMD_EXEC_PID
 //$"HOME" doit devenir HOME
 
-extern int exit_code[2];
+extern int	exit_code[2];
 
 void	new_in_old(for_dollar *var, t_index *index, char **new_env, int *skip)
 {
@@ -65,7 +65,7 @@ char	*do_replace(char *tab, char **new_env, int skip, t_index index)
 void	new_in_old_interrogation(for_dollar *var)
 {
 	var->pos_tab = var->pos_tab + 2;
-	while(var->value[var->i])
+	while (var->value[var->i])
 	{
 		var->new_tab[var->pos] = var->value[var->i];
 		var->pos++;
@@ -117,15 +117,15 @@ int	research(int skip, int a, char *tab, char **new_env)// -1 veut dire qu'on a 
 		if ((skip - 1) != len_env || ft_strncmp(new_env[i], &tab[a], (skip - 1)) != 0)
 			i++;
 		else
-			return(i);
+			return (i);
 	}
 	return (-1);
 }
 
-char *found_it(char *tab, char **new_env, t_index *index, int *skip)
+char	*found_it(char *tab, char **new_env, t_index *index, int *skip)
 {
 	// t_index index;
-	int i;
+	int	i;
 
 
 	// index.a = i;
@@ -158,9 +158,9 @@ char *found_it(char *tab, char **new_env, t_index *index, int *skip)
 	return (tab);
 }
 
-char *found_dollar_inquote(char *tab, int *i, char ** new_env, t_index *index)//peut etre pas besoin de renvoyer un char* ou alors il faut envoyer l'adresse de tab
+char	*found_dollar_inquote(char *tab, int *i, char ** new_env, t_index *index)//peut etre pas besoin de renvoyer un char* ou alors il faut envoyer l'adresse de tab
 {
-	int skip;
+	int	skip;
 
 	skip = 0;
 	(*i)++;
@@ -183,9 +183,9 @@ char *found_dollar_inquote(char *tab, int *i, char ** new_env, t_index *index)//
 	return (tab);
 }
 
-char *one_dollar_or_more(char *tab, int *i, char ** new_env, t_index *index)
+char	*one_dollar_or_more(char *tab, int *i, char ** new_env, t_index *index)
 {
-	int skip;
+	int	skip;
 
 	skip = 0;
 	while (tab[(*i)] && tab[(*i)] == '$')
@@ -194,13 +194,13 @@ char *one_dollar_or_more(char *tab, int *i, char ** new_env, t_index *index)
 		index->a = (*i) + 1;
 		tab = found_it(tab, new_env, index, &skip);
 		if (index->j == -1)
-			break;
+			break ;
 		skip = 0;
 	}
 	return (tab);
 }
 
-char *replace_dollar(char *tab, char **new_env)//peu etre possible de pas renvoyer un char mais il faut dans ce cas envoyer l'adresse de tab
+char	*replace_dollar(char *tab, char **new_env)//peu etre possible de pas renvoyer un char mais il faut dans ce cas envoyer l'adresse de tab
 {
 	int		i;
 	int		skip;
@@ -240,14 +240,14 @@ void	interprete_quote(char *str)
 	{
 		if (str[i] && str[i] == '\'') // si single cote on change single
 		{
-			if (doubl == 1) // si on est pas dans un double cote 
+			if (doubl == 1) // si on est pas dans un double cote
 				single = single * -1;
 			else
 				printf("%c",str[i]); // on interprete cette parenthese
 		}
 		if (str[i] && str[i] == '\"') // si double cote on change doubl
 		{
-			if (single == 1) // si on est pas un single cote 
+			if (single == 1) // si on est pas un single cote
 				doubl  = doubl * -1;
 			else
 				printf("%c",str[i]); // on interprete cette parenthese

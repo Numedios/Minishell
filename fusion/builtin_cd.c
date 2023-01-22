@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin_cd.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/22 19:35:56 by zakariyaham       #+#    #+#             */
+/*   Updated: 2023/01/22 19:55:49 by zakariyaham      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static void	update_pwd(char **new_env, char *pwd)
@@ -14,7 +26,7 @@ static void	update_pwd(char **new_env, char *pwd)
 	}
 }
 
-int	do_cd(char ** new_env, char    *path)
+int	do_cd(char **new_env, char *path)
 {
 	char	dir[4096];
 	char	*oldpwd;

@@ -1,8 +1,8 @@
 #include "minishell.h"
 
-void ft_print_tab(char **tab)
+void	ft_print_tab(char **tab)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (tab && tab[i])
@@ -14,7 +14,6 @@ void ft_print_tab(char **tab)
 
 void	ft_print_split_elem(t_split_elem *list)
 {
-
 	while (list != NULL)
 	{
 		printf(" %s |", list-> arg);
@@ -26,7 +25,6 @@ void	ft_print_split_elem(t_split_elem *list)
 
 void	ft_print_input_output(t_input_output *list)
 {
-
 	while (list != NULL)
 	{
 		// printf("file = %s operator = %s ||", list->file_name, list->operator);
@@ -36,7 +34,7 @@ void	ft_print_input_output(t_input_output *list)
 	printf("\n");
 }
 
-void ft_print_maillon(t_maillons	*maillons)
+void	ft_print_maillon(t_maillons	*maillons)
 {
 	if (maillons)
 	{
@@ -56,7 +54,7 @@ void ft_print_maillon(t_maillons	*maillons)
 		printf("(null)\n");
 }
 
-void ft_print_maillons(t_maillons	*maillons)
+void	ft_print_maillons(t_maillons	*maillons)
 {
 	if (maillons)
 	{
@@ -82,7 +80,7 @@ void ft_print_maillons(t_maillons	*maillons)
 }
 
 
-void ft_print_garbage(t_garbage	*garbage)
+void	ft_print_garbage(t_garbage	*garbage)
 {
 	dprintf(2, "char** split_pipe\n");
 	if (garbage->split_pipe && garbage->split_pipe[0])
@@ -110,10 +108,10 @@ void ft_print_garbage(t_garbage	*garbage)
 *
 */
 
-int check_pair(char *str, char c)
+int	check_pair(char *str, char c)
 {
-	int i;
-	int count;
+	int	i;
+	int	count;
 
 	i = 0;
 	count = 0;

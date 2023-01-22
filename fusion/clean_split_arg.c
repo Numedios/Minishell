@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   clean_split_arg.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/22 19:36:21 by zakariyaham       #+#    #+#             */
+/*   Updated: 2023/01/22 20:15:50 by zakariyaham      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 /*
@@ -12,7 +24,7 @@ int	chek_sep_str(char *str, char *sep)
 	i = 0;
 	if (!str)
 		return (0);
-	while(str[i])
+	while (str[i])
 	{
 		if (!check_sep(str[i], sep))
 			return (1);
@@ -23,12 +35,12 @@ int	chek_sep_str(char *str, char *sep)
 
 void	create_word_sep(t_split_elem **lst, char *str, int len)
 {
-	char *res;
-	int	i;
+	char	*res;
+	int		i;
 
 	res = malloc(sizeof(char) * (len + 1));
 	if (!res)
-		return	;
+		return ;
 	i = 0;
 	while (i < len)
 	{
@@ -47,16 +59,16 @@ void	create_word_sep(t_split_elem **lst, char *str, int len)
 
 t_split_elem	**split_redirection(char *str, char *sep)
 {
-	t_split_elem **add;
-	char	quote;
-	int	i;
+	t_split_elem	**add;
+	char			quote;
+	int				i;
 
 	add = malloc(sizeof(*add));
 	if (!add)
 		return (NULL);
 	*add = NULL;
 	i = 0;
-	while(str && *str)
+	while (str && *str)
 	{
 		if (*str == '<' || *str == '>')
 		{
@@ -103,7 +115,7 @@ t_split_elem	**split_redirection(char *str, char *sep)
 void	add_el(t_split_elem *lst, t_split_elem **start, t_split_elem *prev)
 {
 	t_split_elem	*tmp;
-	t_split_elem     *del;
+	t_split_elem	*del;
 	t_split_elem	**add;
 
 	add = split_redirection((lst) -> arg, "<>");
@@ -127,7 +139,7 @@ void	add_el(t_split_elem *lst, t_split_elem **start, t_split_elem *prev)
 		tmp->next = lst->next;
 	lst = tmp;
 	if (del)
-    	free_split_elem(del);
+		free_split_elem(del);
 	if (*add)
 		free(add);
 }
@@ -142,7 +154,7 @@ void	add_el(t_split_elem *lst, t_split_elem **start, t_split_elem *prev)
 
 int	just_quote(char *str)
 {
-	int	i;
+	int		i;
 	char	quote;
 
 
@@ -171,7 +183,7 @@ int	just_quote(char *str)
 	else
 		return (0);
 	if (str[i])
-		return(just_quote(&str[i]));
+		return (just_quote(&str[i]));
 	return (1);
 }
 

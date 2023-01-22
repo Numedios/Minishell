@@ -1,65 +1,77 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin_exit.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/22 19:36:10 by zakariyaham       #+#    #+#             */
+/*   Updated: 2023/01/22 19:56:56 by zakariyaham      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 //gerer des long long, is au dessu affihcer une erreur specifique
 //si deux argument afficher une erreur specifique
 //pas de char
 //utiliser une variable globale pour les codes erreurs
-long long    ft_atoll_capped(const char *nptr, int *flag)
+long long	ft_atoll_capped(const char *nptr, int *flag)
 {
-    int                j;
-    long long        nb;
-    long long print;
+	int			j;
+	long long	nb;
+	long long	print;
 
-    if (nptr == NULL)
-        return (0);
-    j = 1;
-    nb = 0;
-    while (*nptr == 32 || (*nptr >= 9 && *nptr <= 13))
-        nptr++;
-    if (*nptr == '-' || *nptr == '+')
-    {
-        if (*nptr == '-')
-            j = -j;
-        nptr++;
-    }
-    while (*nptr >= '0' && *nptr <= '9')
-    {
-        print = LLONG_MAX;
-        if (j > 0 && (LLONG_MAX - *nptr + '0') / 10 < nb)
-            return (++*flag, 0);
-        print = ((LLONG_MAX + *nptr - '0') / 10);
-        if (j < 0 && (LLONG_MAX + *nptr - '0') / 10 > -nb)
-            return (++*flag, 0);
-        nb = nb * 10 + *nptr - '0';
-        nptr++;
-    }
-    return (nb * j);
+	if (nptr == NULL)
+		return (0);
+	j = 1;
+	nb = 0;
+	while (*nptr == 32 || (*nptr >= 9 && *nptr <= 13))
+		nptr++;
+	if (*nptr == '-' || *nptr == '+')
+	{
+		if (*nptr == '-')
+			j = -j;
+		nptr++;
+	}
+	while (*nptr >= '0' && *nptr <= '9')
+	{
+		print = LLONG_MAX;
+		if (j > 0 && (LLONG_MAX - *nptr + '0') / 10 < nb)
+			return (++*flag, 0);
+		print = ((LLONG_MAX + *nptr - '0') / 10);
+		if (j < 0 && (LLONG_MAX + *nptr - '0') / 10 > -nb)
+			return (++*flag, 0);
+		nb = nb * 10 + *nptr - '0';
+		nptr++;
+	}
+	return (nb * j);
 }
 
-int do_exit(char* statut)
+int	do_exit(char* statut)
 {
-    long long exit_code;
-    int flag;
+	long long	exit_code;
+	int			flag;
 
-    flag = 0;
-    while (statut && statut[flag])//erreur il y a une lettree
-    {
-        while (statut[flag] == 32 || (statut[flag] >= 9 && statut[flag] <= 13))
-            flag++;
-        if (statut[flag] == '-' || statut[flag] == '+')
-            flag++;
-        if (statut[flag] >= '0' && statut[flag] <= '9')
-            flag++;
-        else
-        {
-            exit(2);
-        }
-    }
-    flag = 0;
-    exit_code = ft_atoll_capped(statut, &flag);
-    if (flag == 0)
-        exit(exit_code);
-    else
-        exit(2);
+	flag = 0;
+	while (statut && statut[flag])//erreur il y a une lettree
+	{
+		while (statut[flag] == 32 || (statut[flag] >= 9 && statut[flag] <= 13))
+			flag++;
+		if (statut[flag] == '-' || statut[flag] == '+')
+			flag++;
+		if (statut[flag] >= '0' && statut[flag] <= '9')
+			flag++;
+		else
+		{
+			exit(2);
+		}
+	}
+	flag = 0;
+	exit_code = ft_atoll_capped(statut, &flag);
+	if (flag == 0)
+		exit(exit_code);
+	else
+		exit(2);
 }
 
 
@@ -89,13 +101,13 @@ zhamdouc@e2r12p22:~/Minishell/fusion$ cat << eof | wc << eof
 > eof
 > adasl
 > eof
-      1       1       6
+	  1       1       6
 zhamdouc@e2r12p22:~/Minishell/fusion$ cat << eof | wc << eof
-> 
+>
 bash: warning: here-document at line 10 delimited by end-of-file (wanted `eof')
-> 
+>
 bash: warning: here-document at line 10 delimited by end-of-file (wanted `eof')
-      0       0       0
+	  0       0       0
 zhamdouc@e2r12p22:~/Minishell/fusion$ cat << eof | wc << eof
 > ^C
 zhamdouc@e2r12p22:~/Minishell/fusion$ cat << eof | wc << eof | ls
@@ -109,11 +121,11 @@ zhamdouc@e2r12p22:~/Minishell/fusion$ cat << eof | wc << eof | ls
 */
 
 /*
-tout traiter en un bloc car on ne saura pas quoi envoyer en infile du prochain pipe 
+tout traiter en un bloc car on ne saura pas quoi envoyer en infile du prochain pipe
 exemple :
 zhamdouc@e2r12p22:~/Minishell/fusion$ cat Makefile | grep l | grep m > out | grep 2 | wc
-      0       0       0
+	  0       0       0
 zhamdouc@e2r12p22:~/Minishell/fusion$ cat Makefile | grep l | grep m > out | wc
-      0       0       0
+	  0       0       0
 dans notre solution comment traiter wc
 */

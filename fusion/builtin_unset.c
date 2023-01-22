@@ -1,5 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin_unset.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/22 19:36:17 by zakariyaham       #+#    #+#             */
+/*   Updated: 2023/01/22 20:14:52 by zakariyaham      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
-//on peut unset autant qu'on veut 
+//on peut unset autant qu'on veut
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	size_t	i;
@@ -14,32 +26,32 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	return (0);
 }
 //mettre env en variable globale, malloc env dans une nouvelle variable pour pouvoir le manipuler comme on le souhaite
-void    do_unset(char *tab, char **env_copy)
+void	do_unset(char *tab, char **env_copy)
 {
-    int i;
-    int n;
-    int found_line;
+	int	i;
+	int	n;
+	int	found_line;
 
-    i = 0;
-    found_line = 0;
-    n = 0;
-    if (tab ==  NULL)
-        return ;
-	if (env_copy[i] ==  NULL)
-        return ;
-    while (tab && tab[n])
-        n++;
-    while (env_copy[i])
-    {
-        if (ft_strncmp(tab, env_copy[i], n) == 0)
-        {
-            env_copy[i] = env_copy[i + 1];
-            found_line++;
-        }
-        if (found_line == 1)
-            env_copy[i] = env_copy[i + 1];
-        i++;
-    }
-    if (found_line == 1)
-        free(env_copy[i - 1]);
+	i = 0;
+	found_line = 0;
+	n = 0;
+	if (tab == NULL)
+		return ;
+	if (env_copy[i] == NULL)
+		return ;
+	while (tab && tab[n])
+		n++;
+	while (env_copy[i])
+	{
+		if (ft_strncmp(tab, env_copy[i], n) == 0)
+		{
+			env_copy[i] = env_copy[i + 1];
+			found_line++;
+		}
+		if (found_line == 1)
+			env_copy[i] = env_copy[i + 1];
+		i++;
+	}
+	if (found_line == 1)
+		free(env_copy[i - 1]);
 }

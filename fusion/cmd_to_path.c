@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cmd_to_path.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/22 19:36:25 by zakariyaham       #+#    #+#             */
+/*   Updated: 2023/01/22 19:59:45 by zakariyaham      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 
@@ -18,11 +30,11 @@ char	*get_path(char **envp)
 }
 
 
-/* 
+/*
 *
 * retun 1 si contien un /
 * return 0 sinon
-* 
+*
 */
 
 int	check_is_path(char *str)
@@ -46,40 +58,40 @@ int	check_is_path(char *str)
 * tab contient les chemin possible ex ( /usr/bin , /usr, /bin/usr/lol )
 *
 */
-void change_cmd(char **str, char **tab)
+void	change_cmd(char **str, char **tab)
 {
-    char *res;
-    int i;
+	char	*res;
+	int		i;
 
-    i = 0;
-    res = NULL;
-    if (check_is_path(*str))
-        return ;
-    while (tab && tab[i])
-    {
-        res = ft_strjoin_pipex(tab[i], *str);
-        if (access(res, X_OK | F_OK) == 0)
+	i = 0;
+	res = NULL;
+	if (check_is_path(*str))
+		return ;
+	while (tab && tab[i])
+	{
+		res = ft_strjoin_pipex(tab[i], *str);
+		if (access(res, X_OK | F_OK) == 0)
 			{
 				free(*str);
-                *str = res;
+				*str = res;
 				return ;
 			}
-        free(res);
-        i++;
-    }
+		free(res);
+		i++;
+	}
 
 }
 
-int cmd_to_path(t_maillons *maillons, char **env)
+int	cmd_to_path(t_maillons *maillons, char **env)
 {
-    char    **pat;
+	char	**pat;
 
-    pat = split_pipex(get_path(env), ':');
-    while (maillons)
-    {
-        change_cmd(&(maillons->command) , pat);
-        maillons = maillons->next;
-    }
-    ft_free_tab(pat);
-    return (1);
+	pat = split_pipex(get_path(env), ':');
+	while (maillons)
+	{
+		change_cmd(&(maillons->command) , pat);
+		maillons = maillons->next;
+	}
+	ft_free_tab(pat);
+	return (1);
 }

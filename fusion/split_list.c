@@ -2,11 +2,11 @@
 
 t_split_elem	*ft_split_list(char *str, char *sep)
 {
-	int             j;
-	t_split_elem    *lst;
+	int				j;
+	t_split_elem	*lst;
 	t_split_elem	*elem;
-	char	*res;
-	char	quote;
+	char			*res;
+	char			quote;
 
 	j = 0;
 	lst = NULL;

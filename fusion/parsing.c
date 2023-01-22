@@ -3,29 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:39:06 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/01/16 17:50:12 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/01/22 20:23:33 by zakariyaham      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int parenthesis_close_2(char *str);
-int parenthesis_close_1 (char *str);
+int	parenthesis_close_2(char *str);
+int	parenthesis_close_1 (char *str);
 //test : fkfs;sf      '''ho"''''l"a'''    'ho"''l"a'
-//si rien apres pipe = probleme 
-// pour chaque if du parsinf check meme en skipant tout les espace qui separes les char 
+//si rien apres pipe = probleme
+// pour chaque if du parsinf check meme en skipant tout les espace qui separes les char
 //comment gerer les "()"
 // remplacer prinf par ft_putstr_fd pour ecrire sur la sortie d'erreur
 //pour $HOLA il fonctionne tout seul ou avec "$HOLA", on ne peut pas declarer une variable globale en commencant par un chiffre ou $, pas de caractere speciale, mais on peut mettre un chiffre dedans
 
-extern	int exit_code;
+extern int	exit_code;
 
-int after_pipe(char *line)
+int	after_pipe(char *line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (line && line[i])
@@ -48,9 +48,9 @@ int after_pipe(char *line)
 }
 
 
-int check_parenthesis(char *line)//(")"0 ;;; (")" 0) -> est ce qu'il traiter les "()" comment les guillemets
+int	check_parenthesis(char *line)//(")"0 ;;; (")" 0) -> est ce qu'il traiter les "()" comment les guillemets
 {
-	int i;
+	int	i;
 	int	count_1;
 	int	count_2;
 
@@ -76,10 +76,10 @@ int check_parenthesis(char *line)//(")"0 ;;; (")" 0) -> est ce qu'il traiter les
 }
 
 
-int del_quote(char *line)
+int	del_quote(char *line)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (line && line[i])
@@ -87,13 +87,13 @@ int del_quote(char *line)
 		i = skip_quote(line, i);
 		if (i == -1)
 			return (0);
-		if((line[i] == '"' && line[i + 1] == '"') || (line[i] == '\'' && line[i + 1] == '\''))
+		if ((line[i] == '"' && line[i + 1] == '"') || (line[i] == '\'' && line[i + 1] == '\''))
 		{
 			j = i;
 			while (line && line[j])
 			{
 				line[j] = line[j + 2];
-				line [j + 1] = line [j + 3]; 
+				line [j + 1] = line [j + 3];
 				j++;
 			}
 			i = 0;
@@ -112,7 +112,7 @@ int	check_error_2_space(char *line, char c, char c_bis, int i)
 			i++;
 		if (line[i] == c_bis)
 			return (2);
-		else 
+		else
 			return (0);
 	}
 	return (0);
@@ -123,20 +123,20 @@ int	check_error_space(char *line, char c, int i)
 	if (line[i] == c)
 	{
 		i++;
-		while(line[i] == ' ')
+		while (line[i] == ' ')
 			i++;
 		if (line[i] == c)
 			return (2);
-		else 
+		else
 			return (0);
 	}
 	return (0);
 }
 
-int check_1(char *line)
+int	check_1(char *line)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (line && line[i])
@@ -144,47 +144,47 @@ int check_1(char *line)
 		i = skip_quote(line, i);
 		if (i == -1)
 			return (0);
-		if(check_error_2_space(line, '(', ')', i) == 2)
+		if (check_error_2_space(line, '(', ')', i) == 2)
 		{
 			ft_putstr_fd("bash: syntax error near unexpected token `)'\n", 2);
 			return (1);
 		}
-		if(check_error_2_space(line, '<', '>', i) == 2)
+		if (check_error_2_space(line, '<', '>', i) == 2)
 		{
 			ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", 2);
 			return (1);
 		}
-		if(check_error_2_space(line, '>', '<', i) == 2)
+		if (check_error_2_space(line, '>', '<', i) == 2)
 		{
 			ft_putstr_fd("bash: syntax error near unexpected token `<'\n", 2);
 			return (1);
 		}
-		if(line[i] == '>' && line[i + 1] == '>' && line[i + 2] == '>')
+		if (line[i] == '>' && line[i + 1] == '>' && line[i + 2] == '>')
 		{
 			ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", 2);
 			return (1);
 		}
-		if(line[i] == '<' && line[i + 1] == '<' && line[i + 2] == '<')
+		if (line[i] == '<' && line[i + 1] == '<' && line[i + 2] == '<')
 		{
 			ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", 2);
 			return (1);
 		}
-		if(line[i] == '<' && line[i + 1] == ' ' && line[i + 2] == '>')
+		if (line[i] == '<' && line[i + 1] == ' ' && line[i + 2] == '>')
 		{
 			ft_putstr_fd("bash: syntax error near unexpected token `>'\n", 2);
 			return (1);
 		}
-		if(line[i] == '<' && line[i + 1] == '>' && line[i + 2] == '>')
+		if (line[i] == '<' && line[i + 1] == '>' && line[i + 2] == '>')
 		{
 			ft_putstr_fd("bash: syntax error near unexpected token `>'\n", 2);
 			return (1);
 		}
-		if(line[i] == '|' && line[i + 1] == '|' && line[i + 2] == '|')
+		if (line[i] == '|' && line[i + 1] == '|' && line[i + 2] == '|')
 		{
 			ft_putstr_fd("bash: syntax error near unexpected token `|'\n", 2);
 			return (1);
 		}
-		if(check_error_space(line, '|', i) == 2)//while space
+		if (check_error_space(line, '|', i) == 2)//while space
 		{
 			ft_putstr_fd("bash: syntax error near unexpected token `|'\n", 2);
 			return (1);
@@ -194,17 +194,17 @@ int check_1(char *line)
 		// 	ft_putstr_fd("bash: syntax error near unexpected token `|'\n");
 		// 	return (1);
 		// }
-		if(line[i] == '&')
+		if (line[i] == '&')
 		{
 			ft_putstr_fd("bash: syntax error near unexpected token `&'\n", 2);
 			return (1);
 		}
-		if(line[i] == '\\')
+		if (line[i] == '\\')
 		{
 			ft_putstr_fd("bash: syntax error near unexpected token `\'\n", 2);
 			return (1);
 		}
-		if(line[i] == ';')
+		if (line[i] == ';')
 		{
 			ft_putstr_fd("bash: syntax error near unexpected token `;'\n", 2);
 			return (1);
@@ -215,10 +215,10 @@ int check_1(char *line)
 			i++;
 		i++;
 	}
-	return(0);
+	return (0);
 }
 
-int parse (char *line)
+int	parse(char *line)
 {
 	if (quote_close(line) == 0)
 	{
@@ -242,62 +242,62 @@ int parse (char *line)
 	if (check_1(line) == 1)
 	{
 		exit_code = 2;
-        return (1);
+		return (1);
 	}
 	del_quote(line);
-    if (ft_strlen(line) == 1)
-    {
-        if (line[0] == '>' || line[0] == '<')
-        {
-            ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", 2);
+	if (ft_strlen(line) == 1)
+	{
+		if (line[0] == '>' || line[0] == '<')
+		{
+			ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", 2);
 			exit_code = 2;
-            return (1);
-        }
-    }
-    if (str_cmp(line,"<<") == 1 || str_cmp(line,">>") == 1)
-    {
-        ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", 2);
+			return (1);
+		}
+	}
+	if (str_cmp(line,"<<") == 1 || str_cmp(line,">>") == 1)
+	{
+		ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", 2);
 		exit_code = 2;
-        return (1);
-    }
-    return (0);
+		return (1);
+	}
+	return (0);
 }
 
-int ft_strlen_const(const char *str)
+int	ft_strlen_const(const char *str)
 {
-    int i;
-
-    i = 0;
-    while (str[i])
-        i++;
-    return (i);
-}
-
-int str_cmp(char *s1, char *s2)
-{
-    int i;
-
-    i = 0;
-    while (s1[i] && s2[i])
-    {
-        if (s1[i] != s2[i])
-            return (0);
-        i++;
-    }
-    if (s1[i] != s2[i])
-        return (0);
-    return (1);
-}
-
-int quote_close_2(char *str)
-{
-	char    c;
 	int i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
+int	str_cmp(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] && s2[i])
+	{
+		if (s1[i] != s2[i])
+			return (0);
+		i++;
+	}
+	if (s1[i] != s2[i])
+		return (0);
+	return (1);
+}
+
+int	quote_close_2(char *str)
+{
+	char	c;
+	int		i;
 
 	i = 0;
 	if (!str)
 			return (0);
-	while(str && str[i])
+	while (str && str[i])
 	{
 		if (str[i] == '\'' || str[i] == '\"')
 		{
@@ -317,7 +317,7 @@ int parenthesis_close_1 (char *str)
 {
 	int i;
 	int count_1;
-	
+
 	i = 0;
 	count_1 = 0;
 

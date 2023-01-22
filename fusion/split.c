@@ -6,7 +6,7 @@
 *
 */
 
-int check_sep(char c, char *sep)
+int	check_sep(char c, char *sep)
 {
 	int i;
 
@@ -26,10 +26,10 @@ int check_sep(char c, char *sep)
 *
 */
 
-int count_words(char *str, char *sep)
+int	count_words(char *str, char *sep)
 {
-	int i;
-	int word;
+	int	i;
+	int	word;
 
 	i = 0;
 	word = 0;
@@ -81,7 +81,7 @@ char	*create_word_quote(char *str, char *sep)
 		i++;
 	}
 	word[i] = '\0';
-	return(word);
+	return (word);
 }
 
 /*
@@ -96,7 +96,7 @@ char	*create_word(char *str, char *sep)
 	int		i;
 
 	i = 0;
-	while(str && str[i] && check_sep(str[i], sep))
+	while (str && str[i] && check_sep(str[i], sep))
 		i++;
 	word = malloc (sizeof(char) * (i + 1));
 	if (!word)
@@ -108,7 +108,7 @@ char	*create_word(char *str, char *sep)
 		i++;
 	}
 	word[i] = '\0';
-	return(word);
+	return (word);
 }
 
 /*
@@ -152,7 +152,7 @@ char	*create_word_and_quote(char *str, char *sep)
 	char	*word;
 	char	quote;
 	int		i;
-	int len;
+	int		len;
 
 	len = count_word_and_quote(str, sep);
 	word = malloc(sizeof(char) * (len + 1));
@@ -172,7 +172,7 @@ char	*create_word_and_quote(char *str, char *sep)
 			word[i] = str[i];
 			i++;
 		}
-		if (str && str[i] &&  (str[i] == '\"' && str[i] == '\''))
+		if (str && str[i] && (str[i] == '\"' && str[i] == '\''))
 		{
 			word[i] = str[i];
 			i++;
@@ -211,7 +211,7 @@ int	count_word_and_quote2(char *str, char *sep)
 			//printf("2 str[%d] = %c\n", i, str[i]);
 			i++;
 		}
-		if (str && str[i] &&  (str[i] == '\"' || str[i] == '\''))
+		if (str && str[i] && (str[i] == '\"' || str[i] == '\''))
 		{
 			//printf("3 str[%d] = %c\n", i, str[i]);
 			i++;
@@ -230,7 +230,7 @@ char	*create_word_and_quote2(char *str, char *sep)
 	char	*word;
 	char	quote;
 	int		i;
-	int len;
+	int		len;
 
 	len = count_word_and_quote2(str, sep);
 	//printf("len = %d\n", len);
@@ -255,7 +255,7 @@ char	*create_word_and_quote2(char *str, char *sep)
 			word[i] = str[i];
 			i++;
 		}
-		if (str && str[i] &&  (str[i] == '\"' || str[i] == '\''))
+		if (str && str[i] && (str[i] == '\"' || str[i] == '\''))
 		{
 			word[i] = str[i];
 			i++;
@@ -303,7 +303,7 @@ int	check_word_quote(char *str, char *sep)
 	while (str && *str && check_sep(*str, sep))
 	{
 		if (*str == '\"' || *str == '\'')
-			return(0);
+			return (0);
 		str++;
 	}
 	return (1);
@@ -318,7 +318,7 @@ int	check_word_quote(char *str, char *sep)
 
 char	*create_word_all2(char *str, char *sep)
 {
-	char *word;
+	char	*word;
 
 	if (!check_word_quote(str, sep))
 	{
@@ -341,7 +341,7 @@ char	*create_word_all2(char *str, char *sep)
 
 char	*create_word_all(char *str, char *sep)
 {
-	char *word;
+	char	*word;
 
 	if (*str == '\"' || *str == '\'')
 		word = create_word_quote(str, sep);
@@ -352,12 +352,12 @@ char	*create_word_all(char *str, char *sep)
 	return (word);
 }
 
-char **ft_split(char *str, char *sep)
+char	**ft_split(char *str, char *sep)
 {
-	int i;
-	int j;
-	char **res;
-	char quote;
+	int		i;
+	int		j;
+	char	**res;
+	char	quote;
 
 	i = 0;
 	j = 0;
