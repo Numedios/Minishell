@@ -83,7 +83,7 @@ int	switch_dup2_fd_out(t_maillons *maillons, t_pipes *pipes, int i, int len)
 }
 
 
-int	pipex_multiple(t_maillons	*maillons, char **env, int len)
+int    pipex_multiple(t_maillons    *maillons, char **env, int len, t_garbage     *garbage) 
 {
 	t_pipes pipes;
 	pid_t pid;

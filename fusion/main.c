@@ -86,9 +86,9 @@ int main(int argc, char **argv, char **env)
 
 	setup_signal_handlers();
 	initialize_garbage(&garbage);
-	//new_env = my_env(env);//ne pas oublier de free a la fin le new env
-	//while (1)
-	//{
+	new_env = my_env(env);//ne pas oublier de free a la fin le new env
+	while (1)
+	{
 		line = rl_gets();
 		if (line == NULL)  // si l'utilisateur appuie sur ctrl-D
 		{
@@ -98,6 +98,8 @@ int main(int argc, char **argv, char **env)
 		}
 		if (parse(line) == 0)
 		{
+			line = replace_dollar(line, new_env);
+			line = delete_dollar(line);
 			loop_create_maillons(line, &garbage);
 			cmd_to_path(garbage.maillons, env);
 			find_all_heredoc(garbage.maillons);// verifier les leak au niveau de cat << a <b
@@ -107,8 +109,8 @@ int main(int argc, char **argv, char **env)
 			pipex(garbage.maillons, env, &garbage);
 			//free_maillons(&maillons);
 		}
-	//}
-	//ft_free_tab(new_env);
+	}
+	ft_free_tab(new_env);
 	return (1);
 }
 

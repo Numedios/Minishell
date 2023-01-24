@@ -113,7 +113,11 @@ int	pipex(t_maillons *maillons, char **env, t_garbage *garbage)
 	{
 		pipex_one(maillons, env, garbage);
 	}
-	if (len != 1)
+	if (len == 2)
+	{
+		pipex_2(maillons, env);
+	}
+	else if (len != 1)
 	{
 		pipex_multiple(maillons, env, len, garbage);
 	}

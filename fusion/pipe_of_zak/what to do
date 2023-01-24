@@ -3,3 +3,6 @@ ctrl + C pendant un heredoc cancel toute la ligne
 retirer les $ qui n'ont pas trouve de valeur
 gerer les & dans les hereoc
 mettre a jour mon pipex avec la nouvelle methode des heredoc
+rajouter mmon pipex dans les conditions des pipex
+si on fait unset hola=salut ne rien faire
+executer minishell dans minishell

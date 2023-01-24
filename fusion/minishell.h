@@ -262,7 +262,7 @@ int				pipex(t_maillons *maillons, char **env, t_garbage *garbage);
 
 /* pipex2.c */
 
-int				pipex_multiple(t_maillons		*maillons, char **env, int len);
+int                pipex_multiple(t_maillons *maillons, char **env, int len, t_garbage *garbage);
 
 /* utils_pipex.c */
 
