@@ -105,7 +105,10 @@ int	pipex(t_maillons *maillons, char **env, t_garbage *garbage)
 	int	len;
 
 	//ft_print_garbage(garbage);
+	ft_print_maillons(garbage->maillons);
 	len = ft_strlen_maillons(maillons); // nombre de maillons
+	if (check_access(maillons) == 1)//sauf si c'est un builtin
+		return (1);
 	if (len == 0)
 		return(0);
 

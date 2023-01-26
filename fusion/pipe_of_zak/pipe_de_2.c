@@ -34,7 +34,7 @@ int	child1(two_pipe *two_pipe, char **env, t_maillons *maillons)
 		dprintf(2, "yes !\n");
 		exit(0);
 	}
-	if (check_echo(maillons->args, 0 , 0) == 0)
+	if (check_echo(maillons->args, 0 , 0, 0) == 0)
 	{
 		dprintf(2, "yes1\n");
 		exit(0);
@@ -75,7 +75,7 @@ int	child2(two_pipe *two_pipe, char **env, t_maillons *maillons)
 		dprintf(2, "yes 2!\n");
 		exit(0);
 	}
-	if (check_echo(maillons->args, 0, 0) == 0)
+	if (check_echo(maillons->args, 0, 0, 0) == 0)
 	{
 		dprintf(2, "yes3\n");
 		exit(0);

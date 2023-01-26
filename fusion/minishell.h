@@ -97,7 +97,8 @@ char			*ft_itoa(int n);
 
 /*  security */
 int				check_if_builtin (char **args, char **env);
-int				check_echo (char **args,int cmp, int i);
+int				check_echo (char **args,int cmp, int i, int execute);
+int				check_access(t_maillons *maillons);
 
 /* main.c */
 

@@ -6,3 +6,5 @@ mettre a jour mon pipex avec la nouvelle methode des heredoc
 rajouter mmon pipex dans les conditions des pipex
 si on fait unset hola=salut ne rien faire
 executer minishell dans minishell
+ajouter l'execution des buitlin dans pipex one
+probleme avec export dans un pipe

@@ -1,5 +1,50 @@
 #include "../minishell.h"
 
+int	check_builtin (char **args)
+{
+	int	cmp;
+	int i;
+	
+	cmp = 0;
+	i = 0;
+	while (args[cmp])
+	{
+		if(args[cmp][0] == '-')
+			return(1);
+		cmp++;
+	}
+	if (str_cmp(args[0], "cd") == 1 && cmp == 2)
+		return(0);
+	if (str_cmp(args[0], "env") == 1)
+		return (0);
+	if (str_cmp(args[0], "pwd") == 1)
+		return (0);
+	if (str_cmp(args[0], "exit") == 1 && cmp < 3)// pas plus d'un argument et si pas d'argument le retour d'exit est 0 en code erreur 
+		return (0); 
+	if (str_cmp(args[0], "unset") == 1)
+		return (0);
+	if (str_cmp(args[0], "export") == 1)
+		return (0);
+	return (1);
+}
+
+int	check_access(t_maillons *maillons)
+{
+	while (maillons)
+	{
+		if (check_echo(maillons->args, 0, 0, 0) == 0 || check_builtin(maillons->args) == 0)
+			maillons = maillons->next;
+		else if (access(maillons->command, F_OK | X_OK) != 0)
+		{
+			write(2,"probleme de chemin\n", 20);
+			return (1);
+		}
+		else
+			maillons = maillons->next;
+	}
+	return (0);
+}
+
 void	init(two_pipe *two_pipe)
 {
     two_pipe->status = 0;
@@ -52,7 +97,7 @@ int	check_if_builtin (char **args, char **env)
 	return (1);
 }
 
-int check_echo(char **args, int cmp, int i)
+int check_echo(char **args, int cmp, int i, int execute)
 {
 	cmp = 0;
 	i = 0;
@@ -74,7 +119,8 @@ int check_echo(char **args, int cmp, int i)
 	}
 	if (str_cmp(args[0], "echo") == 1)//attention a le droit a une seule option
 	{
-		do_echo(&args[1]);
+		if (execute == 0)
+			do_echo(&args[1]);
 		return (0);
 	}
 	return (1);
