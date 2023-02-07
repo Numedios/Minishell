@@ -25,16 +25,19 @@ char	*delete_dollar(char *line)
 	i = 0;
 	j = 0;
 	new_line = malloc(sizeof(char) * (ft_strlen(line) + 1));
-	while (line[i])
+	while (line && line[i])
 	{
 		if (line[i] == '$')
 		{
-			while (line[i] != ' ' && line[i] != '\0' && line[i] != '"' && line[i] != '\'')// et des autres espaces
+			while (line && line[i] != '\0' && line[i] != ' ' && line[i] != '"' && line[i] != '\'')// et des autres espaces
 				i++;
 		}
 		new_line[j] = line[i];
-		i++;
-		j++;
+		if (line && line[i] != '\0')
+		{
+			i++;
+			j++;
+		}
 	}
 	new_line[j] = '\0';
 	free(line);

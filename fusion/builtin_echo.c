@@ -26,7 +26,7 @@ int	check_option_n(char *str, int *space)
 	i = 2;
 	if ((str[0] && str[1]) && (str[0] != '-' || str[1] != 'n'))
 		return (0);
-	while (str[i])
+	while (str && str[i])
 	{
 		if (str[i] != 'n')
 			return (0);

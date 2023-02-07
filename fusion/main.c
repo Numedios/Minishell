@@ -108,8 +108,8 @@ int main(int argc, char **argv, char **env)
 			//ft_print_garbage(&garbage);
 			//ft_print_maillons(garbage.maillons);
 			pipex(garbage.maillons, env, &garbage);
-			free_garbage(&garbage);
 		}
+		free_garbage(&garbage);
 		free(line);
 	}
 	ft_free_tab(new_env);
