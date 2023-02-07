@@ -116,6 +116,11 @@ int	del_quote(char *line)
 		if ((line[i] == '"' && line[i + 1] == '"') || (line[i] == '\'' && line[i + 1] == '\''))
 		{
 			j = i;
+			if (line[i + 2] == '\0')
+			{
+				line[j] = '\0';
+				return(0);
+			}
 			while (line && line[j])
 			{
 				line[j] = line[j + 2];
@@ -127,6 +132,7 @@ int	del_quote(char *line)
 		else
 			i++;
 	}
+	return (0);
 }
 
 int	check_error_2_space(char *line, char c, char c_bis, int i)

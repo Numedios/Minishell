@@ -32,7 +32,7 @@ int	check_access(t_maillons *maillons)
 {
 	while (maillons)
 	{
-		if (check_echo(maillons->args, 0, 0, 0) == 0 || check_builtin(maillons->args) == 0)
+		if (check_echo(maillons->args, 0, 0, 1) == 0 || check_builtin(maillons->args) == 0)
 			maillons = maillons->next;
 		else if (access(maillons->command, F_OK | X_OK) != 0)
 		{

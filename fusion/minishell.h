@@ -93,6 +93,10 @@ void			init(two_pipe *two_pipe);
 int				dup_fd(int new_stdin, int new_stdout);
 void			signal_quit_child(int useless);
 
+
+/*      free_garbage     */
+void    free_garbage(t_garbage *garbage);
+
 /*  ft_itoa */
 char			*ft_itoa(int n);
 

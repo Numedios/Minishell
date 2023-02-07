@@ -93,6 +93,7 @@ int main(int argc, char **argv, char **env)
 		if (line == NULL)  // si l'utilisateur appuie sur ctrl-D
 		{
 			ft_free_tab(new_env);
+			free(line);
 			printf("\n");
 			exit(0);
 		}
@@ -107,10 +108,12 @@ int main(int argc, char **argv, char **env)
 			//ft_print_garbage(&garbage);
 			//ft_print_maillons(garbage.maillons);
 			pipex(garbage.maillons, env, &garbage);
-			//free_maillons(&maillons);
+			free_garbage(&garbage);
 		}
+		free(line);
 	}
 	ft_free_tab(new_env);
+	free(line);
 	return (1);
 }
 

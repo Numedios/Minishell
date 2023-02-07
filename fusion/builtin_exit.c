@@ -68,7 +68,6 @@ int	do_exit(char* statut)
 		}
 	}
 	flag = 0;
-	exit(2);
 	exit_code = ft_atoll_capped(statut, &flag);
 	if (flag == 0)
 	{
