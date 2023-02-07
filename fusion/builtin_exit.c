@@ -52,6 +52,7 @@ int	do_exit(char* statut)
 	long long	exit_code;
 	int			flag;
 
+	exit_code = 2;
 	flag = 0;
 	while (statut && statut[flag])//erreur il y a une lettree
 	{
@@ -67,11 +68,16 @@ int	do_exit(char* statut)
 		}
 	}
 	flag = 0;
+	exit(2);
 	exit_code = ft_atoll_capped(statut, &flag);
 	if (flag == 0)
+	{
 		exit(exit_code);
+	}
 	else
+	{
 		exit(2);
+	}
 }
 
 

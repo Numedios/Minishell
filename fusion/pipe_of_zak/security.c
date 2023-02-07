@@ -7,23 +7,23 @@ int	check_builtin (char **args)
 	
 	cmp = 0;
 	i = 0;
-	while (args[cmp])
+	while (args && args[cmp])
 	{
 		if(args[cmp][0] == '-')
 			return(1);
 		cmp++;
 	}
-	if (str_cmp(args[0], "cd") == 1 && cmp == 2)
+	if (args[0] && str_cmp(args[0], "cd") == 1 && cmp == 2)
 		return(0);
-	if (str_cmp(args[0], "env") == 1)
+	if (args[0] && str_cmp(args[0], "env") == 1)
 		return (0);
-	if (str_cmp(args[0], "pwd") == 1)
+	if (args[0] && str_cmp(args[0], "pwd") == 1)
 		return (0);
-	if (str_cmp(args[0], "exit") == 1 && cmp < 3)// pas plus d'un argument et si pas d'argument le retour d'exit est 0 en code erreur 
+	if (args[0] && str_cmp(args[0], "exit") == 1 && cmp < 3)// pas plus d'un argument et si pas d'argument le retour d'exit est 0 en code erreur 
 		return (0); 
-	if (str_cmp(args[0], "unset") == 1)
+	if (args[0] && str_cmp(args[0], "unset") == 1)
 		return (0);
-	if (str_cmp(args[0], "export") == 1)
+	if (args[0] && str_cmp(args[0], "export") == 1)
 		return (0);
 	return (1);
 }
@@ -36,7 +36,10 @@ int	check_access(t_maillons *maillons)
 			maillons = maillons->next;
 		else if (access(maillons->command, F_OK | X_OK) != 0)
 		{
-			write(2,"probleme de chemin\n", 20);
+			// write(2,"probleme de chemin\n", 20);
+			ft_putstr_fd("bash: ", 2);
+			ft_putstr_fd(maillons->command, 2);
+			ft_putstr_fd(": command not found\n", 2);
 			return (1);
 		}
 		else
@@ -68,27 +71,27 @@ int	check_if_builtin (char **args, char **env)
 	
 	cmp = 0;
 	i = 0;
-	while (args[cmp])
+	while (args && args[cmp])
 	{
 		if(args[cmp][0] == '-')
 			return(1);
 		cmp++;
 	}
-	if (str_cmp(args[0], "cd") == 1 && cmp == 2)
+	if (args[0] && str_cmp(args[0], "cd") == 1 && cmp == 2)
 		return(do_cd(env, args[1]), 0);
-	if (str_cmp(args[0], "env") == 1)
+	if (args[0] && str_cmp(args[0], "env") == 1)
 		return (do_env(env), 0);
-	if (str_cmp(args[0], "pwd") == 1)
+	if (args[0] && str_cmp(args[0], "pwd") == 1)
 		return (do_pwd(), 0);
-	if (str_cmp(args[0], "exit") == 1 && cmp < 3)// pas plus d'un argument et si pas d'argument le retour d'exit est 0 en code erreur 
+	if (args[0] && str_cmp(args[0], "exit") == 1 && cmp < 3)// pas plus d'un argument et si pas d'argument le retour d'exit est 0 en code erreur 
 		return (do_exit(args[1]), 0); 
-	if (str_cmp(args[0], "unset") == 1)
+	if (args[0] && str_cmp(args[0], "unset") == 1)
 	{
 		while (args[++i])
 			do_unset(args[i], env);
 		return (0);
 	}
-	if (str_cmp(args[0], "export") == 1)
+	if (args[0] && str_cmp(args[0], "export") == 1)
 	{
 		while (args[++i])
 			env = do_export(args[i], env);
@@ -101,7 +104,7 @@ int check_echo(char **args, int cmp, int i, int execute)
 {
 	cmp = 0;
 	i = 0;
-	while (args[cmp])
+	while (args && args[cmp])
 	{
 		while (args[cmp][i])
 		{
@@ -117,7 +120,7 @@ int check_echo(char **args, int cmp, int i, int execute)
 		i = 0;
 		cmp++;
 	}
-	if (str_cmp(args[0], "echo") == 1)//attention a le droit a une seule option
+	if (args[0] && str_cmp(args[0], "echo") == 1)//attention a le droit a une seule option
 	{
 		if (execute == 0)
 			do_echo(&args[1]);

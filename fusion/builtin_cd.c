@@ -45,7 +45,7 @@ int	do_cd(char **new_env, char *path)
 	if (oldpwd)
 	{
 		new_env = do_export(oldpwd, new_env);
-		free(oldpwd);
+		//free(oldpwd);
 	}
 	update_pwd(new_env, pwd);
 	return (0);

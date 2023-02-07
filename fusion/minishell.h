@@ -91,6 +91,7 @@ int				find_stdin_2(t_maillons *maillons, int * fd_in, two_pipe *two_pipe);
 int				find_stdout_2(t_maillons *maillons, int *fd_out, two_pipe *two_pipe);
 void			init(two_pipe *two_pipe);
 int				dup_fd(int new_stdin, int new_stdout);
+void			signal_quit_child(int useless);
 
 /*  ft_itoa */
 char			*ft_itoa(int n);
@@ -131,6 +132,7 @@ void			do_unset(char *tab, char **env_copy);
 /*  signals */
 void			setup_signal_handlers(void);
 void			handle_sig(int sig);
+void			setup_signal_handlers_child(void);
 
 /*  utils parsing_bis */
 char			*ft_strdup_const(const char *s);

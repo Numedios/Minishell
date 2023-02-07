@@ -80,15 +80,15 @@ t_maillons *loop_create_maillons(char * line, t_garbage *garbage)
 
 int main(int argc, char **argv, char **env)
 {
-	char			*line;
+	char		*line;
 	t_garbage	garbage;
-	char **new_env;
+	char		**new_env;
 
-	setup_signal_handlers();
 	initialize_garbage(&garbage);
 	new_env = my_env(env);//ne pas oublier de free a la fin le new env
 	while (1)
 	{
+		setup_signal_handlers();
 		line = rl_gets();
 		if (line == NULL)  // si l'utilisateur appuie sur ctrl-D
 		{

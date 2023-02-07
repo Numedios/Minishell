@@ -8,3 +8,5 @@ si on fait unset hola=salut ne rien faire
 executer minishell dans minishell
 ajouter l'execution des buitlin dans pipex one
 probleme avec export dans un pipe
+gerer les erreurs de file directory or directory 
+probleme builtin_export, avec les free de replace value ligne 179 (sinon on va devoir calculer la taille savoir si il y a assez de place sinon strjoin une partie et remplacer les valeurs existantes)

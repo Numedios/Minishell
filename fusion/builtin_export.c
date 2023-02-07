@@ -183,7 +183,7 @@ char	**replace_value(int j, int a, char *tab, char **env)
 	i = 0;
 	if (a == 0)
 	{
-		free(env[j]);
+		//free(env[j]);
 		env[j] = ft_strdup(tab);
 		return (env);
 	}

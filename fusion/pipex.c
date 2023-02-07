@@ -69,9 +69,20 @@ int	pipex_one(t_maillons *maillons, char **env, t_garbage *garbage)
 	int		fd_out;
 
 
+	if (check_if_builtin(maillons->args, env) == 0)
+	{
+		dprintf(2, "yes !\n");
+		return (0);
+	}
+	if (check_echo(maillons->args, 0 , 0, 0) == 0)
+	{
+		dprintf(2, "yes1\n");
+		return (0);
+	}
 	pid = fork();
 	if (pid == -1)
 			return (perror("fork"), 1);
+	signal(SIGQUIT,signal_quit_child);
 	if (pid == 0)
 	{
 		fd_in = find_stdin(maillons);
@@ -105,7 +116,7 @@ int	pipex(t_maillons *maillons, char **env, t_garbage *garbage)
 	int	len;
 
 	//ft_print_garbage(garbage);
-	ft_print_maillons(garbage->maillons);
+	//ft_print_maillons(garbage->maillons);
 	len = ft_strlen_maillons(maillons); // nombre de maillons
 	if (check_access(maillons) == 1)//sauf si c'est un builtin
 		return (1);
