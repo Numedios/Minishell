@@ -36,7 +36,7 @@ int	child1(two_pipe *two_pipe, char **env, t_maillons *maillons)
         close(two_pipe->fd_out);
 	if (maillons -> command == NULL)
 		return (1);
-	if (check_if_builtin(maillons->args, env) == 0)
+	if (check_if_builtin(maillons->args, &env) == 0)
 	{
 		dprintf(2, "yes !\n");
 		exit(0);
@@ -77,7 +77,7 @@ int	child2(two_pipe *two_pipe, char **env, t_maillons *maillons)
 	}
 	if (maillons -> command == NULL)
 		return ( 1);
-	if (check_if_builtin(maillons->args, env) == 0)
+	if (check_if_builtin(maillons->args, &env) == 0)
 	{
 		dprintf(2, "yes 2!\n");
 		exit(0);

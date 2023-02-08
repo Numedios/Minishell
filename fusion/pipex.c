@@ -71,7 +71,12 @@ int	pipex_one(t_maillons *maillons, char **env, t_garbage *garbage)
 	if (check_if_exit(maillons->args, env) == 0)
 	{
 		dprintf(2, "yes !\n");
-		return (1);
+		return (1);// 1 ou 0
+	}
+	if (check_if_builtin(maillons->args, env) == 0)
+	{
+		dprintf(2, "yes !\n");
+		return (1);// 1 ou 0
 	}
 	pid = fork();
 	if (pid == -1)
@@ -90,11 +95,6 @@ int	pipex_one(t_maillons *maillons, char **env, t_garbage *garbage)
 		{
 			dup2(fd_out, STDOUT_FILENO);
 			close(fd_out);
-		}
-		if (check_if_builtin(maillons->args, env) == 0)
-		{
-			dprintf(2, "yes !\n");
-			exit(0);
 		}
 		if (check_echo(maillons->args, 0 , 0, 0) == 0)
 		{

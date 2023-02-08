@@ -179,11 +179,12 @@ int	what_to_do(char *tab, char **env)//il faut retourner la bonne ligne et faire
 char	**replace_value(int j, int a, char *tab, char **env)
 {
 	int	i;
+	char *tmp;
 
 	i = 0;
 	if (a == 0)
 	{
-		//free(env[j]);
+		free(env[j]);
 		env[j] = ft_strdup(tab);
 		return (env);
 	}

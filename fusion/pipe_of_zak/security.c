@@ -94,7 +94,7 @@ int	check_if_builtin (char **args, char **env)
 	if (args[0] && str_cmp(args[0], "export") == 1)
 	{
 		while (args[++i])
-			env = do_export(args[i], env);
+			&env = do_export(args[i], env);
 		return (0);
 	}
 	return (1);

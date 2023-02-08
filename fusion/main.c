@@ -102,12 +102,12 @@ int main(int argc, char **argv, char **env)
 			line = replace_dollar(line, new_env);
 			line = delete_dollar(line);
 			loop_create_maillons(line, &garbage);
-			cmd_to_path(garbage.maillons, env);
+			cmd_to_path(garbage.maillons, new_env);
 			find_all_heredoc(garbage.maillons);// verifier les leak au niveau de cat << a <b
 			check_inputs_outputs(garbage.maillons);
 			//ft_print_garbage(&garbage);
 			//ft_print_maillons(garbage.maillons);
-			pipex(garbage.maillons, env, &garbage);
+			pipex(garbage.maillons, new_env, &garbage);
 		}
 		free_garbage(&garbage);
 		free(line);
