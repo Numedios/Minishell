@@ -68,7 +68,11 @@ int	pipex_one(t_maillons *maillons, char **env, t_garbage *garbage)
 	int		fd_in;
 	int		fd_out;
 
-
+	if (check_if_exit(maillons->args, env) == 0)
+	{
+		dprintf(2, "yes !\n");
+		return (1);
+	}
 	pid = fork();
 	if (pid == -1)
 			return (perror("fork"), 1);

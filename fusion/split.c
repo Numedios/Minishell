@@ -323,7 +323,7 @@ char	*create_word_all2(char *str, char *sep)
 	if (!check_word_quote(str, sep))
 	{
 		//printf("2 create word and quote \n");
-		word = create_word_and_quote2(str, sep);
+		word = create_word_and_quote(str, sep);
 	}
 	else if (*str == '\"' || *str == '\'')
 	{

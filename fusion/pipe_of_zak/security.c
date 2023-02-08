@@ -100,6 +100,24 @@ int	check_if_builtin (char **args, char **env)
 	return (1);
 }
 
+int	check_if_exit (char **args, char **env)
+{
+	int	cmp;
+	int i;
+	
+	cmp = 0;
+	i = 0;
+	while (args && args[cmp])
+	{
+		if(args[cmp][0] == '-')
+			return(1);
+		cmp++;
+	}
+	if (args[0] && str_cmp(args[0], "exit") == 1 && cmp < 3)// pas plus d'un argument et si pas d'argument le retour d'exit est 0 en code erreur 
+		return (do_exit(args[1]), 0); 
+	return (1);
+}
+
 int check_echo(char **args, int cmp, int i, int execute)
 {
 	cmp = 0;
