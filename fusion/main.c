@@ -107,7 +107,7 @@ int main(int argc, char **argv, char **env)
 			check_inputs_outputs(garbage.maillons);
 			//ft_print_garbage(&garbage);
 			//ft_print_maillons(garbage.maillons);
-			pipex(garbage.maillons, new_env, &garbage);
+			pipex(garbage.maillons, &new_env, &garbage);
 		}
 		free_garbage(&garbage);
 		free(line);

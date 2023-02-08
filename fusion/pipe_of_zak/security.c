@@ -64,7 +64,7 @@ void	init(two_pipe *two_pipe)
 /*return 1 si il y a pas de builtin a faire et 0 si il y en a un et finir pipex*/
 // gerer les erreurs pour chaque built in a qui on envoie trop d'argument
 
-int	check_if_builtin (char **args, char **env)
+int	check_if_builtin (char **args, char **env, char ***new_env)
 {
 	int	cmp;
 	int i;
@@ -94,7 +94,7 @@ int	check_if_builtin (char **args, char **env)
 	if (args[0] && str_cmp(args[0], "export") == 1)
 	{
 		while (args[++i])
-			&env = do_export(args[i], env);
+			(*new_env) = do_export(args[i], env);
 		return (0);
 	}
 	return (1);

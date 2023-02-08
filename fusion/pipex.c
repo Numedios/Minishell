@@ -62,18 +62,18 @@ int	find_stdout(t_maillons *maillons)
 }
 
 
-int	pipex_one(t_maillons *maillons, char **env, t_garbage *garbage)
+int	pipex_one(t_maillons *maillons, char ***env, t_garbage *garbage)
 {
 	pid_t	pid;
 	int		fd_in;
 	int		fd_out;
 
-	if (check_if_exit(maillons->args, env) == 0)
+	if (check_if_exit(maillons->args, *env) == 0)
 	{
 		dprintf(2, "yes !\n");
 		return (1);// 1 ou 0
 	}
-	if (check_if_builtin(maillons->args, env) == 0)
+	if (check_if_builtin(maillons->args, *env, env) == 0)
 	{
 		dprintf(2, "yes !\n");
 		return (1);// 1 ou 0
@@ -101,7 +101,7 @@ int	pipex_one(t_maillons *maillons, char **env, t_garbage *garbage)
 			dprintf(2, "yes1\n");
 			exit(0);
 		}
-		if (execve(maillons ->command, maillons -> args , env) == -1)
+		if (execve(maillons ->command, maillons -> args , *env) == -1)
 		{
 			perror("execve");
 			exit (1);
@@ -114,7 +114,7 @@ int	pipex_one(t_maillons *maillons, char **env, t_garbage *garbage)
 
 
 
-int	pipex(t_maillons *maillons, char **env, t_garbage *garbage)
+int	pipex(t_maillons *maillons, char ***env, t_garbage *garbage)
 {
 	int	*pipes;
 	int	len;

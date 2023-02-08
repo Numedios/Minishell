@@ -83,7 +83,7 @@ int	switch_dup2_fd_out(t_maillons *maillons, t_pipes *pipes, int i, int len)
 }
 
 
-int    pipex_multiple(t_maillons    *maillons, char **env, int len, t_garbage     *garbage) 
+int    pipex_multiple(t_maillons    *maillons, char ***env, int len, t_garbage     *garbage) 
 {
 	t_pipes pipes;
 	pid_t pid;
@@ -106,7 +106,7 @@ int    pipex_multiple(t_maillons    *maillons, char **env, int len, t_garbage   
 			free_all_pipes((len-1) * 2, pipes);
 			if (maillons->heredoc !=-1)
 				close(maillons->heredoc);
-			if (check_if_builtin(maillons->args, env) == 0)
+			if (check_if_builtin(maillons->args, *env, env) == 0)
 			{
 				dprintf(2, "yes !\n");
 				exit(0);
@@ -116,7 +116,7 @@ int    pipex_multiple(t_maillons    *maillons, char **env, int len, t_garbage   
 				dprintf(2, "yes1\n");
 				exit(0);
 			}
-			if (execve(maillons ->command, maillons -> args , env) == -1)
+			if (execve(maillons ->command, maillons -> args , *env) == -1)
 			{
 				perror("execve");
 				exit (1);

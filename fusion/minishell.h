@@ -86,7 +86,7 @@ typedef struct	for_dollar
 # define BUFFER_SIZE 5
 
 /*      pipe_of_zak     */
-int				pipex_2(t_maillons  *maillons, char **env);
+int				pipex_2(t_maillons  *maillons, char ***env);
 int				find_stdin_2(t_maillons *maillons, int * fd_in, two_pipe *two_pipe);
 int				find_stdout_2(t_maillons *maillons, int *fd_out, two_pipe *two_pipe);
 void			init(two_pipe *two_pipe);
@@ -101,7 +101,7 @@ void    free_garbage(t_garbage *garbage);
 char			*ft_itoa(int n);
 
 /*  security */
-int				check_if_builtin (char **args, char **env);
+int				check_if_builtin (char **args, char **env, char ***new_env);
 int				check_echo (char **args,int cmp, int i, int execute);
 int				check_access(t_maillons *maillons);
 int				check_if_exit (char **args, char **env);
@@ -266,11 +266,11 @@ void			cd(char **arg);
 
 /* pipex.c */
 
-int				pipex(t_maillons *maillons, char **env, t_garbage *garbage);
+int				pipex(t_maillons *maillons, char ***env, t_garbage *garbage);
 
 /* pipex2.c */
 
-int                pipex_multiple(t_maillons *maillons, char **env, int len, t_garbage *garbage);
+int                pipex_multiple(t_maillons *maillons, char ***env, int len, t_garbage *garbage);
 
 /* utils_pipex.c */
 

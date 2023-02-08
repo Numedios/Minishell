@@ -14,7 +14,7 @@ void	signal_quit_child(int useless)
 	write(2, "QUIT\n", 5);
 }
 
-int	child1(two_pipe *two_pipe, char **env, t_maillons *maillons)
+int	child1(two_pipe *two_pipe, char ***env, t_maillons *maillons)
 {
 	if (find_stdin_2(maillons, &two_pipe->fd_in, two_pipe) != 0)
 		dup2(two_pipe->fd_in, STDIN_FILENO);
@@ -36,7 +36,7 @@ int	child1(two_pipe *two_pipe, char **env, t_maillons *maillons)
         close(two_pipe->fd_out);
 	if (maillons -> command == NULL)
 		return (1);
-	if (check_if_builtin(maillons->args, &env) == 0)
+	if (check_if_builtin(maillons->args, *env, env) == 0)
 	{
 		dprintf(2, "yes !\n");
 		exit(0);
@@ -46,7 +46,7 @@ int	child1(two_pipe *two_pipe, char **env, t_maillons *maillons)
 		dprintf(2, "yes1\n");
 		exit(0);
 	}
-	if (execve(maillons -> command, maillons -> args , env) < 0)
+	if (execve(maillons -> command, maillons -> args , *env) < 0)
 	{
 		write(2,"execve!\n", 8);
 		exit(1);
@@ -54,7 +54,7 @@ int	child1(two_pipe *two_pipe, char **env, t_maillons *maillons)
 	return (1);
 }
 
-int	child2(two_pipe *two_pipe, char **env, t_maillons *maillons)
+int	child2(two_pipe *two_pipe, char ***env, t_maillons *maillons)
 {
 	if (find_stdout_2(maillons, &two_pipe->fd_out, two_pipe) != 0)
 		dup2(two_pipe->fd_out, STDOUT_FILENO);
@@ -77,7 +77,7 @@ int	child2(two_pipe *two_pipe, char **env, t_maillons *maillons)
 	}
 	if (maillons -> command == NULL)
 		return ( 1);
-	if (check_if_builtin(maillons->args, &env) == 0)
+	if (check_if_builtin(maillons->args, *env, env) == 0)
 	{
 		dprintf(2, "yes 2!\n");
 		exit(0);
@@ -87,7 +87,7 @@ int	child2(two_pipe *two_pipe, char **env, t_maillons *maillons)
 		dprintf(2, "yes3\n");
 		exit(0);
 	}
-	if (execve(maillons-> command , maillons-> args , env) < 0)
+	if (execve(maillons-> command , maillons-> args , *env) < 0)
 	{
 		write(2,"execve!\n", 8);
 		exit(1);
@@ -96,7 +96,7 @@ int	child2(two_pipe *two_pipe, char **env, t_maillons *maillons)
 }
 
 
-int	loop(two_pipe *two_pipe, char **env, t_maillons *maillons, pid_t pid)
+int	loop(two_pipe *two_pipe, char ***env, t_maillons *maillons, pid_t pid)
 {
 	int	n;
 
@@ -116,7 +116,7 @@ int	loop(two_pipe *two_pipe, char **env, t_maillons *maillons, pid_t pid)
 	return (0);
 }
 
-int pipex_2(t_maillons  *maillons, char **env)
+int pipex_2(t_maillons  *maillons, char ***env)
 {
 	two_pipe	two_pipe;
 	pid_t	pid[2];
