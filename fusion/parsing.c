@@ -86,7 +86,7 @@ int	check_parenthesis(char *line)//(")"0 ;;; (")" 0) -> est ce qu'il traiter les
 	while (line && line[i])
 	{
 		i = skip_quote(line, i);
-		if (i == -1)
+		if (i == -1 || !line || line[i] == '\0')
 			return (0);
 		if (line[i] == '(')
 			count_1++;
@@ -111,7 +111,7 @@ int	del_quote(char *line)
 	while (line && line[i])
 	{
 		i = skip_quote(line, i);
-		if (i == -1)
+		if (i == -1 || !line || line[i] == '\0')
 			return (0);
 		if ((line[i] == '"' && line[i + 1] == '"') || (line[i] == '\'' && line[i + 1] == '\''))
 		{
@@ -189,7 +189,7 @@ int	check_1(char *line)
 	while (line && line[i])
 	{
 		i = skip_quote(line, i);
-		if (i == -1)
+		if (i == -1 || !line || line[i] == '\0')
 			return (0);
 		if (check_error_2_space(line, '(', ')', i) == 2)
 		{
