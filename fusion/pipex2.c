@@ -82,6 +82,11 @@ int	switch_dup2_fd_out(t_maillons *maillons, t_pipes *pipes, int i, int len)
 	return (1);
 }
 
+void 	sigint_child (int unused)//rajouter exit_code
+{
+	(void)unused;
+	write(1, "\n", 1);
+}
 
 int    pipex_multiple(t_maillons    *maillons, char ***env, int len, t_garbage     *garbage) 
 {
@@ -99,6 +104,7 @@ int    pipex_multiple(t_maillons    *maillons, char ***env, int len, t_garbage  
 		if (pid == -1)
 			return (perror("fork"), 1);
 		signal(SIGQUIT,signal_quit_child);
+		signal(SIGINT,sigint_child);
 		if (pid == 0)
 		{
 			switch_dup2_fd_in(maillons, &pipes, i, len);

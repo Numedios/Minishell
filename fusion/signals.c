@@ -7,21 +7,31 @@ void	handle_sig(int sig)//il faut free si exit
 {
 	if (sig == SIGINT)//ctrl+c
 	{
+		if (exit_code[1] == 5)//pour here doc 
+		{
+			/*
+			rajouter exit code dans le here doc
+			psk je me dis peut etre que je mettrait en place un exit_code special pour celui la, en mode si exit_code[1]=5, 
+			et on mettre cette valeur au debut de la fonction, mon signal fermera tous les pipes, passera l'exit code a 6 
+			et on rajoute une condition pour executer pipex qui est que exit_code[1] != 6
+			ou que juste dans mon signal quand exit code[1] == 5, on free tout comme ca il se passe rien dans pipex
+			*/
+		}
 		if (exit_code[1] == 2)
 		{
-			//dprintf(2, "here2\n");
-			exit_code[1] = 3;
-			write(1, " ", 0);
+			// dprintf(2, "here2\n");
+			exit_code[1] = 3;// == 0
+			write(1, "\n", 1);
 		}
 		else
 		{
 			//dprintf(2, "here\n");
-			exit_code[0] = 130;
+			rl_replace_line("", 0);
+			write(1, "\n", 1);
 			rl_on_new_line();
 			// rl_on_new_line_with_prompt();devoir defenir un prompte au prealable peut etre pour eviter que le prompt ne s'affiche qu'une fois qu'on a touche a un lettre
-			write(1, "\n", 1);
-			rl_replace_line("", 0);
 			rl_redisplay();
+			exit_code[0] = 130;//verifier les codes erreurs
 		}
 	}
 	// if (sig == SIGTSTP)//il faudra l'enlever

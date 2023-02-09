@@ -17,3 +17,5 @@ pour pipex one, mettre exit en dehors de l'enfant, dans un pipe il ne modifie pa
 verifier que tous les mallocs sont securises, faire la fonction clean exit et la mettre a la place des exit
 
 faire un cas du signal pour le heredoc, si par exemple exi_code[1] = 4, fermer le pipe ou close(demander a so)
+
+mieux analyser le ctrl+c dans multipipe, mettre les codes erreurs

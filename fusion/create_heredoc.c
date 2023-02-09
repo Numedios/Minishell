@@ -35,6 +35,8 @@ char	*ft_strjoin(char *line, char *buf)
 	return (res);
 }*/
 
+extern int exit_code[2];
+
 void	create_heredoc(int *pipe_fd)
 {
 
@@ -56,7 +58,7 @@ int	heredoc(char *stop)
 	create_heredoc(pipe_fd);
 	comp = ft_strjoin(stop, "\n");
 	str = NULL;
-	while (1)
+	while (1 && exit_code[1] != 7)
 	{
 		write(1, "> ", 2);
 		str = get_next_line(1);
@@ -76,10 +78,18 @@ int	heredoc(char *stop)
 	return (pipe_fd[0]);
 }
 
+void	sigint_heredoc(int unused)
+{
+	(void) unused;
+	exit_code[1] = 7;
+
+}
+
 void	find_all_heredoc(t_maillons *maillons)
 {
 	t_input_output	*tmp;
 
+	signal(SIGINT,sigint_heredoc);
 	while (maillons)
 	{
 		tmp = maillons->output;
