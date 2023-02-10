@@ -30,7 +30,7 @@ int	print_tab(char **tab)
 int	skip_quote(char *line, int i)//existe deja dans un autre fichier, a ajouter dans le .h et le retirer d'ici
 {
 	if (line && line[i] != '\0' && line[i + 1] != '\0' && ((line[i] == '"' && line[i + 1] == '"') || (line[i] == '\'' && line[i + 1] == '\'')))
-		return (i + 2);
+		return (i + 1);
 	while (line && line[i] != '\0' && line[i + 1] != '\0' && ((line[i] == '"' && line[i + 1] != '"') || (line[i] == '\'' && line[i + 1] != '\'')))//ne fonctionne pas quand je met line[i + 1] doit etre different de '\0', pour ce test '''ho"''''l"a'''
 	{
 		if (line[i] == '"' && line[i + 1] != '"')
@@ -38,15 +38,15 @@ int	skip_quote(char *line, int i)//existe deja dans un autre fichier, a ajouter 
 			i++;
 			if (line && line[i] == '\0')
 				return (-1);
-			while (line[i] != '"')
+			while (line && line[i] != '\0' && line[i] != '"')
 				i++;
 		}
-		if ((line[i] == '\'' && line[i + 1] != '\''))
+		if (line && line[i] != '\0' && (line[i] == '\'' && line[i + 1] != '\''))
 		{
 			i++;
 			if (line && line[i] == '\0')
 				return (-1);
-			while (line[i] != '\'')
+			while (line && line[i] != '\0' && line[i] != '\'')
 				i++;
 		}
 		i++;

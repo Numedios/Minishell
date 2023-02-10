@@ -19,3 +19,5 @@ verifier que tous les mallocs sont securises, faire la fonction clean exit et la
 faire un cas du signal pour le heredoc, si par exemple exi_code[1] = 4, fermer le pipe ou close(demander a so)
 
 mieux analyser le ctrl+c dans multipipe, mettre les codes erreurs
+
+valgrind --suppressions=readline_leaks.txt --leak-check=full --show-leak-kinds=all ./minishell

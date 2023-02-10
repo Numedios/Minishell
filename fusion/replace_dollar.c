@@ -208,17 +208,31 @@ char	*replace_dollar(char *tab, char **new_env)//peu etre possible de pas renvoy
 
 	i = 0;
 	skip = 0;
-	while (tab && tab[i])
+	while (tab && tab[i] != '\0')
+	{
+		if (tab[i] != '$')
+			i++;
+		else
+		{
+			skip = 1;
+			break ; 
+		}
+	}
+	i = 0;
+	if (skip == 0)
+		return (tab);
+	skip = 0;
+	while (tab && tab[i] != '\0')
 	{
 		if (tab[i] == '"')
 			tab = found_dollar_inquote(tab, &i, new_env, &index);
-		if (tab[i] && tab[i] == '\'')
+		if (tab && tab[i] && tab[i] == '\'')
 		{
 			i++;
-			while (tab[i] && tab[i] != '\'')
+			while (tab && tab[i] != '\0' && tab[i] != '\'')
 				i++;
 		}
-		while (tab[i] && tab[i] == '$' && tab[i + 1] == '$')
+		while (tab && tab[i] != '\0' && tab[i] == '$' && tab[i + 1] == '$')
 					i++;
 		tab = one_dollar_or_more(tab, &i, new_env, &index);
 		i++;

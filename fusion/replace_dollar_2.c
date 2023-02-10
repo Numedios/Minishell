@@ -24,6 +24,21 @@ char	*delete_dollar(char *line)
 
 	i = 0;
 	j = 0;
+	while (line && line[i] != '\0')
+	{
+		if (line[i] != '$')
+			i++;
+		else
+		{
+			j = 1;
+			break ; 
+		}
+	}
+	i = 0;
+	if (j == 0)
+		return (line);
+	i = 0;
+	j = 0;
 	new_line = malloc(sizeof(char) * (ft_strlen(line) + 1));
 	while (line && line[i])
 	{
