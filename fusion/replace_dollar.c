@@ -229,7 +229,7 @@ char	*replace_dollar(char *tab, char **new_env)//peu etre possible de pas renvoy
 		if (tab && tab[i] && tab[i] == '\'')
 		{
 			i++;
-			while (tab && tab[i] != '\0' && tab[i] != '\'')
+			while (tab && tab[i] != '\0' && tab[i] != '\'' && tab[i] != '\'')
 				i++;
 		}
 		while (tab && tab[i] != '\0' && tab[i] == '$' && tab[i + 1] == '$')
