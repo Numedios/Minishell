@@ -24,3 +24,5 @@ valgrind --suppressions=readline_leaks.txt --leak-check=full --show-leak-kinds=a
 
 
 le probleme du replace dollar quand on met un simple guillement c'est que la comparaison du str_len se fait sur un simple guillemet, faire un str_len qui a la meme conditon de sortir que dans le foundit avec le long if
+
+enlever le retour a la ligne du ctrl+d, ou ecrire exit

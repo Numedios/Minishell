@@ -172,9 +172,9 @@ char	*found_dollar_inquote(char *tab, int *i, char ** new_env, t_index *index)//
 		{
 			skip++;
 			index->a = (*i) + 1;
-			dprintf(2, "index->a = %d\nindex->j =%d\n ", index->a, index->j);
+			//dprintf(2, "index->a = %d\nindex->j =%d\n ", index->a, index->j);
 			tab = found_it(tab, new_env, index, &skip);
-			dprintf(2, "index->a = %d\nindex->j = %d", index->a, index->j);
+			//dprintf(2, "index->a = %d\nindex->j = %d", index->a, index->j);
 			if (index->j == -1)
 				(*i) = skip + (*i);
 			skip = 0;

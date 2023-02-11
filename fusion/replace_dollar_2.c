@@ -62,9 +62,13 @@ char	*delete_dollar(char *line)
 					i++;
 				}
 			}
-			new_line[j] = line[i];
-			j++;
-			i++;
+			//check si line existe
+			if (line && line[i] != '\0')
+			{
+				new_line[j] = line[i];
+				j++;
+				i++;
+			}
 		}
 		while (line && line[i] != '\0' && line [i] == '\'')
 		{
@@ -77,9 +81,12 @@ char	*delete_dollar(char *line)
 				j++;
 				i++;
 			}
-			new_line[j] = line[i];
-			j++;
-			i++;
+			if (line && line[i] != '\0')
+			{
+				new_line[j] = line[i];
+				j++;
+				i++;
+			}
 		}
 		while (line && line[i] != '\0' && line[i] != '\'' && line [i] != '"')
 		{
@@ -88,9 +95,12 @@ char	*delete_dollar(char *line)
 				while (line && line[i] != '\0' && line[i] != ' ' && line[i] != '"' && line[i] != '\'')// et des autres espaces
 					i++;
 			}
-			new_line[j] = line[i];
-			i++; 
-			j++;
+			if (line && line[i] != '\0')
+			{
+				new_line[j] = line[i];
+				j++;
+				i++;
+			}
 		}
 		// if (line && line[i] != '\0')
 		// {
