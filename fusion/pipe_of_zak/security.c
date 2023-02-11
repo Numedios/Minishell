@@ -34,7 +34,7 @@ int	check_access(t_maillons *maillons)
 	{
 		if (check_echo(maillons->args, 0, 0, 1) == 0 || check_builtin(maillons->args) == 0)
 			maillons = maillons->next;
-		else if (access(maillons->command, F_OK | X_OK) != 0)
+		else if (maillons->command != NULL && access(maillons->command, F_OK | X_OK) != 0)
 		{
 			// write(2,"probleme de chemin\n", 20);
 			ft_putstr_fd("bash: ", 2);

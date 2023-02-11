@@ -101,12 +101,12 @@ int	pipex_one(t_maillons *maillons, char ***env, t_garbage *garbage)
 			dprintf(2, "yes1\n");
 			exit(0);
 		}
-		if (execve(maillons ->command, maillons -> args , *env) == -1)
+		if (maillons->command != NULL && execve(maillons ->command, maillons -> args , *env) == -1)
 		{
 			perror("execve");
 			exit (1);
 		}
-		return (1);
+		exit (1);
 	}
 	waitpid(-1 , NULL, 0);
 	return (0);

@@ -122,11 +122,12 @@ int    pipex_multiple(t_maillons    *maillons, char ***env, int len, t_garbage  
 				dprintf(2, "yes1\n");
 				exit(0);
 			}
-			if (execve(maillons ->command, maillons -> args , *env) == -1)
+			if (maillons->command != NULL && execve(maillons ->command, maillons -> args , *env) == -1)
 			{
 				perror("execve");
 				exit (1);
 			}
+			exit (1);
 		}
 		if (i > 0 && pipes.pipe[i * 2 - 2])
 		{
