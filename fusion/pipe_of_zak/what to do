@@ -21,3 +21,6 @@ faire un cas du signal pour le heredoc, si par exemple exi_code[1] = 4, fermer l
 mieux analyser le ctrl+c dans multipipe, mettre les codes erreurs
 
 valgrind --suppressions=readline_leaks.txt --leak-check=full --show-leak-kinds=all ./minishell
+
+
+le probleme du replace dollar quand on met un simple guillement c'est que la comparaison du str_len se fait sur un simple guillemet, faire un str_len qui a la meme conditon de sortir que dans le foundit avec le long if

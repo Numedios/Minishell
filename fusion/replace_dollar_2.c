@@ -40,19 +40,63 @@ char	*delete_dollar(char *line)
 	i = 0;
 	j = 0;
 	new_line = malloc(sizeof(char) * (ft_strlen(line) + 1));
+	//il faut garder le dollar seulement quand on est dans un simple quote qui est en dehors d'une double quote
 	while (line && line[i])
 	{
-		if (line[i] == '$')
+		while (line && line[i] != '\0' && line [i] == '"')//faire possiblement attention au cas il la quote n'est pas ferme 
 		{
-			while (line && line[i] != '\0' && line[i] != ' ' && line[i] != '"' && line[i] != '\'')// et des autres espaces
-				i++;
-		}
-		new_line[j] = line[i];
-		if (line && line[i] != '\0')
-		{
+			new_line[j] = line[i];
+			j++;
 			i++;
+			while(line && line[i] != '\0' && line[i] != '"')
+			{
+				if (line[i] == '$')
+				{
+					while (line && line[i] != '\0' && line[i] != ' ' && line[i] != '"' && line[i] != '\'')// et des autres espaces
+						i++;
+				}
+				else
+				{
+					new_line[j] = line[i];
+					j++;
+					i++;
+				}
+			}
+			new_line[j] = line[i];
+			j++;
+			i++;
+		}
+		while (line && line[i] != '\0' && line [i] == '\'')
+		{
+			new_line[j] = line[i];
+			j++;
+			i++;
+			while (line && line[i] != '\0' && line[i] != '\'')
+			{
+				new_line[j] = line[i];
+				j++;
+				i++;
+			}
+			new_line[j] = line[i];
+			j++;
+			i++;
+		}
+		while (line && line[i] != '\0' && line[i] != '\'' && line [i] != '"')
+		{
+			if (line[i] == '$')
+			{
+				while (line && line[i] != '\0' && line[i] != ' ' && line[i] != '"' && line[i] != '\'')// et des autres espaces
+					i++;
+			}
+			new_line[j] = line[i];
+			i++; 
 			j++;
 		}
+		// if (line && line[i] != '\0')
+		// {
+		// 	i++;
+		// 	j++;
+		// }
 	}
 	new_line[j] = '\0';
 	free(line);

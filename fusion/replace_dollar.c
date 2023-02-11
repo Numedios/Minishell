@@ -132,7 +132,7 @@ char	*found_it(char *tab, char **new_env, t_index *index, int *skip)
 	i = index->a;
 	while (tab[i])
 	{
-		if (tab[i] == '"' || tab[i] == ' ' || tab[i] == '-' || tab[i] == '!' || tab[i] == '@' || tab[i] == '#' || tab[i] == '$' || tab[i] == '%' || tab[i] == '^' || tab[i] == '&' || tab[i] == '*' || tab[i] == '(' || tab[i] == ')' || tab[i] == '{' || tab[i] == '}' || tab[i] == '[' || tab[i] == ']' || tab[i] == '|' || tab[i] == ';' || tab[i] == ':' || tab[i] == '<' || tab[i] == '>' || tab[i] == '?' || tab[i] == '/'|| tab[i] == '~' || tab[i] == '\\')
+		if (tab[i] == '\'' || tab[i] == '"' || tab[i] == ' ' || tab[i] == '-' || tab[i] == '!' || tab[i] == '@' || tab[i] == '#' || tab[i] == '$' || tab[i] == '%' || tab[i] == '^' || tab[i] == '&' || tab[i] == '*' || tab[i] == '(' || tab[i] == ')' || tab[i] == '{' || tab[i] == '}' || tab[i] == '[' || tab[i] == ']' || tab[i] == '|' || tab[i] == ';' || tab[i] == ':' || tab[i] == '<' || tab[i] == '>' || tab[i] == '?' || tab[i] == '/'|| tab[i] == '~' || tab[i] == '\\')
 		{
 			index->j = research(*skip, index->a, tab, new_env);
 			if (index->j != -1)
@@ -164,7 +164,7 @@ char	*found_dollar_inquote(char *tab, int *i, char ** new_env, t_index *index)//
 
 	skip = 0;
 	(*i)++;
-	while (tab[(*i)] && tab[(*i)] != '"' && tab[(*i)] != '\'')
+	while (tab[(*i)] && tab[(*i)] != '"' /*&& tab[(*i)] != '\''*/)
 	{
 		while (tab[(*i)] == '$' && tab[(*i) + 1] == '$')
 			i++;
@@ -175,7 +175,8 @@ char	*found_dollar_inquote(char *tab, int *i, char ** new_env, t_index *index)//
 			dprintf(2, "index->a = %d\nindex->j =%d\n ", index->a, index->j);
 			tab = found_it(tab, new_env, index, &skip);
 			dprintf(2, "index->a = %d\nindex->j = %d", index->a, index->j);
-			// i = skip + i;
+			if (index->j == -1)
+				(*i) = skip + (*i);
 			skip = 0;
 		}
 		(*i)++;
