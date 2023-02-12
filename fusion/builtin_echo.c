@@ -24,6 +24,8 @@ int	check_option_n(char *str, int *space)
 	if (!str)
 		return (0);
 	i = 2;
+	if (str[1] == '\0')
+		return (0);
 	if ((str[0] && str[1]) && (str[0] != '-' || str[1] != 'n'))
 		return (0);
 	while (str && str[i])
@@ -64,7 +66,7 @@ void	do_echo(char **arg)
 	}
 	while (arg && arg[i])
 	{
-		printf("%s ", arg[i]);
+		printf("%s", arg[i]);
 		i++;
 	}
 	if (space == 1)

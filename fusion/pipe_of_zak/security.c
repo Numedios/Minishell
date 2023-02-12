@@ -126,7 +126,7 @@ int check_echo(char **args, int cmp, int i, int execute)
 	{
 		while (args[cmp][i])
 		{
-			if(args[cmp][0] == '-')
+			if(args[cmp][0] == '-')//check juste apres echo
 			{
 				while(args[cmp][i] && args[cmp][i] == 'n')
 					i++;
