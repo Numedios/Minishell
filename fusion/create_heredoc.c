@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:36:28 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/02/13 16:16:20 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/13 18:02:46 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,21 +51,17 @@ int	heredoc(char *stop)
 {
 	int		pipe_fd[2];
 	char	*str;
-	char	*comp;
 
 	create_heredoc(pipe_fd);
-	comp = ft_strjoin(stop, "\n");
 	str = NULL;
 	while (1)
 	{
-		write(1, "> ", 2);
-		str = get_next_line(1);
-
+		str = readline("> ");
 		if (g_exit_code[1] == 7)
 		{
 			return (9);
 		}
-		if (ft_strcmp(comp, str))
+		if (ft_strcmp(stop, str))
 		{
 			free(str);
 			break ;
@@ -77,7 +73,6 @@ int	heredoc(char *stop)
 		}
 	}
 	close(pipe_fd[1]);
-	free(comp);
 	return (pipe_fd[0]);
 }
 
@@ -89,11 +84,14 @@ void	sigint_heredoc(int unused)
 	close(0);
 }
 
-void	find_all_heredoc(t_maillons *maillons)
+void	find_all_heredoc(t_maillons *maillons)//remttre la fonction des signaux du parent, que se passe il apres ctrl+c 
 {
 	t_input_output	*tmp;
-
+	int				copy_fd;
+	
+	copy_fd = dup(0);
 	signal(SIGINT, sigint_heredoc);
+	
 	while (maillons)
 	{
 		tmp = maillons->output;
@@ -106,8 +104,9 @@ void	find_all_heredoc(t_maillons *maillons)
 				if (maillons -> heredoc = heredoc(maillons -> output -> file_name) == 9)
 				{
 					dprintf(2, "fin heredoc");
-					g_exit_code[1] = 0;//pour ne pas bloquer au prochain prompt
-					return;
+					dup2(copy_fd, 0);
+					//g_exit_code[1] = 0;//pour ne pas bloquer au prochain prompt
+					return ;
 				}
 			}
 			maillons -> output = maillons -> output -> next;
@@ -115,4 +114,6 @@ void	find_all_heredoc(t_maillons *maillons)
 		maillons->output = tmp;
 		maillons = maillons -> next;
 	}
+	close(copy_fd);
+	g_exit_code[1] = 0;
 }
