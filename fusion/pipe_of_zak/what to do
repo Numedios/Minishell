@@ -28,3 +28,7 @@ le probleme du replace dollar quand on met un simple guillement c'est que la com
 enlever le retour a la ligne du ctrl+d, ou ecrire exit
 
 verifier le code erreur quand la command est null (>b)
+
+HEREDOC SIGnal (on peut faire un fork et exit avec le signal)
+
+< file cat | grep x output/outfile5 (essayer cette command quand file et output n'existe pas, probleme dans le mesage d'erreur)

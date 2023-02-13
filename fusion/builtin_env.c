@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:36:07 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/01/22 20:12:29 by zakariyaham      ###   ########.fr       */
+/*   Updated: 2023/02/13 11:30:17 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	**my_env(char **env)
 		return (NULL);
 	while (env[i])
 		i++;
-	env_copy = malloc ((i + 1) * sizeof(char*));
+	env_copy = malloc((i + 1) * sizeof(char *));
 	if (env_copy == NULL)
 		return (NULL);
 	i = 0;

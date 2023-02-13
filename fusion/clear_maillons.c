@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clear_maillons.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:36:23 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/01/22 20:18:14 by zakariyaham      ###   ########.fr       */
+/*   Updated: 2023/02/13 11:36:08 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ void free_maillon_middle(t_maillons **lst, t_maillons **first)
 	*lst = *tmp; // lst devien tmp
 	free(tmp);
 }*/
-
 
 /*
 * return (1) si lst contient sep dans un operator

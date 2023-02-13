@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex2.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/13 11:30:40 by zhamdouc          #+#    #+#             */
+/*   Updated: 2023/02/13 11:33:32 by zhamdouc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	switch_dup2_fd_in(t_maillons *maillons, t_pipes *pipes, int i, int len)
@@ -24,7 +36,7 @@ int	switch_dup2_fd_in(t_maillons *maillons, t_pipes *pipes, int i, int len)
 		//dup2(res, STDIN_FILENO);
 		return (1);
 	}
-	else if (find_if_have_output(maillons -> prev -> output , ">") || !(maillons->prev->command))
+	else if (find_if_have_output(maillons -> prev -> output, ">") || !(maillons->prev->command))
 	{
 		//dprintf(2, "Lecture %d est dev/null\n", i);
 		res = open("/dev/null", O_RDWR, O_DSYNC, !O_DIRECTORY);
@@ -45,7 +57,7 @@ int	switch_dup2_fd_in(t_maillons *maillons, t_pipes *pipes, int i, int len)
 
 int	switch_dup2_fd_out(t_maillons *maillons, t_pipes *pipes, int i, int len)
 {
-	int res;
+	int	res;
 
 	res = -2;
 	if (find_if_have_output(maillons -> output, ">"))
@@ -82,17 +94,17 @@ int	switch_dup2_fd_out(t_maillons *maillons, t_pipes *pipes, int i, int len)
 	return (1);
 }
 
-void 	sigint_child (int unused)//rajouter exit_code
+void	sigint_child(int unused)//rajouter exit_code
 {
 	(void)unused;
 	write(1, "\n", 1);
 }
 
-int    pipex_multiple(t_maillons    *maillons, char ***env, int len, t_garbage     *garbage) 
+int	pipex_multiple(t_maillons *maillons, char ***env, int len, t_garbage *garbage)
 {
-	t_pipes pipes;
-	pid_t pid;
-	int i;
+	t_pipes	pipes;
+	pid_t	pid;
+	int		i;
 
 	pipes = create_all_pipes(len - 1);
 	//dprintf(2, "pipe[0] = %dpipe[1] = %d\n", pipes.pipe[0], pipes.pipe[1]);
@@ -103,26 +115,26 @@ int    pipex_multiple(t_maillons    *maillons, char ***env, int len, t_garbage  
 		pid = fork();
 		if (pid == -1)
 			return (perror("fork"), 1);
-		signal(SIGQUIT,signal_quit_child);
-		signal(SIGINT,sigint_child);
+		signal(SIGQUIT, signal_quit_child);
+		signal(SIGINT, sigint_child);
 		if (pid == 0)
 		{
 			switch_dup2_fd_in(maillons, &pipes, i, len);
 			switch_dup2_fd_out(maillons, &pipes, i, len);
-			free_all_pipes((len-1) * 2, pipes);
-			if (maillons->heredoc !=-1)
+			free_all_pipes((len - 1) * 2, pipes);
+			if (maillons->heredoc != -1)
 				close(maillons->heredoc);
 			if (check_if_builtin(maillons->args, *env, env) == 0)
 			{
 				dprintf(2, "yes !\n");
 				exit(0);
 			}
-			if (check_echo(maillons->args, 0 , 0, 0) == 0)
+			if (check_echo(maillons->args, 0, 0, 0) == 0)
 			{
 				dprintf(2, "yes1\n");
 				exit(0);
 			}
-			if (maillons->command != NULL && execve(maillons ->command, maillons -> args , *env) == -1)
+			if (maillons->command != NULL && execve(maillons ->command, maillons -> args, *env) == -1)
 			{
 				perror("execve");
 				exit (1);

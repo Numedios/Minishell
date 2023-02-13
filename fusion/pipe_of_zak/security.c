@@ -1,26 +1,38 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   security.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/13 11:40:14 by zhamdouc          #+#    #+#             */
+/*   Updated: 2023/02/13 11:43:31 by zhamdouc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
-int	check_builtin (char **args)
+int	check_builtin(char **args)
 {
 	int	cmp;
-	int i;
-	
+	int	i;
+
 	cmp = 0;
 	i = 0;
 	while (args && args[cmp])
 	{
-		if(args[cmp][0] == '-')
-			return(1);
+		if (args[cmp][0] == '-')
+			return (1);
 		cmp++;
 	}
 	if (args[0] && str_cmp(args[0], "cd") == 1 && cmp == 2)
-		return(0);
+		return (0);
 	if (args[0] && str_cmp(args[0], "env") == 1)
 		return (0);
 	if (args[0] && str_cmp(args[0], "pwd") == 1)
 		return (0);
-	if (args[0] && str_cmp(args[0], "exit") == 1 && cmp < 3)// pas plus d'un argument et si pas d'argument le retour d'exit est 0 en code erreur 
-		return (0); 
+	if (args[0] && str_cmp(args[0], "exit") == 1 && cmp < 3) // pas plus d'un argument et si pas d'argument le retour d'exit est 0 en code erreur 
+		return (0);
 	if (args[0] && str_cmp(args[0], "unset") == 1)
 		return (0);
 	if (args[0] && str_cmp(args[0], "export") == 1)
@@ -50,13 +62,13 @@ int	check_access(t_maillons *maillons)
 
 void	init(two_pipe *two_pipe)
 {
-    two_pipe->status = 0;
-    two_pipe->i = 0;
-    two_pipe->fd_in = -3;
-    two_pipe->fd_out = -3;
+	two_pipe->status = 0;
+	two_pipe->i = 0;
+	two_pipe->fd_in = -3;
+	two_pipe->fd_out = -3;
 	if (pipe(two_pipe->pipe_fd) < 0)
 	{
-		write(2,"pipe_fd\n", 8);
+		write(2, "pipe_fd\n", 8);
 		exit ;
 	}
 }
@@ -64,27 +76,27 @@ void	init(two_pipe *two_pipe)
 /*return 1 si il y a pas de builtin a faire et 0 si il y en a un et finir pipex*/
 // gerer les erreurs pour chaque built in a qui on envoie trop d'argument
 
-int	check_if_builtin (char **args, char **env, char ***new_env)
+int	check_if_builtin(char **args, char **env, char ***new_env)
 {
 	int	cmp;
-	int i;
-	
+	int	i;
+
 	cmp = 0;
 	i = 0;
 	while (args && args[cmp])
 	{
-		if(args[cmp][0] == '-')
-			return(1);
+		if (args[cmp][0] == '-')
+			return (1);
 		cmp++;
 	}
 	if (args[0] && str_cmp(args[0], "cd") == 1 && cmp == 2)
-		return(do_cd(env, args[1]), 0);
+		return (do_cd(env, args[1]), 0);
 	if (args[0] && str_cmp(args[0], "env") == 1)
 		return (do_env(env), 0);
 	if (args[0] && str_cmp(args[0], "pwd") == 1)
 		return (do_pwd(), 0);
-	if (args[0] && str_cmp(args[0], "exit") == 1 && cmp < 3)// pas plus d'un argument et si pas d'argument le retour d'exit est 0 en code erreur 
-		return (do_exit(args[1]), 0); 
+	if (args[0] && str_cmp(args[0], "exit") == 1 && cmp < 3) // pas plus d'un argument et si pas d'argument le retour d'exit est 0 en code erreur 
+		return (do_exit(args[1]), 0);
 	if (args[0] && str_cmp(args[0], "unset") == 1)
 	{
 		while (args[++i])
@@ -100,25 +112,25 @@ int	check_if_builtin (char **args, char **env, char ***new_env)
 	return (1);
 }
 
-int	check_if_exit (char **args, char **env)
+int	check_if_exit(char **args, char **env)
 {
 	int	cmp;
-	int i;
-	
+	int	i;
+
 	cmp = 0;
 	i = 0;
 	while (args && args[cmp])
 	{
-		if(args[cmp][0] == '-')
-			return(1);
+		if (args[cmp][0] == '-')
+			return (1);
 		cmp++;
 	}
 	if (args[0] && str_cmp(args[0], "exit") == 1 && cmp < 3)// pas plus d'un argument et si pas d'argument le retour d'exit est 0 en code erreur 
-		return (do_exit(args[1]), 0); 
+		return (do_exit(args[1]), 0);
 	return (1);
 }
 
-int check_echo(char **args, int cmp, int i, int execute)
+int	check_echo(char **args, int cmp, int i, int execute)
 {
 	cmp = 0;
 	i = 0;
@@ -126,9 +138,9 @@ int check_echo(char **args, int cmp, int i, int execute)
 	{
 		while (args[cmp][i])
 		{
-			if(args[cmp][0] == '-')//check juste apres echo
+			if (args[cmp][0] == '-')//check juste apres echo
 			{
-				while(args[cmp][i] && args[cmp][i] == 'n')
+				while (args[cmp][i] && args[cmp][i] == 'n')
 					i++;
 				if (args[cmp][i] == 'e' || args[cmp][i] == 'E')
 					return (1);
@@ -146,7 +158,6 @@ int check_echo(char **args, int cmp, int i, int execute)
 	}
 	return (1);
 }
-
 
 /*
 void	write_error(char *argv, t_vare *vare, char *tab)

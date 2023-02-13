@@ -1,10 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   list_input_output.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/13 11:27:07 by zhamdouc          #+#    #+#             */
+/*   Updated: 2023/02/13 11:27:30 by zhamdouc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 t_input_output	*create_input_output(char *name, char *operator, t_input_output *prev)
 {
 	t_input_output	*new;
-
-
 
 	new = malloc(sizeof(*new));
 	if (!new)
@@ -26,8 +36,6 @@ t_input_output	*lstlast_input_output(t_input_output *lst)
 	}
 	return (lst);
 }
-
-
 
 void	add_end_input_output(t_input_output **list, t_input_output *add)
 {

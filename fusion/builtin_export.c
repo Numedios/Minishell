@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:36:12 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/01/22 20:14:10 by zakariyaham      ###   ########.fr       */
+/*   Updated: 2023/02/13 11:24:07 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-int	check_if_tab_exist (char *tab, char **env)
+int	check_if_tab_exist(char *tab, char **env)
 {
 	int	len_tab;
 	int	len_env;
@@ -69,7 +69,6 @@ int	check_if_tab_exist (char *tab, char **env)
 			return (1);
 	}
 	return (0);
-
 }
 
 int	ft_isdigit(int c)
@@ -94,7 +93,7 @@ int	parse_value(char *tab, int i)//return 1 si tout se passe bien autre en cas d
 		i++;
 	if (tab && (tab[i] == '\0' || tab[i] == ' ' || tab[i] == '\t' || tab[i] == '\n' || tab[i] == '\v' || tab[i] == '\f' || tab[i] == '\r'))
 	{
-		if(a == 3)
+		if (a == 3)
 			return (5);
 		else
 			return (4);
@@ -130,7 +129,7 @@ int	parse_export(char *tab)//ne pas commencer par un nombre pas de caractere spe
 			return (1);
 		if (tab[i] == '+' && tab[i + 1] == '=' && i == 0)
 			return (1);
-		if ((tab[i] == '+' && tab[i + 1] == '=') ||tab[i] == '=')//ou appeler une fonction qui parse apres le '='
+		if ((tab[i] == '+' && tab[i + 1] == '=') || tab[i] == '=') //ou appeler une fonction qui parse apres le '='
 		{
 			a = parse_value(tab, i);
 			break ;

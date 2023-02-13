@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   replace_dollar.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 19:09:08 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/01/22 20:26:50 by zakariyaham      ###   ########.fr       */
+/*   Updated: 2023/02/13 11:17:38 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 //test a faire : echo $'hola'       echo $"hola"    echo $      echo $hol (hol n'existe pas)        echo $$SYSTEMD_EXEC_PID
 //$"HOME" doit devenir HOME
 
-extern int	exit_code[2];
+extern int	g_exit_code[2];
 
 void	new_in_old(for_dollar *var, t_index *index, char **new_env, int *skip)
 {
@@ -79,7 +79,7 @@ char	*replace_interrogation(char *tab, char **new_env, int skip, t_index index)
 
 	var.pos = 0;
 	var.pos_tab = 0;
-	var.value = ft_itoa(exit_code[0]);
+	var.value = ft_itoa(g_exit_code[0]);
 	var.len_tab = ft_strlen(var.value);
 	var.new_len = var.len_tab - skip;
 	var.len_value = ft_strlen(var.value);

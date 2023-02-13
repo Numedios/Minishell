@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   find_commande.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/13 11:37:34 by zhamdouc          #+#    #+#             */
+/*   Updated: 2023/02/13 11:38:22 by zhamdouc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 /*
@@ -7,8 +19,6 @@
 *   a changer et a envoyer sa dans la structure maillon dans commande et arg sous forme de tab
 *
 */
-
-
 
 char	*find_command(t_split_elem *lst)
 {
@@ -26,12 +36,10 @@ char	*find_command(t_split_elem *lst)
 	return (NULL);
 }
 
-
-
 int	count_arg(t_split_elem *lst)
 {
 	t_split_elem	*prev;
-	int i;
+	int				i;
 
 	i = 0;
 	prev = lst;
@@ -101,9 +109,7 @@ t_split_elem    *find_argument(t_split_elem *lst)
 	return (res);
 }*/
 
-
 // > in >> in2 cat -e < out <out2 << out3 -l
-
 
 /*
 char    *find_command(t_split_elem *lst)

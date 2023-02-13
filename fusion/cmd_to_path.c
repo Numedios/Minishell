@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_to_path.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:36:25 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/01/22 19:59:45 by zakariyaham      ###   ########.fr       */
+/*   Updated: 2023/02/13 11:14:02 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 char	*get_path(char **envp)
 {
@@ -28,7 +27,6 @@ char	*get_path(char **envp)
 		return (&*envp[i] + 5);
 	return (NULL);
 }
-
 
 /*
 *
@@ -71,15 +69,14 @@ void	change_cmd(char **str, char **tab)
 	{
 		res = ft_strjoin_pipex(tab[i], *str);
 		if (access(res, X_OK | F_OK) == 0)
-			{
-				free(*str);
-				*str = res;
-				return ;
-			}
+		{
+			free(*str);
+			*str = res;
+			return ;
+		}
 		free(res);
 		i++;
 	}
-
 }
 
 int	cmd_to_path(t_maillons *maillons, char **env)
@@ -89,7 +86,7 @@ int	cmd_to_path(t_maillons *maillons, char **env)
 	pat = split_pipex(get_path(env), ':');
 	while (maillons)
 	{
-		change_cmd(&(maillons->command) , pat);
+		change_cmd(&(maillons->command), pat);
 		maillons = maillons->next;
 	}
 	ft_free_tab(pat);

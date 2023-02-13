@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipe_de_2.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/13 11:44:01 by zhamdouc          #+#    #+#             */
+/*   Updated: 2023/02/13 11:44:02 by zhamdouc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 //test : <a ls >a | < b ls > b
 //que faire si le fichier in n'exise pas ??
@@ -5,8 +17,8 @@
 //maillons -> args = a commmand et les options
 //probleme avec le heredoc en premiere commande
 
-extern int	exit_code[2];
-//gerer les enfants avec exit_code[1] = 2; si exit_code[1] == 3 alors exit(0) ou faire un if dans les enfants pour directement exit si exit_code[1] == 3;
+extern int	g_exit_code[2];
+//gerer les enfants avec g_exit_code[1] = 2; si g_exit_code[1] == 3 alors exit(0) ou faire un if dans les enfants pour directement exit si g_exit_code[1] == 3;
 
 void	signal_quit_child(int useless)
 {
@@ -122,7 +134,7 @@ int pipex_2(t_maillons  *maillons, char ***env)
 	pid_t	pid[2];
 	int		n;
 
-	exit_code[1] = 2;
+	g_exit_code[1] = 2;
 	init(&two_pipe);
 	n = 0;
 	while (two_pipe.i < 2)
@@ -135,22 +147,22 @@ int pipex_2(t_maillons  *maillons, char ***env)
 			break ;
 		// if (find_if_have_output(maillons -> output, "<<") == 1)
 		// 	waitpid(pid[0], NULL, 0);
-		// if (exit_code[1] == 3)
+		// if (g_exit_code[1] == 3)
 		// {
-		// 	exit_code[1] = 0;
+		// 	g_exit_code[1] = 0;
 		// 	break ;
 		// }
-		// exit_code[1] = 0;
+		// g_exit_code[1] = 0;
 		two_pipe.i++;
 	}
 	close(two_pipe.pipe_fd[1]);
 	close(two_pipe.pipe_fd[0]);
 	waitpid(pid[0], &two_pipe.status, 0);
 	if (WIFEXITED(two_pipe.status))
-		exit_code[0] = WEXITSTATUS(two_pipe.status);
+		g_exit_code[0] = WEXITSTATUS(two_pipe.status);
 	waitpid(pid[1], NULL, 0);
 	if (WIFEXITED(two_pipe.status))
-		exit_code[0] = WEXITSTATUS(two_pipe.status);
-	exit_code[1] = 0;
+		g_exit_code[0] = WEXITSTATUS(two_pipe.status);
+	g_exit_code[1] = 0;
 	return (0);
 }

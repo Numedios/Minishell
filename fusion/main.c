@@ -45,7 +45,7 @@ int main(int argc, char **argv, char **env)
 }
 */
 
-int	exit_code[2];
+int	g_exit_code[2];
 
 t_maillons *loop_create_maillons(char * line, t_garbage *garbage)
 {
@@ -133,7 +133,7 @@ int main(int argc, char **argv, char **env)
 
 	prev = NULL;
 	maillon = NULL;
-	exit_code[0] = 0;
+	g_exit_code[0] = 0;
 	setup_signal_handlers();
 	new_env = my_env(env);//ne pas oublier de free a la fin le new env
 	while (1)
