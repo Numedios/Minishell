@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:36:02 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/01/22 20:12:22 by zakariyaham      ###   ########.fr       */
+/*   Updated: 2023/02/13 12:47:19 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,7 @@ int	check_option_n(char *str, int *space)
 	if (*space == 1)
 		*space = *space * -1;
 	return (1);
-
 }
-
 
 /*
 *  space = 1 signifie qu'il n'y a pas de -n

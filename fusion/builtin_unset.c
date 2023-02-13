@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:36:17 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/02/13 11:28:07 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/13 13:04:54 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,10 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 }
 
 //mettre env en variable globale, malloc env dans une nouvelle variable pour pouvoir le manipuler comme on le souhaite
-void	do_unset(char *tab, char **env_copy)
+void	do_unset(char *tab, char **env_copy, int i, int found_line)
 {
-	int	i;
 	int	n;
-	int	found_line;
 
-	i = 0;
-	found_line = 0;
 	n = 0;
 	if (tab == NULL)
 		return ;

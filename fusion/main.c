@@ -100,6 +100,7 @@ int main(int argc, char **argv, char **env)
 		if (parse(line) == 0)
 		{
 			line = replace_dollar(line, new_env);
+			printf("line = %s\n", line);
 			line = delete_dollar(line);
 			loop_create_maillons(line, &garbage);
 			cmd_to_path(garbage.maillons, new_env);

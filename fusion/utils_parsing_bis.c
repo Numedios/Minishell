@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parsing_bis.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 17:27:55 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/01/22 20:30:55 by zakariyaham      ###   ########.fr       */
+/*   Updated: 2023/02/13 13:10:55 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,15 @@ int	print_tab(char **tab)
 	return (0);
 }
 
-
-int	skip_quote(char *line, int i)//existe deja dans un autre fichier, a ajouter dans le .h et le retirer d'ici
+int	skip_quote(char *line, int i)//existe deja dans un autre fichier, a ajouter dans le .h et le retirer d'ici, pour la nomrinette il faudrat juste enlever une securtite qui servirait a rien
 {
-	if (line && line[i] != '\0' && line[i + 1] != '\0' && ((line[i] == '"' && line[i + 1] == '"') || (line[i] == '\'' && line[i + 1] == '\'')))
+	if (line && line[i] != '\0' && line[i + 1] != '\0'
+		&& ((line[i] == '"' && line[i + 1] == '"')
+			|| (line[i] == '\'' && line[i + 1] == '\'')))
 		return (i + 1);
-	while (line && line[i] != '\0' && line[i + 1] != '\0' && ((line[i] == '"' && line[i + 1] != '"') || (line[i] == '\'' && line[i + 1] != '\'')))//ne fonctionne pas quand je met line[i + 1] doit etre different de '\0', pour ce test '''ho"''''l"a'''
+	while (line && line[i] != '\0' && line[i + 1] != '\0'
+		&& ((line[i] == '"' && line[i + 1] != '"')
+			|| (line[i] == '\'' && line[i + 1] != '\'')))//ne fonctionne pas quand je met line[i + 1] doit etre different de '\0', pour ce test '''ho"''''l"a'''
 	{
 		if (line[i] == '"' && line[i + 1] != '"')
 		{

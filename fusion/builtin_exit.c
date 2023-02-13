@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:36:10 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/01/22 19:56:56 by zakariyaham      ###   ########.fr       */
+/*   Updated: 2023/02/13 12:50:44 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,12 @@
 //si deux argument afficher une erreur specifique
 //pas de char
 //utiliser une variable globale pour les codes erreurs
-long long	ft_atoll_capped(const char *nptr, int *flag)
+long long	ft_atoll_capped(const char *nptr, int *flag, int j, int nb)
 {
-	int			j;
-	long long	nb;
 	long long	print;
 
 	if (nptr == NULL)
 		return (0);
-	j = 1;
-	nb = 0;
 	while (*nptr == 32 || (*nptr >= 9 && *nptr <= 13))
 		nptr++;
 	if (*nptr == '-' || *nptr == '+')
@@ -47,7 +43,7 @@ long long	ft_atoll_capped(const char *nptr, int *flag)
 	return (nb * j);
 }
 
-int	do_exit(char* statut)
+int	do_exit(char *statut)
 {
 	long long	exit_code;
 	int			flag;
@@ -68,7 +64,7 @@ int	do_exit(char* statut)
 		}
 	}
 	flag = 0;
-	exit_code = ft_atoll_capped(statut, &flag);
+	exit_code = ft_atoll_capped(statut, &flag, 1, 0);
 	if (flag == 0)
 	{
 		exit(exit_code);
@@ -78,8 +74,6 @@ int	do_exit(char* statut)
 		exit(2);
 	}
 }
-
-
 
 //attention au here_doc, surtout quand on fait CTRL+C dans le premier ca doit tout ferme
 //peut etre devoir gerer le CTRL+\ pour le here_doc pour faire coredump, pour ca dir que si le pid est > a 0 alors rien faire dans lautre cas core dump

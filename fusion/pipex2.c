@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 11:30:40 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/13 11:33:32 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/13 16:32:43 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ int	switch_dup2_fd_out(t_maillons *maillons, t_pipes *pipes, int i, int len)
 	{
 		//dprintf(2, "Ecriture %d est %s \n", i, find_name_sep(maillons -> output, ">"));
 		res = open(find_name_sep(maillons -> output, ">"), O_WRONLY | O_CREAT | O_TRUNC, 0644, !O_DIRECTORY);
+		if (!ft_strcmp(find_name_sep(maillons -> output, ">"), "/dev/stdout"))
+			return (1);
 		dup2(res, STDOUT_FILENO);
 	}
 	else if (find_if_have_output(maillons -> output, ">>"))

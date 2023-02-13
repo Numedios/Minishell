@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:36:28 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/02/13 11:26:37 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/13 16:16:20 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,15 @@ int	heredoc(char *stop)
 	create_heredoc(pipe_fd);
 	comp = ft_strjoin(stop, "\n");
 	str = NULL;
-	while (1 && g_exit_code[1] != 7)
+	while (1)
 	{
 		write(1, "> ", 2);
 		str = get_next_line(1);
+
+		if (g_exit_code[1] == 7)
+		{
+			return (9);
+		}
 		if (ft_strcmp(comp, str))
 		{
 			free(str);
@@ -80,6 +85,8 @@ void	sigint_heredoc(int unused)
 {
 	(void) unused;
 	g_exit_code[1] = 7;
+	write(2, "\n", 1);
+	close(0);
 }
 
 void	find_all_heredoc(t_maillons *maillons)
@@ -96,7 +103,12 @@ void	find_all_heredoc(t_maillons *maillons)
 			{
 				if (maillons -> heredoc != -1)
 					close(maillons ->heredoc);
-				maillons -> heredoc = heredoc(maillons -> output -> file_name);
+				if (maillons -> heredoc = heredoc(maillons -> output -> file_name) == 9)
+				{
+					dprintf(2, "fin heredoc");
+					g_exit_code[1] = 0;//pour ne pas bloquer au prochain prompt
+					return;
+				}
 			}
 			maillons -> output = maillons -> output -> next;
 		}

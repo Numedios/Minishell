@@ -32,3 +32,9 @@ verifier le code erreur quand la command est null (>b)
 HEREDOC SIGnal (on peut faire un fork et exit avec le signal)
 
 < file cat | grep x output/outfile5 (essayer cette command quand file et output n'existe pas, probleme dans le mesage d'erreur)
+
+verifier si check builtin fonctionne toujours aussi bien
+
+gerer les erreurs de malloc dans builtin_cd
+
+est ce que dans le builtin export, a est egal a 4 , si oui est il utilise 

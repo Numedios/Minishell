@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 19:09:08 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/13 11:17:38 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/13 13:42:52 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,18 +207,7 @@ char	*replace_dollar(char *tab, char **new_env)//peu etre possible de pas renvoy
 	int		skip;
 	t_index	index;
 
-	i = 0;
-	skip = 0;
-	while (tab && tab[i] != '\0')
-	{
-		if (tab[i] != '$')
-			i++;
-		else
-		{
-			skip = 1;
-			break ; 
-		}
-	}
+	skip = check_dollar(tab);
 	i = 0;
 	if (skip == 0)
 		return (tab);

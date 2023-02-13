@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 17:14:46 by sbelabba          #+#    #+#             */
-/*   Updated: 2023/01/22 19:38:38 by zakariyaham      ###   ########.fr       */
+/*   Updated: 2023/02/13 15:03:48 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_exit_code[2];
 
 char	*get_next_line(int fd)
 {
@@ -26,6 +28,10 @@ char	*get_next_line(int fd)
 	while (rd == BUFFER_SIZE && check_end(line) == 0)
 	{
 		rd = read(fd, buf, BUFFER_SIZE);
+		if (g_exit_code[1] == 7)
+		{
+			dprintf(2, "exit3");
+		}
 		if (rd < 0)
 			return (NULL);
 		buf[rd] = '\0';

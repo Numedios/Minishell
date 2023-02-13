@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 11:40:14 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/13 11:43:31 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/13 13:05:45 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,41 +40,26 @@ int	check_builtin(char **args)
 	return (1);
 }
 
-int	check_access(t_maillons *maillons)
-{
-	while (maillons)
-	{
-		if (check_echo(maillons->args, 0, 0, 1) == 0 || check_builtin(maillons->args) == 0)
-			maillons = maillons->next;
-		else if (maillons->command != NULL && access(maillons->command, F_OK | X_OK) != 0)
-		{
-			// write(2,"probleme de chemin\n", 20);
-			ft_putstr_fd("bash: ", 2);
-			ft_putstr_fd(maillons->command, 2);
-			ft_putstr_fd(": command not found\n", 2);
-			return (1);
-		}
-		else
-			maillons = maillons->next;
-	}
-	return (0);
-}
-
-void	init(two_pipe *two_pipe)
-{
-	two_pipe->status = 0;
-	two_pipe->i = 0;
-	two_pipe->fd_in = -3;
-	two_pipe->fd_out = -3;
-	if (pipe(two_pipe->pipe_fd) < 0)
-	{
-		write(2, "pipe_fd\n", 8);
-		exit ;
-	}
-}
-
 /*return 1 si il y a pas de builtin a faire et 0 si il y en a un et finir pipex*/
 // gerer les erreurs pour chaque built in a qui on envoie trop d'argument
+int	which_builtin(char **args, char **env, int i, int cmp)
+{
+	if (args[0] && str_cmp(args[0], "cd") == 1 && cmp == 2)
+		return (do_cd(env, args[1]), 0);
+	if (args[0] && str_cmp(args[0], "env") == 1)
+		return (do_env(env), 0);
+	if (args[0] && str_cmp(args[0], "pwd") == 1)
+		return (do_pwd(), 0);
+	if (args[0] && str_cmp(args[0], "exit") == 1 && cmp < 3) // pas plus d'un argument et si pas d'argument le retour d'exit est 0 en code erreur 
+		return (do_exit(args[1]), 0);
+	if (args[0] && str_cmp(args[0], "unset") == 1)
+	{
+		while (args[++i])
+			do_unset(args[i], env, 0, 0);
+		return (0);
+	}
+	return (1);
+}
 
 int	check_if_builtin(char **args, char **env, char ***new_env)
 {
@@ -89,27 +74,13 @@ int	check_if_builtin(char **args, char **env, char ***new_env)
 			return (1);
 		cmp++;
 	}
-	if (args[0] && str_cmp(args[0], "cd") == 1 && cmp == 2)
-		return (do_cd(env, args[1]), 0);
-	if (args[0] && str_cmp(args[0], "env") == 1)
-		return (do_env(env), 0);
-	if (args[0] && str_cmp(args[0], "pwd") == 1)
-		return (do_pwd(), 0);
-	if (args[0] && str_cmp(args[0], "exit") == 1 && cmp < 3) // pas plus d'un argument et si pas d'argument le retour d'exit est 0 en code erreur 
-		return (do_exit(args[1]), 0);
-	if (args[0] && str_cmp(args[0], "unset") == 1)
-	{
-		while (args[++i])
-			do_unset(args[i], env);
-		return (0);
-	}
 	if (args[0] && str_cmp(args[0], "export") == 1)
 	{
 		while (args[++i])
 			(*new_env) = do_export(args[i], env);
 		return (0);
 	}
-	return (1);
+	return (which_builtin(args, env, i, cmp));
 }
 
 int	check_if_exit(char **args, char **env)

@@ -1,4 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/13 12:20:55 by zhamdouc          #+#    #+#             */
+/*   Updated: 2023/02/13 12:20:59 by zhamdouc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
+
+
+extern int	g_exit_code[2];
 
 int	dup_fd(int new_stdin, int new_stdout)
 {
@@ -133,7 +148,9 @@ int	pipex(t_maillons *maillons, char ***env, t_garbage *garbage)
 	}
 	if (len == 2)
 	{
+		g_exit_code[1] = 2;
 		pipex_2(maillons, env);
+		g_exit_code[1] = 0;
 	}
 	else if (len != 1)
 	{

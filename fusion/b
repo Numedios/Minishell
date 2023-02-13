@@ -1,0 +1,46 @@
+Error: TOO_MANY_LINES       (line:  58, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_LINES       (line: 111, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_LINES       (line: 147, col:   1):	Function has more than 25 lines
+Error: SPC_AFTER_PAR        (line: 225, col:  15):	Missing space after parenthesis (brace/bracket)
+Error: WRONG_SCOPE_COMMENT  (line: 225, col:  16):	Comment is invalid in this scope
+Error: WRONG_SCOPE_COMMENT  (line: 225, col:  16):	Comment is invalid in this scope
+Error: TOO_MANY_LINES       (line: 290, col:   1):	Function has more than 25 lines
+Error: WRONG_SCOPE_COMMENT  (line:  25, col:   9):	Comment is invalid in this scope
+Error: TOO_MANY_LINES       (line:  79, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_LINES       (line: 119, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_LINES       (line:  48, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_LINES       (line:  82, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_LINES       (line:  56, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_LINES       (line:  95, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_LINES       (line: 165, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_LINES       (line: 170, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_LINES       (line:  48, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_LINES       (line:  85, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_LINES       (line: 185, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_LINES       (line: 226, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_LINES       (line: 268, col:   1):	Function has more than 25 lines
+Error: WRONG_SCOPE_COMMENT  (line: 325, col:   9):	Comment is invalid in this scope
+Error: TOO_MANY_LINES       (line: 390, col:   1):	Function has more than 25 lines
+Error: SPACE_AFTER_KW       (line:  25, col:   9):	Missing space after keyword
+Error: SPC_BFR_PAR          (line:  25, col:  14):	Missing space before parenthesis (brace/bracket)
+Error: TOO_MANY_LINES       (line:  46, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_LINES       (line: 115, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_LINES       (line: 104, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_FUNCS       (line: 125, col:   1):	Too many functions in file
+Error: TOO_MANY_LINES       (line: 159, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_LINES       (line:  72, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_LINES       (line:  54, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_LINES       (line: 128, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_LINES       (line: 160, col:   1):	Function has more than 25 lines
+Error: CONSECUTIVE_NEWLINES (line:  25, col:   1):	Consecutive newlines
+Error: TAB_REPLACE_SPACE    (line:  25, col:   1):	Found tab when expecting space
+Error: TOO_MANY_LINES       (line: 136, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_LINES       (line: 271, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_LINES       (line: 336, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_LINES       (line:  76, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_LINES       (line: 103, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_LINES       (line: 145, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_LINES       (line: 188, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_LINES       (line:  91, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_LINES       (line:  58, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_LINES       (line:  38, col:   1):	Function has more than 25 lines

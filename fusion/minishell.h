@@ -93,6 +93,11 @@ void			init(two_pipe *two_pipe);
 int				dup_fd(int new_stdin, int new_stdout);
 void			signal_quit_child(int useless);
 
+/*      child.c    */
+int				child1(two_pipe *two_pipe, char ***env, t_maillons *maillons);
+int				child2(two_pipe *two_pipe, char ***env, t_maillons *maillons);
+int				check_access(t_maillons *maillons);
+
 
 /*      free_garbage     */
 void    free_garbage(t_garbage *garbage);
@@ -103,8 +108,8 @@ char			*ft_itoa(int n);
 /*  security */
 int				check_if_builtin (char **args, char **env, char ***new_env);
 int				check_echo (char **args,int cmp, int i, int execute);
-int				check_access(t_maillons *maillons);
 int				check_if_exit (char **args, char **env);
+int				check_builtin(char **args);
 
 /* main.c */
 
@@ -132,7 +137,7 @@ int				do_pwd(void);
 
 /*  built in unset */
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
-void			do_unset(char *tab, char **env_copy);
+void			do_unset(char *tab, char **env_copy,int i, int found_line);
 
 /*  signals */
 void			setup_signal_handlers(void);
@@ -156,6 +161,7 @@ char			*replace_dollar(char *tab, char **new_env);
 
 /*  replace dollar 2 */
 char			*delete_dollar(char *line);
+int				check_dollar(char *line);
 
 /* libft.c */
 
