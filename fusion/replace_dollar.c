@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 19:09:08 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/13 20:57:19 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/13 21:10:55 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,7 +189,7 @@ char	*one_dollar_or_more(char *tab, int *i, char ** new_env, t_index *index)
 	int	skip;
 
 	skip = 0;
-	while (tab[(*i)] && tab[(*i)] == '$')
+	while (tab[(*i)] && tab [(*i) + 1] != '\0' && tab[(*i)] == '$' && tab[(*i) + 1] != ' ')
 	{
 		skip++;
 		index->a = (*i) + 1;

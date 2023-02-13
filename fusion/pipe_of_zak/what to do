@@ -47,3 +47,5 @@ mettre expand dollar dans output (a cause des heredoc), TESTER LE DOLLAR EXPAND
 pour dollar verifier les cas comme "$" "$$" (ou plus) des dollars isoles, enture d'esace
 
  echo '$USEER'$USER
+
+ echo $      $ (reduire les espaces a un seul espace)
