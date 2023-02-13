@@ -99,12 +99,14 @@ int main(int argc, char **argv, char **env)
 		}
 		if (parse(line) == 0)
 		{
+			line = delete_dollar(line, new_env);
+			printf("line after delete= %s\n", line);
 			line = replace_dollar(line, new_env);
-			printf("line = %s\n", line);
-			line = delete_dollar(line);
+			printf("line after replace= %s\n", line);
 			loop_create_maillons(line, &garbage);
 			cmd_to_path(garbage.maillons, new_env);
 			find_all_heredoc(garbage.maillons);// verifier les leak au niveau de cat << a <b
+			printf("exit_code[1] = %d\n", g_exit_code[1]);
 			check_inputs_outputs(garbage.maillons);
 			//ft_print_garbage(&garbage);
 			//ft_print_maillons(garbage.maillons);

@@ -158,9 +158,11 @@ int				ft_strlen_const(const char *str);
 
 /*  replace dollar */
 char			*replace_dollar(char *tab, char **new_env);
+int				research(int skip, int a, char *tab, char **new_env);
 
 /*  replace dollar 2 */
-char			*delete_dollar(char *line);
+char			*delete_dollar(char *tab, char **new_env);
+//char			*delete_dollar(char *line);
 int				check_dollar(char *line);
 
 /* libft.c */

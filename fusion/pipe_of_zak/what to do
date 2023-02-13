@@ -38,3 +38,12 @@ verifier si check builtin fonctionne toujours aussi bien
 gerer les erreurs de malloc dans builtin_cd
 
 est ce que dans le builtin export, a est egal a 4 , si oui est il utilise 
+
+
+echo "$EHDH$USER$USSERR"
+
+
+mettre expand dollar dans output (a cause des heredoc), TESTER LE DOLLAR EXPAND
+pour dollar verifier les cas comme "$" "$$" (ou plus) des dollars isoles, enture d'esace
+
+ echo '$USEER'$USER

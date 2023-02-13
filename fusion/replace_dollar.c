@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 19:09:08 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/13 13:42:52 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/13 20:57:19 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int	research(int skip, int a, char *tab, char **new_env)// -1 veut dire qu'on a 
 
 	i = 0;
 	if (skip == 1 && tab[a] == '?')//skip == 1 car le if de la fonction d'avant check les ?
-		return (0);
+		return (-2);
 	while (new_env[i])
 	{
 		len_env = str_len_env(new_env[i]);
@@ -137,7 +137,7 @@ char	*found_it(char *tab, char **new_env, t_index *index, int *skip)
 			index->j = research(*skip, index->a, tab, new_env);
 			if (index->j != -1)
 			{
-				if (index->j == 0)
+				if (index->j == -2)
 					tab = replace_interrogation(tab, new_env, *skip, (*index));
 				else
 					tab = do_replace(tab, new_env, *skip, (*index));
@@ -150,7 +150,7 @@ char	*found_it(char *tab, char **new_env, t_index *index, int *skip)
 	index->j = research(*skip, index->a, tab, new_env);
 	if (index->j != -1)
 	{
-		if (index->j == 0)
+		if (index->j == -2)
 			tab = replace_interrogation(tab, new_env, *skip, (*index));
 		else
 			tab = do_replace(tab, new_env, *skip, (*index));
@@ -195,7 +195,15 @@ char	*one_dollar_or_more(char *tab, int *i, char ** new_env, t_index *index)
 		index->a = (*i) + 1;
 		tab = found_it(tab, new_env, index, &skip);
 		if (index->j == -1)
+		{
+			(*i) = -1;
 			break ;
+		}
+		else
+		{
+			(*i) = -1;
+			break ;
+		}
 		skip = 0;
 	}
 	return (tab);
@@ -216,16 +224,21 @@ char	*replace_dollar(char *tab, char **new_env)//peu etre possible de pas renvoy
 	{
 		if (tab[i] == '"')
 			tab = found_dollar_inquote(tab, &i, new_env, &index);
-		if (tab && tab[i] && tab[i] == '\'')
+		if (tab && tab[i] && tab[i] == '\'')//PEUT ETRE qu'il faut un while
 		{
 			i++;
 			while (tab && tab[i] != '\0' && tab[i] != '\'' && tab[i] != '\'')
+				i++;
+			if (tab && tab[i] && tab[i] == '\'')
 				i++;
 		}
 		while (tab && tab[i] != '\0' && tab[i] == '$' && tab[i + 1] == '$')
 					i++;
 		tab = one_dollar_or_more(tab, &i, new_env, &index);
-		i++;
+		if (i == -1)
+			i = 0;
+		else
+			i++;
 	}
 	return (tab);
 }

@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:36:28 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/02/13 18:02:46 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/13 18:58:55 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	find_all_heredoc(t_maillons *maillons)//remttre la fonction des signaux du 
 				{
 					dprintf(2, "fin heredoc");
 					dup2(copy_fd, 0);
-					//g_exit_code[1] = 0;//pour ne pas bloquer au prochain prompt
+					g_exit_code[1] = 0;//pour ne pas bloquer au prochain prompt
 					return ;
 				}
 			}
