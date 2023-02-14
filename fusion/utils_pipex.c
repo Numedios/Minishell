@@ -12,19 +12,21 @@
 
 #include "minishell.h"
 
-void	free_all_pipes(int argc, t_pipes pipes)
+void	free_all_pipes(int argc, t_pipes *pipes)
 {
 	int	i;
 
 	i = 0;
 	while (i < (argc))
 	{
-		if (pipes.pipe[i])
-			close(pipes.pipe[i]);
+		if (pipes && pipes->pipe[i])
+			close(pipes->pipe[i]);
 		i++;
 	}
-	if (pipes.pipe)
-		free(pipes.pipe);
+	if (pipes && pipes->pipe)
+		free(pipes->pipe);
+	if (pipes)
+		free(pipes);
 }
 
 void	create_pipe(int *pipes, int i)
@@ -58,13 +60,16 @@ int	*create_pipes(int len)
 	return (pipes);
 }
 
-t_pipes	create_all_pipes(int len)
+t_pipes *create_all_pipes(int len)
 {
-	t_pipes	pipes;
+	t_pipes	*pipes;
 
-	pipes.pipe = create_pipes(len);
-	pipes.len = len;
-	if (!pipes.pipe)
+	pipes = malloc(sizeof(t_pipes));
+
+	pipes->pipe = create_pipes(len);
+	printf("%d\n", pipes->pipe[0]);
+	pipes->len = len;
+	if (!pipes || !pipes->pipe)
 	{
 		// free le reste maillons ect
 		free_all_pipes(len * 2, pipes);

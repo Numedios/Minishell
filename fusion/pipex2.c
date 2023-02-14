@@ -108,9 +108,9 @@ int	pipex_multiple(t_maillons *maillons, char ***env, int len, t_garbage *garbag
 	pid_t	pid;
 	int		i;
 
-	pipes = create_all_pipes(len - 1);
 	//dprintf(2, "pipe[0] = %dpipe[1] = %d\n", pipes.pipe[0], pipes.pipe[1]);
 	//dprintf(2, "pipe[2] = %d  pipe[3] = %d\n", pipes.pipe[2], pipes.pipe[3]);
+	garbage->pipes = create_all_pipes(len - 1);
 	i = 0;
 	while (maillons)
 	{
@@ -121,9 +121,9 @@ int	pipex_multiple(t_maillons *maillons, char ***env, int len, t_garbage *garbag
 		signal(SIGINT, sigint_child);
 		if (pid == 0)
 		{
-			switch_dup2_fd_in(maillons, &pipes, i, len);
-			switch_dup2_fd_out(maillons, &pipes, i, len);
-			free_all_pipes((len - 1) * 2, pipes);
+			switch_dup2_fd_in(maillons, garbage->pipes, i, len);
+			switch_dup2_fd_out(maillons, garbage->pipes, i, len);
+			free_all_pipes((len - 1) * 2, garbage->pipes);
 			if (maillons->heredoc != -1)
 				close(maillons->heredoc);
 			if (check_if_builtin(maillons->args, *env, env) == 0)
@@ -146,15 +146,15 @@ int	pipex_multiple(t_maillons *maillons, char ***env, int len, t_garbage *garbag
 			}
 			exit (1);
 		}
-		if (i > 0 && pipes.pipe[i * 2 - 2])
+		if (i > 0 && garbage->pipes->pipe[i * 2 - 2])
 		{
 			//dprintf(2, "tour %d close pipe[%d]\n", i, i * 2 - 2);
-			close(pipes.pipe[i * 2 - 2]);
+			close(garbage->pipes->pipe[i * 2 - 2]);
 		}
-		if (i != (len -1) && pipes.pipe[i * 2 + 1])
+		if (i != (len -1) &&garbage->pipes->pipe[i * 2 + 1])
 		{
 			//dprintf(2, "tour %d close pipe[%d]\n", i, i * 2 +1);
-			close(pipes.pipe[i * 2 + 1]);
+			close(garbage->pipes->pipe[i * 2 + 1]);
 		}
 		i++;
 		maillons = maillons -> next;
@@ -165,6 +165,12 @@ int	pipex_multiple(t_maillons *maillons, char ***env, int len, t_garbage *garbag
 		waitpid(-1, NULL, 0);
 		i++;
 	}
-	free(pipes.pipe);
+	if (garbage->pipes && garbage->pipes->pipe)
+		free(garbage->pipes->pipe);
+	if (garbage->pipes)
+	{
+		free(garbage->pipes);
+		garbage->pipes = NULL;
+	}
 	return (1);
 }

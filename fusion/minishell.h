@@ -284,10 +284,10 @@ int                pipex_multiple(t_maillons *maillons, char ***env, int len, t_
 
 /* utils_pipex.c */
 
-void			free_all_pipes(int argc, t_pipes pipes);
+void			free_all_pipes(int argc, t_pipes *pipes);
 void			create_pipe(int *pipes, int i);
 int				*create_pipes(int len);
-t_pipes			create_all_pipes(int len);
+t_pipes			*create_all_pipes(int len);
 
 /*split_pipex.c */
 
