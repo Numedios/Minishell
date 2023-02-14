@@ -19,4 +19,5 @@ void	initialize_garbage(t_garbage *garbage)
 	garbage->maillons = NULL;
 	garbage->pipes = NULL;
 	garbage->line = NULL;
+	garbage->new_env = NULL;
 }

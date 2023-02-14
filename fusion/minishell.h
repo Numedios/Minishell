@@ -50,6 +50,7 @@ typedef struct	maillons
 typedef struct garbage
 {
 	char				**split_pipe;
+	char				**new_env;
 	char				*line;
 	struct split_elem 	*split_lst;
 	struct maillons		*maillons;

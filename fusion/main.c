@@ -85,36 +85,36 @@ int main(int argc, char **argv, char **env)
 	char		**new_env;
 
 	initialize_garbage(&garbage);
-	new_env = my_env(env);//ne pas oublier de free a la fin le new env
+	garbage.new_env = my_env(env);//ne pas oublier de free a la fin le new env
 	while (1)
 	{
 		setup_signal_handlers();
 		line = rl_gets();
 		if (line == NULL)  // si l'utilisateur appuie sur ctrl-D
 		{
-			ft_free_tab(new_env);
+			ft_free_tab(garbage.new_env);
 			free(line);
 			printf("\n");
 			exit(0);
 		}
 		if (parse(line) == 0)
 		{
-			garbage.line = delete_dollar(line, new_env);
+			garbage.line = delete_dollar(line, garbage.new_env);
 			//printf("line after delete= %s\n", line);
-			garbage.line = replace_dollar(line, new_env);
+			garbage.line = replace_dollar(line, garbage.new_env);
 			//printf("line after replace= %s\n", line);
 			loop_create_maillons(garbage.line, &garbage);
-			cmd_to_path(garbage.maillons, new_env);
+			cmd_to_path(garbage.maillons, garbage.new_env);
 			find_all_heredoc(garbage.maillons);// verifier les leak au niveau de cat << a <b
 			printf("exit_code[1] = %d\n", g_exit_code[1]);
 			check_inputs_outputs(garbage.maillons);
 			//ft_print_garbage(&garbage);
 			//ft_print_maillons(garbage.maillons);
-			pipex(garbage.maillons, &new_env, &garbage);
+			pipex(garbage.maillons, &garbage.new_env, &garbage);
 		}
 		free_garbage(&garbage);
 	}
-	ft_free_tab(new_env);
+	ft_free_tab(garbage.new_env);
 	return (1);
 }
 
