@@ -128,17 +128,20 @@ int	pipex_multiple(t_maillons *maillons, char ***env, int len, t_garbage *garbag
 				close(maillons->heredoc);
 			if (check_if_builtin(maillons->args, *env, env) == 0)
 			{
-				dprintf(2, "yes !\n");
+				//dprintf(2, "yes !\n");
+				free_garbage(garbage);
 				exit(0);
 			}
 			if (check_echo(maillons->args, 0, 0, 0) == 0)
 			{
-				dprintf(2, "yes1\n");
+				//dprintf(2, "yes1\n");
+				free_garbage(garbage);
 				exit(0);
 			}
 			if (maillons->command != NULL && execve(maillons ->command, maillons -> args, *env) == -1)
 			{
 				perror("execve");
+				free_garbage(garbage);
 				exit (1);
 			}
 			exit (1);

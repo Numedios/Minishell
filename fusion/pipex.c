@@ -114,11 +114,13 @@ int	pipex_one(t_maillons *maillons, char ***env, t_garbage *garbage)
 		if (check_echo(maillons->args, 0 , 0, 0) == 0)
 		{
 			dprintf(2, "yes1\n");
+			free_garbage(garbage);
 			exit(0);
 		}
 		if (maillons->command != NULL && execve(maillons ->command, maillons -> args , *env) == -1)
 		{
 			perror("execve");
+			free_garbage(garbage);
 			exit (1);
 		}
 		exit (1);
