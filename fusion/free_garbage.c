@@ -22,6 +22,8 @@ void	free_garbage(t_garbage *garbage)
 		free_maillons(&garbage->maillons);
 	if (garbage->pipes)
 		free_all_pipes(garbage->pipes->len, *garbage->pipes);
+	if (garbage->line)
+		free(garbage->line);
 }
 
 /*void    free_garbage_exit(t_garbage *garbage)

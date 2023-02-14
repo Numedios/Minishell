@@ -99,11 +99,11 @@ int main(int argc, char **argv, char **env)
 		}
 		if (parse(line) == 0)
 		{
-			line = delete_dollar(line, new_env);
-			printf("line after delete= %s\n", line);
-			line = replace_dollar(line, new_env);
-			printf("line after replace= %s\n", line);
-			loop_create_maillons(line, &garbage);
+			garbage.line = delete_dollar(line, new_env);
+			//printf("line after delete= %s\n", line);
+			garbage.line = replace_dollar(line, new_env);
+			//printf("line after replace= %s\n", line);
+			loop_create_maillons(garbage.line, &garbage);
 			cmd_to_path(garbage.maillons, new_env);
 			find_all_heredoc(garbage.maillons);// verifier les leak au niveau de cat << a <b
 			printf("exit_code[1] = %d\n", g_exit_code[1]);
@@ -113,10 +113,8 @@ int main(int argc, char **argv, char **env)
 			pipex(garbage.maillons, &new_env, &garbage);
 		}
 		free_garbage(&garbage);
-		free(line);
 	}
 	ft_free_tab(new_env);
-	free(line);
 	return (1);
 }
 
