@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:35:56 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/02/15 17:35:10 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/15 21:28:43 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	do_cd(char **new_env, char *path)
 	if (oldpwd)
 	{
 		new_env = do_export(oldpwd, new_env, 0, 0);
-		//free(oldpwd);
+		free(oldpwd);
 	}
 	update_pwd(new_env, pwd);
 	return (0);

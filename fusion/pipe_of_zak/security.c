@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 11:40:14 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/15 21:17:58 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/15 21:25:56 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int	which_builtin(char **args, char **env, int i, int cmp)
 int	check_if_builtin(char **args, char **env, char ***new_env, int i)
 {
 	int	cmp;
-	int j;  
 
 	cmp = 0;
 	while (args && args[cmp])
@@ -77,10 +76,10 @@ int	check_if_builtin(char **args, char **env, char ***new_env, int i)
 	{
 		while (args[++i])
 		{
-			j = 0;
-			while (args[i][j] && args[i][j] != '=')
-				j++;
-			if (args[i][j] == '=')
+			cmp = 0;
+			while (args[i][cmp] && args[i][cmp] != '=')
+				cmp++;
+			if (args[i][cmp] == '=')
 			{
 				(*new_env) = do_export(args[i], env, 0, 0);
 				env = (*new_env);

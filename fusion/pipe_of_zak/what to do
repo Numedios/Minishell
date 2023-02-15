@@ -72,3 +72,7 @@ pour dollar verifier les cas comme "$" "$$" (ou plus) des dollars isoles, enture
 check le parsing des redirections (<> EOF >>, s'execute)
 
 pour export tester avec des caracteres speciaux dans le nom (en general pas autorise) et dans la valeur (autorise)
+
+que faire dans le cas d'une erreur dans CD
+
+rajouter la fonction qui free dans le builtin exit
