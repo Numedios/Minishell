@@ -43,7 +43,9 @@ SRC = main.c \
 		get_next_line_utils.c\
 		replace_dollar_2.c \
 		ft_itoa.c \
-		free_garbage.c
+		free_garbage.c \
+		dollars_interrogation.c \
+		export_utils.c \
 
 PIPEX_SRC = pipe_of_zak/pipe_de_2.c \
 				pipe_of_zak/security.c  \

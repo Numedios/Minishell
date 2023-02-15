@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 17:27:55 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/13 13:10:55 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/15 16:20:59 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,4 +106,18 @@ char	*ft_strdup_const(const char *s)
 	}
 	s_copy[s_len] = '\0';
 	return (s_copy);
+}
+
+int	check_dollar(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line && line[i] != '\0')
+	{
+		if (line[i] == '$')
+			return (0);
+		i++;
+	}
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:35:56 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/02/13 12:46:29 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/15 17:35:10 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	update_pwd(char **new_env, char *pwd)
 		pwd = ft_strjoin("PWD=", dir);
 		if (!pwd)
 			return;//appeller la fonction error_malloc
-		new_env = do_export(pwd, new_env);
+		new_env = do_export(pwd, new_env, 0, 0);
 		free(pwd);
 	}
 }
@@ -44,7 +44,7 @@ int	do_cd(char **new_env, char *path)
 		return (1);//error _cd
 	if (oldpwd)
 	{
-		new_env = do_export(oldpwd, new_env);
+		new_env = do_export(oldpwd, new_env, 0, 0);
 		//free(oldpwd);
 	}
 	update_pwd(new_env, pwd);

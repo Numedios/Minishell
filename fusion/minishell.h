@@ -107,6 +107,13 @@ void    free_garbage(t_garbage *garbage);
 /*  ft_itoa */
 char			*ft_itoa(int n);
 
+/*  export_utils.c */
+int				str_len_env(char *str);
+char			*ft_strchr(const char *s, int c);
+int				check_if_tab_exist(char *tab, char **env);
+int				parsing_of_export(char *tab, char **env_copy, int *a, int *j);
+int				what_to_do(char *tab, char **env);
+
 /*  security */
 int				check_if_builtin (char **args, char **env, char ***new_env);
 int				check_echo (char **args,int cmp, int i, int execute);
@@ -129,10 +136,7 @@ char			**my_env(char **env);
 int				do_exit(char *statut);
 
 /*  built in export */
-char			*ft_strchr(const char *s, int c);
-int				check_if_tab_exist (char *tab, char **env);
-char			**do_export(char *tab, char **env_copy);
-int				str_len_env(char *str);
+char			**do_export(char *tab, char **env_copy, int i, int a);
 
 /*  built in pwd */
 int				do_pwd(void);
@@ -159,13 +163,19 @@ int				quote_close_2(char *str);
 int				ft_strlen_const(const char *str);
 
 /*  replace dollar */
-char			*replace_dollar(char *tab, char **new_env);
+char			*replace_dollar(char *tab, char **new_env, int i, int skip);
 int				research(int skip, int a, char *tab, char **new_env);
 
+/*  dollars_interrogation */
+void			new_in_old(for_dollar *var, t_index *index, char **new_env, int *skip);
+void			new_in_old_interrogation(for_dollar *var);
+char			*interrogation(char *tab, char **new_env, int skip, t_index index);
+char			*do_replace(char *tab, char **new_env, int skip, t_index index);
+
 /*  replace dollar 2 */
-char			*delete_dollar(char *tab, char **new_env);
+char			*delete_dollar(char *tab, char **new_env, int i, int skip);
 //char			*delete_dollar(char *line);
-int				check_dollar(char *line);
+
 
 /* libft.c */
 
@@ -173,6 +183,7 @@ int				ft_strlen(char *str);
 int				ft_strcmp(char *str, char *str2);
 char			*ft_strdup(char *str);
 void			ft_putstr_fd(char *s, int fd);
+int				ft_isdigit(int c);
 
 /* split.c */
 
@@ -318,6 +329,7 @@ char			*get_next_line(int fd);
 /*utils_parsing.c */
 
 char			*ft_strjoin_pipex(char *path, char *add);
+int				check_dollar(char *line);
 
 /* garbage_collector.c  */
 

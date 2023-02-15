@@ -49,3 +49,21 @@ pour dollar verifier les cas comme "$" "$$" (ou plus) des dollars isoles, enture
  echo '$USEER'$USER
 
  echo $      $ (reduire les espaces a un seul espace)
+
+ check avec $?
+ et check cd 
+ verifier tous les write et printf
+
+ check si je fais un export avec '+=' d'une variable qui n'existe pas 
+
+ que se passe il quand on fait un builtin dans un pipex et que donc le fork ne s'est pas fait
+
+ test mutliple unset (quand on ecrit une fois unset mais qu'on en fait plusieur comme pour export export USER=z SHELL=h)
+
+ remplacer les printf par des fd_put_str
+
+ 
+
+ remplacer les if avec espace par:
+ if (tab[i] == ' ' || (tab[i] < 14 && tab[i] > 7))
+			return (1);

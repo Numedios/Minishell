@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 11:34:40 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/13 11:35:01 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/15 17:56:17 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,12 @@ char	*ft_strdup(char *str)
 	}
 	res[i] = '\0';
 	return (res);
+}
+
+int	ft_isdigit(int c)
+{
+	if (47 < c && c < 58)
+		return (2);
+	else
+		return (0);
 }

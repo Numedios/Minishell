@@ -93,16 +93,16 @@ int main(int argc, char **argv, char **env)
 		if (line == NULL)  // si l'utilisateur appuie sur ctrl-D
 		{
 			free_garbage(&garbage);
-			//ft_free_tab(garbage.new_env);
+			ft_free_tab(garbage.new_env);
 			//free(line);
 			printf("\n");
 			exit(0);
 		}
 		if (parse(line) == 0)
 		{
-			garbage.line = delete_dollar(line, garbage.new_env);
+			garbage.line = delete_dollar(line, garbage.new_env, 0, 0);
 			//printf("line after delete= %s\n", line);
-			garbage.line = replace_dollar(line, garbage.new_env);
+			garbage.line = replace_dollar(line, garbage.new_env, 0, 0);
 			//printf("line after replace= %s\n", line);
 			loop_create_maillons(garbage.line, &garbage);
 			cmd_to_path(garbage.maillons, garbage.new_env);
