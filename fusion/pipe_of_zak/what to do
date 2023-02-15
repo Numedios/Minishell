@@ -76,3 +76,7 @@ pour export tester avec des caracteres speciaux dans le nom (en general pas auto
 que faire dans le cas d'une erreur dans CD
 
 rajouter la fonction qui free dans le builtin exit
+
+checke le builtin unset, probleme de free (le probleme vient peut etre que j'envoie pas l'original)
+
+export sans argument devrait afficher l'env

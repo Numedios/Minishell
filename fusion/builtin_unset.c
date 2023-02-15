@@ -6,12 +6,16 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:36:17 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/02/13 13:04:54 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/15 21:57:58 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 //on peut unset autant qu'on veut
+
+/*
+Probleme je fais dispa
+*/
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	size_t	i;
@@ -42,6 +46,7 @@ void	do_unset(char *tab, char **env_copy, int i, int found_line)
 	{
 		if (ft_strncmp(tab, env_copy[i], n) == 0)
 		{
+			free(env_copy[i]);
 			env_copy[i] = env_copy[i + 1];
 			found_line++;
 		}
@@ -49,6 +54,6 @@ void	do_unset(char *tab, char **env_copy, int i, int found_line)
 			env_copy[i] = env_copy[i + 1];
 		i++;
 	}
-	if (found_line == 1)
-		free(env_copy[i - 1]);
+	// if (found_line == 1)
+	// 	free(env_copy[i - 1]);
 }
