@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 11:30:40 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/13 16:32:43 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/15 21:18:44 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ int	pipex_multiple(t_maillons *maillons, char ***env, int len, t_garbage *garbag
 			free_all_pipes((len - 1) * 2, garbage->pipes);
 			if (maillons->heredoc != -1)
 				close(maillons->heredoc);
-			if (check_if_builtin(maillons->args, *env, env) == 0)
+			if (check_if_builtin(maillons->args, *env, env, 0) == 0)
 			{
 				//dprintf(2, "yes !\n");
 				free_garbage(garbage);

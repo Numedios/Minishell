@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 11:40:14 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/15 17:35:35 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/15 21:17:58 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,12 @@ int	which_builtin(char **args, char **env, int i, int cmp)
 	return (1);
 }
 
-int	check_if_builtin(char **args, char **env, char ***new_env)
+int	check_if_builtin(char **args, char **env, char ***new_env, int i)
 {
 	int	cmp;
-	int	i;
 	int j;  
 
 	cmp = 0;
-	i = 0;
 	while (args && args[cmp])
 	{
 		if (args[cmp][0] == '-')
@@ -83,7 +81,10 @@ int	check_if_builtin(char **args, char **env, char ***new_env)
 			while (args[i][j] && args[i][j] != '=')
 				j++;
 			if (args[i][j] == '=')
+			{
 				(*new_env) = do_export(args[i], env, 0, 0);
+				env = (*new_env);
+			}
 		}
 		return (0);
 	}

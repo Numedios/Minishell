@@ -115,7 +115,7 @@ int				parsing_of_export(char *tab, char **env_copy, int *a, int *j);
 int				what_to_do(char *tab, char **env);
 
 /*  security */
-int				check_if_builtin (char **args, char **env, char ***new_env);
+int				check_if_builtin (char **args, char **env, char ***new_env, int i);
 int				check_echo (char **args,int cmp, int i, int execute);
 int				check_if_exit (char **args, char **env);
 int				check_builtin(char **args);
@@ -137,6 +137,7 @@ int				do_exit(char *statut);
 
 /*  built in export */
 char			**do_export(char *tab, char **env_copy, int i, int a);
+int				parse_export(char *tab, int i, int a);
 
 /*  built in pwd */
 int				do_pwd(void);

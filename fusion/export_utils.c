@@ -6,11 +6,13 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 17:22:11 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/15 17:56:52 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/15 19:57:57 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_exit_code[2];
 
 int	str_len_env(char *str)
 {
@@ -71,15 +73,17 @@ int	parsing_of_export(char *tab, char **env_copy, int *a, int *j)
 	if (ft_strchr(tab, '=') == NULL)//pas d'espace avant le "="
 	{
 		printf("export: `%s': not a valid identifier\n", tab);
+		g_exit_code[0] = 1;
 		return (1);
 	}
-	a = parse_export(tab, 0, 1);
-	if (a == 1)
+	(*a) = parse_export(tab, 0, 1);
+	if ((*a) == 1)
 	{
 		printf("export: `%s': not a valid identifier\n", tab);
+		g_exit_code[0] = 1;
 		return (1);
 	}
-	if (a == 2)
+	if ((*a) == 2)
 	{
 		do_env(env_copy);
 		return (1);
@@ -89,7 +93,7 @@ int	parsing_of_export(char *tab, char **env_copy, int *a, int *j)
 		printf("export: '%s' : already defined\n", tab);
 		return (1);
 	}
-	j = what_to_do(tab, env_copy);
+	(*j) = what_to_do(tab, env_copy);
 	return (0);
 }
 

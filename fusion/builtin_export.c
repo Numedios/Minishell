@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:36:12 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/02/15 18:21:28 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/15 21:14:46 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,7 @@ int	parse_value(char *tab, int i, int a)
 	}
 	else
 		i++;
-	if (tab && (tab[i] == '\0' || tab[i] == ' ' || tab[i] == '\t'
-			|| tab[i] == '\n' || tab[i] == '\v'
-			|| tab[i] == '\f' || tab[i] == '\r'))
+	if (tab && (tab[i] == '\0' || tab[i] == ' ' || (tab[i] < 14 && tab[i] > 7)))
 	{
 		if (a == 3)
 			return (5);
@@ -58,7 +56,7 @@ int	parse_export(char *tab, int i, int a)
 		return (1);
 	while (tab && tab[i])
 	{
-		if (tab[i] == '+' && tab[i + 1] != '=')
+		if ((tab[i] == '+' && tab[i + 1] != '=') || tab[0] == '=')
 			return (1);
 		if (tab[i] == '+' && tab[i + 1] == '=' && i == 0)
 			return (1);
@@ -67,10 +65,11 @@ int	parse_export(char *tab, int i, int a)
 			a = parse_value(tab, i, 0);
 			break ;
 		}
-		//TESTER LES 2 IF 
+		//TESTER LES 2 IF
 		if (tab[i] == ' ' || (tab[i] < 14 && tab[i] > 7))
 			return (1);
-		if((tab[i] > 32 && tab[i]  < 46) || (tab[i] > 57 && tab[i]  < 65) && (tab[i] > 90 && tab[i]  < 97) || (tab[i] > 122 && tab[i]  < 127))
+		if ((tab[i] > 32 && tab[i] < 48) || (tab[i] > 57 && tab[i] < 65)
+			|| (tab[i] > 90 && tab[i] < 97) || (tab[i] > 122 && tab[i] < 127))
 			return (1);
 		i++;
 	}

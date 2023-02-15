@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:20:55 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/13 12:20:59 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/15 21:18:31 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	pipex_one(t_maillons *maillons, char ***env, t_garbage *garbage)
 		dprintf(2, "yes !\n");
 		return (1);// 1 ou 0
 	}
-	if (check_if_builtin(maillons->args, *env, env) == 0)
+	if (check_if_builtin(maillons->args, *env, env, 0) == 0)
 	{
 		dprintf(2, "yes !\n");
 		return (1);// 1 ou 0

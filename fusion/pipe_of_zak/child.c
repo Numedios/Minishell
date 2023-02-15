@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:27:51 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/13 12:42:56 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/15 21:19:00 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ extern int	g_exit_code[2];
 
 void	child1_end(two_pipe *two_pipe, char ***env, t_maillons *maillons)
 {
-	if (check_if_builtin(maillons->args, *env, env) == 0)
+	if (check_if_builtin(maillons->args, *env, env, 0) == 0)
 	{
 		dprintf(2, "yes !\n");
 		exit(0);
@@ -60,7 +60,7 @@ int	child1(two_pipe *two_pipe, char ***env, t_maillons *maillons)
 
 void	child2_end(two_pipe *two_pipe, char ***env, t_maillons *maillons)
 {
-	if (check_if_builtin(maillons->args, *env, env) == 0)
+	if (check_if_builtin(maillons->args, *env, env, 0) == 0)
 	{
 		dprintf(2, "yes 2!\n");
 		exit(0);

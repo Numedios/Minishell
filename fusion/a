@@ -1,19 +1,28 @@
-builtin_export.c: Error!
-Error: LINE_TOO_LONG        (line:  47, col:   1):	line too long
-Error: LINE_TOO_LONG        (line:  47, col:  82):	line too long
-Error: LINE_TOO_LONG        (line:  48, col:   1):	line too long
-Error: LINE_TOO_LONG        (line:  48, col:  84):	line too long
-Error: LINE_TOO_LONG        (line:  70, col:  83):	line too long
-Error: LINE_TOO_LONG        (line:  72, col:  84):	line too long
-Error: SPC_BFR_OPERATOR     (line:  72, col: 383):	missing space before operator
-Error: TOO_MANY_LINES       (line:  79, col:   1):	Function has more than 25 lines
-Error: WRONG_SCOPE_COMMENT  (line: 100, col:  17):	Comment is invalid in this scope
-Error: WRONG_SCOPE_COMMENT  (line: 100, col:  17):	Comment is invalid in this scope
-Error: WRONG_SCOPE_COMMENT  (line: 103, col:  33):	Comment is invalid in this scope
-Error: WRONG_SCOPE_COMMENT  (line: 103, col:  33):	Comment is invalid in this scope
-Error: WRONG_SCOPE_COMMENT  (line: 128, col:  17):	Comment is invalid in this scope
-Error: WRONG_SCOPE_COMMENT  (line: 128, col:  17):	Comment is invalid in this scope
-Error: WRONG_SCOPE_COMMENT  (line: 130, col:  33):	Comment is invalid in this scope
-Error: WRONG_SCOPE_COMMENT  (line: 130, col:  33):	Comment is invalid in this scope
-Error: WRONG_SCOPE_COMMENT  (line: 144, col:  18):	Comment is invalid in this scope
-Error: WRONG_SCOPE_COMMENT  (line: 144, col:  18):	Comment is invalid in this scope
+pipe_of_zak/security.c: Error!
+Error: LINE_TOO_LONG        (line:  34, col:  62):	line too long
+Error: WRONG_SCOPE_COMMENT  (line:  34, col:  62):	Comment is invalid in this scope
+Error: WRONG_SCOPE_COMMENT  (line:  34, col:  62):	Comment is invalid in this scope
+Error: LINE_TOO_LONG        (line:  34, col: 147):	line too long
+Error: LINE_TOO_LONG        (line:  43, col:   1):	line too long
+Error: LINE_TOO_LONG        (line:  43, col:  82):	line too long
+Error: LINE_TOO_LONG        (line:  53, col:  62):	line too long
+Error: WRONG_SCOPE_COMMENT  (line:  53, col:  62):	Comment is invalid in this scope
+Error: WRONG_SCOPE_COMMENT  (line:  53, col:  62):	Comment is invalid in this scope
+Error: LINE_TOO_LONG        (line:  53, col: 147):	line too long
+Error: SPACE_REPLACE_TAB    (line:  68, col:   8):	Found space when expecting tab
+Error: CONSECUTIVE_SPC      (line:  68, col:  11):	Two or more consecutives spaces
+Error: SPC_BEFORE_NL        (line:  68, col:  12):	Space before newline
+Error: TOO_MANY_LINES       (line:  94, col:   1):	Function has more than 25 lines
+Error: SPC_AFTER_PAR        (line: 109, col:  60):	Missing space after parenthesis (brace/bracket)
+Error: LINE_TOO_LONG        (line: 109, col:  61):	line too long
+Error: WRONG_SCOPE_COMMENT  (line: 109, col:  61):	Comment is invalid in this scope
+Error: WRONG_SCOPE_COMMENT  (line: 109, col:  61):	Comment is invalid in this scope
+Error: LINE_TOO_LONG        (line: 109, col: 146):	line too long
+Error: SPC_AFTER_PAR        (line: 122, col:  36):	Missing space after parenthesis (brace/bracket)
+Error: WRONG_SCOPE_COMMENT  (line: 122, col:  37):	Comment is invalid in this scope
+Error: WRONG_SCOPE_COMMENT  (line: 122, col:  37):	Comment is invalid in this scope
+Error: SPC_AFTER_PAR        (line: 134, col:  49):	Missing space after parenthesis (brace/bracket)
+Error: LINE_TOO_LONG        (line: 134, col:  50):	line too long
+Error: WRONG_SCOPE_COMMENT  (line: 134, col:  50):	Comment is invalid in this scope
+Error: WRONG_SCOPE_COMMENT  (line: 134, col:  50):	Comment is invalid in this scope
+Error: LINE_TOO_LONG        (line: 134, col:  91):	line too long

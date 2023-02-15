@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 15:10:42 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/15 16:24:01 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/15 20:52:58 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*apply_delete(int i, int skip, char *tab)
 	}
 	return (tab);
 }
-
+			
 char	*found_it_delete(char *tab, char **new_env, t_index *index, int *skip)
 {
 	int	i;
@@ -47,7 +47,7 @@ char	*found_it_delete(char *tab, char **new_env, t_index *index, int *skip)
 	i = index->a;
 	while (tab[i])
 	{
-		if (tab[i] == '\'' || tab[i] == '"' || tab[i] == ' ' || tab[i] == '-' || tab[i] == '!' || tab[i] == '@' || tab[i] == '#' || tab[i] == '$' || tab[i] == '%' || tab[i] == '^' || tab[i] == '&' || tab[i] == '*' || tab[i] == '(' || tab[i] == ')' || tab[i] == '{' || tab[i] == '}' || tab[i] == '[' || tab[i] == ']' || tab[i] == '|' || tab[i] == ';' || tab[i] == ':' || tab[i] == '<' || tab[i] == '>' || tab[i] == '?' || tab[i] == '/'|| tab[i] == '~' || tab[i] == '\\')
+		if (tab[i] == ' ' || (tab[i] < 14 && tab[i] > 7) || (tab[i] > 32 && tab[i] < 46) || (tab[i] > 57 && tab[i] < 65) || (tab[i] > 90 && tab[i] < 97) || (tab[i] > 122 && tab[i] < 127))
 		{
 			index->j = research(*skip, index->a, tab, new_env);
 			if (index->j == -1)
@@ -78,7 +78,10 @@ char	*dollar_inquote_del(char *tab, int *i, char **new_env, t_index *index)
 		while (tab[(*i)] == '$'
 			&& (tab[(*i) + 1] == '$' || tab[(*i) + 1] == ' '))
 			(*i)++;
-		while (tab[(*i)] == '$' && (tab[(*i) + 1] != '\0' && tab[(*i) + 1] != ' ' && tab[(*i) + 1] != '"' && tab[(*i) + 1] != '\''))// skip tout les espaces
+		while (tab[(*i)] == '$' && ((tab[(*i) + 1] > 14 || tab[(*i) + 1] < 7)
+			&& (tab[(*i) + 1] < 32 || tab[(*i) + 1] > 47) && (tab[(*i) + 1] < 57 || tab[(*i) + 1] > 65)
+			&& (tab[(*i) + 1] < 90 || tab[(*i) + 1] > 97) && (tab[(*i) + 1] < 122 || tab[(*i) + 1] > 127)
+			&& tab[(*i) + 1] != '\0' && tab[(*i) + 1] != ' ' && tab[(*i) + 1] != '"' && tab[(*i) + 1] != '\''))// skip tout les espaces
 		{
 			skip++;
 			index->a = (*i) + 1;

@@ -67,3 +67,8 @@ pour dollar verifier les cas comme "$" "$$" (ou plus) des dollars isoles, enture
  remplacer les if avec espace par:
  if (tab[i] == ' ' || (tab[i] < 14 && tab[i] > 7))
 			return (1);
+
+
+check le parsing des redirections (<> EOF >>, s'execute)
+
+pour export tester avec des caracteres speciaux dans le nom (en general pas autorise) et dans la valeur (autorise)
