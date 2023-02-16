@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:36:12 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/02/15 21:14:46 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/16 18:35:35 by zakariyaham      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ int	parse_value(char *tab, int i, int a)
 	return (a);
 }
 
-//return 2 si il y a rien et donc imprimer env,  1 pour erreur, 0 pour remplacer 
-//et 3 pour ajouter a c qu'il existe deja, return (4) si apres '=' il a un espace, 
+//return 2 si il y a rien et donc imprimer env,  1 pour erreur, 0 pour remplacer
+//et 3 pour ajouter a c qu'il existe deja, return (4) si apres '=' il a un espace,
 //5 si il ya '+=' et apres un ' '
 
 int	parse_export(char *tab, int i, int a)
@@ -95,7 +95,7 @@ char	**replace_value(int j, int a, char *tab, char **env)
 		env[j] = ft_strjoin(env[j], &tab[i]);
 		return (env);
 	}
-	if (a == 4) //a verifier
+	if (a == 4) //a verifier, correspond a un espace apres un '='
 	{
 		free(env[j]);
 		env[j] = ft_strdup(tab);//ca depend comment je recois tab
@@ -139,7 +139,7 @@ char	**do_export(char *tab, char **env_copy, int i, int a)
 
 	if (parsing_of_export(tab, env_copy, &a, &j) == 1)
 		return (env_copy);
-	if (j != -1) //on a trouve la ligne dans env
+	if (j != -1)
 	{
 		env_copy = replace_value(j, a, tab, env_copy);
 		return (env_copy);

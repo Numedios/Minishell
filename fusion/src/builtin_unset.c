@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:36:17 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/02/15 21:57:58 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/16 18:35:48 by zakariyaham      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,4 @@ void	do_unset(char *tab, char **env_copy, int i, int found_line)
 			env_copy[i] = env_copy[i + 1];
 		i++;
 	}
-	// if (found_line == 1)
-	// 	free(env_copy[i - 1]);
 }

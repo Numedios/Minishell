@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   replace_dollar_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 15:10:42 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/15 20:52:58 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/16 18:57:30 by zakariyaham      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*apply_delete(int i, int skip, char *tab)
 	}
 	return (tab);
 }
-			
+
 char	*found_it_delete(char *tab, char **new_env, t_index *index, int *skip)
 {
 	int	i;
@@ -47,7 +47,9 @@ char	*found_it_delete(char *tab, char **new_env, t_index *index, int *skip)
 	i = index->a;
 	while (tab[i])
 	{
-		if (tab[i] == ' ' || (tab[i] < 14 && tab[i] > 7) || (tab[i] > 32 && tab[i] < 46) || (tab[i] > 57 && tab[i] < 65) || (tab[i] > 90 && tab[i] < 97) || (tab[i] > 122 && tab[i] < 127))
+		if (tab[i] == ' ' || (tab[i] < 14 && tab[i] > 7)
+			|| (tab[i] > 32 && tab[i] < 46) || (tab[i] > 57 && tab[i] < 65)
+			|| (tab[i] > 90 && tab[i] < 97) || (tab[i] > 122 && tab[i] < 127))
 		{
 			index->j = research(*skip, index->a, tab, new_env);
 			if (index->j == -1)
@@ -95,7 +97,7 @@ char	*dollar_inquote_del(char *tab, int *i, char **new_env, t_index *index)
 	return (tab);
 }
 
-char	*one_dollar_or_more_delete(char *tab, int *i, char **new_env, t_index *index)// pas encpre comfigurer pour delete 
+char	*one_dollar_or_more_delete(char *tab, int *i, char **new_env, t_index *index)// pas encpre comfigurer pour delete
 {
 	int	skip;
 

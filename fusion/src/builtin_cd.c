@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:35:56 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/02/15 21:28:43 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/16 18:33:31 by zakariyaham      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	update_pwd(char **new_env, char *pwd)
 	{
 		pwd = ft_strjoin("PWD=", dir);
 		if (!pwd)
-			return;//appeller la fonction error_malloc
+			return ;//appeller la fonction error_malloc
 		new_env = do_export(pwd, new_env, 0, 0);
 		free(pwd);
 	}

@@ -56,7 +56,7 @@ t_maillons *loop_create_maillons(char * line, t_garbage *garbage)
 
 	i = 0;
 	prev = NULL;
-	garbage->split_pipe = ft_split2(line , "|");
+	garbage->split_pipe = ft_split2(line, "|");
 	garbage ->maillons = NULL;
 	if (!(garbage->split_pipe))
 		return (0);
@@ -64,7 +64,7 @@ t_maillons *loop_create_maillons(char * line, t_garbage *garbage)
 	{
 		garbage->split_lst = ft_split_list(garbage->split_pipe[i], WHITE_SPACE);
 		if (!(garbage->split_lst))
-				break;
+				break ;
 		create_split_arg(&garbage-> split_lst);
 		maillon = create_maillons(&garbage->split_lst, prev);
 		add_end_maillons(&garbage->maillons, maillon);

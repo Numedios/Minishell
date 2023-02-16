@@ -6,7 +6,7 @@
 /*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:49:59 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/02/16 17:50:44 by zakariyaham      ###   ########.fr       */
+/*   Updated: 2023/02/16 18:51:59 by zakariyaham      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,10 +169,17 @@ int				skip_quote(char *line, int i);
 int				print_tab(char **tab);
 
 /*  parsing */
-int				str_cmp(char *s1, char *s2);
 int				parse(char *line);
+
+/*	parsing_utils.c	*/
+int				str_cmp(char *s1, char *s2);
 int				quote_close_2(char *str);
 int				ft_strlen_const(const char *str);
+
+/*	check_space.c	*/
+int				check_error_2_space(char *line, char c, char c_bis, int i);
+int				check_error_3_space(char *line, char c, char *c_bis, int i);
+int				check_error_space(char *line, char c, int i);
 
 /* child.c */
 

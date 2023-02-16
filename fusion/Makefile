@@ -92,7 +92,8 @@ SRC = main.c \
 		security.c  \
 		utils_pipex.c \
 		child.c \
-		utilis_pipex_zak.c 
+		utilis_pipex_zak.c \
+		check_space.c
 
 #==============================================================================#
 #                                   HEADERS                                    #

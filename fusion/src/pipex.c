@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:20:55 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/15 21:18:31 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/16 18:54:08 by zakariyaham      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 extern int	g_exit_code[2];
 
@@ -40,10 +39,9 @@ int	find_stdin(t_maillons *maillons)
 		res = maillons -> heredoc;
 		return (res);
 	}
-
 	else if (!(maillons-> prev))
 	{
-		return res;
+		return (res);
 	}
 	else if (find_if_have_output(maillons -> output -> prev, ">") || !(maillons->prev->command))
 	{
@@ -76,7 +74,6 @@ int	find_stdout(t_maillons *maillons)
 	return (res);
 }
 
-
 int	pipex_one(t_maillons *maillons, char ***env, t_garbage *garbage)
 {
 	pid_t	pid;
@@ -95,7 +92,7 @@ int	pipex_one(t_maillons *maillons, char ***env, t_garbage *garbage)
 	}
 	pid = fork();
 	if (pid == -1)
-			return (perror("fork"), 1);
+		return (perror("fork"), 1);
 	signal(SIGQUIT,signal_quit_child);
 	if (pid == 0)
 	{
@@ -117,7 +114,7 @@ int	pipex_one(t_maillons *maillons, char ***env, t_garbage *garbage)
 			free_garbage(garbage);
 			exit(0);
 		}
-		if (maillons->command != NULL && execve(maillons ->command, maillons -> args , *env) == -1)
+		if (maillons->command != NULL && execve(maillons ->command, maillons -> args, *env) == -1)
 		{
 			perror("execve");
 			free_garbage(garbage);
@@ -128,8 +125,6 @@ int	pipex_one(t_maillons *maillons, char ***env, t_garbage *garbage)
 	waitpid(-1 , NULL, 0);
 	return (0);
 }
-
-
 
 int	pipex(t_maillons *maillons, char ***env, t_garbage *garbage)
 {
@@ -143,7 +138,6 @@ int	pipex(t_maillons *maillons, char ***env, t_garbage *garbage)
 		return (1);
 	if (len == 0)
 		return(0);
-
 	if (len == 1)
 	{
 		pipex_one(maillons, env, garbage);
