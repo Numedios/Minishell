@@ -1,6 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/16 17:49:59 by zakariyaham       #+#    #+#             */
+/*   Updated: 2023/02/16 17:50:44 by zakariyaham      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef MINISHELL_H
-#define MINISHELL_H
+# define MINISHELL_H
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -9,27 +20,26 @@
 # include <sys/wait.h>
 # include <string.h>
 # include <fcntl.h>
-#include <signal.h>
+# include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-#include <limits.h>
+# include <limits.h>
 
 # define WHITE_SPACE "\t\n\v\f\r "
 
-typedef struct	s_pipes
+typedef struct s_pipes
 {
 	int	*pipe;
 	int	len;
 }		t_pipes;
 
-typedef struct	split_elem
+typedef struct split_elem
 {
 	char				*arg;
 	struct split_elem	*next;
 }			t_split_elem;
 
-
-typedef struct	input_output
+typedef struct input_output
 {
 	char				*file_name;
 	char				*operator;
@@ -37,7 +47,7 @@ typedef struct	input_output
 	struct input_output	*prev;
 }			t_input_output;
 
-typedef struct	maillons
+typedef struct maillons
 {
 	int						heredoc;
 	struct input_output		*output;
@@ -52,18 +62,18 @@ typedef struct garbage
 	char				**split_pipe;
 	char				**new_env;
 	char				*line;
-	struct split_elem 	*split_lst;
+	struct split_elem	*split_lst;
 	struct maillons		*maillons;
 	struct s_pipes		*pipes;
 }			t_garbage;
 
-typedef struct	index
+typedef struct index
 {
 	int	j;
 	int	a;
 }		t_index;
 
-typedef struct	two_pipe
+typedef struct two_pipe
 {
 	int		fd_in;
 	int		fd_out;
@@ -72,7 +82,7 @@ typedef struct	two_pipe
 	int		status;
 }		two_pipe;
 
-typedef struct	for_dollar
+typedef struct for_dollar
 {
 	int		len_tab;
 	int		len_value;
@@ -100,11 +110,10 @@ int				child1(two_pipe *two_pipe, char ***env, t_maillons *maillons, t_garbage *
 int				child2(two_pipe *two_pipe, char ***env, t_maillons *maillons, t_garbage *garbage);
 int				check_access(t_maillons *maillons);
 
-
 /*      free_garbage     */
 
-void    free_garbage(t_garbage *garbage);
-void	free_garbage_and_env(t_garbage *garbage);
+void			free_garbage(t_garbage *garbage);
+void			free_garbage_and_env(t_garbage *garbage);
 
 /*  ft_itoa */
 char			*ft_itoa(int n);
@@ -135,7 +144,7 @@ void			do_env(char **env);
 char			**my_env(char **env);
 
 /*  built in exit */
-int	do_exit(char *statut, t_garbage *garbage);
+void			do_exit(char *statut, t_garbage *garbage);
 
 /*  built in export */
 char			**do_export(char *tab, char **env_copy, int i, int a);
@@ -146,7 +155,7 @@ int				do_pwd(void);
 
 /*  built in unset */
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
-void			do_unset(char *tab, char **env_copy,int i, int found_line);
+void			do_unset(char *tab, char **env_copy, int i, int found_line);
 
 /*  signals */
 void			setup_signal_handlers(void);
@@ -156,24 +165,22 @@ void			setup_signal_handlers_child(void);
 /*  utils parsing_bis */
 char			*ft_strdup_const(const char *s);
 char			*ft_strjoin(char const *s1, char const *s2);
-int				skip_quote (char *line, int i);
+int				skip_quote(char *line, int i);
 int				print_tab(char **tab);
 
 /*  parsing */
 int				str_cmp(char *s1, char *s2);
-int				parse (char *line);
+int				parse(char *line);
 int				quote_close_2(char *str);
 int				ft_strlen_const(const char *str);
 
 /* child.c */
 
-void	child1_end(two_pipe *two_pipe, char ***env, t_maillons *maillons, t_garbage *garbage);
-int	child1(two_pipe *two_pipe, char ***env, t_maillons *maillons, t_garbage *garbage);
-void	child2_end(two_pipe *two_pipe, char ***env, t_maillons *maillons, t_garbage *garbage);
-int	child2(two_pipe *two_pipe, char ***env, t_maillons *maillons, t_garbage *garbage);
-int	check_access(t_maillons *maillons);
-
-
+void			child1_end(two_pipe *two_pipe, char ***env, t_maillons *maillons, t_garbage *garbage);
+int				child1(two_pipe *two_pipe, char ***env, t_maillons *maillons, t_garbage *garbage);
+void			child2_end(two_pipe *two_pipe, char ***env, t_maillons *maillons, t_garbage *garbage);
+int				child2(two_pipe *two_pipe, char ***env, t_maillons *maillons, t_garbage *garbage);
+int				check_access(t_maillons *maillons);
 
 /*  replace dollar */
 char			*replace_dollar(char *tab, char **new_env, int i, int skip);
@@ -188,7 +195,6 @@ char			*do_replace(char *tab, char **new_env, int skip, t_index index);
 /*  replace dollar 2 */
 char			*delete_dollar(char *tab, char **new_env, int i, int skip);
 //char			*delete_dollar(char *line);
-
 
 /* libft.c */
 
@@ -210,14 +216,13 @@ char			**ft_split(char *str, char *sep);
 
 /* split2.c */
 
-int	is_inquotes(char *str, int pos);
-int check_quote2(char c);
-int	check_sep2(char c, char *sep);
-int count_words2(char *str, char *sep);
-int	ft_stablen(char *str, int tor, char *sep);
-char	*ft_strtab(char *str, int tor, char *sep);
-char	**ft_split2(char *str, char *sep);
-
+int				is_inquotes(char *str, int pos);
+int				check_quote2(char c);
+int				check_sep2(char c, char *sep);
+int				count_words2(char *str, char *sep);
+int				ft_stablen(char *str, int tor, char *sep);
+char			*ft_strtab(char *str, int tor, char *sep);
+char			**ft_split2(char *str, char *sep);
 
 /* split_list.c */
 
@@ -242,7 +247,7 @@ t_input_output	*find_input_output(t_split_elem *lst);
 
 void			free_split_elem(t_split_elem *lst);
 void			ft_free_tab(char **tab);
-void			ft_free_split_arg(t_split_elem  **lst);
+void			ft_free_split_arg(t_split_elem **lst);
 void			free_input_output(t_input_output *lst);
 void			free_input_output_middle(t_input_output **lst, t_input_output **first);
 void			free_inputs_outputs(t_input_output **lst);
@@ -263,7 +268,6 @@ void			ft_strjoin_list(t_split_elem *list, t_split_elem **add, t_split_elem **fi
 t_input_output	*create_input_output(char *name, char *operator, t_input_output *prev);
 t_input_output	*lstlast_input_output(t_input_output *lst);
 void			add_end_input_output(t_input_output **list, t_input_output *add);
-
 
 /* list_mailllons.c */
 
@@ -315,11 +319,11 @@ int				pipex(t_maillons *maillons, char ***env, t_garbage *garbage);
 
 /* pipex2.c */
 
-int                pipex_multiple(t_maillons *maillons, char ***env, int len, t_garbage *garbage);
+int				pipex_multiple(t_maillons *maillons, char ***env, int len, t_garbage *garbage);
 
 /* utils_pipex.c */
 
-void	free_all_pipes(int argc, t_pipes *pipes);
+void			free_all_pipes(int argc, t_pipes *pipes);
 void			create_pipe(int *pipes, int i);
 int				*create_pipes(int len);
 t_pipes			*create_all_pipes(int len);
@@ -341,7 +345,7 @@ void			find_all_heredoc(t_maillons *maillons);
 
 /* builtins_pwd.c */
 
-void			pwd();
+void			pwd(void);
 
 /* get_next_line */
 
@@ -361,11 +365,11 @@ void			initialize_garbage(t_garbage *garbage);
 
 /* supp.c */
 
-void			ft_print_maillon(t_maillons		*maillons);
+void			ft_print_maillon(t_maillons *maillons);
 void			ft_print_tab(char **tab);
 void			ft_print_split_elem(t_split_elem *list);
 void			ft_print_input_output(t_input_output *list);
-void			ft_print_maillons(t_maillons		*maillons);
+void			ft_print_maillons(t_maillons *maillons);
 char			*create_word_and_quote2(char *str, char *sep);
 void			ft_print_garbage(t_garbage	*garbage);
 

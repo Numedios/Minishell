@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:36:10 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/02/13 12:50:44 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/16 17:45:17 by zakariyaham      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,20 @@ long long	ft_atoll_capped(const char *nptr, int *flag, int j, int nb)
 	return (nb * j);
 }
 
-int	do_exit(char *statut, t_garbage *garbage)
+void	exit_free(t_garbage *garbage, long long exit_code)
+{
+	free_garbage_and_env(garbage);
+	exit(exit_code);
+}
+
+void	do_exit(char *statut, t_garbage *garbage)
 {
 	long long	exit_code;
 	int			flag;
 
 	exit_code = 2;
 	flag = 0;
-	while (statut && statut[flag])//erreur il y a une lettree
+	while (statut && statut[flag]) //erreur il y a une lettree
 	{
 		while (statut[flag] == 32 || (statut[flag] >= 9 && statut[flag] <= 13))
 			flag++;
@@ -59,23 +65,14 @@ int	do_exit(char *statut, t_garbage *garbage)
 		if (statut[flag] >= '0' && statut[flag] <= '9')
 			flag++;
 		else
-		{
-			free_garbage_and_env(garbage);
-			exit(2);
-		}
+			exit_free(garbage, 2);
 	}
 	flag = 0;
 	exit_code = ft_atoll_capped(statut, &flag, 1, 0);
 	if (flag == 0)
-	{
-		free_garbage_and_env(garbage);
-		exit(exit_code);
-	}
+		exit_free(garbage, exit_code);
 	else
-	{
-		free_garbage_and_env(garbage);
-		exit(2);
-	}
+		exit_free(garbage, 2);
 }
 
 //attention au here_doc, surtout quand on fait CTRL+C dans le premier ca doit tout ferme
