@@ -65,7 +65,10 @@ void	do_exit(char *statut, t_garbage *garbage)
 		if (statut[flag] >= '0' && statut[flag] <= '9')
 			flag++;
 		else
+		{
+			dprintf(2,"Minishell: exit: %s: numeric argument required\n", statut);
 			exit_free(garbage, 2);
+		}
 	}
 	flag = 0;
 	exit_code = ft_atoll_capped(statut, &flag, 1, 0);

@@ -70,8 +70,8 @@ void	free_garbage_and_env(t_garbage *garbage)
 	}
 	if (garbage->new_env);
 	{
-		garbage->new_env = NULL;
 		ft_free_tab(garbage->new_env);
+		garbage->new_env = NULL;
 	}
 }
 
