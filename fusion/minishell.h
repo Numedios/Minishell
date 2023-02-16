@@ -196,6 +196,17 @@ char			*create_word_all(char *str, char *sep);
 char			*create_word(char *str, char *sep);
 char			**ft_split(char *str, char *sep);
 
+/* split2.c */
+
+int	is_inquotes(char *str, int pos);
+int check_quote2(char c);
+int	check_sep2(char c, char *sep);
+int count_words2(char *str, char *sep);
+int	ft_stablen(char *str, int tor, char *sep);
+char	*ft_strtab(char *str, int tor, char *sep);
+char	**ft_split2(char *str, char *sep);
+
+
 /* split_list.c */
 
 char			*create_word_list(char *str, char *sep);

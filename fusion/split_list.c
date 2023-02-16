@@ -14,35 +14,22 @@
 
 t_split_elem	*ft_split_list(char *str, char *sep)
 {
-	int				j;
+	int				i;
 	t_split_elem	*lst;
 	t_split_elem	*elem;
 	char			*res;
 	char			quote;
+	int count;
 
-	j = 0;
+	i = 0;
 	lst = NULL;
-	while (str && *str)
+	count = count_words2(str, sep);
+	while (count--)
 	{
-		while (*str && !check_sep(*str, sep))
-			str++;
-		if (*str && check_sep(*str, sep))
-		{
-			res = create_word_all2(str, sep);
-			elem = create_split_elem(res);
-			add_end_split_elem(&lst, elem);
-		}
-		while (str && *str && check_sep(*str, sep))
-		{
-			if (*str == '\"' || *str == '\'')
-			{
-				quote = *str;
-				str++;
-				while (*str != quote)
-					str++;
-			}
-			str++;
-		}
+		res = ft_strtab(str, i, sep);
+		elem = create_split_elem(res);
+		add_end_split_elem(&lst, elem);
+		i++;
 	}
 	return (lst);
 }

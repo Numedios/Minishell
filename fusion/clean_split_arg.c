@@ -83,7 +83,7 @@ t_split_elem	**split_redirection(char *str, char *sep)
 		}
 		if (*str && check_sep(*str, "<>"))
 		{
-			add_end_split_elem(add, create_split_elem(create_word_all2(str, "<>")));
+			add_end_split_elem(add, create_split_elem(ft_strtab(str, 0, sep)));
 			i++;
 		}
 		while (*str && check_sep(*str, "<>"))

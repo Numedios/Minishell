@@ -56,7 +56,7 @@ t_maillons *loop_create_maillons(char * line, t_garbage *garbage)
 
 	i = 0;
 	prev = NULL;
-	garbage->split_pipe = ft_split(line , "|");
+	garbage->split_pipe = ft_split2(line , "|");
 	garbage ->maillons = NULL;
 	if (!(garbage->split_pipe))
 		return (0);
