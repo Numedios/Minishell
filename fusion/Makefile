@@ -1,9 +1,51 @@
+# Compilation flags
+ifeq ($(DMEM),1)
+MEM 		= -fsanitize=address
+endif
+
+ifeq ($(DTHREAD),1)
+MEM 		= -fsanitize=thread
+endif
+
+#==============================================================================#
+#                                   TARGETS                                    #
+#==============================================================================#
+
 NAME = minishell
 
-CC = gcc
-CFLAGS = -g3
+#==============================================================================#
+#                                   COMMANDS                                   #
+#==============================================================================#
 
-SRCPATH = src/
+CC = gcc
+CFLAGS =  -g
+DFLAGS = -MMD
+MKDIR = mkdir -p
+RM = rm -f
+MAKE_SILENT = make --no-print-directory
+INC_LIBFT = -L libft -lft
+
+#==============================================================================#
+#                                    COLORS                                    #
+#==============================================================================#
+
+PURPLE = \033[35m
+GREEN = \033[32m
+YELLOW = \033[33m
+END = \033[0m
+
+#==============================================================================#
+#                                    PATHS                                     #
+#==============================================================================#
+
+SRC_DIR = src/
+HEADER_DIR = include/
+OBJ_DIR = obj/
+
+#==============================================================================#
+#                                   SOURCES                                    #
+#==============================================================================#
+
 SRC = main.c \
 		libft.c	\
 		split.c \
@@ -34,7 +76,6 @@ SRC = main.c \
 		parsing_input.c \
 		pipex.c \
 		pipex2.c \
-		utils_pipex.c \
 		split_pipex.c \
 		cmd_to_path.c \
 		utils_parsing.c \
@@ -46,40 +87,55 @@ SRC = main.c \
 		free_garbage.c \
 		dollars_interrogation.c \
 		export_utils.c \
-		split2.c
+		split2.c \
+		pipe_de_2.c \
+		security.c  \
+		utils_pipex.c \
+		child.c \
+		utilis_pipex_zak.c 
 
-PIPEX_SRC = pipe_of_zak/pipe_de_2.c \
-				pipe_of_zak/security.c  \
-				pipe_of_zak/utils_pipex.c \
-				pipe_of_zak/child.c \
+#==============================================================================#
+#                                   HEADERS                                    #
+#==============================================================================#
 
-OBJ = $(SRC:.c=.o) $(PIPEX_SRC:.c=.o)
+HEAD_NAME = $(HEADER_DIR)/minishell.h
+INC = -I./$(HEADER_DIR)
+
+#==============================================================================#
+#                                   OBJECTS                                    #
+#==============================================================================#
+
+OBJ = $(addprefix ${OBJ_DIR}, ${SRC:.c=.o})
+
+#==============================================================================#
+#                                   MAKEFILE                                   #
+#==============================================================================#
 
 all : $(NAME)
 
-$(NAME) : $(OBJ)
-	@echo "\033[36mMaking Minishell \033[0m"
-	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) -lreadline
-	@echo "\033[32mDone\033[0m"
+$(OBJ_DIR)%.o : $(SRC_DIR)%.c $(HEAD_NAME)
+	mkdir -p ${@D}
+	$(CC) $(CFLAGS) $(DFLAGS) $(MEM) $(INC) -c $< -o $@
 
-%.o : $(SRCPATH)%.c
-	@$(CC) $(CFLAGS) -c $^
-%.o : $(SRCPATH)pipe_of_zak/%.c
-	@$(CC) $(CFLAGS) -c $^
+$(NAME) : $(OBJ)
+	echo "$(YELLOW)Making Minishell$(END)"
+	$(CC) $(CFLAGS) $(OBJ) $(INC) $(MEM) -o $(NAME) -lreadline -g
+	echo "$(GREEN)Done$(END)"
 
 bonus : all
 
 clean :
-	@echo "\033[35mCleaning Minishell objects...\033[0m"
-	@rm -f $(OBJ)
-	@echo "\033[32mDone\033[0m"
+	echo "$(PURPLE)Cleaning Minishell's objects...$(END)"
+	$(RM)r $(OBJ_DIR)
+	echo "$(GREEN)Done$(END)"
 
 fclean : clean
-	@echo "\033[35mCleaning  Minishell...\033[0m"
-	@rm -f $(NAME)
-	@echo "\033[32mDone\033[0m"
+	echo "$(PURPLE)Cleaning Minishell...$(END)"
+	$(RM) $(NAME)
+	echo "$(GREEN)Done$(END)"
 
 re : fclean
-	make all
+	$(MAKE_SILENT) all
 
 .PHONY : all clean fclean re bonus
+.SILENT :
