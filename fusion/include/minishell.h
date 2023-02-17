@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:49:59 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/02/17 17:29:52 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/17 18:09:14 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -317,7 +317,7 @@ void			add_end_maillons(t_maillons **lst, t_maillons *add);
 /* quote.c */
 
 int				quote_close(char *str);
-void			change_quote(char *str);
+void			change_quote(char *str, int i, int single, int doubl);
 
 /* parsing_input_output.c */
 

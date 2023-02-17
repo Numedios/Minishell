@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   split2.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/17 18:15:47 by zhamdouc          #+#    #+#             */
+/*   Updated: 2023/02/17 18:18:24 by zhamdouc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 /*char	**ft_split2(char *str, char *sep)
@@ -30,7 +42,6 @@
 	res[i] = 0;
 	return (res);
 }*/
-
 
 /*
 * renvoie 0 si pas entre cote
@@ -66,9 +77,9 @@ int	is_inquotes(char *str, int pos)
 	return (0);
 }
 
-int check_quote2(char c)
+int	check_quote2(char c)
 {
-    return (c == '\'' || c == '\"');
+	return (c == '\'' || c == '\"');
 }
 
 /*
@@ -79,7 +90,7 @@ int check_quote2(char c)
 
 int	check_sep2(char c, char *sep)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (sep && sep[i])
@@ -113,7 +124,7 @@ int count_words2(char *str, char *sep)
     return (word);
 }*/
 
-int count_words2(char *str, char *sep)
+int	count_words2(char *str, char *sep)
 {
 	int	i;
 	int	j;
@@ -128,7 +139,8 @@ int count_words2(char *str, char *sep)
 		return (0);
 	while (str[i])
 	{
-		if (!is_inquotes(str, i) && !check_sep2(str[i], sep) && check_sep2(str[i + 1], sep))
+		if (!is_inquotes(str, i) && !check_sep2(str[i], sep)
+			&& check_sep2(str[i + 1], sep))
 			j++;
 		i++;
 	}
@@ -147,7 +159,7 @@ int	ft_stablen(char *str, int tor, char *sep)
 	j = 0;
 	while (str[i] && !is_inquotes(str, i) && !check_sep2(str[i], sep))
 		i++;
-	while (str[i] && (check_sep2(str[i], sep)|| is_inquotes(str, i)))
+	while (str[i] && (check_sep2(str[i], sep) || is_inquotes(str, i)))
 	{
 		if (!is_inquotes(str, i) && !check_sep2(str[i], sep))
 			j--;
@@ -183,7 +195,6 @@ char	*ft_strtab(char *str, int tor, char *sep)
 	strtab[j] = '\0';
 	return (strtab);
 }
-
 
 char	**ft_split2(char *str, char *sep)
 {

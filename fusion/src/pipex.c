@@ -6,12 +6,11 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:20:55 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/15 21:18:31 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/17 18:05:28 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 extern int	g_exit_code[2];
 
@@ -30,7 +29,8 @@ int	find_stdin(t_maillons *maillons)
 	res = -1;
 	if (find_if_have_output(maillons -> output, "<") == 1)
 	{
-		res = open(find_name_sep(maillons -> output, "<"), O_RDWR, O_DSYNC, !O_DIRECTORY);
+		res = open(find_name_sep(maillons -> output, "<"),
+				O_RDWR, O_DSYNC, !O_DIRECTORY);
 		return (res);
 	}
 	else if (find_if_have_output(maillons -> output, "<<") == 1)
@@ -38,12 +38,12 @@ int	find_stdin(t_maillons *maillons)
 		res = maillons -> heredoc;
 		return (res);
 	}
-
 	else if (!(maillons-> prev))
 	{
-		return res;
+		return (res);
 	}
-	else if (find_if_have_output(maillons -> output -> prev, ">") || !(maillons->prev->command))
+	else if (find_if_have_output(maillons -> output -> prev, ">")
+		|| !(maillons->prev->command))
 	{
 		res = open("/dev/null", O_RDWR, O_DSYNC, !O_DIRECTORY);
 		return (res);
@@ -58,19 +58,20 @@ int	find_stdout(t_maillons *maillons)
 	res = -1;
 	if (find_if_have_output(maillons -> output, ">"))
 	{
-		res = open(find_name_sep(maillons -> output, ">"), O_WRONLY | O_CREAT | O_TRUNC, 0644, !O_DIRECTORY);
+		res = open(find_name_sep(maillons -> output, ">"),
+				O_WRONLY | O_CREAT | O_TRUNC, 0644, !O_DIRECTORY);
 		return (res);
 	}
 	else if (find_if_have_output(maillons -> output, ">>"))
 	{
-		res = open(find_name_sep(maillons -> output, ">>"), O_WRONLY | O_CREAT | O_APPEND, 0644, !O_DIRECTORY);
+		res = open(find_name_sep(maillons -> output, ">>"),
+				O_WRONLY | O_CREAT | O_APPEND, 0644, !O_DIRECTORY);
 		return (res);
 	}
 	else if (!(maillons-> next))
 		return (res);
 	return (res);
 }
-
 
 int	pipex_one(t_maillons *maillons, char ***env, t_garbage *garbage)
 {
@@ -79,13 +80,13 @@ int	pipex_one(t_maillons *maillons, char ***env, t_garbage *garbage)
 	int		fd_out;
 
 	if (check_if_exit(maillons->args, *env, garbage) == 0)
-		return (1);// 1 ou 0
+		return (1);
 	if (check_if_builtin(maillons->args, *env, env, 0, garbage) == 0)
-		return (1);// 1 ou 0
+		return (1);
 	pid = fork();
 	if (pid == -1)
-			return (perror("fork"), 1);
-	signal(SIGQUIT,signal_quit_child);
+		return (perror("fork"), 1);
+	signal(SIGQUIT, signal_quit_child);
 	if (pid == 0)
 	{
 		fd_in = find_stdin(maillons);
@@ -100,28 +101,27 @@ int	pipex_one(t_maillons *maillons, char ***env, t_garbage *garbage)
 			dup2(fd_out, STDOUT_FILENO);
 			close(fd_out);
 		}
-		if (check_echo(maillons->args, 0 , 0, 0) == 0)
+		if (check_echo(maillons->args, 0, 0, 0) == 0)
 			free_garbage_exit(garbage, 0);
-		if (maillons->command != NULL && execve(maillons ->command, maillons -> args , *env) == -1)
+		if (maillons->command != NULL
+			&& execve(maillons->command, maillons->args, *env) == -1)
 			perror("execve");
 		free_garbage_exit(garbage, 1);
 	}
-	waitpid(-1 , NULL, 0);
+	waitpid(-1, NULL, 0);
 	return (0);
 }
-
 
 int	pipex(t_maillons *maillons, char ***env, t_garbage *garbage)
 {
 	int	*pipes;
 	int	len;
 
-	len = ft_strlen_maillons(maillons); // nombre de maillons
-	if (check_access(maillons) == 1)//sauf si c'est un builtin
+	len = ft_strlen_maillons(maillons);
+	if (check_access(maillons) == 1)
 		return (1);
 	if (len == 0)
-		return(0);
-
+		return (0);
 	if (len == 1)
 	{
 		pipex_one(maillons, env, garbage);

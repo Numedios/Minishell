@@ -82,3 +82,8 @@ checke le builtin unset, probleme de free (le probleme vient peut etre que j'env
 export sans argument devrait afficher l'env
 
 TESTER LES SIGNAUXX DANS LES PIPE 
+
+
+est ce que tu utilises    void			change_quote(char *str, int i, int single, int doubl); ??
+
+rajouter le close heredoc dans zak pipex

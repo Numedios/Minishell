@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:36:23 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/02/13 11:36:08 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/17 17:37:56 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ void	free_maillon_middle(t_maillons **lst, t_maillons **first)
 	// Libérer l'élément courant
 	free_maillon(*lst);
 	*lst = NULL;
-
 	// Mettre à jour le pointeur suivant de l'élément précédent
 	if (prev != NULL)
 		prev->next = next;
@@ -98,7 +97,6 @@ void	free_maillon_middle(t_maillons **lst, t_maillons **first)
 	if (next != NULL)
 		next->prev = prev;
 }
-
 
 /*
 *

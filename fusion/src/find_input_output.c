@@ -6,12 +6,14 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 11:11:17 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/13 11:11:18 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/17 17:49:38 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// si l' prev est un < ou << ou > ou >> (pour le premier if)
+// si *lst differend de > >> < << (pour le deuxieme if)
 t_input_output	*find_input_output(t_split_elem *lst)
 {
 	t_input_output	*first;
@@ -25,12 +27,17 @@ t_input_output	*find_input_output(t_split_elem *lst)
 	add = NULL;
 	while (lst)
 	{
-		 if (ft_strcmp(prev->arg, "<") || ft_strcmp(prev->arg, "<<") || ft_strcmp(prev->arg, ">") || ft_strcmp(prev->arg, ">>")) // si l' prev est un < ou << ou > ou >>
-			if (!(ft_strcmp((lst)->arg, "<") || ft_strcmp((lst)->arg, "<<") || ft_strcmp((lst)->arg, ">") || ft_strcmp((lst)->arg, ">>"))) // si *lst differend de > >> < <<
+		if (ft_strcmp(prev->arg, "<") || ft_strcmp(prev->arg, "<<")
+			|| ft_strcmp(prev->arg, ">") || ft_strcmp(prev->arg, ">>"))
+		{
+			if (!(ft_strcmp((lst)->arg, "<") || ft_strcmp((lst)->arg, "<<")
+					|| ft_strcmp((lst)->arg, ">")
+					|| ft_strcmp((lst)->arg, ">>")))
 			{
 				add = create_input_output((lst)->arg, prev->arg, input_prev);
 				add_end_input_output(&first, add);
 			}
+		}
 		prev = lst;
 		input_prev = add;
 		lst = (lst)-> next;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_split_arg.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:36:21 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/01/22 20:15:50 by zakariyaham      ###   ########.fr       */
+/*   Updated: 2023/02/17 17:36:44 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	create_word_sep(t_split_elem **lst, char *str, int len)
 		i++;
 	}
 	res[i] = '\0';
-	add_end_split_elem(lst , create_split_elem(res));
+	add_end_split_elem(lst, create_split_elem(res));
 }
 
 /*
@@ -73,10 +73,10 @@ t_split_elem	**split_redirection(char *str, char *sep)
 		if (*str == '<' || *str == '>')
 		{
 			if (str && str[1] && *str == str[1])
-				{
-					create_word_sep(add, str, 2);
-					str++;
-				}
+			{
+				create_word_sep(add, str, 2);
+				str++;
+			}
 			else
 				create_word_sep(add, str, 1);
 			str++;
@@ -116,7 +116,7 @@ void	add_el(t_split_elem *lst, t_split_elem **start, t_split_elem *prev)
 	t_split_elem	*del;
 	t_split_elem	**add;
 
-	add = split_redirection((lst) -> arg, "<>");
+	add = split_redirection((lst)->arg, "<>");
 	if (!add)
 		return ;
 	del = NULL;
@@ -148,8 +148,8 @@ void	add_el(t_split_elem *lst, t_split_elem **start, t_split_elem *prev)
 *
 *
 */
-
-void	create_split_arg(t_split_elem **lst) // rename avec create
+// rename avec create
+void	create_split_arg(t_split_elem **lst)
 {
 	t_split_elem	**add;
 	t_split_elem	*stock;
@@ -159,16 +159,17 @@ void	create_split_arg(t_split_elem **lst) // rename avec create
 	prev = *lst;
 	while (*lst)
 	{
-		if (chek_sep_str((*lst)->arg, "<>") && !ft_strcmp((*lst)->arg, ">") && !ft_strcmp((*lst)->arg, ">>") &&  !ft_strcmp((*lst)->arg, "<") && !ft_strcmp((*lst)->arg, "<<"))
+		if (chek_sep_str((*lst)->arg, "<>") && !ft_strcmp((*lst)->arg, ">")
+			&& !ft_strcmp((*lst)->arg, ">>") && !ft_strcmp((*lst)->arg, "<")
+			&& !ft_strcmp((*lst)->arg, "<<"))
 		{
-				add_el(*lst, &stock, prev);
-				*lst = stock;
+			add_el(*lst, &stock, prev);
+			*lst = stock;
 		}
 		prev = *lst;
 		*lst = (*lst)->next;
 	//	printf("/%s/", (*lst)->arg);
 	}
-	
 	*lst = stock;
 }
 

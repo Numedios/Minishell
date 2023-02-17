@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 11:20:54 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/13 11:22:02 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/17 17:50:33 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	free_garbage_and_env(t_garbage *garbage)
 		free(garbage->line);
 		garbage->line = NULL;
 	}
-	if (garbage->new_env);
+	if (garbage->new_env)
 	{
 		ft_free_tab(garbage->new_env);
 		garbage->new_env = NULL;

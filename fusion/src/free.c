@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/17 17:50:49 by zhamdouc          #+#    #+#             */
+/*   Updated: 2023/02/17 17:53:02 by zhamdouc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	free_split_elem(t_split_elem *lst)
 {
 	if (lst)
 		if (lst -> arg)
-			free(lst -> arg);
-	lst-> next = NULL;
+			free(lst->arg);
+	lst->next = NULL;
 	free(lst);
 }
 
@@ -60,18 +72,15 @@ void	free_input_output_middle(t_input_output **lst, t_input_output **first)
 	// Libérer l'élément courant
 	free_input_output(*lst);
 	*lst = NULL;
-
 	// Mettre à jour le pointeur suivant de l'élément précédent
 	if (prev != NULL)
 		prev->next = next;
 	else
 		*first = next;
-
 	// Mettre à jour le pointeur précédent de l'élément suivant
 	if (next != NULL)
 		next->prev = prev;
 }
-
 
 void	free_inputs_outputs(t_input_output **lst)
 {
@@ -101,7 +110,6 @@ void	free_maillon(t_maillons *lst)
 			free_inputs_outputs(&lst->output);
 		free(lst);
 	}
-
 }
 
 void	free_maillons(t_maillons **lst)

@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 11:24:35 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/13 11:24:36 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/17 18:14:13 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ t_split_elem	*ft_split_list(char *str, char *sep)
 	t_split_elem	*lst;
 	t_split_elem	*elem;
 	char			*res;
-	char			quote;
-	int count;
+	int				count;
 
 	i = 0;
 	lst = NULL;

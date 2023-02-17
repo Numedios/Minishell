@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:06:46 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/17 15:12:06 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/17 17:32:26 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ char	*ft_strjoin_pipex(char *path, char *add)
 	while (add && add[j])
 		res[i++] = add[j++];
 	res[i] = '\0';
-	//free(path);
 	return (res);
 }
 

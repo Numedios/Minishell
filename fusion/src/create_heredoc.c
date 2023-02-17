@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:36:28 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/02/13 18:58:55 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/17 17:40:40 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	heredoc(char *stop)
 {
 	int		pipe_fd[2];
 	char	*str;
-	char buf[1000];
 
 	create_heredoc(pipe_fd);
 	str = NULL;
@@ -35,9 +34,7 @@ int	heredoc(char *stop)
 	{
 		str = readline("> ");
 		if (g_exit_code[1] == 7)
-		{
 			return (-9);
-		}
 		if (ft_strcmp(stop, str))
 		{
 			free(str);
@@ -46,12 +43,11 @@ int	heredoc(char *stop)
 		else
 		{
 			write(pipe_fd[1], str, ft_strlen(str));
+			write(pipe_fd[1], "\n", 1);
 			free(str);
 		}
 	}
 	close(pipe_fd[1]);
-	//read(pipe_fd[0], buf, 500);
-	//printf("buf = %s\n", buf);
 	return (pipe_fd[0]);
 }
 
@@ -63,11 +59,12 @@ void	sigint_heredoc(int unused)
 	close(0);
 }
 
-void	find_all_heredoc(t_maillons *maillons) //remttre la fonction des signaux du parent, que se passe il apres ctrl+c 
+//remttre la fonction des signaux du parent, que se passe il apres ctrl+c 
+void	find_all_heredoc(t_maillons *maillons)
 {
 	t_input_output	*tmp;
 	int				copy_fd;
-	
+
 	copy_fd = dup(0);
 	signal(SIGINT, sigint_heredoc);
 	while (maillons)
@@ -84,7 +81,7 @@ void	find_all_heredoc(t_maillons *maillons) //remttre la fonction des signaux du
 				{
 					dprintf(2, "fin heredoc");
 					dup2(copy_fd, 0);
-					g_exit_code[1] = 0;//pour ne pas bloquer au prochain prompt
+					g_exit_code[1] = 0;
 					return ;
 				}
 			}
