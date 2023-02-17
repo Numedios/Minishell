@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:39:06 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/16 18:50:10 by zakariyaham      ###   ########.fr       */
+/*   Updated: 2023/02/17 15:34:58 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,69 +47,23 @@ int	after_pipe(char *line)
 	return (0);
 }
 
-int	after_redirection(char *line)
+static int	check_the_line_condition(char *line, int i)
 {
-	int	i;
-
-	i = 0;
-	while (line && line[i])
-	{
-		if (line[i] == '>')
-		{
-			i++;
-			if (line[i] == '>')
-				i++;
-			while (line[i] == ' ')
-				i++;
-			if (line[i] == '\0')
-			{
-				ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", 2);
-				g_exit_code[0] = 2;
-				return (g_exit_code[0]);
-			}
-		}
-		i++;
-	}
-	return (0);
-}
-
-
-int	check_parenthesis(char *line)//(")"0 ;;; (")" 0) -> est ce qu'il traiter les "()" comment les guillemets
-{
-	int	i;
-	int	count_1;
-	int	count_2;
-
-	i = 0;
-	count_1 = 0;
-	count_2 = 0;
-	while (line && line[i])
-	{
-		i = skip_quote(line, i);
-		if (i == -1 || !line || line[i] == '\0')
-			return (0);
-		if (line[i] == '(')
-			count_1++;
-		if (line[i] == ')')
-			count_2++;
-		if (count_2 > count_1)
-			return (1);
-		i++;
-	}
-	if (count_1 != count_2)
+	if ((line[i] == '"' && line[i + 1] == '"')
+		|| (line[i] == '\'' && line[i + 1] == '\''))
+		return (0);
+	else
 		return (1);
-	return (0);
 }
 
-int	del_quote(char *line, int i, int j)// i = 0 et j =0
+int	del_quote(char *line, int i, int j)
 {
 	while (line && line[i])
 	{
 		i = skip_quote(line, i);
 		if (i == -1 || !line || line[i] == '\0')
 			return (0);
-		if ((line[i] == '"' && line[i + 1] == '"')
-			|| (line[i] == '\'' && line[i + 1] == '\''))
+		if (check_the_line_condition(line, i) == 0)
 		{
 			j = i;
 			if (line[i + 2] == '\0')
@@ -131,97 +85,7 @@ int	del_quote(char *line, int i, int j)// i = 0 et j =0
 	return (0);
 }
 
-int	check_1(char *line)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (line && line[i])
-	{
-		i = skip_quote(line, i);
-		if (i == -1 || !line || line[i] == '\0')
-			return (0);
-		if (check_error_2_space(line, '(', ')', i) == 2)
-		{
-			ft_putstr_fd("bash: syntax error near unexpected token `)'\n", 2);
-			return (1);
-		}
-		if (check_error_3_space(line, '<', ">>", i) == 2)
-		{
-			ft_putstr_fd("bash: syntax error near unexpected token `>>'\n", 2);
-			return (1);
-		}
-		if (line[i] == '<' && line[i + 1] == '>')
-		{
-			ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", 2);
-			return (1);
-		}
-		if (check_error_2_space(line, '<', '>', i) == 2)
-		{
-			ft_putstr_fd("bash: syntax error near unexpected token `>'\n", 2);
-			return (1);
-		}
-		if (check_error_3_space(line, '>', "<<", i) == 2)
-		{
-			ft_putstr_fd("bash: syntax error near unexpected token `<<'\n", 2);
-			return (1);
-		}
-		if (check_error_2_space(line, '>', '<', i) == 2)
-		{
-			ft_putstr_fd("bash: syntax error near unexpected token `<'\n", 2);
-			return (1);
-		}
-		if (line[i] == '>' && line[i + 1] == '>' && line[i + 2] == '>')
-		{
-			ft_putstr_fd("bash: syntax error near unexpected token `>>'\n", 2);
-			return (1);
-		}
-		if (line[i] == '<' && line[i + 1] == '<' && line[i + 2] == '<')
-		{
-			ft_putstr_fd("bash: syntax error near unexpected token `>>''\n", 2);
-			return (1);
-		}
-		if (line[i] == '<' && line[i + 1] == '>' && line[i + 2] == '>')
-		{
-			ft_putstr_fd("bash: syntax error near unexpected token `>'\n", 2);
-			return (1);
-		}
-		if (line[i] == '|' && line[i + 1] == '|' && line[i + 2] == '|')
-		{
-			ft_putstr_fd("bash: syntax error near unexpected token `|'\n", 2);
-			return (1);
-		}
-		if (check_error_space(line, '|', i) == 2)
-		{
-			ft_putstr_fd("bash: syntax error near unexpected token `|'\n", 2);
-			return (1);
-		}
-		if (line[i] == '&')
-		{
-			ft_putstr_fd("bash: syntax error near unexpected token `&'\n", 2);
-			return (1);
-		}
-		if (line[i] == '\\')
-		{
-			ft_putstr_fd("bash: syntax error near unexpected token `\'\n", 2);
-			return (1);
-		}
-		if (line[i] == ';')
-		{
-			ft_putstr_fd("bash: syntax error near unexpected token `;'\n", 2);
-			return (1);
-		}
-		while (line[i] == '"' && line[i + 1] == '"' && line[i+ 2] == '"')
-			i++;
-		while (line[i] == '\'' && line[i + 1] == '\'' && line[i+ 2] == '\'')
-			i++;
-		i++;
-	}
-	return (0);
-}
-
-int first_pipe_check (char *line)
+int	first_pipe_check(char *line)
 {
 	int	i;
 
@@ -255,7 +119,7 @@ int	parse(char *line)
 	}
 	if (after_pipe(line) == 2)
 		return (1);
-	if (line[0] == ';')// est quon le garde pour les echo et autre
+	if (line[0] == ';')
 	{
 		ft_putstr_fd("bash: syntax error near unexpected token `;'\n", 2);
 		return (1);

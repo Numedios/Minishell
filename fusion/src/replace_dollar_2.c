@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   replace_dollar_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 15:10:42 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/16 18:57:30 by zakariyaham      ###   ########.fr       */
+/*   Updated: 2023/02/17 15:38:33 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,6 @@ pour linstant je supprime dans les doubes quotes correctement, a tester plus ser
 faire plein de test
 tetser dans differetes situations le $?
 */
-
-char	*apply_delete(int i, int skip, char *tab)
-{
-	while (tab[i - skip])
-	{
-		if (tab[i] != '\0')
-		{
-			tab[i - skip] = tab[i];
-			i++;
-		}
-		else
-		{
-			tab[i - skip] = '\0';
-			break ;
-		}
-	}
-	return (tab);
-}
 
 char	*found_it_delete(char *tab, char **new_env, t_index *index, int *skip)
 {
@@ -69,6 +51,22 @@ char	*found_it_delete(char *tab, char **new_env, t_index *index, int *skip)
 	return (tab);
 }
 
+static int	check_in_quote(char *tab, int i)
+{
+	if (tab[i] == '$' && ((tab[i + 1] > 14 || tab[i + 1] < 7)
+			&& (tab[i + 1] < 32 || tab[i + 1] > 47)
+			&& (tab[i + 1] < 57 || tab[i + 1] > 65)
+			&& (tab[i + 1] < 90 || tab[i + 1] > 97)
+			&& (tab[i + 1] < 122 || tab[i + 1] > 127)
+			&& tab[i + 1] != '\0' && tab[i + 1] != ' '
+			&& tab[i + 1] != '"' && tab[i + 1] != '\''))
+	{
+		return (0);
+	}
+	else
+		return (1);
+}
+
 char	*dollar_inquote_del(char *tab, int *i, char **new_env, t_index *index)
 {
 	int	skip;
@@ -80,10 +78,7 @@ char	*dollar_inquote_del(char *tab, int *i, char **new_env, t_index *index)
 		while (tab[(*i)] == '$'
 			&& (tab[(*i) + 1] == '$' || tab[(*i) + 1] == ' '))
 			(*i)++;
-		while (tab[(*i)] == '$' && ((tab[(*i) + 1] > 14 || tab[(*i) + 1] < 7)
-			&& (tab[(*i) + 1] < 32 || tab[(*i) + 1] > 47) && (tab[(*i) + 1] < 57 || tab[(*i) + 1] > 65)
-			&& (tab[(*i) + 1] < 90 || tab[(*i) + 1] > 97) && (tab[(*i) + 1] < 122 || tab[(*i) + 1] > 127)
-			&& tab[(*i) + 1] != '\0' && tab[(*i) + 1] != ' ' && tab[(*i) + 1] != '"' && tab[(*i) + 1] != '\''))// skip tout les espaces
+		while (check_in_quote(tab, (*i)) == 0)
 		{
 			skip++;
 			index->a = (*i) + 1;

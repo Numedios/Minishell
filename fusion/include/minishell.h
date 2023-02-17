@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:49:59 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/02/16 18:51:59 by zakariyaham      ###   ########.fr       */
+/*   Updated: 2023/02/17 15:35:49 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,7 +201,14 @@ char			*do_replace(char *tab, char **new_env, int skip, t_index index);
 
 /*  replace dollar 2 */
 char			*delete_dollar(char *tab, char **new_env, int i, int skip);
+char			*apply_delete(int i, int skip, char *tab);
 //char			*delete_dollar(char *line);
+
+/*  check_one.c */
+int				check_1(char *line);
+int				after_redirection(char *line);
+int				check_parenthesis(char *line);
+
 
 /* libft.c */
 

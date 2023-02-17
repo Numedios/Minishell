@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:20:55 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/16 18:54:08 by zakariyaham      ###   ########.fr       */
+/*   Updated: 2023/02/17 14:34:37 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,12 +142,12 @@ int	pipex(t_maillons *maillons, char ***env, t_garbage *garbage)
 	{
 		pipex_one(maillons, env, garbage);
 	}
-	/*if (len == 2)
+	if (len == 2)
 	{
 		g_exit_code[1] = 2;
 		pipex_2(maillons, env, garbage);
 		g_exit_code[1] = 0;
-	}*/
+	}
 	else if (len != 1)
 	{
 		pipex_multiple(maillons, env, len, garbage);

@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 17:22:11 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/15 19:57:57 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/17 15:24:25 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	check_if_tab_exist(char *tab, char **env)
 
 int	parsing_of_export(char *tab, char **env_copy, int *a, int *j)
 {
-	if (ft_strchr(tab, '=') == NULL)//pas d'espace avant le "="
+	if (ft_strchr(tab, '=') == NULL) //pas d'espace avant le "="
 	{
 		printf("export: `%s': not a valid identifier\n", tab);
 		g_exit_code[0] = 1;

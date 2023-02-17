@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:06:46 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/16 18:47:59 by zakariyaham      ###   ########.fr       */
+/*   Updated: 2023/02/17 15:12:06 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,22 @@ int	quote_close_2(char *str)
 		i++;
 	}
 	return (1);
+}
+
+char	*apply_delete(int i, int skip, char *tab)
+{
+	while (tab[i - skip])
+	{
+		if (tab[i] != '\0')
+		{
+			tab[i - skip] = tab[i];
+			i++;
+		}
+		else
+		{
+			tab[i - skip] = '\0';
+			break ;
+		}
+	}
+	return (tab);
 }

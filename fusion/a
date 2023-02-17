@@ -1,24 +1,10 @@
-pipe_of_zak/security.c: Error!
-Error: LINE_TOO_LONG        (line:  34, col:  62):	line too long
-Error: WRONG_SCOPE_COMMENT  (line:  34, col:  62):	Comment is invalid in this scope
-Error: WRONG_SCOPE_COMMENT  (line:  34, col:  62):	Comment is invalid in this scope
-Error: LINE_TOO_LONG        (line:  34, col: 147):	line too long
-Error: LINE_TOO_LONG        (line:  43, col:   1):	line too long
-Error: LINE_TOO_LONG        (line:  43, col:  82):	line too long
-Error: LINE_TOO_LONG        (line:  53, col:  62):	line too long
-Error: WRONG_SCOPE_COMMENT  (line:  53, col:  62):	Comment is invalid in this scope
-Error: WRONG_SCOPE_COMMENT  (line:  53, col:  62):	Comment is invalid in this scope
-Error: LINE_TOO_LONG        (line:  53, col: 147):	line too long
-Error: SPC_AFTER_PAR        (line: 106, col:  60):	Missing space after parenthesis (brace/bracket)
-Error: LINE_TOO_LONG        (line: 106, col:  61):	line too long
-Error: WRONG_SCOPE_COMMENT  (line: 106, col:  61):	Comment is invalid in this scope
-Error: WRONG_SCOPE_COMMENT  (line: 106, col:  61):	Comment is invalid in this scope
-Error: LINE_TOO_LONG        (line: 106, col: 146):	line too long
-Error: SPC_AFTER_PAR        (line: 119, col:  36):	Missing space after parenthesis (brace/bracket)
-Error: WRONG_SCOPE_COMMENT  (line: 119, col:  37):	Comment is invalid in this scope
-Error: WRONG_SCOPE_COMMENT  (line: 119, col:  37):	Comment is invalid in this scope
-Error: SPC_AFTER_PAR        (line: 131, col:  49):	Missing space after parenthesis (brace/bracket)
-Error: LINE_TOO_LONG        (line: 131, col:  50):	line too long
-Error: WRONG_SCOPE_COMMENT  (line: 131, col:  50):	Comment is invalid in this scope
-Error: WRONG_SCOPE_COMMENT  (line: 131, col:  50):	Comment is invalid in this scope
-Error: LINE_TOO_LONG        (line: 131, col:  91):	line too long
+src/builtin_exit.c: Error!
+Error: WRONG_SCOPE_COMMENT  (line:  59, col:  36):	Comment is invalid in this scope
+Error: WRONG_SCOPE_COMMENT  (line:  59, col:  36):	Comment is invalid in this scope
+Error: LINE_TOO_LONG        (line:  69, col:  82):	line too long
+Error: LINE_TOO_LONG        (line:  81, col:   1):	line too long
+Error: LINE_TOO_LONG        (line:  81, col:  89):	line too long
+Error: LINE_TOO_LONG        (line:  82, col:   1):	line too long
+Error: LINE_TOO_LONG        (line:  82, col: 151):	line too long
+Error: LINE_TOO_LONG        (line: 125, col:   1):	line too long
+Error: LINE_TOO_LONG        (line: 125, col:   1):	line too long

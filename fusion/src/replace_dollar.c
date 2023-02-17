@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 19:09:08 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/15 20:53:24 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/17 15:44:53 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,18 @@ int	research(int skip, int a, char *tab, char **new_env)
 	return (-1);
 }
 
+void	apply_the_change(char *tab, char **new_env, t_index *index, int *skip)
+{
+	index->j = research(*skip, index->a, tab, new_env);
+	if (index->j != -1)
+	{
+		if (index->j == -2)
+			tab = interrogation(tab, new_env, *skip, (*index));
+		else
+			tab = do_replace(tab, new_env, *skip, (*index));
+	}
+}
+
 char	*found_it(char *tab, char **new_env, t_index *index, int *skip)
 {
 	int	i;
@@ -48,28 +60,44 @@ char	*found_it(char *tab, char **new_env, t_index *index, int *skip)
 	{
 		if (tab[i] == ' ' || (tab[i] < 14 && tab[i] > 7) || (tab[i] > 32 && tab[i] < 46) || (tab[i] > 57 && tab[i] < 65) || (tab[i] > 90 && tab[i] < 97) || (tab[i] > 122 && tab[i] < 127))
 		{
-			index->j = research(*skip, index->a, tab, new_env);
-			if (index->j != -1)
-			{
-				if (index->j == -2)
-					tab = interrogation(tab, new_env, *skip, (*index));
-				else
-					tab = do_replace(tab, new_env, *skip, (*index));
-			}
+			// index->j = research(*skip, index->a, tab, new_env);
+			// if (index->j != -1)
+			// {
+			// 	if (index->j == -2)
+			// 		tab = interrogation(tab, new_env, *skip, (*index));
+			// 	else
+			// 		tab = do_replace(tab, new_env, *skip, (*index));
+			// }
 			return (tab);
 		}
 		(*skip)++;
 		i++;
 	}
-	index->j = research(*skip, index->a, tab, new_env);
-	if (index->j != -1)
-	{
-		if (index->j == -2)
-			tab = interrogation(tab, new_env, *skip, (*index));
-		else
-			tab = do_replace(tab, new_env, *skip, (*index));
-	}
+	// index->j = research(*skip, index->a, tab, new_env);
+	// if (index->j != -1)
+	// {
+	// 	if (index->j == -2)
+	// 		tab = interrogation(tab, new_env, *skip, (*index));
+	// 	else
+	// 		tab = do_replace(tab, new_env, *skip, (*index));
+	// }
 	return (tab);
+}
+
+static int	check_in_quote(char *tab, int i)
+{
+	if (tab[i] == '$' && ((tab[i + 1] > 14 || tab[i + 1] < 7)
+			&& (tab[i + 1] < 32 || tab[i + 1] > 47)
+			&& (tab[i + 1] < 57 || tab[i + 1] > 65)
+			&& (tab[i + 1] < 90 || tab[i + 1] > 97)
+			&& (tab[i + 1] < 122 || tab[i + 1] > 127)
+			&& tab[i + 1] != '\0' && tab[i + 1] != ' '
+			&& tab[i + 1] != '"' && tab[i + 1] != '\''))
+	{
+		return (0);
+	}
+	else
+		return (1);
 }
 
 char	*found_dollar_inquote(char *tab, int *i, char **new_env, t_index *index)
@@ -82,12 +110,7 @@ char	*found_dollar_inquote(char *tab, int *i, char **new_env, t_index *index)
 	{
 		while (tab[(*i)] == '$' && tab[(*i) + 1] == '$')
 			(*i)++;
-		while (tab[(*i)] == '$' && ((tab[(*i) + 1] > 14 || tab[(*i) + 1] < 7)
-			&& (tab[(*i) + 1] < 32 || tab[(*i) + 1] > 47)
-			&& (tab[(*i) + 1] < 57 || tab[(*i) + 1] > 65)
-			&& (tab[(*i) + 1] < 90 || tab[(*i) + 1] > 97)
-			&& (tab[(*i) + 1] < 122 || tab[(*i) + 1] > 127)
-			&& tab[(*i) + 1] != '\0' && tab[(*i) + 1] != ' ' && tab[(*i) + 1] != '"' && tab[(*i) + 1] != '\''))
+		while (check_in_quote(tab, (*i)) == 0)
 		{
 			skip++;
 			index->a = (*i) + 1;
