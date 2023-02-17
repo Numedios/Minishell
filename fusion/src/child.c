@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:27:51 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/15 21:19:00 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/17 18:40:56 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ int	check_access(t_maillons *maillons)
 {
 	while (maillons)
 	{
+		if (check_builtin(maillons->args) == 2)
+			return (1);
 		if (check_echo(maillons->args, 0, 0, 1) == 0
 			|| check_builtin(maillons->args) == 0)
 			maillons = maillons->next;

@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 15:30:15 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/17 16:01:22 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/17 19:05:03 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,61 @@ int	check_parenthesis(char *line)//(")"0 ;;; (")" 0) -> est ce qu'il traiter les
 	return (0);
 }
 
+static int	part_one(char *line, int i)
+{
+	if (check_error_2_space(line, '(', ')', i) == 2)
+		return (ft_putstr_fd("bash: syntax error near unexpected token `)'\n",
+				2), 1);
+	if (check_error_3_space(line, '<', ">>", i) == 2)
+		return (ft_putstr_fd("bash: syntax error near unexpected token `>>'\n",
+				2), 1);
+	if (line[i] == '<' && line[i + 1] == '>')
+	{
+		ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", 2);
+		return (1);
+	}
+	if (check_error_2_space(line, '<', '>', i) == 2)
+		return (ft_putstr_fd("bash: syntax error near unexpected token `>'\n",
+				2), 1);
+	if (check_error_3_space(line, '>', "<<", i) == 2)
+		return (ft_putstr_fd("bash: syntax error near unexpected token `<<'\n",
+				2), 1);
+	if (check_error_2_space(line, '>', '<', i) == 2)
+		return (ft_putstr_fd("bash: syntax error near unexpected token `<'\n",
+				2), 1);
+	if (line[i] == '>' && line[i + 1] == '>' && line[i + 2] == '>')
+		return (ft_putstr_fd("bash: syntax error near unexpected token `>>'\n",
+				2), 1);
+	return (0);
+}
+
+static int	part_two(char *line, int i)
+{
+	if (line[i] == '<' && line[i + 1] == '<' && line[i + 2] == '<')
+		return (ft_putstr_fd("bash: syntax error near unexpected token `>>''\n",
+				2), 1);
+	if (line[i] == '<' && line[i + 1] == '>' && line[i + 2] == '>')
+		return (ft_putstr_fd("bash: syntax error near unexpected token `>'\n",
+				2), 1);
+	if (line[i] == '|' && line[i + 1] == '|' && line[i + 2] == '|')
+		return (ft_putstr_fd("bash: syntax error near unexpected token `|'\n",
+				2), 1);
+	if (check_error_space(line, '|', i) == 2)
+		return (ft_putstr_fd("bash: syntax error near unexpected token `|'\n",
+				2), 1);
+	if (line[i] == '&')
+		return (ft_putstr_fd("bash: syntax error near unexpected token `&'\n",
+				2), 1);
+	if (line[i] == '\\')
+		return (ft_putstr_fd("bash: syntax error near unexpected token `\'\n",
+				2), 1);
+	if (line[i] == ';')
+		return (ft_putstr_fd("bash: syntax error near unexpected token `;'\n",
+				2), 1);
+	return (0);
+}
+
+
 int	check_1(char *line)
 {
 	int	i;
@@ -78,79 +133,15 @@ int	check_1(char *line)
 		i = skip_quote(line, i);
 		if (i == -1 || !line || line[i] == '\0')
 			return (0);
-		if (check_error_2_space(line, '(', ')', i) == 2)
-		{
-			ft_putstr_fd("bash: syntax error near unexpected token `)'\n", 2);
+		if (part_one(line, i) == 1)
 			return (1);
-		}
-		if (check_error_3_space(line, '<', ">>", i) == 2)
-		{
-			ft_putstr_fd("bash: syntax error near unexpected token `>>'\n", 2);
+		if (part_two(line, i) == 1)
 			return (1);
-		}
-		if (line[i] == '<' && line[i + 1] == '>')
-		{
-			ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", 2);
-			return (1);
-		}
-		if (check_error_2_space(line, '<', '>', i) == 2)
-		{
-			ft_putstr_fd("bash: syntax error near unexpected token `>'\n", 2);
-			return (1);
-		}
-		if (check_error_3_space(line, '>', "<<", i) == 2)
-		{
-			ft_putstr_fd("bash: syntax error near unexpected token `<<'\n", 2);
-			return (1);
-		}
-		if (check_error_2_space(line, '>', '<', i) == 2)
-		{
-			ft_putstr_fd("bash: syntax error near unexpected token `<'\n", 2);
-			return (1);
-		}
-		if (line[i] == '>' && line[i + 1] == '>' && line[i + 2] == '>')
-		{
-			ft_putstr_fd("bash: syntax error near unexpected token `>>'\n", 2);
-			return (1);
-		}
-		if (line[i] == '<' && line[i + 1] == '<' && line[i + 2] == '<')
-		{
-			ft_putstr_fd("bash: syntax error near unexpected token `>>''\n", 2);
-			return (1);
-		}
-		if (line[i] == '<' && line[i + 1] == '>' && line[i + 2] == '>')
-		{
-			ft_putstr_fd("bash: syntax error near unexpected token `>'\n", 2);
-			return (1);
-		}
-		if (line[i] == '|' && line[i + 1] == '|' && line[i + 2] == '|')
-		{
-			ft_putstr_fd("bash: syntax error near unexpected token `|'\n", 2);
-			return (1);
-		}
-		if (check_error_space(line, '|', i) == 2)
-		{
-			ft_putstr_fd("bash: syntax error near unexpected token `|'\n", 2);
-			return (1);
-		}
-		if (line[i] == '&')
-		{
-			ft_putstr_fd("bash: syntax error near unexpected token `&'\n", 2);
-			return (1);
-		}
-		if (line[i] == '\\')
-		{
-			ft_putstr_fd("bash: syntax error near unexpected token `\'\n", 2);
-			return (1);
-		}
-		if (line[i] == ';')
-		{
-			ft_putstr_fd("bash: syntax error near unexpected token `;'\n", 2);
-			return (1);
-		}
-		while (line[i] == '"' && line[i + 1] == '"' && line[i+ 2] == '"')
+		// if (part_three(line, i) == 1)
+		// 	return (1);
+		while (line[i] == '"' && line[i + 1] == '"' && line[i + 2] == '"')
 			i++;
-		while (line[i] == '\'' && line[i + 1] == '\'' && line[i+ 2] == '\'')
+		while (line[i] == '\'' && line[i + 1] == '\'' && line[i + 2] == '\'')
 			i++;
 		i++;
 	}

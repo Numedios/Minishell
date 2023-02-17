@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 11:40:14 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/15 21:36:02 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/17 18:39:10 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,17 @@ int	check_builtin(char **args)
 		return (0);
 	if (args[0] && str_cmp(args[0], "pwd") == 1)
 		return (0);
-	if (args[0] && str_cmp(args[0], "exit") == 1 && cmp < 3) // pas plus d'un argument et si pas d'argument le retour d'exit est 0 en code erreur 
-		return (0);
+	if (args[0] && str_cmp(args[0], "exit") == 1)
+	{
+		if (cmp < 3) // pas plus d'un argument et si pas d'argument le retour d'exit est 0 en code erreur 
+			return (0);
+		else
+		{
+			dprintf(1, "hello");
+			dprintf(2, "exit\nbash: exit: too many arguments\n");
+			return (2);
+		}
+	}
 	if (args[0] && str_cmp(args[0], "unset") == 1)
 		return (0);
 	if (args[0] && str_cmp(args[0], "export") == 1)
