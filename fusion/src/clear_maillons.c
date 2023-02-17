@@ -136,37 +136,4 @@ char	*find_name_sep(t_input_output *lst, char *sep)
 	return (NULL);
 }
 
-
-void	find_maillon_without_cmd(t_maillons **maillons)
-{
-	t_maillons	*first;
-	t_maillons	*tmp;
-
-	tmp = NULL;
-	first = *maillons;
-	while (*maillons)
-	{
-		if ((*maillons) && !((*maillons) -> command))
-		{
-			tmp = ((*maillons) -> prev);
-			free_maillon_middle(&(*maillons), &first);
-			*maillons = tmp;
-			while (*maillons && !find_if_have_output((*maillons) -> output,">"))
-			{
-				tmp = (*maillons)->prev;
-				free_maillon_middle(&(*maillons), &first);
-				*maillons = tmp;
-			};
-		*maillons = first;
-		}
-		if (!(*maillons))
-		{
-			break ;
-		}
-		*maillons = (*maillons) -> next;
-	}
-	ft_print_maillon(*maillons);
-	*maillons = first;
-}
-
 // > a | 1| 2 | 3 > a | b | >c | 4 | 5  >a | b | d |e | >4 | 6 >a| >a

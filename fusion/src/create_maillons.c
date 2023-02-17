@@ -23,11 +23,6 @@ t_maillons	*create_maillons(t_split_elem **split, t_maillons *prev)
 	new -> heredoc = -1;
 	new -> next = NULL;
 	new -> prev = prev;
-	/*printf("la commande est %s\n", new->command);
-	printf("les arg sont :  ");
-	ft_print_split_elem(new ->args);
-	printf("les output sont :  \n");
-	ft_print_input_output(new->output);*/
 	return (new);
 }
 
@@ -54,13 +49,3 @@ void	add_end_maillons(t_maillons **lst, t_maillons *add)
 	search = lstlast_maillons(*lst);
 	search -> next = add;
 }
-
-/*
-	pour create maillons
-
-	/*printf("la commande est %s\n", new->command);
-	printf("les arg sont :  ");
-	ft_print_split_elem(new ->args);
-	printf("les output sont :  \n");
-	ft_print_input_output(new->output);
-*/

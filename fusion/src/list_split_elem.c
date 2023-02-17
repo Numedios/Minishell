@@ -60,35 +60,3 @@ void	add_end_split_elem(t_split_elem	**list, t_split_elem *add)
 	search = lstlast_split_elem(*list);
 	search -> next = add;
 }
-
-/*void ft_strjoin_list(t_split_elem *list, t_split_elem **add, t_split_elem **first)
-{
-	t_split_elem *stock;
-	//t_split_elem ***stock2;
-
-	printf(" Voila la list \n");
-	ft_print_split_elem(list);
-	printf(" Voila add \n");
-	ft_print_split_elem(*add);
-
-	stock = (list) -> next;
-
-	*first = *add;
-	free_split_elem(list);
-	list = *add;
-	while(list)
-	{
-		if (!list -> next)
-			break;
-		list = list -> next;
-	}
-	list -> next = stock;
-	*first = *add;
-
-	printf(" Voila la list a la fin\n");
-	ft_print_split_elem(list);
-	printf(" Voila add a la fin\n");
-	ft_print_split_elem(*add);
-}*/
-
-// 1>2>3 4 5 | 1 2>3>4 5

@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 15:10:42 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/17 15:38:33 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/17 16:12:28 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*found_it_delete(char *tab, char **new_env, t_index *index, int *skip)
 	while (tab[i])
 	{
 		if (tab[i] == ' ' || (tab[i] < 14 && tab[i] > 7)
-			|| (tab[i] > 32 && tab[i] < 46) || (tab[i] > 57 && tab[i] < 65)
+			|| (tab[i] > 32 && tab[i] < 48) || (tab[i] > 57 && tab[i] < 65)
 			|| (tab[i] > 90 && tab[i] < 97) || (tab[i] > 122 && tab[i] < 127))
 		{
 			index->j = research(*skip, index->a, tab, new_env);

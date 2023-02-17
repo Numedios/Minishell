@@ -6,11 +6,12 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:20:55 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/17 14:34:37 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/15 21:18:31 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 
 extern int	g_exit_code[2];
 
@@ -29,19 +30,18 @@ int	find_stdin(t_maillons *maillons)
 	res = -1;
 	if (find_if_have_output(maillons -> output, "<") == 1)
 	{
-		//dprintf(2, "entrer est %s\n", find_name_sep(maillons -> output, "<"));
 		res = open(find_name_sep(maillons -> output, "<"), O_RDWR, O_DSYNC, !O_DIRECTORY);
 		return (res);
 	}
 	else if (find_if_have_output(maillons -> output, "<<") == 1)
 	{
-		//dprintf(2, "entrer est %s\n", find_name_sep(maillons -> output, "<<"));
 		res = maillons -> heredoc;
 		return (res);
 	}
+
 	else if (!(maillons-> prev))
 	{
-		return (res);
+		return res;
 	}
 	else if (find_if_have_output(maillons -> output -> prev, ">") || !(maillons->prev->command))
 	{
@@ -58,7 +58,6 @@ int	find_stdout(t_maillons *maillons)
 	res = -1;
 	if (find_if_have_output(maillons -> output, ">"))
 	{
-		//dprintf(2, "Sortie est %s\n", find_name_sep(maillons -> output, ">"));
 		res = open(find_name_sep(maillons -> output, ">"), O_WRONLY | O_CREAT | O_TRUNC, 0644, !O_DIRECTORY);
 		return (res);
 	}
@@ -68,11 +67,10 @@ int	find_stdout(t_maillons *maillons)
 		return (res);
 	}
 	else if (!(maillons-> next))
-	{
 		return (res);
-	}
 	return (res);
 }
+
 
 int	pipex_one(t_maillons *maillons, char ***env, t_garbage *garbage)
 {
@@ -81,18 +79,12 @@ int	pipex_one(t_maillons *maillons, char ***env, t_garbage *garbage)
 	int		fd_out;
 
 	if (check_if_exit(maillons->args, *env, garbage) == 0)
-	{
-		dprintf(2, "yes !\n");
 		return (1);// 1 ou 0
-	}
 	if (check_if_builtin(maillons->args, *env, env, 0, garbage) == 0)
-	{
-		dprintf(2, "yes !\n");
 		return (1);// 1 ou 0
-	}
 	pid = fork();
 	if (pid == -1)
-		return (perror("fork"), 1);
+			return (perror("fork"), 1);
 	signal(SIGQUIT,signal_quit_child);
 	if (pid == 0)
 	{
@@ -109,35 +101,27 @@ int	pipex_one(t_maillons *maillons, char ***env, t_garbage *garbage)
 			close(fd_out);
 		}
 		if (check_echo(maillons->args, 0 , 0, 0) == 0)
-		{
-			dprintf(2, "yes1\n");
-			free_garbage(garbage);
-			exit(0);
-		}
-		if (maillons->command != NULL && execve(maillons ->command, maillons -> args, *env) == -1)
-		{
+			free_garbage_exit(garbage, 0);
+		if (maillons->command != NULL && execve(maillons ->command, maillons -> args , *env) == -1)
 			perror("execve");
-			free_garbage(garbage);
-			exit (1);
-		}
-		exit (1);
+		free_garbage_exit(garbage, 1);
 	}
 	waitpid(-1 , NULL, 0);
 	return (0);
 }
+
 
 int	pipex(t_maillons *maillons, char ***env, t_garbage *garbage)
 {
 	int	*pipes;
 	int	len;
 
-	//ft_print_garbage(garbage);
-	//ft_print_maillons(garbage->maillons);
 	len = ft_strlen_maillons(maillons); // nombre de maillons
 	if (check_access(maillons) == 1)//sauf si c'est un builtin
 		return (1);
 	if (len == 0)
 		return(0);
+
 	if (len == 1)
 	{
 		pipex_one(maillons, env, garbage);

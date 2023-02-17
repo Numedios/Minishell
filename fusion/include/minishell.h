@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:49:59 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/02/17 15:35:49 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/17 17:29:52 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,10 @@ int				check_access(t_maillons *maillons);
 
 /*      free_garbage     */
 
-void			free_garbage(t_garbage *garbage);
-void			free_garbage_and_env(t_garbage *garbage);
+void   		 free_garbage(t_garbage *garbage);
+void		free_garbage_exit(t_garbage *garbage, int exit_code);
+void		free_garbage_and_env(t_garbage *garbage);
+void		free_garbage_env_exit(t_garbage *garbage, int exit_code);
 
 /*  ft_itoa */
 char			*ft_itoa(int n);
@@ -191,7 +193,7 @@ int				check_access(t_maillons *maillons);
 
 /*  replace dollar */
 char			*replace_dollar(char *tab, char **new_env, int i, int skip);
-int				research(int skip, int a, char *tab, char **new_env);
+char			*found_it(char *tab, char **new_env, t_index *index, int *skip);
 
 /*  dollars_interrogation */
 void			new_in_old(for_dollar *var, t_index *index, char **new_env, int *skip);
@@ -203,6 +205,10 @@ char			*do_replace(char *tab, char **new_env, int skip, t_index index);
 char			*delete_dollar(char *tab, char **new_env, int i, int skip);
 char			*apply_delete(int i, int skip, char *tab);
 //char			*delete_dollar(char *line);
+
+/*  dollars_utils.c */
+char			*one_dollar_or_more(char *tab, int *i, char **new_env, t_index *index);
+int				research(int skip, int a, char *tab, char **new_env);
 
 /*  check_one.c */
 int				check_1(char *line);

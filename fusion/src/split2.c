@@ -192,8 +192,8 @@ char	**ft_split2(char *str, char *sep)
 	int		i;
 
 	count = count_words2(str, sep);
-	//if (count == 0)
-	//	return (g_ecode = -42, free(str), NULL);
+	if (count == 0)
+		return (NULL);
 	tab = malloc(sizeof(char *) * (count + 1));
 	if (!tab)
 		return (NULL);
@@ -204,9 +204,5 @@ char	**ft_split2(char *str, char *sep)
 		i++;
 	}
 	tab[i] = 0;
-	//count = count_words2(str, sep);
-	/*if (tab[0] && (tab[0][0] == '|' || (tab[count - 1][0] == '|'
-		&& !tab[count - 1][1])))
-		return (ft_free(tab, 0), free(str), NULL);*/
 	return (tab);
 }

@@ -56,7 +56,7 @@ t_maillons *loop_create_maillons(char * line, t_garbage *garbage)
 
 	i = 0;
 	prev = NULL;
-	garbage->split_pipe = ft_split2(line, "|");
+	garbage->split_pipe = ft_split2(line , "|");
 	garbage ->maillons = NULL;
 	if (!(garbage->split_pipe))
 		return (0);
@@ -64,8 +64,8 @@ t_maillons *loop_create_maillons(char * line, t_garbage *garbage)
 	{
 		garbage->split_lst = ft_split_list(garbage->split_pipe[i], WHITE_SPACE);
 		if (!(garbage->split_lst))
-				break ;
-		create_split_arg(&garbage-> split_lst);
+				break;
+		create_split_arg(&garbage->split_lst);
 		maillon = create_maillons(&garbage->split_lst, prev);
 		add_end_maillons(&garbage->maillons, maillon);
 		prev = maillon;
@@ -85,31 +85,24 @@ int main(int argc, char **argv, char **env)
 	char		**new_env;
 
 	initialize_garbage(&garbage);
-	garbage.new_env = my_env(env);//ne pas oublier de free a la fin le new env
+	garbage.new_env = my_env(env);
 	while (1)
 	{
 		setup_signal_handlers();
 		line = rl_gets();
-		if (line == NULL)  // si l'utilisateur appuie sur ctrl-D
+		if (line == NULL)
 		{
-			free_garbage(&garbage);
-			ft_free_tab(garbage.new_env);
-			//free(line);
 			printf("\n");
-			exit(0);
+			free_garbage_env_exit(&garbage, 0);
 		}
 		if (parse(line) == 0)
 		{
 			garbage.line = delete_dollar(line, garbage.new_env, 0, 0);
-			//printf("line after delete= %s\n", line);
 			garbage.line = replace_dollar(line, garbage.new_env, 0, 0);
-			//printf("line after replace= %s\n", line);
 			loop_create_maillons(garbage.line, &garbage);
 			cmd_to_path(garbage.maillons, garbage.new_env);
-			find_all_heredoc(garbage.maillons);// verifier les leak au niveau de cat << a <b
-			printf("exit_code[1] = %d\n", g_exit_code[1]);
+			find_all_heredoc(garbage.maillons);
 			check_inputs_outputs(garbage.maillons);
-			//ft_print_garbage(&garbage);
 			//ft_print_maillons(garbage.maillons);
 			pipex(garbage.maillons, &garbage.new_env, &garbage);
 			free_garbage(&garbage);

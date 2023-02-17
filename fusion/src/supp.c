@@ -62,7 +62,7 @@ void	ft_print_maillons(t_maillons	*maillons)
 		{
 			printf("maillons\n{\n");
 			if (maillons -> command)
-				printf("  maillons -> commande = %s\n", maillons -> command);
+				printf("  maillons -> commande = *%s*\n", maillons -> command);
 			printf("  maillons ->args\n  {\n    ");
 			if (maillons -> args)
 				ft_print_tab(maillons -> args);
@@ -98,30 +98,4 @@ void	ft_print_garbage(t_garbage	*garbage)
 	if (garbage->pipes && garbage->pipes->pipe[0] && garbage->pipes->pipe[1])
 		dprintf(2,"pipe[0] = %d // pipes[1] =%d \n", garbage->pipes->pipe[0] , garbage->pipes->pipe[1]);
 	dprintf(2,"\n");
-}
-
-
-/*
-* 	inutile actuellement a supp
-*   renvoie 1 si c apparais un nombre paire de fois
-*   0 sinon
-*
-*/
-
-int	check_pair(char *str, char c)
-{
-	int	i;
-	int	count;
-
-	i = 0;
-	count = 0;
-	while (str && str[i])
-	{
-		if (str[i] == c)
-			count++;
-		i++;
-	}
-	if (count == 0 || (count % 2) == 0)
-		return (1);
-	return (0);
 }

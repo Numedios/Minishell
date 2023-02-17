@@ -11,35 +11,11 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-/*
-char	*ft_strjoin(char *line, char *buf)
-{
-	char	*res;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	res = malloc(sizeof(char) * (ft_strlen(line) + ft_strlen(buf) + 1));
-	if (!res)
-		return (NULL);
-	while (line && line[i])
-	{
-		res[i] = line[i];
-		i++;
-	}
-	while (buf[j])
-		res[i++] = buf[j++];
-	res[i] = '\0';
-	free(line);
-	return (res);
-}*/
 
 extern int	g_exit_code[2];
 
 void	create_heredoc(int *pipe_fd)
 {
-	//pipe_fd = malloc(sizeof(int) * 2);
 	if (pipe(pipe_fd) == -1)
 	{
 		perror("pipe");
@@ -51,6 +27,7 @@ int	heredoc(char *stop)
 {
 	int		pipe_fd[2];
 	char	*str;
+	char buf[1000];
 
 	create_heredoc(pipe_fd);
 	str = NULL;
@@ -59,7 +36,7 @@ int	heredoc(char *stop)
 		str = readline("> ");
 		if (g_exit_code[1] == 7)
 		{
-			return (9);
+			return (-9);
 		}
 		if (ft_strcmp(stop, str))
 		{
@@ -73,6 +50,8 @@ int	heredoc(char *stop)
 		}
 	}
 	close(pipe_fd[1]);
+	//read(pipe_fd[0], buf, 500);
+	//printf("buf = %s\n", buf);
 	return (pipe_fd[0]);
 }
 
@@ -84,14 +63,13 @@ void	sigint_heredoc(int unused)
 	close(0);
 }
 
-void	find_all_heredoc(t_maillons *maillons)//remttre la fonction des signaux du parent, que se passe il apres ctrl+c 
+void	find_all_heredoc(t_maillons *maillons) //remttre la fonction des signaux du parent, que se passe il apres ctrl+c 
 {
 	t_input_output	*tmp;
 	int				copy_fd;
 	
 	copy_fd = dup(0);
 	signal(SIGINT, sigint_heredoc);
-	
 	while (maillons)
 	{
 		tmp = maillons->output;
@@ -101,7 +79,8 @@ void	find_all_heredoc(t_maillons *maillons)//remttre la fonction des signaux du 
 			{
 				if (maillons -> heredoc != -1)
 					close(maillons ->heredoc);
-				if (maillons -> heredoc = heredoc(maillons -> output -> file_name) == 9)
+				maillons -> heredoc = heredoc(maillons -> output -> file_name);
+				if (maillons->heredoc == -9)
 				{
 					dprintf(2, "fin heredoc");
 					dup2(copy_fd, 0);

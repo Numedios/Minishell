@@ -6,11 +6,13 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 15:30:15 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/17 15:35:01 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/17 16:01:22 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_exit_code[2];
 
 int	after_redirection(char *line)
 {

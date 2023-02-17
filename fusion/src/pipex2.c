@@ -25,7 +25,7 @@ int	switch_dup2_fd_in(t_maillons *maillons, t_pipes *pipes, int i, int len)
 	}
 	else if (find_if_have_output(maillons -> output, "<<") == 1)
 	{
-		//dprintf(2, "Lecture %d est heredoc %s\n", i ,find_name_sep(maillons -> output, "<<"));
+		dprintf(2, "Lecture %d est heredoc %s\n", i ,find_name_sep(maillons -> output, "<<"));
 		if (maillons -> heredoc != -1)
 			dup2(maillons -> heredoc, STDIN_FILENO);
 	}
@@ -102,14 +102,23 @@ void	sigint_child(int unused)//rajouter exit_code
 	write(1, "\n", 1);
 }
 
+void pipex_multiple_loop(t_maillons *maillons, char ***env, t_garbage *garbage)
+{
+	if (maillons->heredoc != -1)
+		close(maillons->heredoc);
+	if (check_if_builtin(maillons->args, *env, env, 0, garbage) == 0 && check_echo(maillons->args, 0, 0, 0) == 0)
+		free_garbage_exit(garbage, 0);
+	if (maillons->command != NULL && execve(maillons->command, maillons->args, *env) == -1)
+		perror("execve");
+	free_garbage_exit(garbage, 1);
+}
+
 int	pipex_multiple(t_maillons *maillons, char ***env, int len, t_garbage *garbage)
 {
 	t_pipes	pipes;
 	pid_t	pid;
 	int		i;
 
-	//dprintf(2, "pipe[0] = %dpipe[1] = %d\n", pipes.pipe[0], pipes.pipe[1]);
-	//dprintf(2, "pipe[2] = %d  pipe[3] = %d\n", pipes.pipe[2], pipes.pipe[3]);
 	garbage->pipes = create_all_pipes(len - 1);
 	i = 0;
 	while (maillons)
@@ -124,39 +133,20 @@ int	pipex_multiple(t_maillons *maillons, char ***env, int len, t_garbage *garbag
 			switch_dup2_fd_in(maillons, garbage->pipes, i, len);
 			switch_dup2_fd_out(maillons, garbage->pipes, i, len);
 			free_all_pipes((len - 1) * 2, garbage->pipes);
+			garbage->pipes = NULL;
+			//pipex_multiple_loop(maillons, env, garbage);
 			if (maillons->heredoc != -1)
 				close(maillons->heredoc);
-			if (check_if_builtin(maillons->args, *env, env, 0, garbage) == 0)
-			{
-				//dprintf(2, "yes !\n");
-				free_garbage(garbage);
-				exit(0);
-			}
-			if (check_echo(maillons->args, 0, 0, 0) == 0)
-			{
-				//dprintf(2, "yes1\n");
-				free_garbage(garbage);
-				exit(0);
-			}
-			if (maillons->command != NULL && execve(maillons ->command, maillons -> args, *env) == -1)
-			{
+			if (check_if_builtin(maillons->args, *env, env, 0, garbage) == 0 && check_echo(maillons->args, 0, 0, 0) == 0)
+				free_garbage_exit(garbage, 0);
+			if (maillons->command != NULL && execve(maillons->command, maillons->args, *env) == -1)
 				perror("execve");
-				free_garbage(garbage);
-				exit (1);
-			}
-			free_garbage(garbage);
-			exit (1);
+			free_garbage_exit(garbage, 1);
 		}
 		if (i > 0 && garbage->pipes->pipe[i * 2 - 2])
-		{
-			//dprintf(2, "tour %d close pipe[%d]\n", i, i * 2 - 2);
 			close(garbage->pipes->pipe[i * 2 - 2]);
-		}
 		if (i != (len -1) &&garbage->pipes->pipe[i * 2 + 1])
-		{
-			//dprintf(2, "tour %d close pipe[%d]\n", i, i * 2 +1);
 			close(garbage->pipes->pipe[i * 2 + 1]);
-		}
 		i++;
 		maillons = maillons -> next;
 	}
@@ -167,9 +157,8 @@ int	pipex_multiple(t_maillons *maillons, char ***env, int len, t_garbage *garbag
 		i++;
 	}
 	if (garbage->pipes && garbage->pipes->pipe)
-		free(garbage->pipes->pipe);
-	if (garbage->pipes)
 	{
+		free(garbage->pipes->pipe);
 		free(garbage->pipes);
 		garbage->pipes = NULL;
 	}

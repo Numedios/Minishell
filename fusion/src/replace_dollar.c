@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 19:09:08 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/17 15:44:53 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/17 16:24:51 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,35 +19,15 @@ echo $hol (hol n'existe pas)        echo $$SYSTEMD_EXEC_PID
 
 extern int	g_exit_code[2];
 
-int	research(int skip, int a, char *tab, char **new_env)
+static char	*apply_the_change(char *tab, char **env, t_index *index, int skip)
 {
-	int	len_env;
-	int	i;
-
-	i = 0;
-	if (skip == 1 && tab[a] == '?')
-		return (-2);
-	while (new_env[i])
-	{
-		len_env = str_len_env(new_env[i]);
-		if ((skip - 1) != len_env
-			|| ft_strncmp(new_env[i], &tab[a], (skip - 1)) != 0)
-			i++;
-		else
-			return (i);
-	}
-	return (-1);
-}
-
-void	apply_the_change(char *tab, char **new_env, t_index *index, int *skip)
-{
-	index->j = research(*skip, index->a, tab, new_env);
+	index->j = research(skip, index->a, tab, env);
 	if (index->j != -1)
 	{
 		if (index->j == -2)
-			tab = interrogation(tab, new_env, *skip, (*index));
+			tab = interrogation(tab, env, skip, (*index));
 		else
-			tab = do_replace(tab, new_env, *skip, (*index));
+			tab = do_replace(tab, env, skip, (*index));
 	}
 }
 
@@ -58,29 +38,17 @@ char	*found_it(char *tab, char **new_env, t_index *index, int *skip)
 	i = index->a;
 	while (tab[i])
 	{
-		if (tab[i] == ' ' || (tab[i] < 14 && tab[i] > 7) || (tab[i] > 32 && tab[i] < 46) || (tab[i] > 57 && tab[i] < 65) || (tab[i] > 90 && tab[i] < 97) || (tab[i] > 122 && tab[i] < 127))
+		if (tab[i] == ' ' || (tab[i] < 14 && tab[i] > 7)
+			|| (tab[i] > 32 && tab[i] < 48) || (tab[i] > 57 && tab[i] < 65)
+			|| (tab[i] > 90 && tab[i] < 97) || (tab[i] > 122 && tab[i] < 127))
 		{
-			// index->j = research(*skip, index->a, tab, new_env);
-			// if (index->j != -1)
-			// {
-			// 	if (index->j == -2)
-			// 		tab = interrogation(tab, new_env, *skip, (*index));
-			// 	else
-			// 		tab = do_replace(tab, new_env, *skip, (*index));
-			// }
+			tab = apply_the_change(tab, new_env, index, (*skip));
 			return (tab);
 		}
 		(*skip)++;
 		i++;
 	}
-	// index->j = research(*skip, index->a, tab, new_env);
-	// if (index->j != -1)
-	// {
-	// 	if (index->j == -2)
-	// 		tab = interrogation(tab, new_env, *skip, (*index));
-	// 	else
-	// 		tab = do_replace(tab, new_env, *skip, (*index));
-	// }
+	tab = apply_the_change(tab, new_env, index, (*skip));
 	return (tab);
 }
 
@@ -120,32 +88,6 @@ char	*found_dollar_inquote(char *tab, int *i, char **new_env, t_index *index)
 			skip = 0;
 		}
 		(*i)++;
-	}
-	return (tab);
-}
-
-char	*one_dollar_or_more(char *tab, int *i, char **new_env, t_index *index)
-{
-	int	skip;
-
-	skip = 0;
-	while (tab[(*i)] && tab [(*i) + 1] != '\0'
-		&& tab[(*i)] == '$' && tab[(*i) + 1] != ' ')
-	{
-		skip++;
-		index->a = (*i) + 1;
-		tab = found_it(tab, new_env, index, &skip);
-		if (index->j == -1)
-		{
-			(*i) = -1;
-			break ;
-		}
-		else
-		{
-			(*i) = -1;
-			break ;
-		}
-		skip = 0;
 	}
 	return (tab);
 }

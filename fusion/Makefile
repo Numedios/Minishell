@@ -80,8 +80,6 @@ SRC = main.c \
 		cmd_to_path.c \
 		utils_parsing.c \
 		create_heredoc.c \
-		get_next_line.c \
-		get_next_line_utils.c\
 		replace_dollar_2.c \
 		ft_itoa.c \
 		free_garbage.c \
@@ -94,7 +92,8 @@ SRC = main.c \
 		child.c \
 		utilis_pipex_zak.c \
 		check_space.c \
-		check_one.c
+		check_one.c \
+		dollars_utils.c
 
 #==============================================================================#
 #                                   HEADERS                                    #

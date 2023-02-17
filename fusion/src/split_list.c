@@ -27,8 +27,13 @@ t_split_elem	*ft_split_list(char *str, char *sep)
 	while (count--)
 	{
 		res = ft_strtab(str, i, sep);
-		elem = create_split_elem(res);
-		add_end_split_elem(&lst, elem);
+		if (!ft_strcmp(res, ""))
+		{
+			elem = create_split_elem(res);
+			add_end_split_elem(&lst, elem);
+		}
+		else
+			free(res);
 		i++;
 	}
 	return (lst);

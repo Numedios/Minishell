@@ -15,6 +15,7 @@ void	free_all_pipes(int argc, t_pipes *pipes)
 		free(pipes->pipe);
 	if (pipes)
 		free(pipes);
+	pipes = NULL;
 }
 
 void	create_pipe(int *pipes, int i)
