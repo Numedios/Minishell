@@ -59,6 +59,32 @@ void	sigint_heredoc(int unused)
 	close(0);
 }
 
+void	find_all_heredoc_loop(t_maillons **maillons, int *copy_fd)
+{
+	t_input_output	*tmp;
+
+	tmp = (*maillons)->output;
+	while ((*maillons)->output)
+	{
+		if (ft_strcmp(((*maillons)->output->operator), "<<"))
+		{
+			if ((*maillons)->heredoc != -1)
+				close((*maillons)->heredoc);
+			(*maillons)->heredoc = heredoc((*maillons)->output->file_name);
+			if ((*maillons)->heredoc == -9)
+			{
+				dprintf(2, "fin heredoc");
+				dup2(*copy_fd, 0);
+				g_exit_code[1] = 0;
+				return ;
+			}
+		}
+		(*maillons)->output = (*maillons)->output->next;
+	}
+	(*maillons)->output = tmp;
+	(*maillons) = (*maillons)->next;
+}
+
 //remttre la fonction des signaux du parent, que se passe il apres ctrl+c 
 void	find_all_heredoc(t_maillons *maillons)
 {
@@ -68,28 +94,7 @@ void	find_all_heredoc(t_maillons *maillons)
 	copy_fd = dup(0);
 	signal(SIGINT, sigint_heredoc);
 	while (maillons)
-	{
-		tmp = maillons->output;
-		while (maillons->output)
-		{
-			if (ft_strcmp((maillons->output->operator), "<<"))
-			{
-				if (maillons -> heredoc != -1)
-					close(maillons ->heredoc);
-				maillons -> heredoc = heredoc(maillons -> output -> file_name);
-				if (maillons->heredoc == -9)
-				{
-					dprintf(2, "fin heredoc");
-					dup2(copy_fd, 0);
-					g_exit_code[1] = 0;
-					return ;
-				}
-			}
-			maillons -> output = maillons -> output -> next;
-		}
-		maillons->output = tmp;
-		maillons = maillons -> next;
-	}
+		find_all_heredoc_loop(&maillons, &copy_fd);
 	close(copy_fd);
 	g_exit_code[1] = 0;
 }

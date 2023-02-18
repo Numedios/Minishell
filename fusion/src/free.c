@@ -65,9 +65,11 @@ void	free_input_output(t_input_output *lst)
 
 void	free_input_output_middle(t_input_output **lst, t_input_output **first)
 {
-	t_input_output	*prev = (*lst)->prev;
-	t_input_output	*next = (*lst)->next;
+	t_input_output	*prev;
+	t_input_output	*next;
 
+	prev = (*lst)->prev;
+	next = (*lst)->next;
 	free_input_output(*lst);
 	*lst = NULL;
 	if (prev != NULL)

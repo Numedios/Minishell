@@ -13,64 +13,6 @@
 #include "minishell.h"
 
 /*
-void free_maillon_middle(t_maillons **lst, t_maillons **first)
-{
-	t_maillons **tmp;
-
-	tmp = malloc(sizeof(t_maillons *));
-	*tmp = NULL;
-	if ((*lst)->next)
-		*tmp = (*lst) ->next;
-	if ((*lst)->prev)
-	{
-		(*lst) -> prev -> next = (*lst)->next;
-		if ((*lst) -> next)
-			(*lst) -> next -> prev = (*lst) -> prev;
-	}
-	else
-	{
-		if ((*lst) -> next)
-			(*lst) -> next -> prev = NULL;
-		if (*first)
-			*first = (*lst) -> next;
-	}
-	if (lst && *lst)
-	{
-		free_maillon(*lst);
-	}
-	free(*lst);
-	*lst = *tmp;
-	free(tmp);
-}*/
-/*
-void free_maillon_middle(t_maillons **lst, t_maillons **first)
-{
-	t_maillons **tmp; // tmp sert a stocker l'element suivant l'endroit ou l'on se trouve
-
-	tmp = malloc(sizeof(t_maillons *));
-	*tmp = (*lst) ->next; // on stock l'element suivant
-	if ((*lst)->prev) // si il existe un element precedent
-	{
-		(*lst) -> prev -> next = (*lst)->next; // l'ellement avant prend comme suivant le suivant de l'element
-		if ((*lst) -> next) // si il y a un suivant
-			(*lst) -> next -> prev = (*lst) -> prev; // le suivant  prend comme prend comme prev le prev de l'element
-	}
-	else // si il n'existe pas de precedent
-	{
-		if ((*lst) -> next)   // si il existe un suivant
-			(*lst) -> next -> prev = NULL; // le suivant prend comme precedent NULL
-		*first = (*lst) -> next; // FIRST devien le suivant de l'element actuelle
-	}
-	if (lst && *lst)
-	{
-		free_maillon(*lst);
-	}
-	free(*lst);
-	*lst = *tmp; // lst devien tmp
-	free(tmp);
-}*/
-
-/*
 * return (1) si lst contient sep dans un operator
 * return (0) sinon
 *
@@ -81,9 +23,11 @@ void free_maillon_middle(t_maillons **lst, t_maillons **first)
 
 void	free_maillon_middle(t_maillons **lst, t_maillons **first)
 {
-	t_maillons	*prev = (*lst)->prev;
-	t_maillons	*next = (*lst)->next;
+	t_maillons	*prev;
+	t_maillons	*next;
 
+	prev = (*lst)->prev;
+	next = (*lst)->next;
 	free_maillon(*lst);
 	*lst = NULL;
 	if (prev != NULL)

@@ -45,10 +45,7 @@ int	check_input(t_input_output *output)
 	if (ft_strcmp(output->operator, "<"))
 		fd = open(output->file_name, O_RDWR, O_DSYNC, !O_DIRECTORY);
 	else if (ft_strcmp(output->operator, "<<"))
-	{
 		return (1);
-	 //    fd = open("here_doc", O_CREAT | O_WRONLY | O_EXCL, 0647); // a changer
-	}
 	if (fd == -1)
 		return (close(fd), -1);
 	return (close(fd), 1);
@@ -73,7 +70,6 @@ int	check_input_output(t_input_output **input_output)
 			output = (*input_output);
 			if (check_output(output) == -1)
 			{
-				printf("%s ne s'est pas crer \n", (*input_output)-> file_name);
 				// tout free et exit ou renvoyer -1 et gerer sa apres
 				//exit(0);
 				*input_output = first;
@@ -89,7 +85,6 @@ int	check_input_output(t_input_output **input_output)
 			if (check_input(input) == -1)
 			{
 				// tout free et exit ou renvoyer -1 et gerer sa apres
-				printf("%s n'existe pas \n", (*input_output)-> file_name);
 				free_inputs_outputs(&input -> next);
 				input->next = NULL;
 				*input_output = first;

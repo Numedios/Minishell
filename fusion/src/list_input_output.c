@@ -12,7 +12,9 @@
 
 #include "minishell.h"
 
-t_input_output	*create_input_output(char *name, char *operator, t_input_output *prev)
+/* o pour operateur*/
+
+t_input_output	*create_input_output(char *name, char *o, t_input_output *prev)
 {
 	t_input_output	*new;
 
@@ -20,7 +22,7 @@ t_input_output	*create_input_output(char *name, char *operator, t_input_output *
 	if (!new)
 		return (NULL);
 	new -> file_name = ft_strdup(name);
-	new -> operator = ft_strdup(operator);
+	new -> operator = ft_strdup(o);
 	new -> prev = prev;
 	new -> next = NULL;
 	return (new);

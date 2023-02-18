@@ -12,6 +12,12 @@
 
 #include "minishell.h"
 
+int	find_input_output_loop(t_split_elem *lst)
+{
+	return ((!(ft_strcmp((lst)->arg, "<") || ft_strcmp((lst)->arg, "<<")
+				|| ft_strcmp((lst)->arg, ">") || ft_strcmp((lst)->arg, ">>"))));
+}
+
 // si l' prev est un < ou << ou > ou >> (pour le premier if)
 // si *lst differend de > >> < << (pour le deuxieme if)
 t_input_output	*find_input_output(t_split_elem *lst)
@@ -30,9 +36,7 @@ t_input_output	*find_input_output(t_split_elem *lst)
 		if (ft_strcmp(prev->arg, "<") || ft_strcmp(prev->arg, "<<")
 			|| ft_strcmp(prev->arg, ">") || ft_strcmp(prev->arg, ">>"))
 		{
-			if (!(ft_strcmp((lst)->arg, "<") || ft_strcmp((lst)->arg, "<<")
-					|| ft_strcmp((lst)->arg, ">")
-					|| ft_strcmp((lst)->arg, ">>")))
+			if (find_input_output_loop(lst))
 			{
 				add = create_input_output((lst)->arg, prev->arg, input_prev);
 				add_end_input_output(&first, add);

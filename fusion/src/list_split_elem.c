@@ -19,7 +19,7 @@ t_split_elem	*create_split_elem(char	*str)
 	new = malloc(sizeof(*new));
 	if (!new)
 		return (NULL);
-	new -> arg = str; // maybe mettre un dump
+	new -> arg = str;
 	new -> next = NULL;
 	return (new);
 }
@@ -31,7 +31,7 @@ t_split_elem	*create_split_elem_dup(char	*str)
 	new = malloc(sizeof(*new));
 	if (!new)
 		return (NULL);
-	new -> arg = ft_strdup(str); // maybe mettre un dump
+	new -> arg = ft_strdup(str);
 	new -> next = NULL;
 	return (new);
 }
@@ -51,7 +51,6 @@ void	add_end_split_elem(t_split_elem	**list, t_split_elem *add)
 {
 	t_split_elem	*search;
 
-	//ft_print_split_elem(add);
 	if (!*list)
 	{
 		*list = add;

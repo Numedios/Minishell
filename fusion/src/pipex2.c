@@ -19,39 +19,25 @@ int	switch_dup2_fd_in(t_maillons *maillons, t_pipes *pipes, int i, int len)
 	res = -2;
 	if (find_if_have_output(maillons -> output, "<") == 1)
 	{
-		//dprintf(2, "Lecture %d est %s \n", i, find_name_sep(maillons -> output, "<"));
-		res = open(find_name_sep(maillons -> output, "<"), O_RDWR, O_DSYNC, !O_DIRECTORY);
+		res = open(find_name_sep(maillons->output, "<"), O_RDWR, O_DSYNC, !O_DIRECTORY);
 		dup2(res, STDIN_FILENO);
 	}
 	else if (find_if_have_output(maillons -> output, "<<") == 1)
 	{
-		dprintf(2, "Lecture %d est heredoc %s\n", i ,find_name_sep(maillons -> output, "<<"));
 		if (maillons -> heredoc != -1)
 			dup2(maillons -> heredoc, STDIN_FILENO);
 	}
 	else if (!(maillons-> prev))
-	{
-		//dprintf(2, "Lecture %d est dev/stdin\n", i);
-		//res = open("/dev/stdin", O_RDWR, O_DSYNC, !O_DIRECTORY);
-		//dup2(res, STDIN_FILENO);
 		return (1);
-	}
-	else if (find_if_have_output(maillons -> prev -> output, ">") || !(maillons->prev->command))
+	else if (find_if_have_output(maillons -> prev -> output, ">") ||!(maillons->prev->command))
 	{
-		//dprintf(2, "Lecture %d est dev/null\n", i);
 		res = open("/dev/null", O_RDWR, O_DSYNC, !O_DIRECTORY);
 		dup2(res, STDIN_FILENO);
 	}
 	else
-	{
-		//dprintf(2, "Lecture %d est pipe[%d]\n", i,(i*2 -2));
 		dup2(pipes->pipe[i * 2 - 2], STDIN_FILENO);
-	}
 	if (res != -2)
-	{
-		//dprintf(2, "free entrer / i = %d\n", i);
 		close(res);
-	}
 	return (1);
 }
 
@@ -62,7 +48,6 @@ int	switch_dup2_fd_out(t_maillons *maillons, t_pipes *pipes, int i, int len)
 	res = -2;
 	if (find_if_have_output(maillons -> output, ">"))
 	{
-		//dprintf(2, "Ecriture %d est %s \n", i, find_name_sep(maillons -> output, ">"));
 		res = open(find_name_sep(maillons -> output, ">"), O_WRONLY | O_CREAT | O_TRUNC, 0644, !O_DIRECTORY);
 		if (!ft_strcmp(find_name_sep(maillons -> output, ">"), "/dev/stdout"))
 			return (1);
@@ -70,47 +55,62 @@ int	switch_dup2_fd_out(t_maillons *maillons, t_pipes *pipes, int i, int len)
 	}
 	else if (find_if_have_output(maillons -> output, ">>"))
 	{
-		//dprintf(2, "Ecriture %d est %s \n", i, find_name_sep(maillons -> output, ">>"));
 		res = open(find_name_sep(maillons -> output, ">>"), O_WRONLY | O_CREAT | O_APPEND, 0644, !O_DIRECTORY);
 		dup2(res, STDOUT_FILENO);
 	}
 	else if (!(maillons-> next))
-	{
-		//dprintf(2, "Ecriture %d est dev/stdout \n" , i);
-		//dprintf(2, "Commande %s : \n", maillons->command);
-		//res = open("/dev/stdout ", O_RDWR, O_DSYNC, !O_DIRECTORY);
-		//dprintf(2, "res = %d/ i = %d\n", res , i);
-		//dup2(res , STDOUT_FILENO);
 		return (1);
-	}
 	else
-	{
-		//dprintf(2, "Ecriture %d est pipes[%d] \n", i, (i*2 +1));
 		dup2(pipes->pipe[i * 2 + 1], STDOUT_FILENO);
-	}
 	if (res != -2)
-	{
-		//dprintf(2, "free sortie / i = %d\n", i);
 		close(res);
-	}
 	return (1);
 }
 
-void	sigint_child(int unused)//rajouter exit_code
+/* rajouter exit code */
+
+void	sigint_child(int unused)
 {
 	(void)unused;
 	write(1, "\n", 1);
 }
 
-void pipex_multiple_loop(t_maillons *maillons, char ***env, t_garbage *garbage)
+void	pipex_multiple_check(t_maillons **m, char ****e, t_garbage **g)
 {
-	if (maillons->heredoc != -1)
-		close(maillons->heredoc);
-	if (check_if_builtin(maillons->args, *env, env, 0, garbage) == 0 && check_echo(maillons->args, 0, 0, 0) == 0)
-		free_garbage_exit(garbage, 0);
-	if (maillons->command != NULL && execve(maillons->command, maillons->args, *env) == -1)
+	if ((*m)->heredoc != -1)
+		close((*m)->heredoc);
+	if (check_if_builtin((*m)->args, **e, *e, 0, *g) == 0 && check_echo((*m)->args, 0, 0, 0) == 0)
+		free_garbage_exit(*g, 0);
+	if ((*m)->command != NULL && execve((*m)->command, (*m)->args, **e) == -1)
 		perror("execve");
-	free_garbage_exit(garbage, 1);
+	free_garbage_exit(*g, 1);
+}
+
+void	pipex_multiple_free(t_garbage **garbage)
+{
+	if ((*garbage)->pipes && (*garbage)->pipes->pipe)
+	{
+		free((*garbage)->pipes->pipe);
+		free((*garbage)->pipes);
+		(*garbage)->pipes = NULL;
+	}
+}
+
+void pipex_multiple_close_pipe(t_garbage **garbage, int len, int i)
+{
+	if (i > 0 && (*garbage)->pipes->pipe[i * 2 - 2])
+		close((*garbage)->pipes->pipe[i * 2 - 2]);
+	if (i != (len -1) && (*garbage)->pipes->pipe[i * 2 + 1])
+		close((*garbage)->pipes->pipe[i * 2 + 1]);
+}
+
+void handle_child_process(t_maillons *maillons, t_pipes *pipes, int i, int len, char ***env, t_garbage *garbage) 
+{
+    switch_dup2_fd_in(maillons, pipes, i, len);
+    switch_dup2_fd_out(maillons, pipes, i, len);
+    free_all_pipes((len - 1) * 2, pipes);
+    garbage->pipes = NULL;
+    pipex_multiple_check(&maillons, &env, &garbage);
 }
 
 int	pipex_multiple(t_maillons *maillons, char ***env, int len, t_garbage *garbage)
@@ -134,19 +134,10 @@ int	pipex_multiple(t_maillons *maillons, char ***env, int len, t_garbage *garbag
 			switch_dup2_fd_out(maillons, garbage->pipes, i, len);
 			free_all_pipes((len - 1) * 2, garbage->pipes);
 			garbage->pipes = NULL;
-			//pipex_multiple_loop(maillons, env, garbage);
-			if (maillons->heredoc != -1)
-				close(maillons->heredoc);
-			if (check_if_builtin(maillons->args, *env, env, 0, garbage) == 0 && check_echo(maillons->args, 0, 0, 0) == 0)
-				free_garbage_exit(garbage, 0);
-			if (maillons->command != NULL && execve(maillons->command, maillons->args, *env) == -1)
-				perror("execve");
-			free_garbage_exit(garbage, 1);
+			pipex_multiple_check(&maillons, &env, &garbage);
+			//handle_child_process(maillons, garbage->pipes, i, len, env, garbage);
 		}
-		if (i > 0 && garbage->pipes->pipe[i * 2 - 2])
-			close(garbage->pipes->pipe[i * 2 - 2]);
-		if (i != (len -1) &&garbage->pipes->pipe[i * 2 + 1])
-			close(garbage->pipes->pipe[i * 2 + 1]);
+		pipex_multiple_close_pipe(&garbage, len, i);
 		i++;
 		maillons = maillons -> next;
 	}
@@ -156,11 +147,6 @@ int	pipex_multiple(t_maillons *maillons, char ***env, int len, t_garbage *garbag
 		waitpid(-1, NULL, 0);
 		i++;
 	}
-	if (garbage->pipes && garbage->pipes->pipe)
-	{
-		free(garbage->pipes->pipe);
-		free(garbage->pipes);
-		garbage->pipes = NULL;
-	}
+	pipex_multiple_free(&garbage);
 	return (1);
 }

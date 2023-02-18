@@ -16,7 +16,8 @@
 *
 * print la commande et ces argument si il y en a
 *
-*   a changer et a envoyer sa dans la structure maillon dans commande et arg sous forme de tab
+*   a changer et a envoyer sa dans la structure maillon dans commande
+*	et arg sous forme de tab
 *
 */
 // si l' prev est pas un < ou << ou > ou >> (pour le premier if)
@@ -63,6 +64,12 @@ int	count_arg(t_split_elem *lst)
 	return (i);
 }
 
+int	find_argument_loop(t_split_elem *lst)
+{
+	return ((!(ft_strcmp((lst)->arg, "<") || ft_strcmp((lst)->arg, "<<")
+				|| ft_strcmp((lst)->arg, ">") || ft_strcmp((lst)->arg, ">>"))));
+}
+
 // si l' prev est pas un < ou << ou > ou >> (pour le premier if)
 // si *lst differend de > >> < << (pour le deuxieme if)
 char	**find_argument(t_split_elem *lst)
@@ -81,9 +88,7 @@ char	**find_argument(t_split_elem *lst)
 		if (!(ft_strcmp(prev->arg, "<") || ft_strcmp(prev->arg, "<<")
 				|| ft_strcmp(prev->arg, ">") || ft_strcmp(prev->arg, ">>")))
 		{
-			if (!(ft_strcmp((lst)->arg, "<") || ft_strcmp((lst)->arg, "<<")
-					|| ft_strcmp((lst)->arg, ">")
-					|| ft_strcmp((lst)->arg, ">>")))
+			if (find_argument_loop(lst))
 			{
 				res[i] = ft_strdup(lst->arg);
 				i++;
