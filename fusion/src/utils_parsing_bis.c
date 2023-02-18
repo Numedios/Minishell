@@ -25,7 +25,11 @@ int	print_tab(char **tab)
 	}
 	return (0);
 }
-
+/*
+if (line && line[i] == '\0')//
+	return (-1);
+if (line && line[i] != '\0')//
+	i++;*/
 int	skip_quote(char *line, int i)//existe deja dans un autre fichier, a ajouter dans le .h et le retirer d'ici, pour la nomrinette il faudrat juste enlever une securtite qui servirait a rien
 {
 	if (line && line[i] != '\0' && line[i + 1] != '\0'
@@ -52,7 +56,8 @@ int	skip_quote(char *line, int i)//existe deja dans un autre fichier, a ajouter 
 			while (line && line[i] != '\0' && line[i] != '\'')
 				i++;
 		}
-		i++;
+		if (line && line[i] != '\0')//
+			i++;
 	}
 	return (i);
 }

@@ -93,7 +93,8 @@ SRC = main.c \
 		utilis_pipex_zak.c \
 		check_space.c \
 		check_one.c \
-		dollars_utils.c
+		dollars_utils.c \
+		delete_quote.c
 
 #==============================================================================#
 #                                   HEADERS                                    #

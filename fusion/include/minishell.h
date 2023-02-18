@@ -73,6 +73,12 @@ typedef struct index
 	int	a;
 }		t_index;
 
+typedef struct quote
+{
+	int	old_i;
+	int	i;
+}		t_quote;
+
 typedef struct two_pipe
 {
 	int		fd_in;
@@ -137,6 +143,9 @@ int				check_builtin(char **args);
 
 char			*rl_gets();
 int				main(int argc, char **argv, char **env);
+
+/* delete_quote.c */
+char			*delete_the_quote(char *line, int j, int len);
 
 /*  built in cd */
 int				do_cd(char **new_env, char *path);
