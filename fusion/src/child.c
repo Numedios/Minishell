@@ -55,6 +55,8 @@ int	child1(two_pipe *two_pipe, char ***env, t_maillons *maillons, t_garbage *gar
 	}	
 	if (two_pipe->fd_out != -3 && two_pipe->fd_out != -1)
 		close(two_pipe->fd_out);
+	if (maillons->heredoc != -1)//
+		close(maillons->heredoc);//
 	child1_end(two_pipe, env, maillons, garbage);
 }
 
@@ -99,6 +101,8 @@ int	child2(two_pipe *two_pipe, char ***env, t_maillons *maillons, t_garbage *gar
 		write(2, "close1-2\n", 9);
 		exit (1);
 	}
+	if (maillons->heredoc != -1)//
+		close(maillons->heredoc);//
 	child2_end(two_pipe, env, maillons, garbage);
 }
 
@@ -114,6 +118,7 @@ int	check_access(t_maillons *maillons)
 		else if (maillons->command != NULL
 			&& access(maillons->command, F_OK | X_OK) != 0)
 		{
+			g_exit_code[0] = 127;
 			ft_putstr_fd("bash: ", 2);
 			ft_putstr_fd(maillons->command, 2);
 			ft_putstr_fd(": command not found\n", 2);

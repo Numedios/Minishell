@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+extern int g_exit_code[2];
+
 int	check_builtin(char **args)
 {
 	int	cmp;
@@ -37,7 +39,7 @@ int	check_builtin(char **args)
 			return (0);
 		else
 		{
-			dprintf(1, "hello");
+			g_exit_code[0] = 130;
 			dprintf(2, "exit\nbash: exit: too many arguments\n");
 			return (2);
 		}

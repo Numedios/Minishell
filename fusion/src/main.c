@@ -92,7 +92,7 @@ int main(int argc, char **argv, char **env)
 		line = rl_gets();
 		if (line == NULL)
 		{
-			printf("\n");
+			//ft_free_tab(garbage.new_env);
 			free_garbage_env_exit(&garbage, 0);
 		}
 		if (parse(line) == 0)

@@ -48,7 +48,7 @@ char	*interrogation(char *tab, char **new_env, int skip, t_index index)
 	var.pos = 0;
 	var.pos_tab = 0;
 	var.value = ft_itoa(g_exit_code[0]);
-	var.len_tab = ft_strlen(var.value);
+	var.len_tab = ft_strlen(tab);
 	var.new_len = var.len_tab - skip;
 	var.len_value = ft_strlen(var.value);
 	var.new_tab = malloc (sizeof(char) * (var.new_len + var.len_value));
@@ -67,6 +67,7 @@ char	*interrogation(char *tab, char **new_env, int skip, t_index index)
 		var.pos_tab++;
 	}
 	var.new_tab[var.pos] = '\0';
+	free(var.value);
 	return (free(tab), var.new_tab);
 }
 
