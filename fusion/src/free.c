@@ -65,19 +65,15 @@ void	free_input_output(t_input_output *lst)
 
 void	free_input_output_middle(t_input_output **lst, t_input_output **first)
 {
-	// Sauvegarder les pointeurs sur les éléments précédent et suivant
 	t_input_output	*prev = (*lst)->prev;
 	t_input_output	*next = (*lst)->next;
 
-	// Libérer l'élément courant
 	free_input_output(*lst);
 	*lst = NULL;
-	// Mettre à jour le pointeur suivant de l'élément précédent
 	if (prev != NULL)
 		prev->next = next;
 	else
 		*first = next;
-	// Mettre à jour le pointeur précédent de l'élément suivant
 	if (next != NULL)
 		next->prev = prev;
 }

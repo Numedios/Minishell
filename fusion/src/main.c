@@ -91,10 +91,7 @@ int main(int argc, char **argv, char **env)
 		setup_signal_handlers();
 		line = rl_gets();
 		if (line == NULL)
-		{
-			//ft_free_tab(garbage.new_env);
 			free_garbage_env_exit(&garbage, 0);
-		}
 		if (parse(line) == 0)
 		{
 			garbage.line = delete_dollar(line, garbage.new_env, 0, 0);
@@ -103,7 +100,6 @@ int main(int argc, char **argv, char **env)
 			cmd_to_path(garbage.maillons, garbage.new_env);
 			find_all_heredoc(garbage.maillons);
 			check_inputs_outputs(garbage.maillons);
-			//ft_print_maillons(garbage.maillons);
 			pipex(garbage.maillons, &garbage.new_env, &garbage);
 			free_garbage(&garbage);
 		}

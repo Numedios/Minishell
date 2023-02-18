@@ -51,16 +51,38 @@ void	create_word_sep(t_split_elem **lst, char *str, int len)
 	add_end_split_elem(lst, create_split_elem(res));
 }
 
-/*
-*
-*
-*
-*/
+void	handle_redirection(t_split_elem **add, char **str)
+{
+	if (**str == '<' || **str == '>')
+	{
+		if (*str && (*str)[1] && **str == (*str)[1])
+		{
+			create_word_sep(add, *str, 2);
+			(*str)++;
+		}
+		else
+			create_word_sep(add, *str, 1);
+		(*str)++;
+	}
+}
+
+void	split_redirection_quote(char **str)
+{
+	char	quote;
+
+	quote = **str;
+	if (quote == '\"' || quote == '\'')
+	{
+		(*str)++;
+		while (**str && **str != quote)
+			(*str)++;
+	}
+	(*str)++;
+}
 
 t_split_elem	**split_redirection(char *str, char *sep)
 {
 	t_split_elem	**add;
-	char			quote;
 	int				i;
 
 	add = malloc(sizeof(*add));
@@ -70,44 +92,28 @@ t_split_elem	**split_redirection(char *str, char *sep)
 	i = 0;
 	while (str && *str)
 	{
-		if (*str == '<' || *str == '>')
-		{
-			if (str && str[1] && *str == str[1])
-			{
-				create_word_sep(add, str, 2);
-				str++;
-			}
-			else
-				create_word_sep(add, str, 1);
-			str++;
-		}
+		handle_redirection(add, &str);
 		if (*str && check_sep(*str, "<>"))
 		{
 			add_end_split_elem(add, create_split_elem(ft_strtab(str, 0, sep)));
 			i++;
 		}
 		while (*str && check_sep(*str, "<>"))
-		{
-			if (*str == '\"' || *str == '\'')
-			{
-				quote = *str;
-				str++;
-				while (*str && *str != quote)
-					str++;
-			}
-			str++;
-		}
+			split_redirection_quote(&str);
 	}
 	return (add);
 }
 
 // " a <b> c">d
 
+void	add_el_loop(t_split_elem	**d, t_split_elem ***s, t_split_elem ***a)
+{
+	*d = **s;
+	**s = **a;
+}
+
 /*
 *	ajoute add dans lst
-*
-*
-*
 */
 
 void	add_el(t_split_elem *lst, t_split_elem **start, t_split_elem *prev)
@@ -120,11 +126,8 @@ void	add_el(t_split_elem *lst, t_split_elem **start, t_split_elem *prev)
 	if (!add)
 		return ;
 	del = NULL;
-	if (lst == *start)
-	{
-		del = *start;
-		*start = *add;
-	}
+	if (lst && *start && *add && lst == *start)
+		add_el_loop(&del, &start, &add);
 	else
 	{
 		del = prev->next;
@@ -168,7 +171,6 @@ void	create_split_arg(t_split_elem **lst)
 		}
 		prev = *lst;
 		*lst = (*lst)->next;
-	//	printf("/%s/", (*lst)->arg);
 	}
 	*lst = stock;
 }

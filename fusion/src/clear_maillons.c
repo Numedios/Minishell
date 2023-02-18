@@ -81,19 +81,15 @@ void free_maillon_middle(t_maillons **lst, t_maillons **first)
 
 void	free_maillon_middle(t_maillons **lst, t_maillons **first)
 {
-	// Sauvegarder les pointeurs sur les éléments précédent et suivant
 	t_maillons	*prev = (*lst)->prev;
 	t_maillons	*next = (*lst)->next;
 
-	// Libérer l'élément courant
 	free_maillon(*lst);
 	*lst = NULL;
-	// Mettre à jour le pointeur suivant de l'élément précédent
 	if (prev != NULL)
 		prev->next = next;
 	else
 		*first = next;
-	// Mettre à jour le pointeur précédent de l'élément suivant
 	if (next != NULL)
 		next->prev = prev;
 }
@@ -133,5 +129,4 @@ char	*find_name_sep(t_input_output *lst, char *sep)
 	}
 	return (NULL);
 }
-
 // > a | 1| 2 | 3 > a | b | >c | 4 | 5  >a | b | d |e | >4 | 6 >a| >a
