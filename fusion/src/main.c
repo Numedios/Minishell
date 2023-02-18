@@ -88,6 +88,7 @@ int main(int argc, char **argv, char **env)
 	garbage.new_env = my_env(env);
 	while (1)
 	{
+		g_exit_code[1] = 0;
 		setup_signal_handlers();
 		line = rl_gets();
 		if (line == NULL)
@@ -97,12 +98,12 @@ int main(int argc, char **argv, char **env)
 			garbage.line = delete_dollar(line, garbage.new_env, 0, 0);
 			garbage.line = replace_dollar(line, garbage.new_env, 0, 0);
 			garbage.line = delete_the_quote(garbage.line, 0, 0);
-			printf("%s\n", garbage.line);
 			loop_create_maillons(garbage.line, &garbage);
 			cmd_to_path(garbage.maillons, garbage.new_env);
 			find_all_heredoc(garbage.maillons);
 			check_inputs_outputs(garbage.maillons);
-			pipex(garbage.maillons, &garbage.new_env, &garbage);
+			if (g_exit_code[1] != 7)
+				pipex(garbage.maillons, &garbage.new_env, &garbage);
 			free_garbage(&garbage);
 		}
 	}

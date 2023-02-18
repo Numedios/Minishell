@@ -19,7 +19,7 @@ void	handle_sig(int sig)//il faut free si exit
 {
 	if (sig == SIGINT) //ctrl+c
 	{
-		if (g_exit_code[1] == 7) //pour here doc 
+		if (g_exit_code[1] == 9) //pour here doc 
 		{
 			/*
 			rajouter exit code dans le here doc
@@ -28,7 +28,7 @@ void	handle_sig(int sig)//il faut free si exit
 			et on rajoute une condition pour executer pipex qui est que g_exit_code[1] != 6
 			ou que juste dans mon signal quand exit code[1] == 5, on free tout comme ca il se passe rien dans pipex
 			*/
-		g_exit_code[1] = 0;//pour ne pas bloquer au prochain prompt
+			g_exit_code[1] = 0;//pour ne pas bloquer au prochain prompt
 		}
 		if (g_exit_code[1] == 2)
 		{

@@ -48,7 +48,7 @@ char *delete_the_quote(char *line, int j, int len)
 
     quote.i = 0;
     len = ft_strlen(line);
-    new_line = malloc ( len * sizeof(char));
+    new_line = malloc ( (len + 1) * sizeof(char));
     while (line && line [quote.i])
     {
         quote.old_i= quote.i;

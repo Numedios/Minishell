@@ -89,3 +89,5 @@ est ce que tu utilises    void			change_quote(char *str, int i, int single, int 
 rajouter le close heredoc dans zak pipex
 
 verifier quand skip quote renvoie -1 et qu'est que cela fait apres 
+
+j'ai peut etre regle le probleme des heredocs mais il faut verifier qu'on close bien tout psk j'evite pipex avec ma methode

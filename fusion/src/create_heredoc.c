@@ -34,7 +34,10 @@ int	heredoc(char *stop)
 	{
 		str = readline("> ");
 		if (g_exit_code[1] == 7)
-			return (-9);
+		{
+			free(str);
+			break ;
+		}
 		if (ft_strcmp(stop, str))
 		{
 			free(str);
@@ -71,13 +74,13 @@ void	find_all_heredoc_loop(t_maillons **maillons, int *copy_fd)
 			if ((*maillons)->heredoc != -1)
 				close((*maillons)->heredoc);
 			(*maillons)->heredoc = heredoc((*maillons)->output->file_name);
-			if ((*maillons)->heredoc == -9)
+			g_exit_code[1] = 7;
+			if (g_exit_code[1] == 7)
 			{
-				dprintf(2, "fin heredoc");
 				dup2(*copy_fd, 0);
-				g_exit_code[1] = 0;
-				return ;
+				break ;
 			}
+			printf("end1\n");
 		}
 		(*maillons)->output = (*maillons)->output->next;
 	}
@@ -91,10 +94,10 @@ void	find_all_heredoc(t_maillons *maillons)
 	t_input_output	*tmp;
 	int				copy_fd;
 
+	g_exit_code[1] = 9;
 	copy_fd = dup(0);
 	signal(SIGINT, sigint_heredoc);
-	while (maillons)
+	while (maillons && g_exit_code[1] != 7)
 		find_all_heredoc_loop(&maillons, &copy_fd);
 	close(copy_fd);
-	g_exit_code[1] = 0;
 }
