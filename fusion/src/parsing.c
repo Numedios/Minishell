@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/26 17:39:06 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/17 15:34:58 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/18 23:28:10 by zakariyaham      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	parenthesis_close_1(char *str);
 //si rien apres pipe = probleme
 // pour chaque if du parsinf check meme en skipant tout les espace qui separes les char
 //comment gerer les "()"
-// remplacer prinf par ft_putstr_fd pour ecrire sur la sortie d'erreur
+// remplacer prinf par s_fd pour ecrire sur la sortie d'erreur
 //pour $HOLA il fonctionne tout seul ou avec "$HOLA", on ne peut pas declarer une variable globale en commencant par un chiffre ou $, pas de caractere speciale, mais on peut mettre un chiffre dedans
 
 extern int	g_exit_code[2];
@@ -37,7 +37,7 @@ int	after_pipe(char *line)
 				i++;
 			if (line[i] == '\0')
 			{
-				ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);
+				s_fd("minishell: syntax error near unexpected token `|'\n", 2);
 				g_exit_code[0] = 2;
 				return (g_exit_code[0]);
 			}
@@ -94,7 +94,7 @@ int	first_pipe_check(char *line)
 		i++;
 	if (line[i] == '|')
 	{
-		ft_putstr_fd("bash: syntax error near unexpected token `|'\n", 2);
+		s_fd("bash: syntax error near unexpected token `|'\n", 2);
 		g_exit_code[0] = 2;
 		return (1);
 	}
@@ -105,7 +105,7 @@ int	parse(char *line)
 {
 	if (quote_close(line) == 0)
 	{
-		ft_putstr_fd("Minishell : syntax error, quote not close\n", 2);
+		s_fd("Minishell : syntax error, quote not close\n", 2);
 		g_exit_code[0] = 2;
 		return (1);
 	}
@@ -113,7 +113,7 @@ int	parse(char *line)
 		return (1);
 	if (check_parenthesis(line) == 1)
 	{
-		ft_putstr_fd("Minishell : syntax error, parenthesis not close\n", 2);
+		s_fd("Minishell : syntax error, parenthesis not close\n", 2);
 		g_exit_code[0] = 2;
 		return (1);
 	}
@@ -121,7 +121,7 @@ int	parse(char *line)
 		return (1);
 	if (line[0] == ';')
 	{
-		ft_putstr_fd("bash: syntax error near unexpected token `;'\n", 2);
+		s_fd("bash: syntax error near unexpected token `;'\n", 2);
 		return (1);
 	}
 	if (check_1(line) == 1)
@@ -136,14 +136,14 @@ int	parse(char *line)
 	{
 		if (line[0] == '>' || line[0] == '<')
 		{
-			ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", 2);
+			s_fd("bash: syntax error near unexpected token `newline'\n", 2);
 			g_exit_code[0] = 2;
 			return (1);
 		}
 	}
 	if (str_cmp(line, "<<") == 1 || str_cmp(line, ">>") == 1)
 	{
-		ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", 2);
+		s_fd("bash: syntax error near unexpected token `newline'\n", 2);
 		g_exit_code[0] = 2;
 		return (1);
 	}
@@ -174,7 +174,7 @@ int parenthesis_close_1 (char *str)
 	}
 	if (count_1 < 0)
 	{
-		ft_putstr_fd("bash: syntax error near unexpected token `)'\n");
+		s_fd("bash: syntax error near unexpected token `)'\n");
 		return (1);
 	}
 	return (0);
@@ -207,7 +207,7 @@ int parenthesis_close_2 (char *str)
 			}
 			if (count <= 0)
 			{
-				ft_putstr_fd("bash: syntax error near unexpected token `)'\n");
+				s_fd("bash: syntax error near unexpected token `)'\n");
 				return (1);
 			}
 			return(0);

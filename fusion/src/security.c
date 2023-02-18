@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   security.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 11:40:14 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/17 18:39:10 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/18 23:32:59 by zakariyaham      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	check_builtin(char **args)
 		return (0);
 	if (args[0] && str_cmp(args[0], "exit") == 1)
 	{
-		if (cmp < 3) // pas plus d'un argument et si pas d'argument le retour d'exit est 0 en code erreur 
+		if (cmp < 3) // pas plus d'un argument et si pas d'argument le retour d'exit est 0 en code erreur
 			return (0);
 		else
 		{
@@ -61,7 +61,7 @@ int	which_builtin(char **args, char **env, int i, int cmp, t_garbage *garbage)
 		return (do_env(env), 0);
 	if (args[0] && str_cmp(args[0], "pwd") == 1)
 		return (do_pwd(), 0);
-	if (args[0] && str_cmp(args[0], "exit") == 1 && cmp < 3) // pas plus d'un argument et si pas d'argument le retour d'exit est 0 en code erreur 
+	if (args[0] && str_cmp(args[0], "exit") == 1 && cmp < 3) // pas plus d'un argument et si pas d'argument le retour d'exit est 0 en code erreur
 		return (do_exit(args[1], garbage), 0);
 	if (args[0] && str_cmp(args[0], "unset") == 1)
 	{
@@ -114,20 +114,19 @@ int	check_if_exit(char **args, char **env, t_garbage *garbage)
 			return (1);
 		cmp++;
 	}
-	if (args[0] && str_cmp(args[0], "exit") == 1 && cmp < 3)// pas plus d'un argument et si pas d'argument le retour d'exit est 0 en code erreur 
+	if (args[0] && str_cmp(args[0], "exit") == 1 && cmp < 3)// pas plus d'un argument et si pas d'argument le retour d'exit est 0 en code erreur
 		return (do_exit(args[1], garbage), 0);
 	return (1);
 }
+//cmp = 0 et i = 0
 
 int	check_echo(char **args, int cmp, int i, int execute)
 {
-	cmp = 0;
-	i = 0;
 	while (args && args[cmp])
 	{
 		while (args[cmp][i])
 		{
-			if (args[cmp][0] == '-')//check juste apres echo
+			if (args[cmp][0] == '-')
 			{
 				while (args[cmp][i] && args[cmp][i] == 'n')
 					i++;
@@ -140,7 +139,7 @@ int	check_echo(char **args, int cmp, int i, int execute)
 		i = 0;
 		cmp++;
 	}
-	if (args[0] && str_cmp(args[0], "echo") == 1)//attention a le droit a une seule option
+	if (args[0] && str_cmp(args[0], "echo") == 1)
 	{
 		if (execute == 0)
 			do_echo(&args[1]);
@@ -152,7 +151,7 @@ int	check_echo(char **args, int cmp, int i, int execute)
 /*
 void	write_error(char *argv, t_vare *vare, char *tab)
 {
-	ft_putstr_fd("bash: ", 2);
+	s_fd("bash: ", 2);
 	perror(argv);
 	if (tab[0] == '1')
 		close(vare->fd_in);
@@ -172,20 +171,20 @@ void	write_error_2(char *argv, int i, t_vare *vare)
 {
 	if (i == 1)
 	{
-		ft_putstr_fd("bash: ", 2);
-		ft_putstr_fd(argv, 2);
-		ft_putstr_fd(": command not found\n", 2);
+		s_fd("bash: ", 2);
+		s_fd(argv, 2);
+		s_fd(": command not found\n", 2);
 	}
 	if (i == 2)
 	{
-		ft_putstr_fd("bash: ", 2);
+		s_fd("bash: ", 2);
 		perror(argv);
 	}
 	if (i == 3)
 	{
-		ft_putstr_fd("bash: ", 2);
-		ft_putstr_fd(argv, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
+		s_fd("bash: ", 2);
+		s_fd(argv, 2);
+		s_fd(": No such file or directory\n", 2);
 	}
 	free_all(vare);
 	close(STDIN_FILENO);

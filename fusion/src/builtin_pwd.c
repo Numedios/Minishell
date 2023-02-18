@@ -6,7 +6,7 @@
 /*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:36:15 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/01/22 19:58:13 by zakariyaham      ###   ########.fr       */
+/*   Updated: 2023/02/18 23:23:24 by zakariyaham      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	do_pwd(void)
 	}
 	else
 	{
-		ft_putstr_fd(cwd, 1);
+		s_fd(cwd, 1);
 		write(1, "\n", 1);
 	}
 	return (0);

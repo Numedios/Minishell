@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:27:51 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/17 18:40:56 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/18 23:23:51 by zakariyaham      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	child1(two_pipe *two_pipe, char ***env, t_maillons *maillons, t_garbage *gar
 	{
 		write(2, "close2\n", 7);
 		exit(1);
-	}	
+	}
 	if (two_pipe->fd_out != -3 && two_pipe->fd_out != -1)
 		close(two_pipe->fd_out);
 	if (maillons->heredoc != -1)
@@ -119,9 +119,9 @@ int	check_access(t_maillons *maillons)
 			&& access(maillons->command, F_OK | X_OK) != 0)
 		{
 			g_exit_code[0] = 127;
-			ft_putstr_fd("bash: ", 2);
-			ft_putstr_fd(maillons->command, 2);
-			ft_putstr_fd(": command not found\n", 2);
+			s_fd("bash: ", 2);
+			s_fd(maillons->command, 2);
+			s_fd(": command not found\n", 2);
 			return (1);
 		}
 		else

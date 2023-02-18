@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 11:30:40 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/15 21:18:44 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/18 23:29:10 by zakariyaham      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	pipex_multiple_free(t_garbage **garbage)
 	}
 }
 
-void pipex_multiple_close_pipe(t_garbage **garbage, int len, int i)
+void	pipex_multiple_close_pipe(t_garbage **garbage, int len, int i)
 {
 	if (i > 0 && (*garbage)->pipes->pipe[i * 2 - 2])
 		close((*garbage)->pipes->pipe[i * 2 - 2]);
@@ -104,13 +104,13 @@ void pipex_multiple_close_pipe(t_garbage **garbage, int len, int i)
 		close((*garbage)->pipes->pipe[i * 2 + 1]);
 }
 
-void handle_child_process(t_maillons *maillons, t_pipes *pipes, int i, int len, char ***env, t_garbage *garbage) 
+void	handle_child_process(t_maillons *maillons, t_pipes *pipes, int i, int len, char ***env, t_garbage *garbage)
 {
-    switch_dup2_fd_in(maillons, pipes, i, len);
-    switch_dup2_fd_out(maillons, pipes, i, len);
-    free_all_pipes((len - 1) * 2, pipes);
-    garbage->pipes = NULL;
-    pipex_multiple_check(&maillons, &env, &garbage);
+	switch_dup2_fd_in(maillons, pipes, i, len);
+	switch_dup2_fd_out(maillons, pipes, i, len);
+	free_all_pipes((len - 1) * 2, pipes);
+	garbage->pipes = NULL;
+	pipex_multiple_check(&maillons, &env, &garbage);
 }
 
 int	pipex_multiple(t_maillons *maillons, char ***env, int len, t_garbage *garbage)

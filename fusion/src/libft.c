@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   libft.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 11:34:40 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/15 17:56:17 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/18 23:21:58 by zakariyaham      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_putstr_fd(char *s, int fd)
+void	s_fd(char *s, int fd)
 {
 	int			len;
 	const void	*buf;
