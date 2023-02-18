@@ -134,7 +134,8 @@ int	check_echo(char **args, int cmp, int i, int execute)
 				if (args[cmp][i] == 'e' || args[cmp][i] == 'E')
 					return (1);
 			}
-			i++;
+			if (args[cmp][i])
+				i++;
 		}
 		i = 0;
 		cmp++;
