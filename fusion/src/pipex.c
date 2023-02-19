@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:20:55 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/19 15:45:40 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/19 17:37:35 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,10 @@ int	pipex_one(t_maillons *maillons, char ***env, t_garbage *garbage)
 	int		fd_out;
 
 	if ( pipex_one_condition(maillons, env, garbage) == 1)
+	{
+		free_garbage(garbage);
 		return (0);
+	}
 	pid = fork();
 	if (pid == -1)
 		return (perror("fork"), 1);
@@ -118,13 +121,14 @@ int	pipex_one(t_maillons *maillons, char ***env, t_garbage *garbage)
 	{
 		pipex_one_dup(&maillons);
 		if (check_echo(maillons->args, 0, 0, 0) == 0)
-			free_garbage_exit(garbage, 0);
+			free_garbage_env_exit(garbage, 0);
 		if (maillons->command != NULL
 			&& execve(maillons->command, maillons->args, *env) == -1)
 			perror("execve");
-		free_garbage_exit(garbage, 1);
+		free_garbage_env_exit(garbage, 1);
 	}
 	waitpid(-1, NULL, 0);
+	free_garbage(garbage);
 	return (0);
 }
 

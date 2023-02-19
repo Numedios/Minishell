@@ -34,7 +34,7 @@ int	check_output(t_input_output *output)
 				O_WRONLY | O_CREAT | O_APPEND, 0644, !O_DIRECTORY);
 	}
 	if (fd == -1)
-		return (close(fd), -1);
+		return (-1);
 	return (close(fd), 1);
 }
 
@@ -47,11 +47,14 @@ int	check_input(t_input_output *output)
 	else if (ft_strcmp(output->operator, "<<"))
 		return (1);
 	if (fd == -1)
-		return (close(fd), -1);
+	{
+		dprintf(2,"bad files Directorty %s\n", output->file_name);
+		return (-1);
+	}
 	return (close(fd), 1);
 }
 
-int	check_input_output(t_input_output **input_output)
+int	check_input_output(t_input_output **input_output, t_garbage *garbage)
 {
 	t_input_output	*input;
 	t_input_output	*output;
@@ -70,10 +73,10 @@ int	check_input_output(t_input_output **input_output)
 			output = (*input_output);
 			if (check_output(output) == -1)
 			{
-				// tout free et exit ou renvoyer -1 et gerer sa apres
-				//exit(0);
+				//dprintf(2, "1 output a pas ete valider \n");
 				*input_output = first;
-				return (0);
+				free_garbage(garbage); // changer le exit code 
+				return (-1);
 			}
 		}
 		else if (ft_strcmp((*input_output)->operator, "<")
@@ -84,11 +87,10 @@ int	check_input_output(t_input_output **input_output)
 			input = (*input_output);
 			if (check_input(input) == -1)
 			{
-				// tout free et exit ou renvoyer -1 et gerer sa apres
-				free_inputs_outputs(&input -> next);
-				input->next = NULL;
+				//dprintf(2, "2 input a pas ete valider \n");
 				*input_output = first;
-				return (0);
+				free_garbage(garbage); // changer le exit code
+				return (-1);
 			}
 		}
 		*input_output = (*input_output)->next;
@@ -96,7 +98,7 @@ int	check_input_output(t_input_output **input_output)
 	*input_output = first;
 	return (1);
 }
-
+/*
 int	check_inputs_outputs(t_maillons *maillons)
 {
 	while (maillons)
@@ -105,4 +107,4 @@ int	check_inputs_outputs(t_maillons *maillons)
 		maillons = (maillons)->next;
 	}
 	return (1);
-}
+}*/

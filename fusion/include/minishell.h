@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:49:59 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/02/17 18:09:14 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/19 18:21:30 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -332,7 +332,7 @@ void			change_quote(char *str, int i, int single, int doubl);
 
 int				check_output(t_input_output *output);
 int				check_input(t_input_output *output);
-int				check_input_output(t_input_output **input_output);
+int				check_input_output(t_input_output **input_output, t_garbage *garbage);
 int				check_inputs_outputs(t_maillons *maillons);
 
 /* bultins_echo.c */

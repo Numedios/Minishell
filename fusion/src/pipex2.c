@@ -29,8 +29,13 @@ int	switch_dup2_fd_in(t_maillons *maillons, t_pipes *pipes, int i, int len)
 	}
 	else if (!(maillons-> prev))
 		return (1);
-	else if (find_if_have_output(maillons -> prev -> output, ">") ||!(maillons->prev->command))
+	else if ((find_if_have_output(maillons->prev->output, ">") || !(maillons->prev->command)))
 	{
+		if (ft_strcmp(find_name_sep(maillons-> prev-> output, ">"), "/dev/stdout"))
+		{
+			dprintf(2, "1 pas dup input\n");
+			return (1);
+		}
 		res = open("/dev/null", O_RDWR, O_DSYNC, !O_DIRECTORY);
 		dup2(res, STDIN_FILENO);
 	}
@@ -49,8 +54,11 @@ int	switch_dup2_fd_out(t_maillons *maillons, t_pipes *pipes, int i, int len)
 	if (find_if_have_output(maillons -> output, ">"))
 	{
 		res = open(find_name_sep(maillons -> output, ">"), O_WRONLY | O_CREAT | O_TRUNC, 0644, !O_DIRECTORY);
-		if (!ft_strcmp(find_name_sep(maillons -> output, ">"), "/dev/stdout"))
+		if (ft_strcmp(find_name_sep(maillons -> output, ">"), "/dev/stdout"))
+		{
+			dprintf(2, "2 pas dup output\n");
 			return (1);
+		}
 		dup2(res, STDOUT_FILENO);
 	}
 	else if (find_if_have_output(maillons -> output, ">>"))
@@ -128,25 +136,15 @@ int	pipex_multiple(t_maillons *maillons, char ***env, int len, t_garbage *garbag
 			return (perror("fork"), 1);
 		signal(SIGQUIT, signal_quit_child);
 		signal(SIGINT, sigint_child);
-		if (pid == 0)
-		{
-			switch_dup2_fd_in(maillons, garbage->pipes, i, len);
-			switch_dup2_fd_out(maillons, garbage->pipes, i, len);
-			free_all_pipes((len - 1) * 2, garbage->pipes);
-			garbage->pipes = NULL;
-			pipex_multiple_check(&maillons, &env, &garbage);
-			//handle_child_process(maillons, garbage->pipes, i, len, env, garbage);
-		}
+		if (pid == 0 && check_input_output(&(maillons->output), garbage) != -1)
+			handle_child_process(maillons, garbage->pipes, i, len, env, garbage);
 		pipex_multiple_close_pipe(&garbage, len, i);
 		i++;
 		maillons = maillons -> next;
 	}
-	i = 0;
-	while (i < len)
-	{
+	i = -1;
+	while (++i < len)
 		waitpid(-1, NULL, 0);
-		i++;
-	}
 	pipex_multiple_free(&garbage);
 	return (1);
 }

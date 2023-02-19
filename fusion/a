@@ -1,0 +1,15 @@
+drwxr-xr-x 7 zhamdouc 2022_paris   4096 Feb 19 16:58 .
+drwxr-xr-x 9 zhamdouc 2022_paris   4096 Feb 19 14:49 ..
+-rw-r--r-- 1 zhamdouc 2022_paris      0 Feb 19 17:01 a
+drwxr-xr-x 2 zhamdouc 2022_paris   4096 Feb 19 15:49 env
+drwxr-xr-x 2 zhamdouc 2022_paris   4096 Feb 19 14:49 include
+-rw-r--r-- 1 zhamdouc 2022_paris      0 Feb 19 15:28 lol.c”
+-rw-r--r-- 1 zhamdouc 2022_paris   3929 Feb 19 14:49 Makefile
+-rwxr-xr-x 1 zhamdouc 2022_paris 143960 Feb 19 16:55 minishell
+-rw-r--r-- 1 zhamdouc 2022_paris   1957 Feb 19 14:49 modele_lexer
+-rw-r--r-- 1 zhamdouc 2022_paris    134 Feb 19 14:49 notes.txt
+drwxr-xr-x 2 zhamdouc 2022_paris   4096 Feb 19 16:55 obj
+-rw-r--r-- 1 zhamdouc 2022_paris    113 Feb 19 14:49 readline_leaks.txt
+drwxr-xr-x 2 zhamdouc 2022_paris   4096 Feb 19 14:49 src
+drwxr-xr-x 2 zhamdouc 2022_paris   4096 Feb 19 14:49 .vscode
+-rw-r--r-- 1 zhamdouc 2022_paris   3564 Feb 19 16:38 what to do.txt

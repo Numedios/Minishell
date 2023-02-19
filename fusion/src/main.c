@@ -78,6 +78,36 @@ t_maillons *loop_create_maillons(char * line, t_garbage *garbage)
 	return (garbage->maillons);
 }
 
+void end_quote(t_garbage *garbage)
+{
+	t_maillons		*tmp;
+	t_input_output	*tmp2;
+	int i;
+
+	i = 0;
+	tmp = garbage->maillons;
+	tmp2 = garbage->maillons->output;
+	while (garbage->maillons)
+	{
+		i = 0;
+		while ((garbage->maillons->args)[i])
+		{
+			(garbage->maillons->args)[i] = delete_the_quote(((garbage->maillons->args)[i]), 0, 0);
+			i++;
+		}
+		garbage->maillons->command = delete_the_quote(garbage->maillons->command, 0, 0);
+		while(garbage->maillons->output)
+		{
+			garbage->maillons->output->file_name = delete_the_quote(garbage->maillons->output->file_name, 0, 0);
+			garbage->maillons->output = garbage->maillons->output->next;
+		}
+		garbage->maillons = garbage->maillons->next;
+	}
+	garbage->maillons = tmp;
+	garbage->maillons->output = tmp2;
+	//ft_print_garbage(garbage);
+}
+
 int main(int argc, char **argv, char **env)
 {
 	char		*line;
@@ -101,12 +131,10 @@ int main(int argc, char **argv, char **env)
 		{
 			garbage.line = delete_dollar(line, garbage.new_env, 0, 0);
 			garbage.line = replace_dollar(line, garbage.new_env, 0, 0);
-			garbage.line = delete_the_quote(garbage.line, 0, 0);
-			//printf("1->%s\n", garbage.line);
 			loop_create_maillons(garbage.line, &garbage);
 			cmd_to_path(garbage.maillons, garbage.new_env);
 			find_all_heredoc(garbage.maillons);
-			check_inputs_outputs(garbage.maillons);
+			end_quote(&garbage);
 			if (g_exit_code[1] != 7)
 				pipex(garbage.maillons, &garbage.new_env, &garbage);
 			free_garbage(&garbage);

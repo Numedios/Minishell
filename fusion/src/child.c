@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:27:51 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/18 23:23:51 by zakariyaham      ###   ########.fr       */
+/*   Updated: 2023/02/19 17:41:48 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,20 @@ void	child1_end(two_pipe *two_pipe, char ***env, t_maillons *maillons, t_garbage
 	if (check_if_builtin(maillons->args, *env, env, 0, garbage) == 0)
 	{
 		dprintf(2, "yes !\n");
-		exit(0);
+		free_garbage_env_exit(garbage, 0);
 	}
 	if (check_echo(maillons->args, 0, 0, 0) == 0)
 	{
 		dprintf(2, "yes1\n");
-		exit(0);
+		free_garbage_env_exit(garbage, 0);
 	}
 	if (maillons->command != NULL
 		&& execve(maillons -> command, maillons -> args, *env) < 0)
 	{
 		write(2, "execve!\n", 8);
-		exit(1);
+		free_garbage_env_exit(garbage, 1);
 	}
-	exit (1);
+	free_garbage_env_exit (garbage, 1);
 }
 
 int	child1(two_pipe *two_pipe, char ***env, t_maillons *maillons, t_garbage *garbage)
@@ -44,14 +44,14 @@ int	child1(two_pipe *two_pipe, char ***env, t_maillons *maillons, t_garbage *gar
 	if (close(two_pipe->pipe_fd[0]) < 0)
 	{
 		write(2, "close1\n", 7);
-		exit(1);
+		free_garbage_env_exit(garbage, 1);
 	}
 	if (find_stdout_2(maillons, &two_pipe->fd_out, two_pipe) != 0)
 		dup2(two_pipe->fd_out, STDOUT_FILENO);
 	if (close(two_pipe->pipe_fd[1]) < 0)
 	{
 		write(2, "close2\n", 7);
-		exit(1);
+		free_garbage_env_exit(garbage, 1);
 	}
 	if (two_pipe->fd_out != -3 && two_pipe->fd_out != -1)
 		close(two_pipe->fd_out);
@@ -65,20 +65,20 @@ void	child2_end(two_pipe *two_pipe, char ***env, t_maillons *maillons, t_garbage
 	if (check_if_builtin(maillons->args, *env, env, 0, garbage) == 0)
 	{
 		dprintf(2, "yes 2!\n");
-		exit(0);
+		free_garbage_env_exit(garbage, 0);
 	}
 	if (check_echo(maillons->args, 0, 0, 0) == 0)
 	{
 		dprintf(2, "yes3\n");
-		exit(0);
+		free_garbage_env_exit(garbage, 0);
 	}
 	if (maillons->command != NULL
 		&& execve(maillons-> command, maillons-> args, *env) < 0)
 	{
 		write(2, "execve!\n", 8);
-		exit(1);
+		free_garbage_env_exit(garbage, 1);
 	}
-	exit (1);
+	free_garbage_env_exit (garbage, 1);
 }
 
 int	child2(two_pipe *two_pipe, char ***env, t_maillons *maillons, t_garbage *garbage)
@@ -90,7 +90,7 @@ int	child2(two_pipe *two_pipe, char ***env, t_maillons *maillons, t_garbage *gar
 	if (close(two_pipe->pipe_fd[1]) < 0)
 	{
 		write(2, "close2-2\n", 9);
-		exit (1);
+		free_garbage_env_exit (garbage, 1);
 	}
 	if (find_stdin_2(maillons, &two_pipe->fd_in, two_pipe) != 0)
 		dup2(two_pipe->fd_in, STDIN_FILENO);
@@ -99,7 +99,7 @@ int	child2(two_pipe *two_pipe, char ***env, t_maillons *maillons, t_garbage *gar
 	if (close(two_pipe->pipe_fd[0]) < 0)
 	{
 		write(2, "close1-2\n", 9);
-		exit (1);
+		free_garbage_env_exit (garbage, 1);
 	}
 	if (maillons->heredoc != -1)
 		close(maillons->heredoc);
