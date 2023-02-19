@@ -143,7 +143,7 @@ int main(int argc, char **argv, char **env)
 			find_all_heredoc(garbage.maillons);
 			//ft_print_garbage(&garbage);
 			end_quote(&garbage);
-			//ft_print_garbage(&garbage);
+			//ft_print_maillons(garbage.maillons);
 			if (g_exit_code[1] != 7 || g_exit_code[1] != 8)
 				pipex(garbage.maillons, &garbage.new_env, &garbage);
 			free_garbage(&garbage);

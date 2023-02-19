@@ -114,8 +114,11 @@ void	pipex_multiple_close_pipe(t_garbage **garbage, int len, int i)
 
 void	handle_child_process(t_maillons *maillons, t_pipes *pipes, int i, int len, char ***env, t_garbage *garbage)
 {
-	switch_dup2_fd_in(maillons, pipes, i, len);
-	switch_dup2_fd_out(maillons, pipes, i, len);
+	if ((maillons)->command != NULL)
+	{ 
+		switch_dup2_fd_in(maillons, pipes, i, len);
+		switch_dup2_fd_out(maillons, pipes, i, len);
+	}
 	free_all_pipes((len - 1) * 2, pipes);
 	garbage->pipes = NULL;
 	pipex_multiple_check(&maillons, &env, &garbage);

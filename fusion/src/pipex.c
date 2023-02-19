@@ -87,18 +87,22 @@ int	pipex_one_dup(t_maillons **maillons)
 	int		fd_in;
 	int		fd_out;
 
-	fd_in = find_stdin(*maillons);
-	fd_out = find_stdout(*maillons);
-	if (fd_in != -1)
+	if ((*maillons)->command != NULL)
 	{
-		dup2(fd_in, STDIN_FILENO);
-		close(fd_in);
+		fd_in = find_stdin(*maillons);
+		fd_out = find_stdout(*maillons);
+		if (fd_in != -1)
+		{
+			dup2(fd_in, STDIN_FILENO);
+			close(fd_in);
+		}
+		if (fd_out != -1)
+		{
+			dup2(fd_out, STDOUT_FILENO);
+			close(fd_out);
+		}
 	}
-	if (fd_out != -1)
-	{
-		dup2(fd_out, STDOUT_FILENO);
-		close(fd_out);
-	}
+	return(1);
 }
 
 int	pipex_one(t_maillons *maillons, char ***env, t_garbage *garbage)
