@@ -230,7 +230,7 @@ int				check_parenthesis(char *line);
 int				ft_strlen(char *str);
 int				ft_strcmp(char *str, char *str2);
 char			*ft_strdup(char *str);
-void			ft_putstr_fd(char *s, int fd);
+void			s_fd(char *s, int fd);
 int				ft_isdigit(int c);
 
 /* split.c */

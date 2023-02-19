@@ -94,7 +94,7 @@ SRC = main.c \
 		check_space.c \
 		check_one.c \
 		dollars_utils.c \
-		delete_quote.c
+		delete_quote.c \
 
 #==============================================================================#
 #                                   HEADERS                                    #
