@@ -65,6 +65,8 @@ void	do_echo(char **arg)
 	while (arg && arg[i])
 	{
 		printf("%s", arg[i]);
+		if (arg && arg[i] && arg[i+1])
+			printf(" ");
 		i++;
 	}
 	if (space == 1)

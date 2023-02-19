@@ -105,6 +105,7 @@ char	*delete_the_quote(char *line, int j, int len)
 		}
 	}
 	new_line[j] = line[quote.i];
-	free (line);
+	if (line)
+		free (line);
 	return (new_line);
 }

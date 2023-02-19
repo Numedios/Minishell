@@ -87,11 +87,11 @@ void	pipex_multiple_check(t_maillons **m, char ****e, t_garbage **g)
 {
 	if ((*m)->heredoc != -1)
 		close((*m)->heredoc);
-	if (check_if_builtin((*m)->args, **e, *e, 0, *g) == 0 && check_echo((*m)->args, 0, 0, 0) == 0)
-		free_garbage_exit(*g, 0);
+	if (check_if_builtin((*m)->args, **e, *e, 0, *g) == 0 || check_echo((*m)->args, 0, 0, 0) == 0)
+		free_garbage_env_exit(*g, 0);
 	if ((*m)->command != NULL && execve((*m)->command, (*m)->args, **e) == -1)
 		perror("execve");
-	free_garbage_exit(*g, 1);
+	free_garbage_env_exit(*g, 1);
 }
 
 void	pipex_multiple_free(t_garbage **garbage)

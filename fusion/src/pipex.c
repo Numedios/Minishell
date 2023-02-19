@@ -117,7 +117,7 @@ int	pipex_one(t_maillons *maillons, char ***env, t_garbage *garbage)
 		return (perror("fork"), 1);
 	signal(SIGQUIT, signal_quit_child);
 	signal(SIGINT, signal_quit_child);
-	if (pid == 0)
+	if (pid == 0  && check_input_output(&(maillons->output), garbage) != -1)
 	{
 		pipex_one_dup(&maillons);
 		if (check_echo(maillons->args, 0, 0, 0) == 0)
@@ -144,12 +144,12 @@ int	pipex(t_maillons *maillons, char ***env, t_garbage *garbage)
 		return (0);
 	if (len == 1)
 		pipex_one(maillons, env, garbage);
-	if (len == 2)
+	/*if (len == 2)
 	{
 		g_exit_code[1] = 2;
 		pipex_2(maillons, env, garbage);
 		g_exit_code[1] = 0;
-	}
+	}*/
 	else if (len != 1)
 		pipex_multiple(maillons, env, len, garbage);
 	return (0);

@@ -26,7 +26,8 @@ void	do_env(char **env)
 	}
 	while (env[i])
 	{
-		printf("%s\n", env[i]);
+		s_fd(env[i], 1);
+		s_fd("\n", 1);
 		i++;
 	}
 }

@@ -80,32 +80,38 @@ t_maillons *loop_create_maillons(char * line, t_garbage *garbage)
 
 void end_quote(t_garbage *garbage)
 {
-	t_maillons		*tmp;
-	t_input_output	*tmp2;
-	int i;
+    t_maillons        *tmp;
+    t_input_output    *tmp2;
+    int i;
 
-	i = 0;
-	tmp = garbage->maillons;
-	tmp2 = garbage->maillons->output;
-	while (garbage->maillons)
-	{
-		i = 0;
-		while ((garbage->maillons->args)[i])
-		{
-			(garbage->maillons->args)[i] = delete_the_quote(((garbage->maillons->args)[i]), 0, 0);
-			i++;
-		}
-		garbage->maillons->command = delete_the_quote(garbage->maillons->command, 0, 0);
-		while(garbage->maillons->output)
-		{
-			garbage->maillons->output->file_name = delete_the_quote(garbage->maillons->output->file_name, 0, 0);
-			garbage->maillons->output = garbage->maillons->output->next;
-		}
-		garbage->maillons = garbage->maillons->next;
-	}
-	garbage->maillons = tmp;
-	garbage->maillons->output = tmp2;
-	//ft_print_garbage(garbage);
+    i = 0;
+    tmp = NULL;
+    tmp2 = NULL;
+    if (garbage && garbage-> maillons)
+        tmp = garbage->maillons;
+    while (garbage && garbage->maillons)
+    {
+        i = 0;
+		if (garbage && garbage-> maillons && garbage->maillons->output)
+        	tmp2 = garbage->maillons->output;
+        while (garbage && garbage->maillons && (garbage->maillons->args)[i])
+        {
+            (garbage->maillons->args)[i] = delete_the_quote(((garbage->maillons->args)[i]), 0, 0);
+            i++;
+        }
+        if (garbage && garbage->maillons && garbage->maillons->command)
+        	garbage->maillons->command = delete_the_quote(garbage->maillons->command, 0, 0);
+        while(garbage && garbage-> maillons && garbage->maillons->output)
+        {
+            garbage->maillons->output->file_name = delete_the_quote(garbage->maillons->output->file_name, 0, 0);
+            garbage->maillons->output = garbage->maillons->output->next;
+        }
+		if (tmp2)
+       		garbage->maillons->output = tmp2;
+        garbage->maillons = garbage->maillons->next;
+    }
+    if (tmp)
+        garbage->maillons = tmp;
 }
 
 int main(int argc, char **argv, char **env)
@@ -119,10 +125,11 @@ int main(int argc, char **argv, char **env)
 	while (1)
 	{
 		g_exit_code[1] = 0;
-		//g_exit_code[0] = 0;//probleme quand on apppuie juste sur entre l'exit code doit etre de 0
 		setup_signal_handlers();
 		line = rl_gets();
-		if (line == NULL)
+		if (line && line[0] == '\0')
+			g_exit_code[0] = 0;
+		if (line == NULL && g_exit_code[1] != 8)
 		{
 			s_fd("\nexit11\n", 2);
 			free_garbage_env_exit(&garbage, 0);
@@ -134,8 +141,10 @@ int main(int argc, char **argv, char **env)
 			loop_create_maillons(garbage.line, &garbage);
 			cmd_to_path(garbage.maillons, garbage.new_env);
 			find_all_heredoc(garbage.maillons);
+			//ft_print_garbage(&garbage);
 			end_quote(&garbage);
-			if (g_exit_code[1] != 7)
+			//ft_print_garbage(&garbage);
+			if (g_exit_code[1] != 7 || g_exit_code[1] != 8)
 				pipex(garbage.maillons, &garbage.new_env, &garbage);
 			free_garbage(&garbage);
 		}
