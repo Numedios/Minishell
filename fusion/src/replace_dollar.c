@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 19:09:08 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/17 16:24:51 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/19 15:38:16 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ char	*replace_dollar(char *tab, char **new_env, int i, int skip)
 		tab = one_dollar_or_more(tab, &i, new_env, &index);
 		if (i == -1)
 			i = 0;
-		else
+		else if (tab && tab[i] != '\0')
 			i++;
 	}
 	return (tab);

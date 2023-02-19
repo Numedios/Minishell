@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:36:10 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/02/18 23:22:43 by zakariyaham      ###   ########.fr       */
+/*   Updated: 2023/02/19 15:00:03 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ long long	ft_atoll_capped(const char *nptr, int *flag, int j, int nb)
 
 void	exit_free(t_garbage *garbage, long long exit_code)
 {
+	s_fd("exit\n", 2);
 	free_garbage_and_env(garbage);
 	exit(exit_code);
 }

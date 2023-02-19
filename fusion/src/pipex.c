@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:20:55 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/17 18:05:28 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/19 15:45:40 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ int	pipex_one_condition(t_maillons *m, char ***e, t_garbage *g)
 		return (1);
 	if (check_if_builtin(m->args, *e, e, 0, g) == 0)
 		return (1);
+	return (0);
 }
 
 int	pipex_one_dup(t_maillons **maillons)
@@ -106,11 +107,13 @@ int	pipex_one(t_maillons *maillons, char ***env, t_garbage *garbage)
 	int		fd_in;
 	int		fd_out;
 
-	pipex_one_condition(maillons, env, garbage);
+	if ( pipex_one_condition(maillons, env, garbage) == 1)
+		return (0);
 	pid = fork();
 	if (pid == -1)
 		return (perror("fork"), 1);
 	signal(SIGQUIT, signal_quit_child);
+	signal(SIGINT, signal_quit_child);
 	if (pid == 0)
 	{
 		pipex_one_dup(&maillons);

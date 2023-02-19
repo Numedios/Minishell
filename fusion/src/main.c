@@ -89,16 +89,20 @@ int main(int argc, char **argv, char **env)
 	while (1)
 	{
 		g_exit_code[1] = 0;
+		//g_exit_code[0] = 0;//probleme quand on apppuie juste sur entre l'exit code doit etre de 0
 		setup_signal_handlers();
 		line = rl_gets();
 		if (line == NULL)
+		{
+			s_fd("\nexit11\n", 2);
 			free_garbage_env_exit(&garbage, 0);
+		}
 		if (parse(line) == 0)
 		{
 			garbage.line = delete_dollar(line, garbage.new_env, 0, 0);
 			garbage.line = replace_dollar(line, garbage.new_env, 0, 0);
 			garbage.line = delete_the_quote(garbage.line, 0, 0);
-			printf("1->%s\n", garbage.line);
+			//printf("1->%s\n", garbage.line);
 			loop_create_maillons(garbage.line, &garbage);
 			cmd_to_path(garbage.maillons, garbage.new_env);
 			find_all_heredoc(garbage.maillons);

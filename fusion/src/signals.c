@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 11:14:35 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/13 17:29:57 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/19 15:16:46 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ void	handle_sig(int sig)//il faut free si exit
 			*/
 			g_exit_code[1] = 0;//pour ne pas bloquer au prochain prompt
 		}
-		if (g_exit_code[1] == 2)
-		{
-			// dprintf(2, "here2\n");
-			g_exit_code[1] = 3;// == 0
-			write(1, "\n", 1);
-		}
+		// if (g_exit_code[1] == 2)
+		// {
+		// 	// dprintf(2, "here2\n");
+		// 	g_exit_code[1] = 3;// == 0
+		// 	write(1, "\n", 1);
+		// }
 		else
 		{
 			//dprintf(2, "here\n");

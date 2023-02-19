@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 11:44:01 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/13 12:40:42 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/19 15:26:51 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,19 @@ extern int	g_exit_code[2];
 
 void	signal_quit_child(int useless)
 {
-	(void)useless;
-	write(2, "QUIT\n", 5);
+	//(void)useless;
+	if (useless == SIGINT) //ctrl+c
+	{
+		write(1, "\n", 1);
+		g_exit_code[0] = 130;
+		//close(STDIN_FILENO);
+	}
+	if (useless == SIGQUIT) /*ctrl+\*/
+	{
+		write(2, "Quit (core dumped)\n", 19);
+		g_exit_code[0] = 131;
+	}
+	//write(2, "QUIT\n", 5);
 }
 
 int	loop(two_pipe *two_pipe, char ***env, t_maillons *maillons, pid_t pid, t_garbage *garbage)
