@@ -42,7 +42,10 @@ int	switch_dup2_fd_in(t_maillons *m, t_pipes *pipes, int i, int len)
 			dup2(m -> heredoc, STDIN_FILENO);
 	}
 	else if (!(m-> prev))
+	{
+		//dprintf(2, "1 input = %s\n", m->command);
 		return (1);
+	}
 	else if ((find_if_have_output(m->prev->output, ">") || !(m->prev->command)))
 	{
 		res = open("/dev/null", O_RDWR, O_DSYNC, !O_DIRECTORY);
@@ -79,7 +82,10 @@ int	switch_dup2_fd_out(t_maillons *maillons, t_pipes *pipes, int i, int len)
 		dup2(res, STDOUT_FILENO);
 	}
 	else if (!(maillons-> next))
+	{
+		//dprintf(2, "2 output = %s\n", maillons->command);
 		return (1);
+	}
 	else
 		dup2(pipes->pipe[i * 2 + 1], STDOUT_FILENO);
 	if (res != -2)

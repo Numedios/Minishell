@@ -115,5 +115,8 @@ void	free_garbage_env_exit(t_garbage *garbage, int exit_code)
 		ft_free_tab(garbage->new_env);
 		garbage->new_env = NULL;
 	}
+	close (0);
+	close (1);
+	close (2);
 	exit(exit_code);
 }

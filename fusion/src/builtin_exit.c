@@ -44,6 +44,9 @@ void	exit_free(t_garbage *garbage, long long exit_code)
 {
 	s_fd("exit\n", 2);
 	free_garbage_and_env(garbage);
+	close (0);
+	close (1);
+	close (2);
 	exit(exit_code);
 }
 
