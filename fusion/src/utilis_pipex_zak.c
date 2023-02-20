@@ -2,13 +2,6 @@
 
 int find_stdin_2(t_maillons *maillons, int * fd_in, two_pipe *two_pipe)
 {
-	// dprintf(2, "res = %d\n", find_if_have_output(maillons -> output, "<"));
-	// if (find_if_have_output(maillons -> output, "<<") == 1)
-    // {
-	// 	dprintf(2, "entrer est %s\n",  find_name_sep(maillons -> output, "<<"));
-	// 	(*fd_in) = heredoc(find_name_sep(maillons -> output, "<<"));
-	// 	return ((*fd_in));
-	// }
     if (find_if_have_output(maillons -> output, "<") == 1)
     {
 		(*fd_in) = open(find_name_sep(maillons -> output, "<"),  O_RDWR, O_DSYNC, !O_DIRECTORY);
@@ -21,8 +14,7 @@ int find_stdin_2(t_maillons *maillons, int * fd_in, two_pipe *two_pipe)
 	}
 	else if (find_if_have_output(maillons -> output, "<<") == 1)
 	{
-		//dprintf(2, "Lecture %d est heredoc %s\n", i ,find_name_sep(maillons -> output, "<<"));
-		if (maillons -> heredoc != -1)
+		
 			dup2(maillons -> heredoc, STDIN_FILENO);
 	}
 	else if (!(maillons-> prev))

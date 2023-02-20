@@ -6,11 +6,10 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 17:27:55 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/15 16:20:59 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/20 14:05:20 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//verifier que le
 #include "minishell.h"
 
 int	print_tab(char **tab)
@@ -25,12 +24,17 @@ int	print_tab(char **tab)
 	}
 	return (0);
 }
-/*
-if (line && line[i] == '\0')//
-	return (-1);
-if (line && line[i] != '\0')//
-	i++;*/
-int	skip_quote(char *line, int i)//existe deja dans un autre fichier, a ajouter dans le .h et le retirer d'ici, pour la nomrinette il faudrat juste enlever une securtite qui servirait a rien
+
+static int	second_if(char *line, int *i)
+{
+	(*i)++;
+	if (line && line[(*i)] == '\0')
+		return (-1);
+	while (line && line[(*i)] != '\0' && line[(*i)] != '"')
+		(*i)++;
+}
+
+int	skip_quote(char *line, int i)
 {
 	if (line && line[i] != '\0' && line[i + 1] != '\0'
 		&& ((line[i] == '"' && line[i + 1] == '"')
@@ -38,16 +42,11 @@ int	skip_quote(char *line, int i)//existe deja dans un autre fichier, a ajouter 
 		return (i + 1);
 	while (line && line[i] != '\0' && line[i + 1] != '\0'
 		&& ((line[i] == '"' && line[i + 1] != '"')
-			|| (line[i] == '\'' && line[i + 1] != '\'')))//ne fonctionne pas quand je met line[i + 1] doit etre different de '\0', pour ce test '''ho"''''l"a'''
+			|| (line[i] == '\'' && line[i + 1] != '\'')))
 	{
 		if (line[i] == '"' && line[i + 1] != '"')
-		{
-			i++;
-			if (line && line[i] == '\0')
+			if (second_if(line, &i) == -1)
 				return (-1);
-			while (line && line[i] != '\0' && line[i] != '"')
-				i++;
-		}
 		if (line && line[i] != '\0' && (line[i] == '\'' && line[i + 1] != '\''))
 		{
 			i++;
@@ -56,7 +55,7 @@ int	skip_quote(char *line, int i)//existe deja dans un autre fichier, a ajouter 
 			while (line && line[i] != '\0' && line[i] != '\'')
 				i++;
 		}
-		if (line && line[i] != '\0')//
+		if (line && line[i] != '\0')
 			i++;
 	}
 	return (i);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 11:34:40 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/18 23:21:58 by zakariyaham      ###   ########.fr       */
+/*   Updated: 2023/02/20 13:11:03 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ int	ft_strlen(char *str)
 		i++;
 	return (i);
 }
-
-/* compare renvoie  1 si str == str2 renvoie 0 sinon*/
 
 int	ft_strcmp(char *str, char *str2)
 {

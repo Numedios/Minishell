@@ -3,18 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:36:12 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/02/16 18:35:35 by zakariyaham      ###   ########.fr       */
+/*   Updated: 2023/02/20 13:35:22 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//new_env = do_export("FOO=bar", new_env);
-//gerer le cas "+="
-//que faire si on utilise export sans rien derriere (imprimer env)
 
 int	parse_value(char *tab, int i, int a)
 {
@@ -42,10 +38,6 @@ int	parse_value(char *tab, int i, int a)
 	return (a);
 }
 
-//return 2 si il y a rien et donc imprimer env,  1 pour erreur, 0 pour remplacer
-//et 3 pour ajouter a c qu'il existe deja, return (4) si apres '=' il a un espace,
-//5 si il ya '+=' et apres un ' '
-
 int	parse_export(char *tab, int i, int a)
 {
 	while (tab && tab[i] == ' ')
@@ -65,7 +57,6 @@ int	parse_export(char *tab, int i, int a)
 			a = parse_value(tab, i, 0);
 			break ;
 		}
-		//TESTER LES 2 IF
 		if (tab[i] == ' ' || (tab[i] < 14 && tab[i] > 7))
 			return (1);
 		if ((tab[i] > 32 && tab[i] < 48) || (tab[i] > 57 && tab[i] < 65)
@@ -95,10 +86,10 @@ char	**replace_value(int j, int a, char *tab, char **env)
 		env[j] = ft_strjoin(env[j], &tab[i]);
 		return (env);
 	}
-	if (a == 4) //a verifier, correspond a un espace apres un '='
+	if (a == 4)
 	{
 		free(env[j]);
-		env[j] = ft_strdup(tab);//ca depend comment je recois tab
+		env[j] = ft_strdup(tab);
 		return (env);
 	}
 	else
@@ -123,9 +114,9 @@ char	**new_value(int i, int a, char *tab, char **env)
 		env[i] = ft_strjoin(env[i], &tab[j]);
 		return (env);
 	}
-	if (a == 4) //a verifier
+	if (a == 4)
 	{
-		env[i] = ft_strdup(tab);//ca depend comment je recois tab
+		env[i] = ft_strdup(tab);
 		return (env);
 	}
 	else
@@ -160,25 +151,3 @@ char	**do_export(char *tab, char **env_copy, int i, int a)
 		return (ft_free_tab(env_copy), new_env);
 	}
 }
-
-	// if (ft_strchr(tab, '=') == NULL)//pas d'espace avant le "="
-	// {
-	// 	printf("export: `%s': not a valid identifier\n", tab);
-	// 	return (env_copy);
-	// }
-	// a = parse_export(tab, 0, 1);
-	// if (a == 1)
-	// {
-	// 	printf("export: `%s': not a valid identifier\n", tab);
-	// 	return (env_copy);
-	// }
-	// if (a == 2)
-	// {
-	// 	do_env(env_copy);
-	// 	return (env_copy);
-	// }
-	// if (check_if_tab_exist(tab, env_copy) == 1)
-	// {
-	// 	printf("export: '%s' : already defined\n", tab);
-	// 	return (env_copy);
-	// }
