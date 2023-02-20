@@ -12,6 +12,13 @@
 
 #include "minishell.h"
 
+/*
+* 		if (ft_strcmp(find_name_sep(maillons-> prev-> output, ">"), "/dev/stdout"))
+*			return (dprintf(2, "1 pas dup input\n"), 1);
+*
+*/
+
+
 int	switch_dup2_fd_in(t_maillons *maillons, t_pipes *pipes, int i, int len)
 {
 	int	res;
@@ -31,11 +38,6 @@ int	switch_dup2_fd_in(t_maillons *maillons, t_pipes *pipes, int i, int len)
 		return (1);
 	else if ((find_if_have_output(maillons->prev->output, ">") || !(maillons->prev->command)))
 	{
-		if (ft_strcmp(find_name_sep(maillons-> prev-> output, ">"), "/dev/stdout"))
-		{
-			dprintf(2, "1 pas dup input\n");
-			return (1);
-		}
 		res = open("/dev/null", O_RDWR, O_DSYNC, !O_DIRECTORY);
 		dup2(res, STDIN_FILENO);
 	}
@@ -54,11 +56,8 @@ int	switch_dup2_fd_out(t_maillons *maillons, t_pipes *pipes, int i, int len)
 	if (find_if_have_output(maillons -> output, ">"))
 	{
 		res = open(find_name_sep(maillons -> output, ">"), O_WRONLY | O_CREAT | O_TRUNC, 0644, !O_DIRECTORY);
-		if (ft_strcmp(find_name_sep(maillons -> output, ">"), "/dev/stdout"))
-		{
-			dprintf(2, "2 pas dup output\n");
-			return (1);
-		}
+		//if (!ft_strcmp(find_name_sep(maillons -> output, ">"), "/dev/stdout"));
+		//	return (dprintf(2, "2 pas dup output\n"),1);
 		dup2(res, STDOUT_FILENO);
 	}
 	else if (find_if_have_output(maillons -> output, ">>"))

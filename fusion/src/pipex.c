@@ -102,7 +102,7 @@ int	pipex_one_dup(t_maillons **maillons)
 			close(fd_out);
 		}
 	}
-	return(1);
+	return (1);
 }
 
 int	pipex_one(t_maillons *maillons, char ***env, t_garbage *garbage)
@@ -111,17 +111,14 @@ int	pipex_one(t_maillons *maillons, char ***env, t_garbage *garbage)
 	int		fd_in;
 	int		fd_out;
 
-	if ( pipex_one_condition(maillons, env, garbage) == 1)
-	{
-		free_garbage(garbage);
-		return (0);
-	}
+	if (pipex_one_condition(maillons, env, garbage) == 1)
+		return (free_garbage(garbage), 0);
 	pid = fork();
 	if (pid == -1)
 		return (perror("fork"), 1);
 	signal(SIGQUIT, signal_quit_child);
 	signal(SIGINT, signal_quit_child);
-	if (pid == 0  && check_input_output(&(maillons->output), garbage) != -1)
+	if (pid == 0 && check_input_output(&(maillons->output), garbage) != -1)
 	{
 		pipex_one_dup(&maillons);
 		if (check_echo(maillons->args, 0, 0, 0) == 0)
@@ -148,49 +145,7 @@ int	pipex(t_maillons *maillons, char ***env, t_garbage *garbage)
 		return (0);
 	if (len == 1)
 		pipex_one(maillons, env, garbage);
-	/*if (len == 2)
-	{
-		g_exit_code[1] = 2;
-		pipex_2(maillons, env, garbage);
-		g_exit_code[1] = 0;
-	}*/
 	else if (len != 1)
 		pipex_multiple(maillons, env, len, garbage);
 	return (0);
 }
-
-/*
-int pipex_one(t_maillons *maillons, char **env)
-{
-	pid_t	pid;
-	char *a[2];
-	int fd_in;
-	int fd_out;
-
-	fd_in = -3;
-	fd_out = -3;
-	a[0] = ft_strdup("cat");
-	a[1] = 0;
-	pid = fork();
-	if (pid == -1)
-			return (perror("fork"), 1);
-	if (pid == 0)
-	{
-
-		dup_fd(find_stdin(maillons, &fd_in), find_stdout(maillons, &fd_out));
-		if(fd_in != -3)
-			close(fd_in);
-		if(fd_out != -3)
-			close(fd_out);
-		if (execve("/usr/bin/cat", a , env) == -1)
-		{
-			perror("execve");
-			exit (1);
-		}
-		return (1);
-	}
-	waitpid(-1 , NULL, 0);
-	free(a[0]);
-	return(0);
-}
-*/

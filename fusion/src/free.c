@@ -51,18 +51,6 @@ void	ft_free_tab(char **tab)
 		free(tab);
 }
 
-void	free_input_output(t_input_output *lst)
-{
-	if (lst)
-	{
-		if (lst -> file_name)
-			free(lst -> file_name);
-		if (lst -> operator)
-			free(lst -> operator);
-	}
-	free(lst);
-}
-
 void	free_input_output_middle(t_input_output **lst, t_input_output **first)
 {
 	t_input_output	*prev;
@@ -70,7 +58,7 @@ void	free_input_output_middle(t_input_output **lst, t_input_output **first)
 
 	prev = (*lst)->prev;
 	next = (*lst)->next;
-	free_input_output(*lst);
+	free_input_output(lst);
 	*lst = NULL;
 	if (prev != NULL)
 		prev->next = next;
@@ -80,48 +68,86 @@ void	free_input_output_middle(t_input_output **lst, t_input_output **first)
 		next->prev = prev;
 }
 
-void	free_inputs_outputs(t_input_output **lst)
+void free_inputs_outputs(t_input_output **lst)
 {
-	t_input_output	*tmp;
+    t_input_output *tmp;
 
-	tmp = *lst;
-	if (lst)
-	{
-		while (*lst)
-		{
-			tmp = (*lst)->next;
-			free_input_output(*lst);
-			*lst = tmp;
-		}
-	}
+    tmp = *lst;
+    if (lst && *lst)
+    {
+        while (*lst)
+        {
+            tmp = (*lst)->next;
+            free_input_output(lst);
+            *lst = tmp;
+        }
+    }
 }
+
+void free_input_output(t_input_output **lst)
+{
+	t_input_output *current;
+
+    if (*lst)
+    {
+		current = *lst;
+        *lst = (*lst)->next;
+        if (current->file_name)
+        {
+            free(current->file_name);
+            current->file_name = NULL;
+        }
+        if (current->operator)
+        {
+            free(current->operator);
+            current->operator = NULL;
+        }
+        free(current);
+        current = NULL;
+    }
+}
+
 
 void	free_maillon(t_maillons *lst)
 {
 	if (lst)
 	{
 		if (lst -> args)
+		{
 			ft_free_tab(lst -> args);
+			lst -> args = NULL;
+		}	
 		if (lst -> command)
+		{
 			free(lst -> command);
+			lst ->command = NULL;
+		}	
 		if (lst -> output)
+		{
 			free_inputs_outputs(&lst->output);
-		free(lst);
+			lst ->output = NULL;
+		}
+		if (lst)
+			free(lst);
 	}
+	lst = NULL;
 }
 
-void	free_maillons(t_maillons **lst)
+void	free_maillons(t_maillons *lst)
 {
 	t_maillons	*tmp;
 
-	tmp = *lst;
+	tmp = lst;
 	if (lst)
 	{
-		while (*lst)
+		while (lst)
 		{
-			tmp = (*lst)->next;
-			free_maillon(*lst);
-			*lst = tmp;
+			if (lst != NULL)
+				tmp = (lst)->next;
+			else
+				tmp = NULL;
+			free_maillon(lst);
+			lst = tmp;
 		}
 	}
 }

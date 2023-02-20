@@ -277,11 +277,11 @@ t_input_output	*find_input_output(t_split_elem *lst);
 void			free_split_elem(t_split_elem *lst);
 void			ft_free_tab(char **tab);
 void			ft_free_split_arg(t_split_elem **lst);
-void			free_input_output(t_input_output *lst);
+void			free_input_output(t_input_output **lst);
 void			free_input_output_middle(t_input_output **lst, t_input_output **first);
 void			free_inputs_outputs(t_input_output **lst);
 void			free_maillon(t_maillons *lst);
-void			free_maillons(t_maillons **lst);
+void			free_maillons(t_maillons *lst);
 
 /* list_split_elem.c */
 

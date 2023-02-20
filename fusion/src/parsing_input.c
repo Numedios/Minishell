@@ -48,54 +48,82 @@ int	check_input(t_input_output *output)
 		return (1);
 	if (fd == -1)
 	{
-		dprintf(2,"bad files Directorty %s\n", output->file_name);
+		dprintf(2, "bad files Directorty %s\n", output->file_name);
 		return (-1);
 	}
 	return (close(fd), 1);
 }
 
-int	check_input_output(t_input_output **input_output, t_garbage *garbage)
+int	return_output_check(t_input_output **input_output)
 {
-	t_input_output	*input;
+	return ((ft_strcmp((*input_output)->operator, ">")
+			|| ft_strcmp((*input_output)->operator, ">>")));
+}
+
+int	return_input_check(t_input_output **input_output)
+{
+	return (ft_strcmp((*input_output)->operator, "<")
+		|| ft_strcmp((*input_output)->operator, "<<"));
+}
+
+int	check_input_output_output(t_input_output **input_output, t_garbage *garbage)
+{
 	t_input_output	*output;
 	t_input_output	*first;
 
 	first = *input_output;
-	input = NULL;
 	output = NULL;
 	while (*input_output)
 	{
-		if (ft_strcmp((*input_output)->operator, ">")
-			|| ft_strcmp((*input_output)->operator, ">>"))
+		if (return_output_check(input_output))
 		{
 			if (output)
 				free_input_output_middle(&output, &first);
 			output = (*input_output);
 			if (check_output(output) == -1)
 			{
-				//dprintf(2, "1 output a pas ete valider \n");
 				*input_output = first;
-				free_garbage(garbage); // changer le exit code 
-				return (-1);
+				return (free_garbage(garbage), -1);
 			}
 		}
-		else if (ft_strcmp((*input_output)->operator, "<")
-			|| ft_strcmp((*input_output)->operator, "<<"))
+		*input_output = (*input_output)->next;
+	}
+	*input_output = first;
+	return (1);
+}
+
+int	check_input_output_input(t_input_output **input_output, t_garbage *garbage)
+{
+	t_input_output	*first;
+	t_input_output	*input;
+
+	first = *input_output;
+	input = NULL;
+	while (*input_output)
+	{
+		if (return_input_check(input_output))
 		{
 			if (input)
 				free_input_output_middle(&input, &first);
 			input = (*input_output);
 			if (check_input(input) == -1)
 			{
-				//dprintf(2, "2 input a pas ete valider \n");
 				*input_output = first;
-				free_garbage(garbage); // changer le exit code
-				return (-1);
+				return (free_garbage(garbage), -1);
 			}
 		}
 		*input_output = (*input_output)->next;
 	}
 	*input_output = first;
+	return (1);
+}
+
+int	check_input_output(t_input_output **input_output, t_garbage *garbage)
+{
+	if (check_input_output_input(input_output, garbage) == -1)
+		return (-1);
+	if (check_input_output_output(input_output, garbage) == -1)
+		return (-1);
 	return (1);
 }
 /*
