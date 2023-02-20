@@ -30,7 +30,7 @@ void	do_env(char **env)
 	}
 }
 
-char	**my_env(char **env)
+char	**my_env(char **env, t_garbage *garbage)
 {
 	int		i;
 	char	**env_copy;
@@ -41,14 +41,17 @@ char	**my_env(char **env)
 	while (env[i])
 		i++;
 	env_copy = malloc((i + 1) * sizeof(char *));
-	if (env_copy == NULL)
-		return (NULL);
+	if (!env_copy)
+		free_garbage_env_exit(garbage, 0);
 	i = 0;
 	while (env[i])
 	{
 		env_copy[i] = ft_strdup_const(env[i]);
 		if (env_copy[i] == NULL)
-			return (NULL);
+		{
+			ft_free_tab(env_copy);
+			free_garbage_env_exit(garbage, 0);
+		}
 		i++;
 	}
 	env_copy[i] = NULL;

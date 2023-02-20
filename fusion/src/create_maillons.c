@@ -12,17 +12,19 @@
 
 #include "minishell.h"
 
-t_maillons	*create_maillons(t_split_elem **split, t_maillons *prev)
+t_maillons	*create_maillons(t_split_elem **s, t_maillons *p, t_garbage *g)
 {
 	t_maillons	*new;
 
 	new = malloc(sizeof(*new));
-	new -> command = find_command(*split);
-	new -> args = find_argument(*split);
-	new -> output = find_input_output(*split);
+	if (!new)
+		free_garbage_env_exit(g, 1);
+	new -> command = find_command(*s);
+	new -> args = find_argument(*s);
+	new -> output = find_input_output(*s, g);
 	new -> heredoc = -1;
 	new -> next = NULL;
-	new -> prev = prev;
+	new -> prev = p;
 	return (new);
 }
 

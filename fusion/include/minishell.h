@@ -157,7 +157,7 @@ int				do_cd(char **new_env, char *path);
 
 /*  built in env */
 void			do_env(char **env);
-char			**my_env(char **env);
+char			**my_env(char **env, t_garbage *garbage);
 
 /*  built in exit */
 void			do_exit(char *statut, t_garbage *garbage);
@@ -275,7 +275,7 @@ char			**find_argument(t_split_elem *lst);
 
 /* find_input_output.c */
 
-t_input_output	*find_input_output(t_split_elem *lst);
+t_input_output	*find_input_output(t_split_elem *lst, t_garbage *g);
 
 /* free.c */
 
@@ -299,7 +299,7 @@ void			ft_strjoin_list(t_split_elem *list, t_split_elem **add, t_split_elem **fi
 
 /* list_input_output.c */
 
-t_input_output	*create_input_output(char *name, char *operator, t_input_output *prev);
+t_input_output	*create_input_output(char *name, char *operator, t_input_output *prev, t_garbage *g);
 t_input_output	*lstlast_input_output(t_input_output *lst);
 void			add_end_input_output(t_input_output **list, t_input_output *add);
 
@@ -324,7 +324,7 @@ void			find_maillon_without_cmd(t_maillons **maillons);
 
 /* create_maillons.c */
 
-t_maillons		*create_maillons(t_split_elem **split, t_maillons *prev);
+t_maillons		*create_maillons(t_split_elem **split, t_maillons *prev, t_garbage *garbage);
 t_maillons		*lstlast_maillons(t_maillons *lst);
 void			add_end_maillons(t_maillons **lst, t_maillons *add);
 

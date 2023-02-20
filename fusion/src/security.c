@@ -26,22 +26,25 @@ static int	control_builtin(char **args, int cmp)
 		return (0);
 	if (args[0] && str_cmp(args[0], "export") == 1)
 		return (0);
+	return (1);
 }
 
 int	check_builtin(char **args)
 {
 	int	cmp;
 	int	i;
+	int	sign;
 
+	sign = 0;
 	cmp = 0;
 	i = 0;
 	while (args && args[cmp])
 	{
 		if (args[cmp][0] == '-')
-			return (1);
+			sign = 1;
 		cmp++;
 	}
-	if (control_builtin(args, cmp) == 0)
+	if (sign != 1 && control_builtin(args, cmp) == 0)
 		return (0);
 	if (args[0] && str_cmp(args[0], "exit") == 1)
 	{
@@ -66,9 +69,7 @@ int	which_builtin(char **env, int i, int cmp, t_garbage *g)
 		return (do_env(env), 0);
 	if (g->maillons->args[0] && str_cmp(g->maillons->args[0], "pwd") == 1)
 		return (do_pwd(), 0);
-	if (g->maillons->args[0]
-		&& str_cmp(g->maillons->args[0], "exit") == 1 && cmp < 3)
-		return (do_exit(g->maillons->args[1], g), 0);
+	
 	if (g->maillons->args[0] && str_cmp(g->maillons->args[0], "unset") == 1)
 	{
 		while (g->maillons->args[++i])
@@ -81,15 +82,20 @@ int	which_builtin(char **env, int i, int cmp, t_garbage *g)
 int	check_if_builtin(char **env, char ***new_env, int i, t_garbage *g)
 {
 	int	j;
+	int sign;
 
 	j = 0;
+	sign = 0;
 	while (g->maillons->args && g->maillons->args[j])
 	{
 		if (g->maillons->args[j][0] == '-')
-			return (1);
+			sign = 1;
 		j++;
 	}
-	if (g->maillons->args[0] && str_cmp(g->maillons->args[0], "export") == 1)
+	if (g->maillons->args[0]
+		&& str_cmp(g->maillons->args[0], "exit") == 1 && j < 3)
+		return (do_exit(g->maillons->args[1], g), 0);
+	if (sign != 1 && g->maillons->args[0] && str_cmp(g->maillons->args[0], "export") == 1)
 	{
 		while (g->maillons->args[++i])
 		{
@@ -104,7 +110,10 @@ int	check_if_builtin(char **env, char ***new_env, int i, t_garbage *g)
 		}
 		return (0);
 	}
-	return (which_builtin(env, i, j, g));
+	if (sign != 1)
+		return (which_builtin(env, i, j, g));
+	else
+		return (1);
 }
 
 int	check_if_exit(char **args, char **env, t_garbage *garbage)
@@ -116,8 +125,6 @@ int	check_if_exit(char **args, char **env, t_garbage *garbage)
 	i = 0;
 	while (args && args[cmp])
 	{
-		if (args[cmp][0] == '-')
-			return (1);
 		cmp++;
 	}
 	if (args[0] && str_cmp(args[0], "exit") == 1 && cmp < 3)

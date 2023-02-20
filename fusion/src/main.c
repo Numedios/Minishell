@@ -11,7 +11,7 @@ static int	first_if(char **line, t_garbage *garbage)
 		g_exit_code[0] = 0;
 	if ((*line) == NULL && g_exit_code[1] != 8)
 	{
-		s_fd("\nexit11\n", 2);
+		s_fd("\nexit\n", 2);
 		free_garbage_env_exit(garbage, 0);
 	}
 }
@@ -23,7 +23,7 @@ int	main(int argc, char **argv, char **env)
 	char		**new_env;
 
 	initialize_garbage(&garbage);
-	garbage.new_env = my_env(env);
+	garbage.new_env = my_env(env, &garbage);
 	while (1)
 	{
 		first_if(&line, &garbage);

@@ -48,7 +48,7 @@ t_maillons	*loop_create_maillons(char *line, t_garbage *garbage, int i)
 		if (!(garbage->split_lst))
 			break ;
 		create_split_arg(&garbage->split_lst);
-		maillon = create_maillons(&garbage->split_lst, prev);
+		maillon = create_maillons(&garbage->split_lst, prev, garbage);
 		add_end_maillons(&garbage->maillons, maillon);
 		prev = maillon;
 		ft_free_split_arg(&garbage->split_lst);

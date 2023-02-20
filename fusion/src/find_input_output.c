@@ -20,7 +20,7 @@ int	find_input_output_loop(t_split_elem *lst)
 
 // si l' prev est un < ou << ou > ou >> (pour le premier if)
 // si *lst differend de > >> < << (pour le deuxieme if)
-t_input_output	*find_input_output(t_split_elem *lst)
+t_input_output	*find_input_output(t_split_elem *lst, t_garbage *g)
 {
 	t_input_output	*first;
 	t_input_output	*add;
@@ -38,7 +38,7 @@ t_input_output	*find_input_output(t_split_elem *lst)
 		{
 			if (find_input_output_loop(lst))
 			{
-				add = create_input_output((lst)->arg, prev->arg, input_prev);
+				add = create_input_output((lst)->arg, prev->arg, input_prev, g);
 				add_end_input_output(&first, add);
 			}
 		}

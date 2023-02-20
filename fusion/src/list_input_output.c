@@ -14,15 +14,19 @@
 
 /* o pour operateur*/
 
-t_input_output	*create_input_output(char *name, char *o, t_input_output *prev)
+t_input_output	*create_input_output(char *name, char *o, t_input_output *prev, t_garbage *g)
 {
 	t_input_output	*new;
 
 	new = malloc(sizeof(*new));
 	if (!new)
-		return (NULL);
+		free_garbage_env_exit(g, 1);
 	new -> file_name = ft_strdup(name);
+	if (!new->file_name)
+		free_garbage_env_exit(g, 1);
 	new -> operator = ft_strdup(o);
+	if (!new->operator)
+		free_garbage_env_exit(g, 1);
 	new -> prev = prev;
 	new -> next = NULL;
 	return (new);
