@@ -1,7 +1,19 @@
 #include "minishell.h"
 
 /* --suppressions=readline_leaks.txt */
+int	only_white_space(char *line_read)
+{
+	int	i;
 
+	i = 0;
+	while (line_read[i])
+	{
+		if (line_read[i] != ' ' )
+			return (0);
+		i++;
+	}
+	return (1);
+}
 /* Read a string, and return a pointer to it.  Returns NULL on EOF. */
 char *rl_gets()
 {
@@ -20,7 +32,10 @@ char *rl_gets()
 
 		/* If the line has any text in it, save it on the history. */
 		if (line_read && *line_read)
-			add_history(line_read);
+		{
+			if (only_white_space(line_read) == 0)
+				add_history(line_read);
+		}
 		//if (ft_strcmp(line_read, "stop"))
 		//	break;
 
@@ -144,7 +159,7 @@ int main(int argc, char **argv, char **env)
 			//ft_print_garbage(&garbage);
 			end_quote(&garbage);
 			//ft_print_maillons(garbage.maillons);
-			if (g_exit_code[1] != 7 || g_exit_code[1] != 8)
+			if (g_exit_code[1] != 7)
 				pipex(garbage.maillons, &garbage.new_env, &garbage);
 			free_garbage(&garbage);
 		}

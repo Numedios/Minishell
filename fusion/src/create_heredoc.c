@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:36:28 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/02/19 19:29:33 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/20 12:58:04 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ void	create_heredoc(int *pipe_fd)
 }
 
 
-void	prompt_eof(void)
-{
-	g_exit_code[1] = 8;
-	// write(2, "\n", 1);
-	printf("minishell: warning eof\n");
-	close (0);
-}
+// void	prompt_eof(void)
+// {
+// 	g_exit_code[1] = 8;
+// 	// write(2, "\n", 1);
+// 	printf("minishell: warning eof\n");
+// 	close (0);
+// }
 
 int	heredoc(char *stop)
 {
@@ -47,8 +47,14 @@ int	heredoc(char *stop)
 			free(str);
 			break ;
 		}
-		if (ft_strcmp(stop, str))
+		if (ft_strcmp(stop, str) || str == NULL)
 		{
+			if (!str)
+			{
+				write(2, "minishell: warning wanted :", 27);
+				write(2, stop, ft_strlen(stop));
+				write(2, "\n", 1);
+			}
 			free(str);
 			break ;
 		}
@@ -57,11 +63,6 @@ int	heredoc(char *stop)
 			write(pipe_fd[1], str, ft_strlen(str));
 			write(pipe_fd[1], "\n", 1);
 			free(str);
-			if (str == NULL)
-			{
-				prompt_eof();
-				break ;
-			}
 		}
 	}
 	close(pipe_fd[1]);
@@ -72,6 +73,7 @@ void	sigint_heredoc(int unused)
 {
 	(void) unused;
 	g_exit_code[1] = 7;
+	g_exit_code[0] = 130;
 	write(2, "\n", 1);
 	close(0);
 }
@@ -88,7 +90,7 @@ void	find_all_heredoc_loop(t_maillons **maillons, int *copy_fd)
 			if ((*maillons)->heredoc != -1)
 				close((*maillons)->heredoc);
 			(*maillons)->heredoc = heredoc((*maillons)->output->file_name);
-			if (g_exit_code[1] == 7 || g_exit_code[1] == 8)
+			if (g_exit_code[1] == 7)
 			{
 				dup2(*copy_fd, 0);
 				break ;
