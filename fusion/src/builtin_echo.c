@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:36:02 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/02/18 23:18:12 by zakariyaham      ###   ########.fr       */
+/*   Updated: 2023/02/20 22:33:27 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ void	do_echo(char **arg)
 	}
 	while (arg && arg[i])
 	{
-		printf("%s", arg[i]);
+		s_fd(arg[i], 1);
 		if (arg && arg[i] && arg[i + 1])
-			printf(" ");
+			s_fd(" ", 1);
 		i++;
 	}
 	if (space == 1)

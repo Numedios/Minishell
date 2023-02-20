@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 17:22:11 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/20 13:10:55 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/20 22:26:02 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	check_if_tab_exist(char *tab, char **env)
 
 	len_tab = ft_strlen(tab);
 	i = 0;
-	while (env[i])
+	while (env && env[i])
 	{
 		len_env = ft_strlen(env[i]);
 		if (len_tab != len_env || ft_strncmp(env[i], tab, len_tab) != 0)

@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:36:25 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/02/13 11:14:02 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/20 22:20:33 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*get_path(char **envp)
 	int	i;
 
 	i = 0;
+	if (!envp)
+		return (NULL);
 	while (envp[i])
 	{
 		if (ft_strcmp_pipex(envp[i], "PATH="))
