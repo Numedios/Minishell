@@ -271,7 +271,7 @@ char			*find_output(char **tab);
 /* find_command.c */
 
 char			*find_command(t_split_elem *lst);
-char			**find_argument(t_split_elem *lst);
+char			**find_argument(t_split_elem *lst, t_garbage *g);
 
 /* find_input_output.c */
 
