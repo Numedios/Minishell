@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex_one.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sbelabba <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/20 17:44:42 by sbelabba          #+#    #+#             */
+/*   Updated: 2023/02/20 17:44:44 by sbelabba         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	find_stdin(t_maillons *maillons)
@@ -7,7 +19,7 @@ int	find_stdin(t_maillons *maillons)
 	res = -1;
 	if (find_if_have_output(maillons -> output, "<") == 1)
 	{
-		res = open(find_name_sep(maillons -> output, "<"),
+		res = open(find_s(maillons -> output, "<"),
 				O_RDWR, O_DSYNC, !O_DIRECTORY);
 		return (res);
 	}
@@ -36,13 +48,13 @@ int	find_stdout(t_maillons *maillons)
 	res = -1;
 	if (find_if_have_output(maillons -> output, ">"))
 	{
-		res = open(find_name_sep(maillons -> output, ">"),
+		res = open(find_s(maillons -> output, ">"),
 				O_WRONLY | O_CREAT | O_TRUNC, 0644, !O_DIRECTORY);
 		return (res);
 	}
 	else if (find_if_have_output(maillons -> output, ">>"))
 	{
-		res = open(find_name_sep(maillons -> output, ">>"),
+		res = open(find_s(maillons -> output, ">>"),
 				O_WRONLY | O_CREAT | O_APPEND, 0644, !O_DIRECTORY);
 		return (res);
 	}
@@ -55,7 +67,7 @@ int	pipex_one_condition(t_maillons *m, char ***e, t_garbage *g)
 {
 	if (check_if_exit(m->args, *e, g) == 0)
 		return (1);
-	if (check_if_builtin(m->args, *e, e, 0, g) == 0)
+	if (check_if_builtin(*e, e, 0, g) == 0)
 		return (1);
 	return (0);
 }

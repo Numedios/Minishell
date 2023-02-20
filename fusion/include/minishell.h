@@ -115,6 +115,9 @@ void			signal_quit_child(int useless);
 int				child1(two_pipe *two_pipe, char ***env, t_maillons *maillons, t_garbage *garbage);
 int				child2(two_pipe *two_pipe, char ***env, t_maillons *maillons, t_garbage *garbage);
 int				check_access(t_maillons *maillons);
+int				first_pipe_check(char *line);
+int				after_pipe(char *line);
+int				only_white_space(char *line_read);
 
 /*      free_garbage     */
 
@@ -134,7 +137,7 @@ int				parsing_of_export(char *tab, char **env_copy, int *a, int *j);
 int				what_to_do(char *tab, char **env);
 
 /*  security */
-int				check_if_builtin (char **args, char **env, char ***new_env, int i, t_garbage *garbage);
+int				check_if_builtin (char **env, char ***new_env, int i, t_garbage *garbage);
 int				check_echo (char **args,int cmp, int i, int execute);
 int				check_if_exit(char **args, char **env, t_garbage *garbage);
 int				check_builtin(char **args);
@@ -143,6 +146,8 @@ int				check_builtin(char **args);
 
 char			*rl_gets();
 int				main(int argc, char **argv, char **env);
+t_maillons		*loop_create_maillons(char *line, t_garbage *garbage, int i);
+void			end_quote(t_garbage *garbage);
 
 /* delete_quote.c */
 char			*del_q(char *line, int j, int len);
@@ -313,7 +318,7 @@ void			create_split_arg(t_split_elem **lst);
 
 /* clear_maillons.c */
 
-char			*find_name_sep(t_input_output *lst, char *sep);
+char			*find_s(t_input_output *lst, char *sep);
 int				find_if_have_output(t_input_output *lst, char *sep);
 void			find_maillon_without_cmd(t_maillons **maillons);
 
@@ -352,7 +357,17 @@ int	pipex_one(t_maillons *maillons, char ***env, t_garbage *garbage);
 
 /* pipex2.c */
 
-int				pipex_multiple(t_maillons *maillons, char ***env, int len, t_garbage *garbage);
+void	sigint_child(int unused);
+int	switch_dup2_fd_in(t_maillons *m, t_pipes *pipes, int i, int len);
+int	switch_dup2_fd_out(t_maillons *maillons, t_pipes *pipes, int i, int len);
+int	pipex_multiple(int len, t_garbage *g, int i);
+
+/*utils_pipex_two.c */
+
+void	pipex_multiple_check(t_garbage *g);
+void	pipex_multiple_free(t_garbage *garbage);
+void	pipex_multiple_close_pipe(t_garbage *garbage, int len, int i);
+void	handle_child_process(int i, int len, t_garbage *g);
 
 /* utils_pipex.c */
 

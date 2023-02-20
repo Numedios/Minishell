@@ -60,7 +60,7 @@ int	find_if_have_output(t_input_output *lst, char *sep)
 	return (0);
 }
 
-char	*find_name_sep(t_input_output *lst, char *sep)
+char	*find_s(t_input_output *lst, char *sep)
 {
 	int	i;
 

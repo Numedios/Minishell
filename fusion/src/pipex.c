@@ -35,6 +35,6 @@ int	pipex(t_maillons *maillons, char ***env, t_garbage *garbage)
 	if (len == 1)
 		pipex_one(maillons, env, garbage);
 	else if (len != 1)
-		pipex_multiple(maillons, env, len, garbage);
+		pipex_multiple(len, garbage, 0);
 	return (0);
 }

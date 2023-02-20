@@ -101,6 +101,8 @@ SRC = main.c \
 		pipex_one.c \
 		utils_split.c \
 		utils_parsing_bisbis.c \
+		utils_pipex_two.c \
+		utils_main.c \
 
 #==============================================================================#
 #                                   HEADERS                                    #

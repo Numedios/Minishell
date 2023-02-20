@@ -26,30 +26,6 @@ int	parenthesis_close_1(char *str);
 
 extern int	g_exit_code[2];
 
-int	after_pipe(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line && line[i])
-	{
-		if (line[i] == '|')
-		{
-			i++;
-			while (line[i] == ' ')
-				i++;
-			if (line[i] == '\0')
-			{
-				s_fd("minishell: syntax error near unexpected token `|'\n", 2);
-				g_exit_code[0] = 2;
-				return (g_exit_code[0]);
-			}
-		}
-		i++;
-	}
-	return (0);
-}
-
 static int	check_the_line_condition(char *line, int i)
 {
 	if ((line[i] == '"' && line[i + 1] == '"')
@@ -88,23 +64,7 @@ int	del_quote(char *line, int i, int j)
 	return (0);
 }
 
-int	first_pipe_check(char *line)
-{
-	int	i;
-
-	i = 0;
-	while ((line[i] > 7 && line[i] < 14) || line[i] == 32)
-		i++;
-	if (line[i] == '|')
-	{
-		s_fd("bash: syntax error near unexpected token `|'\n", 2);
-		g_exit_code[0] = 2;
-		return (1);
-	}
-	return (0);
-}
-
-int	parse(char *line)
+static int	control_parse(char *line)
 {
 	if (quote_close(line) == 0)
 	{
@@ -127,12 +87,26 @@ int	parse(char *line)
 		s_fd("bash: syntax error near unexpected token `;'\n", 2);
 		return (1);
 	}
+	return (0);
+}
+
+static int	control_parse_two(char *line)
+{
 	if (check_1(line) == 1)
 	{
 		g_exit_code[0] = 2;
 		return (1);
 	}
 	if (after_redirection(line) == 2)
+		return (1);
+	return (0);
+}
+
+int	parse(char *line)
+{
+	if (control_parse(line) == 1)
+		return (1);
+	if (control_parse_two(line) == 1)
 		return (1);
 	del_quote(line, 0, 0);
 	if (ft_strlen(line) == 1)
