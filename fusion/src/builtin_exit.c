@@ -47,29 +47,33 @@ void	exit_free(t_garbage *garbage, long long exit_code)
 	exit(exit_code);
 }
 
-void	do_exit(char *statut, t_garbage *garbage)
+/*
+* s pour status
+*/
+
+void	do_exit(char *s, t_garbage *garbage)
 {
 	long long	exit_code;
 	int			flag;
 
 	exit_code = 2;
 	flag = 0;
-	while (statut && statut[flag])
+	while (s && s[flag])
 	{
-		while (statut[flag] == 32 || (statut[flag] >= 9 && statut[flag] <= 13))
+		while (s[flag] == 32 || (s[flag] >= 9 && s[flag] <= 13))
 			flag++;
-		if (statut[flag] == '-' || statut[flag] == '+')
+		if (s[flag] == '-' || s[flag] == '+')
 			flag++;
-		if (statut[flag] >= '0' && statut[flag] <= '9')
+		if (s[flag] >= '0' && s[flag] <= '9')
 			flag++;
 		else
 		{
-			dprintf(2, "Minishell: exit: %s: numeric argument required\n", statut);
+			dprintf(2, "Minishell: exit: %s: numeric argument required\n", s);
 			exit_free(garbage, 2);
 		}
 	}
 	flag = 0;
-	exit_code = ft_atoll_capped(statut, &flag, 1, 0);
+	exit_code = ft_atoll_capped(s, &flag, 1, 0);
 	if (flag == 0)
 		exit_free(garbage, exit_code);
 	else

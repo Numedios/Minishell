@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	free_garbage(t_garbage *garbage)
+void	free_garbage_add(t_garbage *garbage)
 {
 	if (garbage && garbage->split_pipe)
 	{
@@ -24,6 +24,11 @@ void	free_garbage(t_garbage *garbage)
 		free_split_elem(garbage->split_lst);
 		garbage->split_lst = NULL;
 	}
+}
+
+void	free_garbage(t_garbage *garbage)
+{
+	free_garbage_add(garbage);
 	if (garbage && garbage->maillons)
 	{
 		free_maillons(garbage->maillons);
@@ -43,16 +48,7 @@ void	free_garbage(t_garbage *garbage)
 
 void	free_garbage_exit(t_garbage *garbage, int exit_code)
 {
-	if (garbage && garbage->split_pipe)
-	{
-		ft_free_tab(garbage->split_pipe);
-		garbage->split_pipe = NULL;
-	}
-	if (garbage && garbage->split_lst)
-	{
-		free_split_elem(garbage->split_lst);
-		garbage->split_lst = NULL;
-	}
+	free_garbage_add(garbage);
 	if (garbage && garbage->maillons)
 	{
 		free_maillons(garbage->maillons);
@@ -73,16 +69,7 @@ void	free_garbage_exit(t_garbage *garbage, int exit_code)
 
 void	free_garbage_and_env(t_garbage *garbage)
 {
-	if (garbage && garbage->split_pipe)
-	{
-		ft_free_tab(garbage->split_pipe);
-		garbage->split_pipe = NULL;
-	}
-	if (garbage && garbage->split_lst)
-	{
-		free_split_elem(garbage->split_lst);
-		garbage->split_lst = NULL;
-	}
+	free_garbage_add(garbage);
 	if (garbage && garbage->maillons)
 	{
 		free_maillons(garbage->maillons);
@@ -107,16 +94,7 @@ void	free_garbage_and_env(t_garbage *garbage)
 
 void	free_garbage_env_exit(t_garbage *garbage, int exit_code)
 {
-	if (garbage && garbage->split_pipe)
-	{
-		ft_free_tab(garbage->split_pipe);
-		garbage->split_pipe = NULL;
-	}
-	if (garbage && garbage->split_lst)
-	{
-		free_split_elem(garbage->split_lst);
-		garbage->split_lst = NULL;
-	}
+	free_garbage_add(garbage);
 	if (garbage && garbage->maillons)
 	{
 		free_maillons(garbage->maillons);

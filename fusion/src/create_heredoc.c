@@ -23,6 +23,12 @@ void	create_heredoc(int *pipe_fd)
 	}
 }
 
+void	print_minishell_warning_heredoc(char *stop)
+{
+	write(2, "minishell: warning wanted :", 27);
+	write(2, stop, ft_strlen(stop));
+	write(2, "\n", 1);
+}
 
 // void	prompt_eof(void)
 // {
@@ -43,19 +49,11 @@ int	heredoc(char *stop)
 	{
 		str = readline("> ");
 		if (g_exit_code[1] == 7)
-		{
-			free(str);
 			break ;
-		}
 		if (ft_strcmp(stop, str) || str == NULL)
 		{
 			if (!str)
-			{
-				write(2, "minishell: warning wanted :", 27);
-				write(2, stop, ft_strlen(stop));
-				write(2, "\n", 1);
-			}
-			free(str);
+				print_minishell_warning_heredoc(stop);
 			break ;
 		}
 		else
@@ -65,54 +63,6 @@ int	heredoc(char *stop)
 			free(str);
 		}
 	}
-	close(pipe_fd[1]);
-	return (pipe_fd[0]);
-}
-
-void	sigint_heredoc(int unused)
-{
-	(void) unused;
-	g_exit_code[1] = 7;
-	g_exit_code[0] = 130;
-	write(2, "\n", 1);
-	close(0);
-}
-
-void	find_all_heredoc_loop(t_maillons **maillons, int *copy_fd)
-{
-	t_input_output	*tmp;
-
-	tmp = (*maillons)->output;
-	while ((*maillons)->output)
-	{
-		if (ft_strcmp(((*maillons)->output->operator), "<<"))
-		{
-			if ((*maillons)->heredoc != -1)
-				close((*maillons)->heredoc);
-			(*maillons)->heredoc = heredoc((*maillons)->output->file_name);
-			if (g_exit_code[1] == 7)
-			{
-				dup2(*copy_fd, 0);
-				break ;
-			}
-			//printf("end1\n");
-		}
-		(*maillons)->output = (*maillons)->output->next;
-	}
-	(*maillons)->output = tmp;
-	(*maillons) = (*maillons)->next;
-}
-
-//remttre la fonction des signaux du parent, que se passe il apres ctrl+c 
-void	find_all_heredoc(t_maillons *maillons)
-{
-	t_input_output	*tmp;
-	int				copy_fd;
-
-	g_exit_code[1] = 9;
-	copy_fd = dup(0);
-	signal(SIGINT, sigint_heredoc);
-	while (maillons && g_exit_code[1] != 7)
-		find_all_heredoc_loop(&maillons, &copy_fd);
-	close(copy_fd);
+	free(str);
+	return (close(pipe_fd[1]), pipe_fd[0]);
 }

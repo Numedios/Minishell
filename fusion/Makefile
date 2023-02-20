@@ -83,6 +83,7 @@ SRC = main.c \
 		replace_dollar_2.c \
 		ft_itoa.c \
 		free_garbage.c \
+		free_input.c \
 		dollars_interrogation.c \
 		export_utils.c \
 		split2.c \
@@ -90,11 +91,16 @@ SRC = main.c \
 		security.c  \
 		utils_pipex.c \
 		child.c \
-		utilis_pipex_zak.c \
 		check_space.c \
 		check_one.c \
 		dollars_utils.c \
 		delete_quote.c \
+		utils_clean_split_arg.c \
+		utils_create_heredoc.c \
+		utils_parsing_input.c \
+		pipex_one.c \
+		utils_split.c \
+		utils_parsing_bisbis.c \
 
 #==============================================================================#
 #                                   HEADERS                                    #

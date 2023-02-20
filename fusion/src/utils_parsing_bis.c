@@ -12,19 +12,6 @@
 
 #include "minishell.h"
 
-int	print_tab(char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab && tab[i])
-	{
-		printf("%s\n", tab[i]);
-		i++;
-	}
-	return (0);
-}
-
 static int	second_if(char *line, int *i)
 {
 	(*i)++;

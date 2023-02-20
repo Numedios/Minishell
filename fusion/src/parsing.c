@@ -16,10 +16,13 @@ int	parenthesis_close_2(char *str);
 int	parenthesis_close_1(char *str);
 //test : fkfs;sf      '''ho"''''l"a'''    'ho"''l"a'
 //si rien apres pipe = probleme
-// pour chaque if du parsinf check meme en skipant tout les espace qui separes les char
+// pour chaque if du parsinf check meme en skipant tout les espace qui
+// separes les char
 //comment gerer les "()"
 // remplacer prinf par s_fd pour ecrire sur la sortie d'erreur
-//pour $HOLA il fonctionne tout seul ou avec "$HOLA", on ne peut pas declarer une variable globale en commencant par un chiffre ou $, pas de caractere speciale, mais on peut mettre un chiffre dedans
+//pour $HOLA il fonctionne tout seul ou avec "$HOLA", on ne peut pas 
+//declarer une variable globale en commencant par un chiffre ou $, 
+//pas de caractere speciale, mais on peut mettre un chiffre dedans
 
 extern int	g_exit_code[2];
 
@@ -149,71 +152,3 @@ int	parse(char *line)
 	}
 	return (0);
 }
-
-/*
-int parenthesis_close_1 (char *str)
-{
-	int i;
-	int count_1;
-
-	i = 0;
-	count_1 = 0;
-
-	while (str && str[i])
-	{
-		if (str[i] == '(')
-			count_1++;
-		i++;
-	}
-	i = 0;
-	while (str && str[i])
-	{
-		if (str[i] == ')')
-			count_1--;
-		i++;
-	}
-	if (count_1 < 0)
-	{
-		s_fd("bash: syntax error near unexpected token `)'\n");
-		return (1);
-	}
-	return (0);
-}
-
-int parenthesis_close_2 (char *str)
-{
-	char    c;
-	int i;
-	int count;
-
-	i = 0;
-	count = 0;
-	if (!str)
-			return (0);
-	while(str && str[i])
-	{
-		while (str[i] == '(')
-		{
-			i++;
-			count++;
-		}
-		if (count > 0)
-		{
-			while(str[i] == ')' || str[i] == ' ')
-			{
-				if (str[i] == ')')
-					count--;
-				i++;
-			}
-			if (count <= 0)
-			{
-				s_fd("bash: syntax error near unexpected token `)'\n");
-				return (1);
-			}
-			return(0);
-		}
-		i++;
-	}
-	return (0);
-}
-*/

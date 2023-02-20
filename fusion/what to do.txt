@@ -93,3 +93,6 @@ verifier quand skip quote renvoie -1 et qu'est que cela fait apres
 j'ai peut etre regle le probleme des heredocs mais il faut verifier qu'on close bien tout psk j'evite pipex avec ma methode
 
 probleme de quote et code erreur quand on appuie sur entree 
+
+
+erreur bultins pipe env | grep OLDPWD

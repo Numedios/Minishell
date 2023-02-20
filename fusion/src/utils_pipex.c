@@ -49,18 +49,20 @@ int	*create_pipes(int len)
 	return (pipes);
 }
 
-t_pipes *create_all_pipes(int len)
+/*
+* erreur ligne 65 free avant de exit
+*/
+
+t_pipes	*create_all_pipes(int len)
 {
 	t_pipes	*pipes;
 
 	pipes = malloc(sizeof(t_pipes));
-
 	pipes->pipe = create_pipes(len);
 	printf("%d\n", pipes->pipe[0]);
 	pipes->len = len;
 	if (!pipes || !pipes->pipe)
 	{
-		// free le reste maillons ect
 		free_all_pipes(len * 2, pipes);
 		unlink("here_doc");
 		exit (1);

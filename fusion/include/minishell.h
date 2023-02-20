@@ -145,7 +145,7 @@ char			*rl_gets();
 int				main(int argc, char **argv, char **env);
 
 /* delete_quote.c */
-char			*delete_the_quote(char *line, int j, int len);
+char			*del_q(char *line, int j, int len);
 
 /*  built in cd */
 int				do_cd(char **new_env, char *path);
@@ -345,6 +345,10 @@ void			cd(char **arg);
 /* pipex.c */
 
 int				pipex(t_maillons *maillons, char ***env, t_garbage *garbage);
+
+/* pipex_one.c */
+
+int	pipex_one(t_maillons *maillons, char ***env, t_garbage *garbage);
 
 /* pipex2.c */
 

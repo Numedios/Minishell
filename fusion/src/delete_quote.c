@@ -79,7 +79,7 @@ static int	skip_other(char *line, int i, int *j, char **new_line)
 	return (i + 1);
 }
 
-char	*delete_the_quote(char *line, int j, int len)
+char	*del_q(char *line, int j, int len)
 {
 	char	*new_line;
 	t_quote	quote;
