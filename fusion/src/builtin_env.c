@@ -6,14 +6,12 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:36:07 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/02/13 11:30:17 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/20 13:08:45 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//possibilite de creer sa propre env
-//comparer toutes les lignes pour savoir laquelle imprimer en premier
 void	do_env(char **env)
 {
 	int	i;

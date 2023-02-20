@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 16:13:39 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/17 15:24:04 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/20 13:43:53 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,7 @@ char	*interrogation(char *tab, char **new_env, int skip, t_index index)
 	var.i = 0;
 	new_in_old_interrogation(&var);
 	while (tab && tab[var.pos_tab])
-	{
-		var.new_tab[var.pos] = tab[var.pos_tab];
-		var.pos++;
-		var.pos_tab++;
-	}
+		var.new_tab[(var.pos)++] = tab[(var.pos_tab)++];
 	var.new_tab[var.pos] = '\0';
 	free(var.value);
 	return (free(tab), var.new_tab);

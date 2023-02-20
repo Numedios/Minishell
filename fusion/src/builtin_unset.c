@@ -3,19 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:36:17 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/02/16 18:35:48 by zakariyaham      ###   ########.fr       */
+/*   Updated: 2023/02/20 13:09:45 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-//on peut unset autant qu'on veut
 
-/*
-Probleme je fais dispa
-*/
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	size_t	i;
@@ -30,7 +26,6 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	return (0);
 }
 
-//mettre env en variable globale, malloc env dans une nouvelle variable pour pouvoir le manipuler comme on le souhaite
 void	do_unset(char *tab, char **env_copy, int i, int found_line)
 {
 	int	n;

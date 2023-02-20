@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delete_quote.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 23:25:32 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/02/18 23:25:33 by zakariyaham      ###   ########.fr       */
+/*   Updated: 2023/02/20 13:38:41 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,27 +56,27 @@ static int	skip_other(char *line, int i, int *j, char **new_line)
 {
 	if (line [i] == '\0' || line[i] != '\'')
 		return (i);
-    else if (line[i + 1] != '\0' &&  line[i] == '\'' &&  line[i + 1] == '\'')
-    {
-        (*new_line)[(*j)] = line[i];
+	else if (line[i + 1] != '\0' && line[i] == '\'' && line[i + 1] == '\'')
+	{
+		(*new_line)[(*j)] = line[i];
 		(*j)++;
-        i++;
-        (*new_line)[(*j)] = line[i];
-        (*j)++;
-        return (i + 1);
-    }
-    (*new_line)[(*j)] = line[i];
+		i++;
+		(*new_line)[(*j)] = line[i];
+		(*j)++;
+		return (i + 1);
+	}
+	(*new_line)[(*j)] = line[i];
 	(*j)++;
-    i++;
+	i++;
 	while (line && line [i] != '\0' && line[i] != '\'')
-    {
-        (*new_line)[(*j)] = line[i];
+	{
+		(*new_line)[(*j)] = line[i];
 		(*j)++;
-        i++;
-    }
-    (*new_line)[(*j)] = line[i];
+		i++;
+	}
+	(*new_line)[(*j)] = line[i];
 	(*j)++;
-    return (i + 1);
+	return (i + 1);
 }
 
 char	*delete_the_quote(char *line, int j, int len)
@@ -89,7 +89,6 @@ char	*delete_the_quote(char *line, int j, int len)
 	new_line = malloc((len + 1) * sizeof(char));
 	while (line && line [quote.i])
 	{
-		//quote.i = skip_other(line, quote.i, &j, &new_line);
 		quote.old_i = quote.i;
 		quote.i = skip_inside(line, quote.i, '"');
 		quote.i = skip_inside(line, quote.i, '\'');
@@ -98,11 +97,7 @@ char	*delete_the_quote(char *line, int j, int len)
 		else if (quote.i != quote.old_i)
 				new_line = delete_quote(line, new_line, quote, &j);
 		else if (line && line [quote.i] != '\0')
-		{
-			new_line[j] = line[quote.i];
-			j++;
-			quote.i++;
-		}
+			new_line[j++] = line[(quote.i)++];
 	}
 	new_line[j] = line[quote.i];
 	if (line)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_one.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 15:30:15 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/18 23:23:38 by zakariyaham      ###   ########.fr       */
+/*   Updated: 2023/02/20 13:10:06 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	after_redirection(char *line)
 	return (0);
 }
 
-int	check_parenthesis(char *line)//(")"0 ;;; (")" 0) -> est ce qu'il traiter les "()" comment les guillemets
+int	check_parenthesis(char *line)
 {
 	int	i;
 	int	count_1;
