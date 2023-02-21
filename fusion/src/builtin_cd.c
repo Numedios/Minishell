@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:35:56 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/02/19 16:55:32 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/21 14:21:25 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static void	update_pwd(char **new_env, char *pwd)
 			return ;
 		new_env = do_export(pwd, new_env, 0, 0);
 		free(pwd);
+		pwd = NULL;
 	}
 }
 
@@ -44,6 +45,7 @@ int	do_cd_change_directory(char *path, char **oldpwd)
 		s_fd(path, 2);
 		s_fd(" No such file or directory\n", 2);
 		free (*oldpwd);
+		oldpwd = NULL;
 		return (1);
 	}
 	return (0);
@@ -72,6 +74,7 @@ int	do_cd(char **new_env, char *path)
 		if (check_if_tab_exist(oldpwd, new_env) != 1)
 			new_env = do_export(oldpwd, new_env, 0, 0);
 		free(oldpwd);
+		oldpwd = NULL;
 	}
 	update_pwd(new_env, pwd);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 11:38:47 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/17 18:15:13 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/21 13:45:59 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_strcmp_pipex(char *str, char *search)
 	int	i;
 
 	i = 0;
-	while (search[i])
+	while (str && search[i])
 	{
 		if (str[i] != search[i])
 			return (0);

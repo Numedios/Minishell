@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:36:25 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/02/20 22:20:33 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/21 13:50:41 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ char	*get_path(char **envp)
 	i = 0;
 	if (!envp)
 		return (NULL);
-	while (envp[i])
+	while (envp && envp[i])
 	{
 		if (ft_strcmp_pipex(envp[i], "PATH="))
 			break ;
 		i++;
 	}
-	if (envp[i])
+	if (envp && envp[i])
 		return (&*envp[i] + 5);
 	return (NULL);
 }
