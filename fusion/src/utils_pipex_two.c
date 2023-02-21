@@ -48,8 +48,8 @@ void	handle_child_process(int i, int len, t_garbage *g)
 {
 	if ((g->maillons)->command != NULL)
 	{
-		switch_dup2_fd_in(g->maillons, g->pipes, i, len);
-		switch_dup2_fd_out(g->maillons, g->pipes, i, len);
+		switch_dup2_fd_in(g->maillons, g->pipes, i);
+		switch_dup2_fd_out(g->maillons, g->pipes, i);
 	}
 	free_all_pipes((len - 1) * 2, g->pipes);
 	g->pipes = NULL;

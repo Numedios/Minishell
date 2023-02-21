@@ -26,7 +26,7 @@ void	sigint_child(int unused)
 *
 */
 
-int	switch_dup2_fd_in(t_maillons *m, t_pipes *pipes, int i, int len)
+int	switch_dup2_fd_in(t_maillons *m, t_pipes *pipes, int i)
 {
 	int	res;
 
@@ -64,7 +64,7 @@ int	switch_dup2_fd_in(t_maillons *m, t_pipes *pipes, int i, int len)
 *
 */
 
-int	switch_dup2_fd_out(t_maillons *maillons, t_pipes *pipes, int i, int len)
+int	switch_dup2_fd_out(t_maillons *maillons, t_pipes *pipes, int i)
 {
 	int	res;
 
@@ -95,7 +95,6 @@ int	switch_dup2_fd_out(t_maillons *maillons, t_pipes *pipes, int i, int len)
 
 int	pipex_multiple(int len, t_garbage *g, int i)
 {
-	t_pipes		pipes;
 	pid_t		pid;
 	t_maillons	*tmp;
 

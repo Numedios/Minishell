@@ -75,6 +75,7 @@ char	**replace_value(int j, int a, char *tab, char **env)
 	if (a == 0)
 	{
 		free(env[j]);
+		env[j] = NULL;
 		env[j] = ft_strdup(tab);
 		return (env);
 	}
@@ -128,7 +129,6 @@ char	**do_export(char *tab, char **env_copy, int i, int a)
 	int		j;
 	char	**new_env;
 
-	j = 0;
 	if (parsing_of_export(tab, env_copy, &a, &j) == 1)
 		return (env_copy);
 	if (env_copy && j != -1)
@@ -149,7 +149,8 @@ char	**do_export(char *tab, char **env_copy, int i, int a)
 		}
 		new_env = new_value(i, a, tab, new_env);
 		new_env[i + 1] = NULL;
-		return (ft_free_tab(env_copy), new_env);
+		ft_free_tab(env_copy);
+		env_copy = NULL;
+		return (new_env);
 	}
-	return (NULL);
 }

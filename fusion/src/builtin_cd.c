@@ -17,16 +17,20 @@
 *
 */
 
-static void	update_pwd(char **new_env, char *pwd)
+static void	update_pwd(char ***new_env, char *pwd)
 {
 	char	dir[4096];
+	// char **cpy;
 
+	// cpy = map_copy((*new_env));
+	// ft_free_tab((*new_env));
 	if (getcwd(dir, sizeof(dir)) != NULL)
 	{
 		pwd = ft_strjoin("PWD=", dir);
 		if (!pwd)
 			return ;
-		new_env = do_export(pwd, new_env, 0, 0);
+		(*new_env) = do_export(pwd, (*new_env), 0, 0);
+		//ft_free_tab(cpy);
 		free(pwd);
 		pwd = NULL;
 	}
@@ -51,7 +55,7 @@ int	do_cd_change_directory(char *path, char **oldpwd)
 	return (0);
 }
 
-int	do_cd(char **new_env, char *path)
+int	do_cd(char ***new_env, char *path)
 {
 	char	dir[4096];
 	char	*oldpwd;
@@ -68,11 +72,15 @@ int	do_cd(char **new_env, char *path)
 	if (do_cd_change_directory(path, &oldpwd) == 1)
 		return (1);
 	if (path[0] == '.' && path[1] == '\0')
-		return (free(oldpwd), 0);
+	{
+		free(oldpwd);
+		oldpwd = NULL;
+		return (0);
+	}
 	if (oldpwd)
 	{
-		if (check_if_tab_exist(oldpwd, new_env) != 1)
-			new_env = do_export(oldpwd, new_env, 0, 0);
+		if (check_if_tab_exist(oldpwd, (*new_env)) != 1)
+			(*new_env) = do_export(oldpwd, (*new_env), 0, 0);
 		free(oldpwd);
 		oldpwd = NULL;
 	}

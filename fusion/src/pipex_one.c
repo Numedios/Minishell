@@ -65,7 +65,7 @@ int	find_stdout(t_maillons *maillons)
 
 int	pipex_one_condition(t_maillons *m, char ***e, t_garbage *g)
 {
-	if (check_if_exit(m->args, *e, g) == 0)
+	if (check_if_exit(m->args, g) == 0)
 		return (1);
 	if (check_if_builtin(*e, e, 0, g) == 0)
 		return (1);
@@ -98,8 +98,6 @@ int	pipex_one_dup(t_maillons **maillons)
 int	pipex_one(t_maillons *maillons, char ***env, t_garbage *garbage)
 {
 	pid_t	pid;
-	int		fd_in;
-	int		fd_out;
 
 	if (pipex_one_condition(maillons, env, garbage) == 1)
 		return (free_garbage(garbage), 0);

@@ -19,6 +19,7 @@ static int	second_if(char *line, int *i)
 		return (-1);
 	while (line && line[(*i)] != '\0' && line[(*i)] != '"')
 		(*i)++;
+	return (1);
 }
 
 int	skip_quote(char *line, int i)

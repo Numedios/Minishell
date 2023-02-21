@@ -19,16 +19,17 @@ echo $hol (hol n'existe pas)        echo $$SYSTEMD_EXEC_PID
 
 extern int	g_exit_code[2];
 
-static char	*apply_the_change(char *tab, char **env, t_index *index, int skip)
+static char *apply_the_change(char *tab, char **env, t_index *index, int skip)
 {
 	index->j = research(skip, index->a, tab, env);
 	if (index->j != -1)
 	{
 		if (index->j == -2)
-			tab = interrogation(tab, env, skip, (*index));
+			tab = interrogation(tab, skip, (*index));
 		else
 			tab = do_replace(tab, env, skip, (*index));
 	}
+	return (tab);
 }
 
 char	*found_it(char *tab, char **new_env, t_index *index, int *skip)
@@ -58,7 +59,7 @@ static int	check_in_quote(char *tab, int i)
 			&& (tab[i + 1] < 32 || tab[i + 1] > 47)
 			&& (tab[i + 1] < 57 || tab[i + 1] > 62)
 			&& (tab[i + 1] < 90 || tab[i + 1] > 97)
-			&& (tab[i + 1] < 122 || tab[i + 1] > 127)
+			&& (tab[i + 1] < 122 || tab[i + 1] > 126)
 			&& tab[i + 1] != '\0' && tab[i + 1] != ' '
 			&& tab[i + 1] != '"' && tab[i + 1] != '\'') && tab[i + 1] != '@')
 	{
@@ -92,7 +93,7 @@ char	*found_dollar_inquote(char *tab, int *i, char **new_env, t_index *index)
 	return (tab);
 }
 
-char	*replace_dollar(char *tab, char **new_env, int i, int skip)
+char	*replace_dollar(char *tab, char **new_env, int i)
 {
 	t_index	index;
 

@@ -47,7 +47,7 @@ static int	check_in_quote(char *tab, int i)
 			&& (tab[i + 1] < 32 || tab[i + 1] > 47)
 			&& (tab[i + 1] < 57 || tab[i + 1] > 62)
 			&& (tab[i + 1] < 90 || tab[i + 1] > 97)
-			&& (tab[i + 1] < 122 || tab[i + 1] > 127)
+			&& (tab[i + 1] < 122 || tab[i + 1] > 126)
 			&& tab[i + 1] != '\0' && tab[i + 1] != ' '
 			&& tab[i + 1] != '"' && tab[i + 1] != '\'') && tab[i + 1] != '@')
 	{
@@ -105,7 +105,7 @@ char	*dollar_or_more_del(char *tab, int *i, char **new_env, t_index *index)
 	return (tab);
 }
 
-char	*delete_dollar(char *tab, char **new_env, int i, int skip)
+char	*delete_dollar(char *tab, char **new_env, int i)
 {
 	t_index	index;
 

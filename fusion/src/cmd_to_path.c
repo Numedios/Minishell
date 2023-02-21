@@ -77,6 +77,7 @@ void	change_cmd(char **str, char **tab)
 			return ;
 		}
 		free(res);
+		res = NULL;
 		i++;
 	}
 }

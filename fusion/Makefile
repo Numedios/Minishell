@@ -18,7 +18,7 @@ NAME = minishell
 #==============================================================================#
 
 CC = gcc
-CFLAGS = -g
+CFLAGS = -g -Wall -Werror -Wextra
 DFLAGS = -MMD
 MKDIR = mkdir -p
 RM = rm -f
@@ -103,6 +103,7 @@ SRC = main.c \
 		utils_parsing_bisbis.c \
 		utils_pipex_two.c \
 		utils_main.c \
+		map_cpy.c \
 
 #==============================================================================#
 #                                   HEADERS                                    #

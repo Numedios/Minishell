@@ -53,7 +53,6 @@ void	do_echo(char **arg)
 {
 	int	space;
 	int	i;
-	int	j;
 
 	i = 0;
 	space = 1;

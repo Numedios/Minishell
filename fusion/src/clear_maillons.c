@@ -46,9 +46,6 @@ void	free_maillon_middle(t_maillons **lst, t_maillons **first)
 
 int	find_if_have_output(t_input_output *lst, char *sep)
 {
-	int	i;
-
-	i = 0;
 	while (lst)
 	{
 		if (ft_strcmp(lst-> operator, sep))
@@ -62,9 +59,6 @@ int	find_if_have_output(t_input_output *lst, char *sep)
 
 char	*find_s(t_input_output *lst, char *sep)
 {
-	int	i;
-
-	i = 0;
 	while (lst && lst)
 	{
 		if (ft_strcmp(lst-> operator, sep))

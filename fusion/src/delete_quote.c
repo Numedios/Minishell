@@ -52,34 +52,6 @@ static int	skip_inside(char *line, int i, char c)
 	return (i + 1);
 }
 
-static int	skip_other(char *line, int i, int *j, char **new_line)
-{
-	if (line [i] == '\0' || line[i] != '\'')
-		return (i);
-	else if (line[i + 1] != '\0' && line[i] == '\'' && line[i + 1] == '\'')
-	{
-		(*new_line)[(*j)] = line[i];
-		(*j)++;
-		i++;
-		(*new_line)[(*j)] = line[i];
-		(*j)++;
-		return (i + 1);
-	}
-	(*new_line)[(*j)] = line[i];
-	(*j)++;
-	i++;
-	while (line && line [i] != '\0' && line[i] != '\'')
-	{
-		(*new_line)[(*j)] = line[i];
-		(*j)++;
-		i++;
-	}
-	(*new_line)[(*j)] = line[i];
-	(*j)++;
-	return (i + 1);
-}
-//"'
-//
 static char	*last(char *new_line)
 {
 	int	i;
@@ -101,6 +73,7 @@ static char	*last(char *new_line)
 	new_line[j] = '\0';
 	return (new_line);
 }
+
 char	*del_q(char *line, int j, int len)
 {
 	char	*new_line;
@@ -124,6 +97,7 @@ char	*del_q(char *line, int j, int len)
 	new_line[j] = line[quote.i];
 	if (line)
 		free (line);
+	line = NULL;
 	new_line = last(new_line);
 	return (new_line);
 }

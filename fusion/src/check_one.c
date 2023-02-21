@@ -124,7 +124,6 @@ static int	part_two(char *line, int i)
 int	check_1(char *line)
 {
 	int	i;
-	int	j;
 
 	i = 0;
 	while (line && line[i])

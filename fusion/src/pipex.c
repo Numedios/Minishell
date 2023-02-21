@@ -24,7 +24,6 @@ int	dup_fd(int new_stdin, int new_stdout)
 
 int	pipex(t_maillons *maillons, char ***env, t_garbage *garbage)
 {
-	int	*pipes;
 	int	len;
 
 	len = ft_strlen_maillons(maillons);

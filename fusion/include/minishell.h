@@ -139,7 +139,7 @@ int				what_to_do(char *tab, char **env);
 /*  security */
 int				check_if_builtin (char **env, char ***new_env, int i, t_garbage *garbage);
 int				check_echo (char **args,int cmp, int i, int execute);
-int				check_if_exit(char **args, char **env, t_garbage *garbage);
+int				check_if_exit(char **args, t_garbage *garbage);
 int				check_builtin(char **args);
 
 /* main.c */
@@ -153,7 +153,7 @@ void			end_quote(t_garbage *garbage);
 char			*del_q(char *line, int j, int len);
 
 /*  built in cd */
-int				do_cd(char **new_env, char *path);
+int				do_cd(char ***new_env, char *path);
 
 /*  built in env */
 void			do_env(char **env);
@@ -206,17 +206,17 @@ int				child2(two_pipe *two_pipe, char ***env, t_maillons *maillons, t_garbage *
 int				check_access(t_maillons *maillons);
 
 /*  replace dollar */
-char			*replace_dollar(char *tab, char **new_env, int i, int skip);
+char			*replace_dollar(char *tab, char **new_env, int i);
 char			*found_it(char *tab, char **new_env, t_index *index, int *skip);
 
 /*  dollars_interrogation */
 void			new_in_old(for_dollar *var, t_index *index, char **new_env, int *skip);
 void			new_in_old_interrogation(for_dollar *var);
-char			*interrogation(char *tab, char **new_env, int skip, t_index index);
+char			*interrogation(char *tab, int skip, t_index index);
 char			*do_replace(char *tab, char **new_env, int skip, t_index index);
 
 /*  replace dollar 2 */
-char			*delete_dollar(char *tab, char **new_env, int i, int skip);
+char			*delete_dollar(char *tab, char **new_env, int i);
 char			*apply_delete(int i, int skip, char *tab);
 //char			*delete_dollar(char *line);
 
@@ -358,8 +358,8 @@ int	pipex_one(t_maillons *maillons, char ***env, t_garbage *garbage);
 /* pipex2.c */
 
 void	sigint_child(int unused);
-int	switch_dup2_fd_in(t_maillons *m, t_pipes *pipes, int i, int len);
-int	switch_dup2_fd_out(t_maillons *maillons, t_pipes *pipes, int i, int len);
+int	switch_dup2_fd_in(t_maillons *m, t_pipes *pipes, int i);
+int	switch_dup2_fd_out(t_maillons *maillons, t_pipes *pipes, int i);
 int	pipex_multiple(int len, t_garbage *g, int i);
 
 /*utils_pipex_two.c */
@@ -409,7 +409,12 @@ int				check_dollar(char *line);
 
 /* garbage_collector.c  */
 
-void			initialize_garbage(t_garbage *garbage);
+void			initialize_garbage(t_garbage *garbage, int argc, char ** argv);
+
+
+/* cpy_map.c */
+
+char **map_copy(char **map);
 
 /* supp.c */
 

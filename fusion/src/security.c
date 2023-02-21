@@ -32,12 +32,10 @@ static int	control_builtin(char **args, int cmp)
 int	check_builtin(char **args)
 {
 	int	cmp;
-	int	i;
 	int	sign;
 
 	sign = 0;
 	cmp = 0;
-	i = 0;
 	while (args && args[cmp])
 	{
 		if (args[cmp][0] == '-')
@@ -62,9 +60,7 @@ int	check_builtin(char **args)
 
 int	which_builtin(char **env, int i, int cmp, t_garbage *g)
 {
-	if (g->maillons->args[0]
-		&& str_cmp(g->maillons->args[0], "cd") == 1 && cmp == 2)
-		return (do_cd(env, g->maillons->args[1]), 0);
+	(void)cmp;
 	if (g->maillons->args[0] && str_cmp(g->maillons->args[0], "env") == 1)
 		return (do_env(env), 0);
 	if (g->maillons->args[0] && str_cmp(g->maillons->args[0], "pwd") == 1)
@@ -110,19 +106,20 @@ int	check_if_builtin(char **env, char ***new_env, int i, t_garbage *g)
 		}
 		return (0);
 	}
+	if (g->maillons->args[0]
+		&& str_cmp(g->maillons->args[0], "cd") == 1 && j == 2)
+		return (do_cd(new_env, g->maillons->args[1]), 0);
 	if (sign != 1)
 		return (which_builtin(env, i, j, g));
 	else
 		return (1);
 }
 
-int	check_if_exit(char **args, char **env, t_garbage *garbage)
+int	check_if_exit(char **args, t_garbage *garbage)
 {
 	int	cmp;
-	int	i;
 
 	cmp = 0;
-	i = 0;
 	while (args && args[cmp])
 	{
 		cmp++;

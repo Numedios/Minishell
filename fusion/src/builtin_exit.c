@@ -14,8 +14,6 @@
 
 long long	ft_atoll_capped(const char *nptr, int *flag, int j, int nb)
 {
-	long long	print;
-
 	if (nptr == NULL)
 		return (0);
 	while (*nptr == 32 || (*nptr >= 9 && *nptr <= 13))
@@ -28,10 +26,8 @@ long long	ft_atoll_capped(const char *nptr, int *flag, int j, int nb)
 	}
 	while (*nptr >= '0' && *nptr <= '9')
 	{
-		print = LLONG_MAX;
 		if (j > 0 && (LLONG_MAX - *nptr + '0') / 10 < nb)
 			return (++*flag, 0);
-		print = ((LLONG_MAX + *nptr - '0') / 10);
 		if (j < 0 && (LLONG_MAX + *nptr - '0') / 10 > -nb)
 			return (++*flag, 0);
 		nb = nb * 10 + *nptr - '0';

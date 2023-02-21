@@ -41,7 +41,7 @@ void	new_in_old_interrogation(for_dollar *var)
 	}
 }
 
-char	*interrogation(char *tab, char **new_env, int skip, t_index index)
+char	*interrogation(char *tab, int skip, t_index index)
 {
 	for_dollar	var;
 
@@ -64,7 +64,9 @@ char	*interrogation(char *tab, char **new_env, int skip, t_index index)
 		var.new_tab[(var.pos)++] = tab[(var.pos_tab)++];
 	var.new_tab[var.pos] = '\0';
 	free(var.value);
-	return (free(tab), var.new_tab);
+	free(tab);
+	tab = NULL;
+	return (var.new_tab);
 }
 
 char	*do_replace(char *tab, char **new_env, int skip, t_index index)
@@ -93,5 +95,6 @@ char	*do_replace(char *tab, char **new_env, int skip, t_index index)
 	}
 	var.new_tab[var.pos] = '\0';
 	free(tab);
+	tab = NULL;
 	return (var.new_tab);
 }

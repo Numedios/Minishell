@@ -19,6 +19,7 @@ void	free_split_elem(t_split_elem *lst)
 			free(lst->arg);
 	lst->next = NULL;
 	free(lst);
+	lst = NULL;
 }
 
 void	ft_free_split_arg(t_split_elem **lst)
@@ -45,10 +46,12 @@ void	ft_free_tab(char **tab)
 	while (tab && tab[i])
 	{
 		free(tab[i]);
+		tab[i] = NULL;
 		i++;
 	}
 	if (tab)
 		free(tab);
+	tab = NULL;
 }
 
 void	free_maillon(t_maillons *lst)

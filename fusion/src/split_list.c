@@ -32,7 +32,10 @@ t_split_elem	*ft_split_list(char *str, char *sep)
 			add_end_split_elem(&lst, elem);
 		}
 		else
+		{
 			free(res);
+			res = NULL;
+		}
 		i++;
 	}
 	return (lst);

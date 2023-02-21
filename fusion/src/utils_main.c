@@ -33,7 +33,6 @@ char	*rl_gets(void)
 
 t_maillons	*loop_create_maillons(char *line, t_garbage *garbage, int i)
 {
-	t_maillons		*maillons;
 	t_maillons		*maillon;
 	t_maillons		*prev;
 

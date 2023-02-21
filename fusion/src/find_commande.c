@@ -70,11 +70,6 @@ int	find_argument_loop(t_split_elem *lst)
 				|| ft_strcmp((lst)->arg, ">") || ft_strcmp((lst)->arg, ">>"))));
 }
 
-char free_tab_garbage(char **tab, t_garbage *garbage)
-{
-	
-}
-
 // si l' prev est pas un < ou << ou > ou >> (pour le premier if)
 // si *lst differend de > >> < << (pour le deuxieme if)
 char	**find_argument(t_split_elem *lst, t_garbage *g, int i)
