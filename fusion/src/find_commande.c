@@ -70,20 +70,23 @@ int	find_argument_loop(t_split_elem *lst)
 				|| ft_strcmp((lst)->arg, ">") || ft_strcmp((lst)->arg, ">>"))));
 }
 
+char free_tab_garbage(char **tab, t_garbage *garbage)
+{
+	
+}
+
 // si l' prev est pas un < ou << ou > ou >> (pour le premier if)
 // si *lst differend de > >> < << (pour le deuxieme if)
-char	**find_argument(t_split_elem *lst, t_garbage *g)
+char	**find_argument(t_split_elem *lst, t_garbage *g, int i)
 {
 	t_split_elem	*prev;
 	char			**res;
 	int				len;
-	int				i;
 
 	len = count_arg(lst);
 	res = malloc(sizeof(char *) * (len + 1));
 	if (!res)
 		free_garbage_env_exit(g, 1);
-	i = 0;
 	prev = lst;
 	while (lst)
 	{
@@ -97,8 +100,7 @@ char	**find_argument(t_split_elem *lst, t_garbage *g)
 				{
 					ft_free_tab(res);
 					free_garbage_env_exit(g, 1);
-				}
-				
+				}	
 				i++;
 			}
 		}

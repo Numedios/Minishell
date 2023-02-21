@@ -38,7 +38,7 @@ t_input_output	*find_input_output(t_split_elem *lst, t_garbage *g)
 		{
 			if (find_input_output_loop(lst))
 			{
-				add = create_input_output((lst)->arg, prev->arg, input_prev, g);
+				add = crea_input((lst)->arg, prev->arg, input_prev, g);
 				add_end_input_output(&first, add);
 			}
 		}

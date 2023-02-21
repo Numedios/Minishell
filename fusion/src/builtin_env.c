@@ -18,10 +18,7 @@ void	do_env(char **env)
 
 	i = 0;
 	if (env == NULL)
-	{
-		//printf("\n");
 		return ;
-	}
 	while (env[i])
 	{
 		s_fd(env[i], 1);

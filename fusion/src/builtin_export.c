@@ -128,6 +128,7 @@ char	**do_export(char *tab, char **env_copy, int i, int a)
 	int		j;
 	char	**new_env;
 
+	j = 0;
 	if (parsing_of_export(tab, env_copy, &a, &j) == 1)
 		return (env_copy);
 	if (env_copy && j != -1)

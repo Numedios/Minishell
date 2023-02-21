@@ -271,7 +271,7 @@ char			*find_output(char **tab);
 /* find_command.c */
 
 char			*find_command(t_split_elem *lst);
-char			**find_argument(t_split_elem *lst, t_garbage *g);
+char			**find_argument(t_split_elem *lst, t_garbage *g, int i);
 
 /* find_input_output.c */
 
@@ -299,7 +299,7 @@ void			ft_strjoin_list(t_split_elem *list, t_split_elem **add, t_split_elem **fi
 
 /* list_input_output.c */
 
-t_input_output	*create_input_output(char *name, char *operator, t_input_output *prev, t_garbage *g);
+t_input_output	*crea_input(char *name, char *operator, t_input_output *prev, t_garbage *g);
 t_input_output	*lstlast_input_output(t_input_output *lst);
 void			add_end_input_output(t_input_output **list, t_input_output *add);
 
