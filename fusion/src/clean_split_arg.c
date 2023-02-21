@@ -48,10 +48,8 @@ void	add_el(t_split_elem *lst, t_split_elem **start, t_split_elem *prev)
 	lst = tmp;
 	if (del)
 		free_split_elem(del);
-	del = NULL;
 	if (*add)
 		free(add);
-	add = NULL;
 }
 
 /*

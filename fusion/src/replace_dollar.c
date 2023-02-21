@@ -19,7 +19,7 @@ echo $hol (hol n'existe pas)        echo $$SYSTEMD_EXEC_PID
 
 extern int	g_exit_code[2];
 
-static char *apply_the_change(char *tab, char **env, t_index *index, int skip)
+static char	*apply_the_change(char *tab, char **env, t_index *index, int skip)
 {
 	index->j = research(skip, index->a, tab, env);
 	if (index->j != -1)

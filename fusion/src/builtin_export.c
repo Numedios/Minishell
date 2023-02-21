@@ -67,61 +67,25 @@ int	parse_export(char *tab, int i, int a)
 	return (a);
 }
 
-char	**replace_value(int j, int a, char *tab, char **env)
+char	*strjoin_and_free(char *s1, char *s2)
+{
+	char	*tmp;
+
+	tmp = ft_strjoin(s1, s2);
+	free(s1);
+	if (tmp == NULL)
+		return (NULL);
+	return (tmp);
+}
+
+static int	str_len_tab(char **env_copy)
 {
 	int	i;
 
 	i = 0;
-	if (a == 0)
-	{
-		free(env[j]);
-		env[j] = NULL;
-		env[j] = ft_strdup(tab);
-		return (env);
-	}
-	if (a == 3)
-	{
-		while (tab && tab[i] != '=')
-			i++;
+	while (env_copy && env_copy[i])
 		i++;
-		env[j] = ft_strjoin(env[j], &tab[i]);
-		return (env);
-	}
-	if (a == 4)
-	{
-		free(env[j]);
-		env[j] = ft_strdup(tab);
-		return (env);
-	}
-	else
-		return (env);
-}
-
-char	**new_value(int i, int a, char *tab, char **env)
-{
-	int	j;
-
-	j = 0;
-	if (a == 0)
-	{
-		env[i] = ft_strdup(tab);
-		return (env);
-	}
-	if (a == 3)
-	{
-		while (tab && tab[j] != '=')
-			j++;
-		j++;
-		env[i] = ft_strjoin(env[i], &tab[j]);
-		return (env);
-	}
-	if (a == 4)
-	{
-		env[i] = ft_strdup(tab);
-		return (env);
-	}
-	else
-		return (env);
+	return (i);
 }
 
 char	**do_export(char *tab, char **env_copy, int i, int a)
@@ -136,11 +100,11 @@ char	**do_export(char *tab, char **env_copy, int i, int a)
 		env_copy = replace_value(j, a, tab, env_copy);
 		return (env_copy);
 	}
+	if (check_if_tab_exist(tab, env_copy) != 1 && a == 3)
+		return (env_copy);
 	else
 	{
-		while (env_copy && env_copy[i])
-			i++;
-		new_env = malloc ((i + 2) * sizeof(char *));
+		new_env = malloc ((str_len_tab(env_copy) + 2) * sizeof(char *));
 		i = 0;
 		while (env_copy && env_copy[i])
 		{
@@ -149,8 +113,6 @@ char	**do_export(char *tab, char **env_copy, int i, int a)
 		}
 		new_env = new_value(i, a, tab, new_env);
 		new_env[i + 1] = NULL;
-		ft_free_tab(env_copy);
-		env_copy = NULL;
-		return (new_env);
+		return (ft_free_tab(env_copy), new_env);
 	}
 }

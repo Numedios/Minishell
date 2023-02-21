@@ -61,10 +61,8 @@ int	heredoc(char *stop)
 			write(pipe_fd[1], str, ft_strlen(str));
 			write(pipe_fd[1], "\n", 1);
 			free(str);
-			str = NULL;
 		}
 	}
 	free(str);
-	str = NULL;
 	return (close(pipe_fd[1]), pipe_fd[0]);
 }

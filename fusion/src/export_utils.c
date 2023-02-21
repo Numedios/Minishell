@@ -91,12 +91,8 @@ int	parsing_of_export(char *tab, char **env_copy, int *a, int *j)
 		return (1);
 	}
 	if (env_copy && check_if_tab_exist(tab, env_copy) == 1)
-	{
-		printf("export: '%s' : already defined\n", tab);
-		return (1);
-	}
-	if (env_copy)
-		(*j) = what_to_do(tab, env_copy);
+		return (printf("export: '%s' : already defined\n", tab), 1);
+	(*j) = what_to_do(tab, env_copy);
 	return (0);
 }
 

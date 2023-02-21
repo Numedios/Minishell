@@ -49,7 +49,6 @@ OBJ_DIR = obj/
 SRC = main.c \
 		libft.c	\
 		split.c \
-		supp.c \
 		free.c \
 		quote.c \
 		find_commande.c \
@@ -103,7 +102,7 @@ SRC = main.c \
 		utils_parsing_bisbis.c \
 		utils_pipex_two.c \
 		utils_main.c \
-		map_cpy.c \
+		extra_utils.c \
 
 #==============================================================================#
 #                                   HEADERS                                    #

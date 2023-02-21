@@ -72,15 +72,13 @@ int	find_argument_loop(t_split_elem *lst)
 
 // si l' prev est pas un < ou << ou > ou >> (pour le premier if)
 // si *lst differend de > >> < << (pour le deuxieme if)
-char	**find_argument(t_split_elem *lst, t_garbage *g, int i)
+char	**find_argument(t_split_elem *lst, t_garbage *g, int i, int len)
 {
 	t_split_elem	*prev;
-	char			**res;
-	int				len;
+	char			**r;
 
-	len = count_arg(lst);
-	res = malloc(sizeof(char *) * (len + 1));
-	if (!res)
+	r = malloc(sizeof(char *) * (len + 1));
+	if (!r)
 		free_garbage_env_exit(g, 1);
 	prev = lst;
 	while (lst)
@@ -90,18 +88,15 @@ char	**find_argument(t_split_elem *lst, t_garbage *g, int i)
 		{
 			if (find_argument_loop(lst))
 			{
-				res[i] = ft_strdup(lst->arg);
-				if (!res[i])
-				{
-					ft_free_tab(res);
-					free_garbage_env_exit(g, 1);
-				}	
+				r[i] = ft_strdup(lst->arg);
+				if (!r[i])
+					return (ft_free_tab(r), free_garbage_env_exit(g, 1), NULL);
 				i++;
 			}
 		}
 		prev = lst;
 		lst = (lst)->next;
 	}
-	res[i] = 0;
-	return (res);
+	r[i] = 0;
+	return (r);
 }

@@ -58,52 +58,48 @@ int	check_builtin(char **args)
 	return (1);
 }
 
-int	which_builtin(char **env, int i, int cmp, t_garbage *g)
+static void	first_loop(int *j, int *sign, t_garbage *g)
 {
-	(void)cmp;
-	if (g->maillons->args[0] && str_cmp(g->maillons->args[0], "env") == 1)
-		return (do_env(env), 0);
-	if (g->maillons->args[0] && str_cmp(g->maillons->args[0], "pwd") == 1)
-		return (do_pwd(), 0);
-	
-	if (g->maillons->args[0] && str_cmp(g->maillons->args[0], "unset") == 1)
+	(*j) = 0;
+	(*sign) = 0;
+	while (g->maillons->args && g->maillons->args[(*j)])
 	{
-		while (env && g->maillons->args[++i])
-			do_unset(g->maillons->args[i], env, 0, 0);
-		return (0);
+		if (g->maillons->args[(*j)][0] == '-')
+			(*sign) = 1;
+		(*j)++;
 	}
-	return (1);
+}
+
+static void	second_loop(char ***new_env, int i, t_garbage *g, char **env)
+{
+	int	j;
+
+	while (g->maillons->args[++i])
+	{
+		j = 0;
+		while (g->maillons->args[i][j] && g->maillons->args[i][j] != '=')
+			j++;
+		if (g->maillons->args[i][j] == '=')
+		{
+			(*new_env) = do_export(g->maillons->args[i], env, 0, 0);
+			env = (*new_env);
+		}
+	}
 }
 
 int	check_if_builtin(char **env, char ***new_env, int i, t_garbage *g)
 {
 	int	j;
-	int sign;
+	int	sign;
 
-	j = 0;
-	sign = 0;
-	while (g->maillons->args && g->maillons->args[j])
-	{
-		if (g->maillons->args[j][0] == '-')
-			sign = 1;
-		j++;
-	}
+	first_loop(&j, &sign, g);
 	if (g->maillons->args[0]
 		&& str_cmp(g->maillons->args[0], "exit") == 1 && j < 3)
 		return (do_exit(g->maillons->args[1], g), 0);
-	if (sign != 1 && g->maillons->args[0] && str_cmp(g->maillons->args[0], "export") == 1)
+	if (sign != 1 && g->maillons->args[0]
+		&& str_cmp(g->maillons->args[0], "export") == 1)
 	{
-		while (g->maillons->args[++i])
-		{
-			j = 0;
-			while (g->maillons->args[i][j] && g->maillons->args[i][j] != '=')
-				j++;
-			if (g->maillons->args[i][j] == '=')
-			{
-				(*new_env) = do_export(g->maillons->args[i], env, 0, 0);
-				env = (*new_env);
-			}
-		}
+		second_loop(new_env, i, g, env);
 		return (0);
 	}
 	if (g->maillons->args[0]
@@ -113,18 +109,4 @@ int	check_if_builtin(char **env, char ***new_env, int i, t_garbage *g)
 		return (which_builtin(env, i, j, g));
 	else
 		return (1);
-}
-
-int	check_if_exit(char **args, t_garbage *garbage)
-{
-	int	cmp;
-
-	cmp = 0;
-	while (args && args[cmp])
-	{
-		cmp++;
-	}
-	if (args[0] && str_cmp(args[0], "exit") == 1 && cmp < 3)
-		return (do_exit(args[1], garbage), 0);
-	return (1);
 }

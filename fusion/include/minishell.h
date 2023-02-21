@@ -135,6 +135,7 @@ char			*ft_strchr(const char *s, int c);
 int				check_if_tab_exist(char *tab, char **env);
 int				parsing_of_export(char *tab, char **env_copy, int *a, int *j);
 int				what_to_do(char *tab, char **env);
+char		*strjoin_and_free(char *s1, char *s2);
 
 /*  security */
 int				check_if_builtin (char **env, char ***new_env, int i, t_garbage *garbage);
@@ -271,7 +272,8 @@ char			*find_output(char **tab);
 /* find_command.c */
 
 char			*find_command(t_split_elem *lst);
-char			**find_argument(t_split_elem *lst, t_garbage *g, int i);
+int	count_arg(t_split_elem *lst);
+char			**find_argument(t_split_elem *lst, t_garbage *g, int i, int len);
 
 /* find_input_output.c */
 
@@ -369,6 +371,14 @@ void	pipex_multiple_free(t_garbage *garbage);
 void	pipex_multiple_close_pipe(t_garbage *garbage, int len, int i);
 void	handle_child_process(int i, int len, t_garbage *g);
 
+/*extra_utils.c */
+
+char	**replace_value(int j, int a, char *tab, char **env);
+char	**new_value(int i, int a, char *tab, char **env);
+int		check_if_builtin(char **env, char ***new_env, int i, t_garbage *g);
+int		check_if_exit(char **args, t_garbage *garbage);
+int		which_builtin(char **env, int i, int cmp, t_garbage *g);
+
 /* utils_pipex.c */
 
 void			free_all_pipes(int argc, t_pipes *pipes);
@@ -410,11 +420,6 @@ int				check_dollar(char *line);
 /* garbage_collector.c  */
 
 void			initialize_garbage(t_garbage *garbage, int argc, char ** argv);
-
-
-/* cpy_map.c */
-
-char **map_copy(char **map);
 
 /* supp.c */
 

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sbelabba <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/21 18:29:01 by sbelabba          #+#    #+#             */
+/*   Updated: 2023/02/21 18:29:05 by sbelabba         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	g_exit_code[2];
@@ -14,7 +26,6 @@ static void	first_if(char **line, t_garbage *garbage)
 		s_fd("\nexit\n", 2);
 		free_garbage_env_exit(garbage, 0);
 	}
-	
 }
 
 int	main(int argc, char **argv, char **env)
@@ -23,10 +34,7 @@ int	main(int argc, char **argv, char **env)
 	t_garbage	garbage;
 
 	if (!isatty(0))
-	{
-		dprintf(2, "Error: Invalid STDIN\n");
-		return (0);
-	}
+		return (dprintf(2, "Error: Invalid STDIN\n"), 0);
 	initialize_garbage(&garbage, argc, argv);
 	garbage.new_env = my_env(env, &garbage);
 	while (1)

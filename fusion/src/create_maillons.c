@@ -20,7 +20,7 @@ t_maillons	*create_maillons(t_split_elem **s, t_maillons *p, t_garbage *g)
 	if (!new)
 		free_garbage_env_exit(g, 1);
 	new -> command = find_command(*s);
-	new -> args = find_argument(*s, g, 0);
+	new -> args = find_argument(*s, g, 0, count_arg(*s));
 	new -> output = find_input_output(*s, g);
 	new -> heredoc = -1;
 	new -> next = NULL;

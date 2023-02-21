@@ -94,7 +94,5 @@ char	*do_replace(char *tab, char **new_env, int skip, t_index index)
 		var.pos_tab++;
 	}
 	var.new_tab[var.pos] = '\0';
-	free(tab);
-	tab = NULL;
-	return (var.new_tab);
+	return (free(tab), var.new_tab);
 }
