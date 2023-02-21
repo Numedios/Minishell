@@ -48,7 +48,9 @@ int	check_input(t_input_output *output)
 		return (1);
 	if (fd == -1)
 	{
-		dprintf(2, "bad files Directorty %s\n", output->file_name);
+		s_fd("bad files Directorty ", 2);
+		s_fd(output->file_name, 2);
+		s_fd("\n", 2);
 		return (-1);
 	}
 	return (close(fd), 1);

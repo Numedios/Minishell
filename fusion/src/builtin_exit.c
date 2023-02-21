@@ -67,7 +67,7 @@ void	do_exit(char *s, t_garbage *garbage)
 			flag++;
 		else
 		{
-			dprintf(2, "Minishell: exit: %s: numeric argument required\n", s);
+			dprintf(2, "exit: %s: numeric argument required\n", s);
 			exit_free(garbage, 2);
 		}
 	}

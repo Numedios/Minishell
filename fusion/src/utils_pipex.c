@@ -71,7 +71,6 @@ t_pipes	*create_all_pipes(int len)
 
 	pipes = malloc(sizeof(t_pipes));
 	pipes->pipe = create_pipes(len);
-	printf("%d\n", pipes->pipe[0]);
 	pipes->len = len;
 	if (!pipes || !pipes->pipe)
 	{

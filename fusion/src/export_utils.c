@@ -70,18 +70,28 @@ int	check_if_tab_exist(char *tab, char **env)
 	return (0);
 }
 
+static void print_export(char *s)
+{
+	if (s)
+	{
+		s_fd("export: `",2);
+		s_fd(s,2);
+		s_fd("': not a valid identifier\n", 2);
+	}
+} 
+
 int	parsing_of_export(char *tab, char **env_copy, int *a, int *j)
 {
 	if (ft_strchr(tab, '=') == NULL)
 	{
-		printf("export: `%s': not a valid identifier\n", tab);
+		print_export(tab);
 		g_exit_code[0] = 1;
 		return (1);
 	}
 	(*a) = parse_export(tab, 0, 1);
 	if ((*a) == 1)
 	{
-		printf("export: `%s': not a valid identifier\n", tab);
+		print_export(tab);
 		g_exit_code[0] = 1;
 		return (1);
 	}

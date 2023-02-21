@@ -51,7 +51,7 @@ int	check_builtin(char **args)
 		else
 		{
 			g_exit_code[0] = 130;
-			dprintf(2, "exit\nbash: exit: too many arguments\n");
+			s_fd("exit\nbash: exit: too many arguments\n", 2);
 			return (2);
 		}
 	}

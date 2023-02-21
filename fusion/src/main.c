@@ -23,7 +23,7 @@ static void	first_if(char **line, t_garbage *garbage)
 		g_exit_code[0] = 0;
 	if ((*line) == NULL && g_exit_code[1] != 8)
 	{
-		s_fd("\nexit\n", 2);
+		s_fd("exit\n", 2);
 		free_garbage_env_exit(garbage, 0);
 	}
 }
@@ -34,7 +34,7 @@ int	main(int argc, char **argv, char **env)
 	t_garbage	garbage;
 
 	if (!isatty(0))
-		return (dprintf(2, "Error: Invalid STDIN\n"), 0);
+		return (s_fd("Error: Invalid STDIN\n", 2), 0);
 	initialize_garbage(&garbage, argc, argv);
 	garbage.new_env = my_env(env, &garbage);
 	while (1)
