@@ -130,7 +130,7 @@ char	**do_export(char *tab, char **env_copy, int i, int a)
 
 	if (parsing_of_export(tab, env_copy, &a, &j) == 1)
 		return (env_copy);
-	if (j != -1)
+	if (env_copy && j != -1)
 	{
 		env_copy = replace_value(j, a, tab, env_copy);
 		return (env_copy);
@@ -150,4 +150,5 @@ char	**do_export(char *tab, char **env_copy, int i, int a)
 		new_env[i + 1] = NULL;
 		return (ft_free_tab(env_copy), new_env);
 	}
+	return (NULL);
 }

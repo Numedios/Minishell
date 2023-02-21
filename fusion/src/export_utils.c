@@ -55,6 +55,8 @@ int	check_if_tab_exist(char *tab, char **env)
 	int	len_env;
 	int	i;
 
+	if (!env)
+		return (0);
 	len_tab = ft_strlen(tab);
 	i = 0;
 	while (env && env[i])
@@ -83,17 +85,18 @@ int	parsing_of_export(char *tab, char **env_copy, int *a, int *j)
 		g_exit_code[0] = 1;
 		return (1);
 	}
-	if ((*a) == 2)
+	if (env_copy && (*a) == 2)
 	{
 		do_env(env_copy);
 		return (1);
 	}
-	if (check_if_tab_exist(tab, env_copy) == 1)
+	if (env_copy && check_if_tab_exist(tab, env_copy) == 1)
 	{
 		printf("export: '%s' : already defined\n", tab);
 		return (1);
 	}
-	(*j) = what_to_do(tab, env_copy);
+	if (env_copy)
+		(*j) = what_to_do(tab, env_copy);
 	return (0);
 }
 

@@ -19,7 +19,7 @@ void	do_env(char **env)
 	i = 0;
 	if (env == NULL)
 	{
-		printf("vide\n");
+		//printf("\n");
 		return ;
 	}
 	while (env[i])
@@ -36,7 +36,7 @@ char	**my_env(char **env, t_garbage *garbage)
 	char	**env_copy;
 
 	i = 0;
-	if (env[i] == NULL)
+	if (!env || env[i] == NULL)
 		return (NULL);
 	while (env[i])
 		i++;

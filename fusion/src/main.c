@@ -22,6 +22,11 @@ int	main(int argc, char **argv, char **env)
 	t_garbage	garbage;
 	char		**new_env;
 
+	if (!isatty(0))
+	{
+		dprintf(2, "Error: Invalid STDIN\n");
+		return (0);
+	}
 	initialize_garbage(&garbage);
 	garbage.new_env = my_env(env, &garbage);
 	while (1)

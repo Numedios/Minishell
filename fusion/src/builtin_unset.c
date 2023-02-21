@@ -33,7 +33,7 @@ void	do_unset(char *tab, char **env_copy, int i, int found_line)
 	n = 0;
 	if (tab == NULL)
 		return ;
-	if (env_copy[i] == NULL)
+	if (!env_copy || env_copy[i] == NULL)
 		return ;
 	while (tab && tab[n])
 		n++;

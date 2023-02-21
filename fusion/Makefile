@@ -18,7 +18,7 @@ NAME = minishell
 #==============================================================================#
 
 CC = gcc
-CFLAGS = -g -fsanitize=address
+CFLAGS = -g
 DFLAGS = -MMD
 MKDIR = mkdir -p
 RM = rm -f
