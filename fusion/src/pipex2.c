@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+extern int	g_exit_code[2];
+
 /* rajouter exit code */
 
 void	sigint_child(int unused)
@@ -87,10 +89,70 @@ int	switch_dup2_fd_out(t_maillons *maillons, t_pipes *pipes, int i)
 	return (1);
 }
 
+t_maillons *get_last_maillons(t_maillons *maillons)
+{
+	t_maillons *tmp;
+
+	tmp = maillons;
+	if (!tmp) 
+		return (NULL);
+	while (tmp->next) 
+		tmp = tmp->next;
+	return (tmp);
+}
+
+
+int	is_builtin_parent(t_garbage *data, t_maillons *last, char *cmd)
+{
+	if (!cmd || (last && data->maillons != last))
+		return (0);
+	if (!ft_strcmp(cmd, "exit"))
+		return (1);
+	else if (!ft_strcmp(cmd, "cd"))
+		return (1);
+	else if (!ft_strcmp(cmd, "export"))
+		return (1);
+	else if (!ft_strcmp(cmd, "unset"))
+		return (1);
+	return (0);
+}
+
+
+static void	catch_child_status(t_garbage *data, int wstatus, t_maillons *command, t_maillons *last)
+{
+	int	status_code;
+
+	status_code = 0;
+	if (WIFSIGNALED(wstatus))
+	{
+		status_code = WTERMSIG(wstatus);
+		if (status_code == 2)
+			g_exit_code[0] = 130;
+		else if (status_code == 3)
+		{
+			g_exit_code[0] = 131;
+			if (command == last)
+			{
+				s_fd("Quit", 2);
+				if (WCOREDUMP(wstatus))
+					s_fd(" (core dumped)", 2);
+				s_fd("\n", 2);
+			}
+		}
+		return ;
+	}
+	else if (WIFEXITED(wstatus))
+		g_exit_code[0] = WEXITSTATUS(wstatus);
+	if (!is_builtin_parent(data, last, command->command))
+		g_exit_code[0] = status_code;
+}
+
+
 int	pipex_multiple(int len, t_garbage *g, int i)
 {
 	pid_t		pid;
 	t_maillons	*tmp;
+	int		wstatus;
 
 	tmp = g->maillons;
 	g->pipes = create_all_pipes(len - 1);
@@ -109,7 +171,10 @@ int	pipex_multiple(int len, t_garbage *g, int i)
 	}
 	i = -1;
 	while (++i < len)
-		waitpid(-1, NULL, 0);
+	{
+		waitpid(-1, &wstatus, 0);
+		catch_child_status(g, wstatus,tmp, get_last_maillons(g->maillons));
+	}
 	g->maillons = tmp;
 	pipex_multiple_free(g);
 	return (1);

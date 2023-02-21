@@ -17,6 +17,9 @@
 * 0 sinon
 */
 // rajouter echo $? qui imprime le code erreur
+
+extern	int g_exit_code[2];
+
 int	check_option_n(char *str, int *space)
 {
 	int	i;
@@ -70,4 +73,5 @@ void	do_echo(char **arg)
 	}
 	if (space == 1)
 		printf("\n");
+	g_exit_code[0] = 0;
 }

@@ -17,6 +17,8 @@
 *
 */
 
+extern int g_exit_code[2];
+
 static void	update_pwd(char ***new_env, char *pwd)
 {
 	char	dir[4096];
@@ -44,6 +46,7 @@ int	do_cd_change_directory(char *path, char **oldpwd)
 		s_fd("bash: cd: ", 2);
 		s_fd(path, 2);
 		s_fd(" No such file or directory\n", 2);
+		g_exit_code[0] = 1;
 		free (*oldpwd);
 		oldpwd = NULL;
 		return (1);

@@ -12,14 +12,16 @@
 
 #include "minishell.h"
 
+extern int	g_exit_code[2];
+
 void	pipex_multiple_check(t_garbage *g)
 {
 	if (g->maillons->heredoc != -1)
 		close((g->maillons)->heredoc);
 	if (check_if_builtin(g->new_env, &(g->new_env), 0, g) == 0)
-		free_garbage_env_exit(g, 0);
+		free_garbage_env_exit(g, g_exit_code[0]);
 	else if (check_echo(g->maillons->args, 0, 0, 0) == 0)
-		free_garbage_env_exit(g, 0);
+		free_garbage_env_exit(g, g_exit_code[0]);
 	else if (g->maillons->command != NULL
 		&& execve(g->maillons->command, g->maillons->args, g->new_env) == -1)
 		perror("execve");

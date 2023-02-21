@@ -362,6 +362,7 @@ int	pipex_one(t_maillons *maillons, char ***env, t_garbage *garbage);
 void	sigint_child(int unused);
 int	switch_dup2_fd_in(t_maillons *m, t_pipes *pipes, int i);
 int	switch_dup2_fd_out(t_maillons *maillons, t_pipes *pipes, int i);
+int	is_builtin_parent(t_garbage *data, t_maillons *last, char *cmd);
 int	pipex_multiple(int len, t_garbage *g, int i);
 
 /*utils_pipex_two.c */

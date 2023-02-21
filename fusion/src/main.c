@@ -18,6 +18,8 @@ static void	first_if(char **line, t_garbage *garbage)
 {
 	g_exit_code[1] = 0;
 	setup_signal_handlers();
+	// if (g_exit_code[0] != 130)
+	// 	g_exit_code[0] = 0;
 	(*line) = rl_gets();
 	if ((*line) && (*line)[0] == '\0')
 		g_exit_code[0] = 0;
