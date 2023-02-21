@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 23:25:32 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/02/20 13:38:41 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/21 14:45:02 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,29 @@ static int	skip_other(char *line, int i, int *j, char **new_line)
 	(*j)++;
 	return (i + 1);
 }
+//"'
+//
+static char	*last(char *new_line)
+{
+	int	i;
+	int	j;
 
+	i = 0;
+	j = 0;
+	while (new_line && new_line[i] != '\0')
+	{
+		if (new_line[i] == '"' && new_line[i + 1] == '\'')
+			i = i + 2;
+		else
+		{
+			new_line[j] = new_line[i];
+			j++;
+			i++;
+		}
+	}
+	new_line[j] = '\0';
+	return (new_line);
+}
 char	*del_q(char *line, int j, int len)
 {
 	char	*new_line;
@@ -102,5 +124,6 @@ char	*del_q(char *line, int j, int len)
 	new_line[j] = line[quote.i];
 	if (line)
 		free (line);
+	new_line = last(new_line);
 	return (new_line);
 }
