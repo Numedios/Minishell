@@ -12,37 +12,6 @@
 
 #include "minishell.h"
 
-/*char	**ft_split2(char *str, char *sep)
-{
-	int		i;
-	int		j;
-	char	**res;
-	char	quote;
-
-	i = 0;
-	j = 0;
-	res = malloc(sizeof(char *) * (count_words2(str, sep) + 1));
-	printf("count_word = %d\n", count_words2(str, sep));
-	if (!res)
-		return (NULL);
-	while (str && *str)
-	{
-		while (*str && !check_sep2(*str, sep))
-			str++;
-		if (*str && check_sep2(*str, sep))
-		{
-			res[i] = create_word_all2(str, sep);
-			i++;
-		}
-		while (*str && check_sep2(*str, sep))
-		{
-			str++;
-		}
-	}
-	res[i] = 0;
-	return (res);
-}*/
-
 /*
 * renvoie 0 si pas entre cote
 * renvoie 1 si c'est single cote

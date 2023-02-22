@@ -48,9 +48,9 @@ int	check_input(t_input_output *output)
 		return (1);
 	if (fd == -1)
 	{
-		s_fd("bad files Directorty ", 2);
+		s_fd("bash :  ", 2);
 		s_fd(output->file_name, 2);
-		s_fd("\n", 2);
+		s_fd(": No such file or directory\n", 2);
 		return (-1);
 	}
 	return (close(fd), 1);

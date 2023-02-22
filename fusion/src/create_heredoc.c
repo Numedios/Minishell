@@ -30,14 +30,6 @@ void	print_minishell_warning_heredoc(char *stop)
 	write(2, "\n", 1);
 }
 
-// void	prompt_eof(void)
-// {
-// 	g_exit_code[1] = 8;
-// 	// write(2, "\n", 1);
-// 	printf("minishell: warning eof\n");
-// 	close (0);
-// }
-
 int	heredoc(char *stop)
 {
 	int		pipe_fd[2];

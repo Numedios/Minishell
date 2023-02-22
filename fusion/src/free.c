@@ -73,6 +73,8 @@ void	free_maillon(t_maillons *lst)
 			free_inputs_outputs(&lst->output);
 			lst ->output = NULL;
 		}
+		if (lst-> heredoc != -1)
+			close(lst->heredoc);
 		if (lst)
 			free(lst);
 	}

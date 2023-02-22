@@ -18,7 +18,7 @@ NAME = minishell
 #==============================================================================#
 
 CC = gcc
-CFLAGS = -g -Wall -Werror -Wextra
+CFLAGS = -g 
 DFLAGS = -MMD
 MKDIR = mkdir -p
 RM = rm -f
@@ -103,6 +103,8 @@ SRC = main.c \
 		utils_pipex_two.c \
 		utils_main.c \
 		extra_utils.c \
+		switch_dup.c \
+		supp.c
 
 #==============================================================================#
 #                                   HEADERS                                    #

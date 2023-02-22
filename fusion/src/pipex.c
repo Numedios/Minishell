@@ -25,7 +25,9 @@ int	dup_fd(int new_stdin, int new_stdout)
 int	pipex(t_maillons *maillons, char ***env, t_garbage *garbage)
 {
 	int	len;
+	int	wstatus;
 
+	wstatus = 0;
 	len = ft_strlen_maillons(maillons);
 	if (check_access(maillons) == 1)
 		return (1);
@@ -34,6 +36,6 @@ int	pipex(t_maillons *maillons, char ***env, t_garbage *garbage)
 	if (len == 1)
 		pipex_one(maillons, env, garbage);
 	else if (len != 1)
-		pipex_multiple(len, garbage, 0);
+		pipex_multiple(len, garbage, 0, wstatus);
 	return (0);
 }

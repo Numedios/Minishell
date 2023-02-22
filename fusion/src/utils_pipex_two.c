@@ -30,12 +30,13 @@ void	pipex_multiple_check(t_garbage *g)
 
 void	pipex_multiple_free(t_garbage *garbage)
 {
+	/*free_garbage(garbage);
 	if ((garbage)->pipes && (garbage)->pipes->pipe)
 	{
 		free((garbage)->pipes->pipe);
 		free((garbage)->pipes);
 		(garbage)->pipes = NULL;
-	}
+	}*/
 }
 
 void	pipex_multiple_close_pipe(t_garbage *garbage, int len, int i)

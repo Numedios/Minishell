@@ -14,7 +14,7 @@
 
 extern int	g_exit_code[2];
 
-void	new_in_old(for_dollar *var, t_index *index, char **new_env, int *skip)
+void	new_in_old(t_for_dollar *var, t_index *index, char **new_env, int *skip)
 {
 	var->pos_new_env = str_len_env(new_env[index->j]);
 	while (new_env[index->j][var->pos_new_env] == '='
@@ -30,7 +30,7 @@ void	new_in_old(for_dollar *var, t_index *index, char **new_env, int *skip)
 	var->pos_tab = var->pos_tab + (*skip);
 }
 
-void	new_in_old_interrogation(for_dollar *var)
+void	new_in_old_interrogation(t_for_dollar *var)
 {
 	var->pos_tab = var->pos_tab + 2;
 	while (var->value[var->i])
@@ -43,7 +43,7 @@ void	new_in_old_interrogation(for_dollar *var)
 
 char	*interrogation(char *tab, int skip, t_index index)
 {
-	for_dollar	var;
+	t_for_dollar	var;
 
 	var.pos = 0;
 	var.pos_tab = 0;
@@ -71,7 +71,7 @@ char	*interrogation(char *tab, int skip, t_index index)
 
 char	*do_replace(char *tab, char **new_env, int skip, t_index index)
 {
-	for_dollar	var;
+	t_for_dollar	var;
 
 	var.pos = 0;
 	var.pos_tab = 0;

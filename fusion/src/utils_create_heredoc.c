@@ -47,7 +47,6 @@ void	find_all_heredoc_loop(t_maillons **maillons, int *copy_fd)
 	(*maillons) = (*maillons)->next;
 }
 
-//remttre la fonction des signaux du parent, que se passe il apres ctrl+c 
 void	find_all_heredoc(t_maillons *maillons)
 {
 	int				copy_fd;

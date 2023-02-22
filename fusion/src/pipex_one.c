@@ -74,37 +74,13 @@ int	pipex_one_condition(t_maillons *m, char ***e, t_garbage *g)
 	return (0);
 }
 
-int	pipex_one_dup(t_maillons **maillons)
-{
-	int		fd_in;
-	int		fd_out;
-
-	if ((*maillons)->command != NULL)
-	{
-		fd_in = find_stdin(*maillons);
-		fd_out = find_stdout(*maillons);
-		if (fd_in != -1)
-		{
-			dup2(fd_in, STDIN_FILENO);
-			close(fd_in);
-		}
-		if (fd_out != -1)
-		{
-			dup2(fd_out, STDOUT_FILENO);
-			close(fd_out);
-		}
-	}
-	return (1);
-}
-
-static void	catch_status(t_garbage *data, int wstatus, t_maillons *command)
+void	catch_status(t_garbage *data, int wstatus, t_maillons *command)
 {
 	int	status_code;
 
 	status_code = 0;
 	if (WIFSIGNALED(wstatus))
 	{
-		dprintf(2, "************************\n");
 		status_code = WTERMSIG(wstatus);
 		if (status_code == 2)
 			g_exit_code[0] = 130;
@@ -150,7 +126,7 @@ int	pipex_one(t_maillons *maillons, char ***env, t_garbage *garbage)
 		free_garbage_env_exit(garbage, g_exit_code[0]);
 	}
 	waitpid(-1, &wstatus, 0);
-	catch_status(garbage, wstatus, maillons);
+	//catch_status(garbage, wstatus, maillons);
 	free_garbage(garbage);
 	return (0);
 }

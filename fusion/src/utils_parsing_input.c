@@ -41,7 +41,7 @@ int	check_input_output_output(t_input_output **input_output, t_garbage *garbage)
 			if (check_output(output) == -1)
 			{
 				*input_output = first;
-				return (free_garbage(garbage), -1);
+				return (-1);
 			}
 		}
 		*input_output = (*input_output)->next;
@@ -67,7 +67,7 @@ int	check_input_output_input(t_input_output **input_output, t_garbage *garbage)
 			if (check_input(input) == -1)
 			{
 				*input_output = first;
-				return (free_garbage(garbage), -1);
+				return (-1);
 			}
 		}
 		*input_output = (*input_output)->next;
@@ -78,9 +78,7 @@ int	check_input_output_input(t_input_output **input_output, t_garbage *garbage)
 
 int	check_input_output(t_input_output **input_output, t_garbage *garbage)
 {
-	if (check_input_output_input(input_output, garbage) == -1)
-		return (-1);
-	if (check_input_output_output(input_output, garbage) == -1)
+	if (check_input_output_input(input_output, garbage) == -1 || check_input_output_output(input_output, garbage) == -1)
 		return (-1);
 	return (1);
 }

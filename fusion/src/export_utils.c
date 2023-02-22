@@ -49,36 +49,15 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-int	check_if_tab_exist(char *tab, char **env)
-{
-	int	len_tab;
-	int	len_env;
-	int	i;
-
-	if (!env)
-		return (0);
-	len_tab = ft_strlen(tab);
-	i = 0;
-	while (env && env[i])
-	{
-		len_env = ft_strlen(env[i]);
-		if (len_tab != len_env || ft_strncmp(env[i], tab, len_tab) != 0)
-			i++;
-		else
-			return (1);
-	}
-	return (0);
-}
-
-static void print_export(char *s)
+static void	print_export(char *s)
 {
 	if (s)
 	{
-		s_fd("export: `",2);
-		s_fd(s,2);
+		s_fd("export: `", 2);
+		s_fd(s, 2);
 		s_fd("': not a valid identifier\n", 2);
 	}
-} 
+}
 
 int	parsing_of_export(char *tab, char **env_copy, int *a, int *j)
 {

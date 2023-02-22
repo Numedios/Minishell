@@ -67,4 +67,3 @@ char	*find_s(t_input_output *lst, char *sep)
 	}
 	return (NULL);
 }
-// > a | 1| 2 | 3 > a | b | >c | 4 | 5  >a | b | d |e | >4 | 6 >a| >a

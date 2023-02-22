@@ -11,9 +11,8 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-// " a <b> c">d
 
-void	add_el_loop(t_split_elem	**d, t_split_elem ***s, t_split_elem ***a)
+void	add_el_loop(t_split_elem **d, t_split_elem ***s, t_split_elem ***a)
 {
 	*d = **s;
 	**s = **a;
@@ -58,7 +57,7 @@ void	add_el(t_split_elem *lst, t_split_elem **start, t_split_elem *prev)
 *
 *
 */
-// rename avec create
+
 void	create_split_arg(t_split_elem **lst)
 {
 	t_split_elem	*stock;
@@ -80,6 +79,3 @@ void	create_split_arg(t_split_elem **lst)
 	}
 	*lst = stock;
 }
-
-// 12>30\"ab<cd\"abbb>e>f
-// 1>2>3 4 5 | 1 2>3 4 5

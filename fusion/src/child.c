@@ -37,7 +37,6 @@ int	check_access(t_maillons *maillons)
 	}
 	return (0);
 }
-//cmp = 0 et i = 0
 
 int	check_echo(char **args, int cmp, int i, int execute)
 {
