@@ -14,31 +14,25 @@
 
 extern int	g_exit_code[2];
 
+static void	first_free(t_garbage *g, t_maillons *first)
+{
+	g->maillons = first;
+	free_garbage_env_exit(g, g_exit_code[0]);
+}
+
 /* crer une fonction qui just strcmp un char avec tout les bultins*/
 void	pipex_multiple_check(t_garbage *g, t_maillons *cmd, t_maillons *first)
 {
 	if (cmd->heredoc != -1)
 		close((cmd)->heredoc);
 	if (cmd->command == NULL)
-	{
-		g->maillons = first;
-		free_garbage_env_exit(g, g_exit_code[0]);
-	}
+		first_free(g, first);
 	else if (check_if_builtin(g->new_env, &(g->new_env), 0, g) == 0)
-	{
-		g->maillons = first;
-		free_garbage_env_exit(g, g_exit_code[0]);
-	}
+		first_free(g, first);
 	else if (check_echo(g->maillons->args, 0, 0, 0) == 0)
-	{
-		g->maillons = first;
-		free_garbage_env_exit(g, g_exit_code[0]);
-	}
+		first_free(g, first);
 	else if (access(g->maillons->command, F_OK | X_OK) == -1)
-	{
-		g->maillons = first;
-		free_garbage_env_exit(g, g_exit_code[0]);
-	}
+		first_free(g, first);
 	else if (execve(cmd->command, cmd->args, g->new_env) == -1)
 		perror("execve");
 	g->maillons = first;
@@ -61,8 +55,12 @@ void	pipex_multiple_close_pipe(t_garbage *garbage, int len, int i)
 	}
 }
 
-void	handle_child_process(int i, int len, t_garbage *g, t_maillons *cmd,  t_maillons *first)
+void	handle_child_process(int i, t_garbage *g, \
+t_maillons *cmd, t_maillons *first)
 {
+	int	len;
+
+	len = ft_strlen_maillons(first);
 	if ((g->maillons)->command != NULL)
 	{
 		switch_dup2_fd_in(g->maillons, g->pipes, i);

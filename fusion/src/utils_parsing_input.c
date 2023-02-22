@@ -48,7 +48,10 @@ int	check_input_output2(t_input_output **input_output, \
 				free_input_output_middle(&output, &first);
 			output = (*input_output);
 			if (condition(output, input_output, first) == 0)
+			{
+				dprintf(2, "%s: Permission denied\n", (*input_output)->file_name);
 				return (-1);
+			}
 		}
 		else if (ft_strcmp((*input_output)->operator, "<")
 			|| ft_strcmp((*input_output)->operator, "<<"))
@@ -57,7 +60,10 @@ int	check_input_output2(t_input_output **input_output, \
 				free_input_output_middle(&input, &first);
 			input = (*input_output);
 			if (condition_2(input, input_output, first) == 0)
+			{
+				dprintf(2, "%s: Permission denied\n", (*input_output)->file_name);
 				return (-1);
+			}
 		}
 		*input_output = (*input_output)->next;
 	}

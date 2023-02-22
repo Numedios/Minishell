@@ -12,61 +12,6 @@
 
 #include "minishell.h"
 
-int	parse_value(char *tab, int i, int a)
-{
-	if (tab[i] == '+')
-	{
-		a = 3;
-		i = i + 2;
-	}
-	else
-		i++;
-	if (tab && (tab[i] == '\0' || tab[i] == ' ' || (tab[i] < 14 && tab[i] > 7)))
-	{
-		if (a == 3)
-			return (5);
-		else
-			return (4);
-	}
-	while (tab && tab[i])
-	{
-		i = skip_quote(tab, i);
-		if (i == -1)
-			return (1);
-		i++;
-	}
-	return (a);
-}
-
-int	parse_export(char *tab, int i, int a)
-{
-	while (tab && tab[i] == ' ')
-		i++;
-	if (!tab)
-		return (2);
-	if (ft_isdigit(tab[i]) == 2)
-		return (1);
-	while (tab && tab[i])
-	{
-		if ((tab[i] == '+' && tab[i + 1] != '=') || tab[0] == '=')
-			return (1);
-		if (tab[i] == '+' && tab[i + 1] == '=' && i == 0)
-			return (1);
-		if ((tab[i] == '+' && tab[i + 1] == '=') || tab[i] == '=')
-		{
-			a = parse_value(tab, i, 0);
-			break ;
-		}
-		if (tab[i] == ' ' || (tab[i] < 14 && tab[i] > 7))
-			return (1);
-		if ((tab[i] > 32 && tab[i] < 48) || (tab[i] > 57 && tab[i] < 65)
-			|| (tab[i] > 90 && tab[i] < 97) || (tab[i] > 122 && tab[i] < 127))
-			return (1);
-		i++;
-	}
-	return (a);
-}
-
 char	*strjoin_and_free(char *s1, char *s2)
 {
 	char	*tmp;
@@ -88,6 +33,12 @@ static int	str_len_tab(char **env_copy)
 	return (i);
 }
 
+static void	do_export_add(char **new_env, t_garbage *g)
+{
+	if (new_env == NULL)
+		free_garbage_env_exit(g, 1);
+}
+
 char	**do_export(char *tab, char **env_copy, int i, t_garbage *g)
 {
 	int		j;
@@ -104,8 +55,7 @@ char	**do_export(char *tab, char **env_copy, int i, t_garbage *g)
 	if (check_if_tab_exist(tab, env_copy) != 1 && a == 3)
 		return (env_copy);
 	new_env = malloc ((str_len_tab(env_copy) + 2) * sizeof(char *));
-	if (new_env == NULL)
-		return (free_garbage_env_exit(g, 1), NULL);
+	do_export_add(new_env, g);
 	while (env_copy && env_copy[i])
 	{
 		new_env[i] = ft_strdup_const(env_copy[i], g);

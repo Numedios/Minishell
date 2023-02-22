@@ -21,7 +21,7 @@ void	s_fd(char *s, int fd)
 		return ;
 	len = ft_strlen(s);
 	buf = s;
-	if (fd == 1)
+	if (fd == 1 || fd == 2 || fd == 0)
 		write(fd, buf, len);
 }
 

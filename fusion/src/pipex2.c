@@ -54,6 +54,23 @@ int	check_access_two(t_maillons *maillons)
 	return (0);
 }
 
+static void	exec_child_pid(t_garbage *g, t_maillons *tmp, int i)
+{
+	if (check_input_output2(&(g->maillons)->output, NULL,
+			NULL, g->maillons->output) == -1)
+	{
+		g->maillons = tmp;
+		free_garbage_env_exit(g, 1);
+	}
+	else
+	{
+		if (check_access_two(g->maillons) == 0)
+			handle_child_process(i, g, g->maillons, tmp);
+		g->maillons = tmp;
+		free_garbage_env_exit(g, 1);
+	}
+}
+
 int	pipex_multiple(int len, t_garbage *g, int i, int wstatus)
 {
 	pid_t		pid;
@@ -67,20 +84,8 @@ int	pipex_multiple(int len, t_garbage *g, int i, int wstatus)
 		if (pid == -1)
 			return (perror("fork"), 1);
 		call_signal_pipex();
-		if (pid == 0 && check_input_output2(&(g->maillons)->output, NULL, NULL, g->maillons->output) == -1)
-		{
-			g->maillons = tmp;
-			free_garbage_env_exit(g, 1);
-		}
-		else if (pid == 0)
-		{
-			if (check_access_two(g->maillons) == 0)
-			{
-				handle_child_process(i, len, g, g->maillons, tmp);
-			}
-			g->maillons = tmp;
-			free_garbage_env_exit(g, 1);
-		}
+		if (pid == 0)
+			exec_child_pid(g, tmp, i);
 		pipex_multiple_close_pipe(g, len, i);
 		i++;
 		g->maillons = g->maillons->next;

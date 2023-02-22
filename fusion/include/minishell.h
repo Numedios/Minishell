@@ -122,7 +122,7 @@ char			**my_env(char **env, t_garbage *garbage);
 
 long long		ft_atoll_capped(const char *nptr, int *flag, int j, int nb);
 void			exit_free(t_garbage *garbage, long long exit_code);
-void			do_exit(char *s, t_garbage *garbage);
+void			do_exit(char *s, t_garbage *garbage, int flag);
 
 /*  builtin_export.c */
 
@@ -274,6 +274,7 @@ void			initialize_garbage(t_garbage *garbage, int argc, char **argv);
 void			s_fd(char *s, int fd);
 int				ft_strlen(char *str);
 int				ft_strcmp(char *str, char *str2);
+char			*ft_strdup_g(char *str, t_garbage *g);
 char			*ft_strdup(char *str);
 int				ft_isdigit(int c);
 
@@ -445,7 +446,7 @@ char			*apply_delete(int i, int skip, char *tab);
 void			pipex_multiple_check(t_garbage *g, t_maillons *cmd, t_maillons *tmp);
 void			pipex_multiple_free(t_garbage *garbage);
 void			pipex_multiple_close_pipe(t_garbage *garbage, int len, int i);
-void			handle_child_process(int i, int len, t_garbage *g, \
+void			handle_child_process(int i, t_garbage *g, \
 t_maillons *cmd, t_maillons *tmp);
 
 /* utils_pipex.c  */
@@ -460,6 +461,8 @@ t_pipes			*create_all_pipes(int len);
 int				check_sep2(char c, char *sep);
 int				count_words2(char *str, char *sep);
 int				ft_stablen(char *str, int tor, char *sep);
+
+/* last_files.c */
 
 /* supp.c */
 

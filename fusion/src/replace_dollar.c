@@ -114,9 +114,7 @@ char	*replace_dollar(char *tab, char **new_env, int i)
 		while (tab && tab[i] != '\0' && tab[i] == '$' && tab[i + 1] == '$')
 					i++;
 		tab = one_dollar_or_more(tab, &i, new_env, &index);
-		if (i == -1)
-			i = 0;
-		else if (tab && tab[i] != '\0')
+		if (tab && tab[i] != '\0')
 			i++;
 	}
 	return (tab);

@@ -65,17 +65,7 @@ int	find_stdout(t_maillons *maillons)
 	return (res);
 }
 
-int	pipex_one_condition(t_maillons *m, char ***e, t_garbage *g)
-{
-	if (check_if_exit(m->args, g) == 0)
-		return (1);
-	if (check_if_builtin(*e, e, 0, g) == 0)
-		return (1);
-	else if (check_echo(g->maillons->args, 0, 0, 0) == 0)
-		return (1);
-	return (0);
-}
-
+/*
 void	catch_status(int wstatus, t_maillons *command)
 {
 	int	status_code;
@@ -104,7 +94,7 @@ void	catch_status(int wstatus, t_maillons *command)
 		wstatus = WEXITSTATUS(wstatus);
 		g_exit_code[0] = wstatus;
 	}
-}
+}*/
 
 static int	check_access_one(t_maillons *maillons)
 {
@@ -121,7 +111,6 @@ static int	check_access_one(t_maillons *maillons)
 		return (0);
 	if (access(maillons->command, F_OK | X_OK) == -1)
 	{
-		dprintf(2, "bash: syntax error near unexpected token `newline'\n");
 		g_exit_code[0] = 127;
 		s_fd("bash: ", 2);
 		s_fd(maillons->command, 2);
@@ -131,7 +120,8 @@ static int	check_access_one(t_maillons *maillons)
 	return (0);
 }
 
-static int	condition_access(t_maillons *maillons, char ***env, t_garbage *garbage)
+static int	condition_access(t_maillons *maillons, \
+char ***env, t_garbage *garbage)
 {
 	if (check_access_one(maillons) == 0)
 	{
@@ -163,7 +153,8 @@ int	pipex_one(t_maillons *maillons, char ***env, t_garbage *garbage)
 		return (perror("fork"), 1);
 	signal(SIGQUIT, signal_quit_child);
 	signal(SIGINT, signal_quit_child);
-	if (pid == 0 && check_input_output2(&(garbage->maillons)->output, NULL, NULL, garbage->maillons->output) == -1)
+	if (pid == 0 && check_input_output2(&(garbage->maillons)->output,
+			NULL, NULL, garbage->maillons->output) == -1)
 	{
 		g_exit_code[0] = 1;
 		free_garbage_env_exit(garbage, g_exit_code[0]);
@@ -174,6 +165,5 @@ int	pipex_one(t_maillons *maillons, char ***env, t_garbage *garbage)
 			return (free_garbage_env_exit(garbage, g_exit_code[0]), 1);
 	}
 	waitpid(-1, &wstatus, 0);
-	catch_status(wstatus, maillons);
 	return (0);
 }

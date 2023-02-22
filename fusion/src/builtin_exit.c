@@ -50,13 +50,11 @@ void	exit_free(t_garbage *garbage, long long exit_code)
 * s pour status
 */
 
-void	do_exit(char *s, t_garbage *garbage)
+void	do_exit(char *s, t_garbage *garbage, int flag)
 {
 	long long	exit_code;
-	int			flag;
 
 	exit_code = 2;
-	flag = 0;
 	while (s && s[flag])
 	{
 		while (s[flag] == 32 || (s[flag] >= 9 && s[flag] <= 13))
@@ -67,7 +65,9 @@ void	do_exit(char *s, t_garbage *garbage)
 			flag++;
 		else
 		{
-			dprintf(2, "exit: %s: numeric argument required\n", s);
+			s_fd("exit: ", 2);
+			s_fd(s, 2);
+			s_fd(": numeric argument required\n", 2);
 			exit_free(garbage, 2);
 		}
 	}

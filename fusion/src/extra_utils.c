@@ -94,6 +94,6 @@ int	check_if_exit(char **args, t_garbage *garbage)
 		cmp++;
 	}
 	if (args[0] && str_cmp(args[0], "exit") == 1 && cmp < 3)
-		return (do_exit(args[1], garbage), 0);
+		return (do_exit(args[1], garbage, 0), 0);
 	return (1);
 }

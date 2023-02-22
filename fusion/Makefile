@@ -104,7 +104,8 @@ SRC = main.c \
 		utils_main.c \
 		extra_utils.c \
 		switch_dup.c \
-		supp.c
+		supp.c \
+		last_files.c \
 
 #==============================================================================#
 #                                   HEADERS                                    #

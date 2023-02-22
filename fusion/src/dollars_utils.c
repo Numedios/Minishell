@@ -43,16 +43,6 @@ char	*one_dollar_or_more(char *tab, int *i, char **new_env, t_index *index)
 		skip++;
 		index->a = (*i) + 1;
 		tab = found_it(tab, new_env, index, &skip);
-		if (index->j == -1)
-		{
-			(*i) = -1;
-			break ;
-		}
-		else
-		{
-			(*i) = -1;
-			break ;
-		}
 		skip = 0;
 	}
 	return (tab);

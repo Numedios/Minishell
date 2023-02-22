@@ -61,25 +61,28 @@ int	ft_varcompare(char *s1, char *s2)
 	return (0);
 }
 
+void	unistialise_two_value(int *j, int *index_var, \
+char **env_copy, char *tab)
+{
+	(*j) = 0;
+	(*index_var) = 0;
+	while (env_copy[(*index_var)])
+	{
+		if (!ft_varcompare(tab, env_copy[(*index_var)]))
+			break ;
+		(*index_var)++;
+	}
+}
+
 char	**do_unset(char *tab, char **env_copy, int i, t_garbage *garbage)
 {
 	int		index_var;
 	int		j;
 	char	**new_env;
 
-	j = 0;
-	new_env = NULL;
-	index_var = 0;
-	(void)garbage;
-	while (env_copy[index_var])
-	{
-		if (!ft_varcompare(tab, env_copy[index_var]))
-			break ;
-		index_var++;
-	}
+	unistialise_two_value(&j, &index_var, env_copy, tab);
 	if (!env_copy[index_var])
 		return (env_copy);
-	i = 0;
 	new_env = malloc(sizeof(char *) * (ft_tablen(env_copy)));
 	while (i < ft_tablen(env_copy))
 	{
@@ -87,7 +90,7 @@ char	**do_unset(char *tab, char **env_copy, int i, t_garbage *garbage)
 			i++;
 		else
 		{
-			new_env[j++] = ft_strdup(env_copy[i]);
+			new_env[j++] = ft_strdup_g(env_copy[i], garbage);
 			i++;
 		}
 	}

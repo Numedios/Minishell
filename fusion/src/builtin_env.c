@@ -54,10 +54,3 @@ char	**my_env(char **env, t_garbage *garbage)
 	env_copy[i] = NULL;
 	return (env_copy);
 }
-
-
-// Minishell > unset kdjfhgfdhsf
-// Minishell > export y=j
-// Minishell > unset y
-// Minishell > export fkjnrgnoanga 
-// Minishell > env | grep fkjnrgnoanga
