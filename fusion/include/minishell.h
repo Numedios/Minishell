@@ -443,7 +443,8 @@ char			*apply_delete(int i, int skip, char *tab);
 
 /* utils_pipex_two.c */
 
-void			pipex_multiple_check(t_garbage *g, t_maillons *cmd, t_maillons *tmp);
+void			pipex_multiple_check(t_garbage *g, \
+t_maillons *cmd, t_maillons *tmp);
 void			pipex_multiple_free(t_garbage *garbage);
 void			pipex_multiple_close_pipe(t_garbage *garbage, int len, int i);
 void			handle_child_process(int i, t_garbage *g, \
@@ -463,6 +464,8 @@ int				count_words2(char *str, char *sep);
 int				ft_stablen(char *str, int tor, char *sep);
 
 /* last_files.c */
+
+int				str_len_env(char *str);
 
 /* supp.c */
 

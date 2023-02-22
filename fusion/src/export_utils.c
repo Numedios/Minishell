@@ -14,20 +14,6 @@
 
 extern int	g_exit_code[2];
 
-int	str_len_env(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str && str[i])
-	{
-		if (str[i] == '+' || str[i] == '=')
-			return (i);
-		i++;
-	}
-	return (i);
-}
-
 char	*ft_strchr(const char *s, int c)
 {
 	int				i;
@@ -59,6 +45,16 @@ static void	print_export(char *s)
 	}
 }
 
+static void	already_defined(char *s)
+{
+	if (s)
+	{
+		s_fd("export: `", 2);
+		s_fd(s, 2);
+		s_fd("' : already defined\n", 2);
+	}
+}
+
 int	parsing_of_export(char *tab, char **env_copy, int *a, int *j)
 {
 	if (ft_strchr(tab, '=') == NULL)
@@ -80,7 +76,7 @@ int	parsing_of_export(char *tab, char **env_copy, int *a, int *j)
 		return (1);
 	}
 	if (env_copy && check_if_tab_exist(tab, env_copy) == 1)
-		return (printf("export: '%s' : already defined\n", tab), 1);
+		return (already_defined(tab), 1);
 	(*j) = what_to_do(tab, env_copy);
 	return (0);
 }

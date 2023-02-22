@@ -72,6 +72,6 @@ void	do_echo(char **arg)
 		i++;
 	}
 	if (space == 1)
-		printf("\n");
+		s_fd("\n", 1);
 	g_exit_code[0] = 0;
 }

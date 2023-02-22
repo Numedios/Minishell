@@ -95,3 +95,17 @@ int	pipex_one_condition(t_maillons *m, char ***e, t_garbage *g)
 		return (1);
 	return (0);
 }
+
+int	str_len_env(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str && str[i])
+	{
+		if (str[i] == '+' || str[i] == '=')
+			return (i);
+		i++;
+	}
+	return (i);
+}
