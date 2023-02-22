@@ -17,14 +17,20 @@ void	free_all_pipes(int argc, t_pipes *pipes)
 	int	i;
 
 	i = 0;
-	while (i < (argc))
+	while (i < (argc * 2))
 	{
-		if (pipes && pipes->pipe[i])
+		if (pipes && pipes->pipe[i] != -1)
+		{
 			close(pipes->pipe[i]);
+			pipes->pipe[i] = -1;
+		}
 		i++;
 	}
 	if (pipes && pipes->pipe)
+	{
 		free(pipes->pipe);
+		pipes->pipe = NULL;
+	}
 	if (pipes)
 		free(pipes);
 	pipes = NULL;

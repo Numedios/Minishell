@@ -67,6 +67,7 @@ void	ft_print_maillon(t_maillons	*maillons)
 
 void	ft_print_maillons(t_maillons	*maillons)
 {
+	dprintf(2,"***********************************\n");
 	if (maillons)
 	{
 		while (maillons)
@@ -88,6 +89,7 @@ void	ft_print_maillons(t_maillons	*maillons)
 	}
 	else
 		printf("(null)\n");
+	dprintf(2,"***********************************\n");
 }
 
 void	ft_print_garbage(t_garbage	*garbage)

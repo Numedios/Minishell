@@ -16,6 +16,9 @@ extern int	g_exit_code[2];
 
 int	check_access(t_maillons *maillons)
 {
+	t_maillons *tmp;
+
+	tmp = maillons;
 	while (maillons)
 	{
 		if (check_builtin(maillons->args) == 2)
@@ -23,18 +26,21 @@ int	check_access(t_maillons *maillons)
 		if (check_echo(maillons->args, 0, 0, 1) == 0
 			|| check_builtin(maillons->args) == 0)
 			maillons = maillons->next;
-		else if (maillons->command != NULL
+		if (maillons->command != NULL
 			&& access(maillons->command, F_OK | X_OK) != 0)
 		{
 			g_exit_code[0] = 127;
 			s_fd("bash: ", 2);
 			s_fd(maillons->command, 2);
 			s_fd(": command not found\n", 2);
+			maillons = tmp; // restaurer l'état initial de maillons
 			return (1);
 		}
 		else
 			maillons = maillons->next;
 	}
+	maillons = tmp; // restaurer l'état initial de maillons
+	dprintf(2, "maillons->file_name = %s\n", maillons->command);
 	return (0);
 }
 

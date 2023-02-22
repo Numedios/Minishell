@@ -49,8 +49,6 @@ typedef struct input_output
 
 typedef struct maillons
 {
-	int						fd_in;
-	int						fd_out;
 	int						heredoc;
 	struct input_output		*output;
 	char					*command;
@@ -305,6 +303,7 @@ int				main(int argc, char **argv, char **env);
 
 int				check_output(t_input_output *output);
 int				check_input(t_input_output *output);
+int				check_two_input_output(t_input_output *output);
 
 /* parsing.c  */
 
@@ -333,6 +332,7 @@ int				pipex(t_maillons *maillons, char ***env, t_garbage *garbage);
 
 t_maillons		*get_last_maillons(t_maillons *maillons);
 int				is_builtin_parent(t_garbage *data, t_maillons *last, char *cmd);
+int				check_access_two(t_maillons *maillons);
 int				pipex_multiple(int len, t_garbage *g, int i, int wstatus);
 
 /* quote.c  */
@@ -433,14 +433,11 @@ int				str_cmp(char *s1, char *s2);
 
 /* utils_parsing_input.c  */
 
-int				return_output_check(t_input_output **input_output);
-int				return_input_check(t_input_output **input_output);
-int				check_input_output_output(t_input_output **input_output, \
-	t_garbage *garbage);
-int				check_input_output_input(t_input_output **input_output, \
-	t_garbage *garbage);
-int				check_input_output(t_input_output **input_output, \
-t_garbage *garbage);
+int				return_output_check(t_input_output *input_output);
+int				return_input_check(t_input_output *input_output);
+int				check_input_output_output(t_input_output *input_output);
+int				check_input_output_input(t_input_output *input_output);
+int				check_input_output(t_input_output *input_output);
 
 /* utils_parsing.c */
 
@@ -449,10 +446,10 @@ char			*apply_delete(int i, int skip, char *tab);
 
 /* utils_pipex_two.c */
 
-void			pipex_multiple_check(t_garbage *g);
+void			pipex_multiple_check(t_garbage *g, t_maillons *cmd);
 void			pipex_multiple_free(t_garbage *garbage);
 void			pipex_multiple_close_pipe(t_garbage *garbage, int len, int i);
-void			handle_child_process(int i, int len, t_garbage *g);
+void			handle_child_process(int i, int len, t_garbage *g, t_maillons *cmd);
 
 /* utils_pipex.c  */
 

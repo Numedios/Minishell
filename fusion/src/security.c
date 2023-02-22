@@ -95,7 +95,10 @@ int	check_if_builtin(char **env, char ***new_env, int i, t_garbage *g)
 	first_loop(&j, &sign, g);
 	if (g->maillons->args[0]
 		&& str_cmp(g->maillons->args[0], "exit") == 1 && j < 3)
+	{
+		dprintf(2, "do_exit\n");
 		return (do_exit(g->maillons->args[1], g), 0);
+	}
 	if (sign != 1 && g->maillons->args[0]
 		&& str_cmp(g->maillons->args[0], "export") == 1)
 	{

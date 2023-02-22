@@ -29,8 +29,8 @@ int	pipex(t_maillons *maillons, char ***env, t_garbage *garbage)
 
 	wstatus = 0;
 	len = ft_strlen_maillons(maillons);
-	if (check_access(maillons) == 1)
-		return (1);
+	//if (check_access(maillons) == 1)
+	//	return (1);
 	if (len == 0)
 		return (0);
 	if (len == 1)

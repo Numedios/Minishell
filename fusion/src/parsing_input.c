@@ -23,6 +23,7 @@ int	check_output(t_input_output *output)
 {
 	int	fd;
 
+	fd = -42;
 	if (ft_strcmp(output->operator, ">"))
 	{
 		fd = open(output->file_name,
@@ -35,13 +36,16 @@ int	check_output(t_input_output *output)
 	}
 	if (fd == -1)
 		return (-1);
-	return (close(fd), 1);
+	if (fd != -42)
+		close(fd);
+	return (1);
 }
 
 int	check_input(t_input_output *output)
 {
 	int	fd;
 
+	fd =-42;
 	if (ft_strcmp(output->operator, "<"))
 		fd = open(output->file_name, O_RDWR, O_DSYNC, !O_DIRECTORY);
 	else if (ft_strcmp(output->operator, "<<"))
@@ -53,5 +57,16 @@ int	check_input(t_input_output *output)
 		s_fd(": No such file or directory\n", 2);
 		return (-1);
 	}
-	return (close(fd), 1);
+	if (fd != -42)
+		close(fd);
+	return (1);
+}
+
+int check_two_input_output(t_input_output *output)
+{
+	if (check_input(output) == -1)
+		return(-1);
+	if (check_output(output) == -1)
+		return (-1);
+	return(1);
 }

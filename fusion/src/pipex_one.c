@@ -71,6 +71,8 @@ int	pipex_one_condition(t_maillons *m, char ***e, t_garbage *g)
 		return (1);
 	if (check_if_builtin(*e, e, 0, g) == 0)
 		return (1);
+	else if (check_echo(g->maillons->args, 0, 0, 0) == 0)
+		return (1);
 	return (0);
 }
 
@@ -108,25 +110,22 @@ int	pipex_one(t_maillons *maillons, char ***env, t_garbage *garbage)
 	pid_t	pid;
 	int		wstatus;
 
-	if (pipex_one_condition(maillons, env, garbage) == 1)
-		return (free_garbage(garbage), 0);
+	wstatus = 0;
 	pid = fork();
 	if (pid == -1)
 		return (perror("fork"), 1);
 	signal(SIGQUIT, signal_quit_child);
 	signal(SIGINT, signal_quit_child);
-	if (pid == 0 && check_input_output(&(maillons->output), garbage) != -1)
+	if (pid == 0 && check_input_output((maillons->output)) != -1)
 	{
 		pipex_one_dup(&maillons);
-		if (check_echo(maillons->args, 0, 0, 0) == 0)
-			free_garbage_env_exit(garbage, g_exit_code[0]);
 		if (maillons->command != NULL
 			&& execve(maillons->command, maillons->args, *env) == -1)
 			perror("execve");
 		free_garbage_env_exit(garbage, g_exit_code[0]);
 	}
 	waitpid(-1, &wstatus, 0);
-	//catch_status(garbage, wstatus, maillons);
-	free_garbage(garbage);
+	//if (maillons->command != NULL && check_two_input_output(maillons->output) != -1)
+	//	catch_status(garbage, wstatus, maillons);
 	return (0);
 }
