@@ -51,6 +51,41 @@ void	add_el(t_split_elem *lst, t_split_elem **start, t_split_elem *prev)
 		free(add);
 }
 
+int	just_quote(char *str)
+{
+	int		i;
+	char	quote;
+
+
+	if (!str)
+		return (0);
+	i = 0;
+	while (str[i] && (str[i] != '>' && str[i] != '<') && ((str[i] != '\'' && str[i] != '\"')))
+		i++;
+	if (str[i] == '>' || str[i] == '<')
+		return (0);
+	i = 0;
+	while (str[i] && (str[i] != '\'' && str[i] != '\"'))
+		i++;
+	if (str[i] && (str[i] == '\'' || str[i] == '\"'))
+	{
+		quote = str[i];
+		i++;
+		while (str && str[i] && str[i] != quote)
+			i++;
+		i++;
+		while (str[i] && (str[i] != '>' && str[i] != '<') && ((str[i] != '\'' && str[i] != '\"')))
+			i++;
+		if (str[i] && (str[i] == '>' || str[i] == '<'))
+			return (0);
+	}
+	else
+		return (0);
+	if (str[i])
+		return (just_quote(&str[i]));
+	return (1);
+}
+
 /*
 * separe les redirection colle
 * transforme les >>out2 en >> out2
@@ -71,8 +106,11 @@ void	create_split_arg(t_split_elem **lst)
 			&& !ft_strcmp((*lst)->arg, ">>") && !ft_strcmp((*lst)->arg, "<")
 			&& !ft_strcmp((*lst)->arg, "<<"))
 		{
-			add_el(*lst, &stock, prev);
-			*lst = stock;
+			if (!just_quote(((*lst)->arg)))
+			{
+				add_el(*lst, &stock, prev);
+				*lst = stock;
+			}
 		}
 		prev = *lst;
 		*lst = (*lst)->next;

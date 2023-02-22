@@ -1,0 +1,26 @@
+">" creer une boucle infini
+echo ">"
+
+echo “cat lol.c | catlol.c”
+echo “cat lol.c | cat>lol.c”
+
+
+echo "ls -la <a | grep x > b”
+
+echo "$oui"
+
+
+echo ok "" ok
+
+
+cd ././././././././. print indefini
+
+
+exit 1 2
+
+exit -10000 mauvais exit code
+exit -10000 mauvais exit code
+
+echo bonjours > $test
+
+echo bonjours > $test

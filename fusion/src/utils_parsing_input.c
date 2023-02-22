@@ -80,5 +80,7 @@ int	check_input_output(t_input_output **input_output, t_garbage *garbage)
 {
 	if (check_input_output_input(input_output, garbage) == -1 || check_input_output_output(input_output, garbage) == -1)
 		return (-1);
+	//dprintf(2, "3 res ON EST LA \n");	
+	//ft_print_input_output(*input_output);
 	return (1);
 }
