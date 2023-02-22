@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:49:59 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/02/20 14:26:16 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/22 22:04:21 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ typedef struct t_for_dollar
 /*  built in cd */
 
 int				do_cd_change_directory(char *path, char **oldpwd);
-int				do_cd(char ***new_env, char *path);
+int				do_cd(char ***new_env, char *path, t_garbage *g);
 
 /* bultins_echo.c */
 
@@ -129,7 +129,7 @@ void			do_exit(char *s, t_garbage *garbage);
 int				parse_value(char *tab, int i, int a);
 int				parse_export(char *tab, int i, int a);
 char			*strjoin_and_free(char *s1, char *s2);
-char			**do_export(char *tab, char **env_copy, int i, int a);
+char			**do_export(char *tab, char **env_copy, int i, t_garbage *g);
 
 /* bultins_pwd.c */
 
@@ -138,7 +138,7 @@ int				do_pwd(void);
 /* bultins_unset.c */
 
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
-void			do_unset(char *tab, char **env_copy, int i, int found_line);
+char			**do_unset(char *tab, char **env_copy, int i, t_garbage *g);
 
 /* check_one.c */
 
@@ -331,7 +331,6 @@ int				pipex(t_maillons *maillons, char ***env, t_garbage *garbage);
 /* pipex2.c */
 
 t_maillons		*get_last_maillons(t_maillons *maillons);
-int				is_builtin_parent(t_garbage *data, t_maillons *last, char *cmd);
 int				check_access_two(t_maillons *maillons);
 int				pipex_multiple(int len, t_garbage *g, int i, int wstatus);
 
@@ -422,7 +421,7 @@ void			end_quote(t_garbage *garbage);
 
 int				skip_quote(char *line, int i);
 char			*ft_strjoin(char const *s1, char const *s2);
-char			*ft_strdup_const(const char *s);
+char			*ft_strdup_const(const char *s, t_garbage *g);
 int				check_dollar(char *line);
 
 /* utils_parsing_bisbis.c */
@@ -433,11 +432,8 @@ int				str_cmp(char *s1, char *s2);
 
 /* utils_parsing_input.c  */
 
-int				return_output_check(t_input_output *input_output);
-int				return_input_check(t_input_output *input_output);
-int				check_input_output_output(t_input_output *input_output);
-int				check_input_output_input(t_input_output *input_output);
-int				check_input_output(t_input_output *input_output);
+int				check_input_output2(t_input_output **input_output, \
+t_input_output *input, t_input_output *output, t_input_output *first);
 
 /* utils_parsing.c */
 
@@ -446,10 +442,11 @@ char			*apply_delete(int i, int skip, char *tab);
 
 /* utils_pipex_two.c */
 
-void			pipex_multiple_check(t_garbage *g, t_maillons *cmd);
+void			pipex_multiple_check(t_garbage *g, t_maillons *cmd, t_maillons *tmp);
 void			pipex_multiple_free(t_garbage *garbage);
 void			pipex_multiple_close_pipe(t_garbage *garbage, int len, int i);
-void			handle_child_process(int i, int len, t_garbage *g, t_maillons *cmd);
+void			handle_child_process(int i, int len, t_garbage *g, \
+t_maillons *cmd, t_maillons *tmp);
 
 /* utils_pipex.c  */
 

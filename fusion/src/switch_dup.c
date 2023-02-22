@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   switch_dup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbelabba <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 20:36:02 by sbelabba          #+#    #+#             */
-/*   Updated: 2023/02/21 20:36:03 by sbelabba         ###   ########.fr       */
+/*   Updated: 2023/02/22 16:16:02 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	switch_dup2_fd_in(t_maillons *m, t_pipes *pipes, int i)
 	}
 	else
 		dup2(pipes->pipe[i * 2 - 2], STDIN_FILENO);
-	if (res != -2)
+	if (res != -2 && res != -1)
 		close(res);
 	return (1);
 }
@@ -82,7 +82,7 @@ int	switch_dup2_fd_out(t_maillons *maillons, t_pipes *pipes, int i)
 		return (1);
 	else
 		dup2(pipes->pipe[i * 2 + 1], STDOUT_FILENO);
-	if (res != -2)
+	if (res != -2 && res != -1)
 		close(res);
 	return (1);
 }

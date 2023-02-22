@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:27:51 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/19 17:41:48 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/22 16:32:09 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ extern int	g_exit_code[2];
 
 int	check_access(t_maillons *maillons)
 {
-	t_maillons *tmp;
+	t_maillons	*tmp;
 
 	tmp = maillons;
 	while (maillons)
@@ -33,14 +33,13 @@ int	check_access(t_maillons *maillons)
 			s_fd("bash: ", 2);
 			s_fd(maillons->command, 2);
 			s_fd(": command not found\n", 2);
-			maillons = tmp; // restaurer l'état initial de maillons
+			maillons = tmp;
 			return (1);
 		}
 		else
 			maillons = maillons->next;
 	}
-	maillons = tmp; // restaurer l'état initial de maillons
-	dprintf(2, "maillons->file_name = %s\n", maillons->command);
+	maillons = tmp;
 	return (0);
 }
 

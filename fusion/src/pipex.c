@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 12:20:55 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/19 17:37:35 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/22 16:53:35 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,22 @@ int	pipex(t_maillons *maillons, char ***env, t_garbage *garbage)
 
 	wstatus = 0;
 	len = ft_strlen_maillons(maillons);
-	//if (check_access(maillons) == 1)
-	//	return (1);
 	if (len == 0)
 		return (0);
 	if (len == 1)
-		pipex_one(maillons, env, garbage);
+	{
+		if (find_if_have_output(maillons-> output, ">") != 1
+			&& find_if_have_output(maillons -> output, "<") != 1
+			&& (check_echo(maillons->args, 0, 0, 1) == 0
+				|| check_builtin(maillons->args) == 0))
+		{
+			check_if_builtin(garbage->new_env, \
+			&(garbage->new_env), 0, garbage);
+			check_echo(garbage->maillons->args, 0, 0, 0);
+		}
+		else
+			pipex_one(maillons, env, garbage);
+	}
 	else if (len != 1)
 		pipex_multiple(len, garbage, 0, wstatus);
 	return (0);

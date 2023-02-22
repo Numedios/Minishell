@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:36:07 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/02/20 13:08:45 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/22 19:54:07 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	**my_env(char **env, t_garbage *garbage)
 	i = 0;
 	while (env[i])
 	{
-		env_copy[i] = ft_strdup_const(env[i]);
+		env_copy[i] = ft_strdup_const(env[i], garbage);
 		if (env_copy[i] == NULL)
 		{
 			ft_free_tab(env_copy);
@@ -54,3 +54,10 @@ char	**my_env(char **env, t_garbage *garbage)
 	env_copy[i] = NULL;
 	return (env_copy);
 }
+
+
+// Minishell > unset kdjfhgfdhsf
+// Minishell > export y=j
+// Minishell > unset y
+// Minishell > export fkjnrgnoanga 
+// Minishell > env | grep fkjnrgnoanga

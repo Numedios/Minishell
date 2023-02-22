@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:35:56 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/02/21 14:21:25 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/22 18:25:05 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 extern int	g_exit_code[2];
 
-static void	update_pwd(char ***new_env, char *pwd)
+static void	update_pwd(char ***new_env, char *pwd, t_garbage *g)
 {
 	char	dir[4096];
 
@@ -27,8 +27,11 @@ static void	update_pwd(char ***new_env, char *pwd)
 	{
 		pwd = ft_strjoin("PWD=", dir);
 		if (!pwd)
+		{
+			free_garbage_env_exit(g ,1);
 			return ;
-		(*new_env) = do_export(pwd, (*new_env), 0, 0);
+		}
+		(*new_env) = do_export(pwd, (*new_env), 0, g);
 		free(pwd);
 		pwd = NULL;
 	}
@@ -54,7 +57,7 @@ int	do_cd_change_directory(char *path, char **oldpwd)
 	return (0);
 }
 
-int	do_cd(char ***new_env, char *path)
+int	do_cd(char ***new_env, char *path, t_garbage *g)
 {
 	char	dir[4096];
 	char	*oldpwd;
@@ -66,7 +69,7 @@ int	do_cd(char ***new_env, char *path)
 	{
 		oldpwd = ft_strjoin("OLDPWD=", dir);
 		if (!oldpwd)
-			return (1);
+			return (free_garbage_env_exit(g ,1), 1);
 	}
 	if (do_cd_change_directory(path, &oldpwd) == 1)
 		return (1);
@@ -75,9 +78,9 @@ int	do_cd(char ***new_env, char *path)
 	if (oldpwd)
 	{
 		if (check_if_tab_exist(oldpwd, (*new_env)) != 1)
-			(*new_env) = do_export(oldpwd, (*new_env), 0, 0);
+			(*new_env) = do_export(oldpwd, (*new_env), 0, g);
 		free(oldpwd);
 	}
-	update_pwd(new_env, pwd);
+	update_pwd(new_env, pwd, g);
 	return (0);
 }

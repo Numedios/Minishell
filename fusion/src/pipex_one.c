@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_one.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbelabba <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 17:44:42 by sbelabba          #+#    #+#             */
-/*   Updated: 2023/02/20 17:44:44 by sbelabba         ###   ########.fr       */
+/*   Updated: 2023/02/22 17:37:05 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	pipex_one_condition(t_maillons *m, char ***e, t_garbage *g)
 	return (0);
 }
 
-void	catch_status(t_garbage *data, int wstatus, t_maillons *command)
+void	catch_status(int wstatus, t_maillons *command)
 {
 	int	status_code;
 
@@ -100,9 +100,56 @@ void	catch_status(t_garbage *data, int wstatus, t_maillons *command)
 		return ;
 	}
 	else if (WIFEXITED(wstatus))
-		g_exit_code[0] = WEXITSTATUS(wstatus);
-	if (!is_builtin_parent(data, command, command->command))
-		g_exit_code[0] = status_code;
+	{
+		wstatus = WEXITSTATUS(wstatus);
+		g_exit_code[0] = wstatus;
+	}
+}
+
+static int	check_access_one(t_maillons *maillons)
+{
+	if (check_builtin(maillons->args) == 2)
+	{
+		return(0);
+	}
+	if (check_echo(maillons->args, 0, 0, 1) == 0
+		|| check_builtin(maillons->args) == 0)
+	{
+		return(0);
+	}
+	if (maillons->command == NULL)
+		return (0);
+	if (access(maillons->command, F_OK | X_OK) == -1)
+	{
+		dprintf(2, "bash: syntax error near unexpected token `newline'\n");
+		g_exit_code[0] = 127;
+		s_fd("bash: ", 2);
+		s_fd(maillons->command, 2);
+		s_fd(": command not found\n", 2);
+		return (1);
+	}
+	return (0);
+}
+
+static int condition_access(t_maillons *maillons, char ***env, t_garbage *garbage)
+{
+	if (check_access_one(maillons) == 0)
+	{
+		pipex_one_dup(&maillons);
+		if (check_echo(maillons->args, 0, 0, 1) == 0
+			|| check_builtin(maillons->args) == 0)
+		{
+			check_if_builtin(garbage->new_env, &(garbage->new_env), 0, garbage) ;
+			check_echo(garbage->maillons->args, 0, 0, 0);
+			free_garbage_env_exit(garbage, g_exit_code[0]);
+		}
+		if (maillons->command != NULL
+			&& execve(maillons->command, maillons->args, *env) == -1)
+			perror("execve");
+		return (free_garbage_env_exit(garbage, g_exit_code[0]), 1);
+	}
+	else
+		return (1);
 }
 
 int	pipex_one(t_maillons *maillons, char ***env, t_garbage *garbage)
@@ -116,16 +163,17 @@ int	pipex_one(t_maillons *maillons, char ***env, t_garbage *garbage)
 		return (perror("fork"), 1);
 	signal(SIGQUIT, signal_quit_child);
 	signal(SIGINT, signal_quit_child);
-	if (pid == 0 && check_input_output((maillons->output)) != -1)
+	if (pid == 0 && check_input_output2(&(garbage->maillons)->output, NULL, NULL, garbage->maillons->output) == -1)
 	{
-		pipex_one_dup(&maillons);
-		if (maillons->command != NULL
-			&& execve(maillons->command, maillons->args, *env) == -1)
-			perror("execve");
+		g_exit_code[0] = 1;
 		free_garbage_env_exit(garbage, g_exit_code[0]);
 	}
+	else if (pid == 0)
+	{
+		if (condition_access(maillons, env, garbage) == 1)
+			return (free_garbage_env_exit(garbage, g_exit_code[0]), 1);
+	}
 	waitpid(-1, &wstatus, 0);
-	//if (maillons->command != NULL && check_two_input_output(maillons->output) != -1)
-	//	catch_status(garbage, wstatus, maillons);
+	catch_status(wstatus, maillons);
 	return (0);
 }

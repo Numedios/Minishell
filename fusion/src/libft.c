@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 11:34:40 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/20 13:11:03 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/22 18:47:25 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ void	s_fd(char *s, int fd)
 		return ;
 	len = ft_strlen(s);
 	buf = s;
-	write(fd, buf, len);
+	if (fd == 1)
+		write(fd, buf, len);
+	//write(fd, buf, len);
 }
 
 int	ft_strlen(char *str)
@@ -31,7 +33,7 @@ int	ft_strlen(char *str)
 	if (!str)
 		return (0);
 	i = 0;
-	while (str[i])
+	while (str && str[i])
 		i++;
 	return (i);
 }

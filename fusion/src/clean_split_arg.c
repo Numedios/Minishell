@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:36:21 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/02/17 17:36:44 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/22 16:49:29 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,18 @@ void	add_el(t_split_elem *lst, t_split_elem **start, t_split_elem *prev)
 		free(add);
 }
 
-int	just_quote(char *str)
+static void	loop_for_i(char *str, int *i)
 {
-	int		i;
-	char	quote;
+	while (str[(*i)] && (str[(*i)] != '>' && str[(*i)] != '<')
+		&& ((str[(*i)] != '\'' && str[(*i)] != '\"')))
+		(*i)++;
+}
 
-
+int	just_quote(char *str, int i, char quote)
+{
 	if (!str)
 		return (0);
-	i = 0;
-	while (str[i] && (str[i] != '>' && str[i] != '<') && ((str[i] != '\'' && str[i] != '\"')))
-		i++;
+	loop_for_i(str, &i);
 	if (str[i] == '>' || str[i] == '<')
 		return (0);
 	i = 0;
@@ -74,15 +75,14 @@ int	just_quote(char *str)
 		while (str && str[i] && str[i] != quote)
 			i++;
 		i++;
-		while (str[i] && (str[i] != '>' && str[i] != '<') && ((str[i] != '\'' && str[i] != '\"')))
-			i++;
+		loop_for_i(str, &i);
 		if (str[i] && (str[i] == '>' || str[i] == '<'))
 			return (0);
 	}
 	else
 		return (0);
 	if (str[i])
-		return (just_quote(&str[i]));
+		return (just_quote(&str[i], 0, '\0'));
 	return (1);
 }
 
@@ -106,7 +106,7 @@ void	create_split_arg(t_split_elem **lst)
 			&& !ft_strcmp((*lst)->arg, ">>") && !ft_strcmp((*lst)->arg, "<")
 			&& !ft_strcmp((*lst)->arg, "<<"))
 		{
-			if (!just_quote(((*lst)->arg)))
+			if (!just_quote(((*lst)->arg), 0, '\0'))
 			{
 				add_el(*lst, &stock, prev);
 				*lst = stock;

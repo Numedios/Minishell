@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 11:40:14 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/21 14:06:49 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/22 20:35:14 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int	check_if_builtin(char **env, char ***new_env, int i, t_garbage *g)
 	}
 	if (g->maillons->args[0]
 		&& str_cmp(g->maillons->args[0], "cd") == 1 && j == 2)
-		return (do_cd(new_env, g->maillons->args[1]), 0);
+		return (do_cd(new_env, g->maillons->args[1], g), 0);
 	if (sign != 1)
 		return (which_builtin(env, i, j, g));
 	else

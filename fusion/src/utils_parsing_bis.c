@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 17:27:55 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/20 14:05:20 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/22 18:28:52 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (s);
 }
 
-char	*ft_strdup_const(const char *s)
+char	*ft_strdup_const(const char *s, t_garbage *g)
 {
 	char	*s_copy;
 	size_t	s_len;
@@ -89,7 +89,7 @@ char	*ft_strdup_const(const char *s)
 	s_len = ft_strlen_const(s);
 	s_copy = malloc((s_len + 1) * sizeof(char));
 	if (s_copy == NULL)
-		return (NULL);
+		return (free_garbage_env_exit(g, 1), NULL);
 	s_len = 0;
 	while (s[s_len])
 	{

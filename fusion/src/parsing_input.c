@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 17:54:57 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/17 17:57:59 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/22 16:33:39 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	check_input(t_input_output *output)
 {
 	int	fd;
 
-	fd =-42;
+	fd = -42;
 	if (ft_strcmp(output->operator, "<"))
 		fd = open(output->file_name, O_RDWR, O_DSYNC, !O_DIRECTORY);
 	else if (ft_strcmp(output->operator, "<<"))
@@ -62,11 +62,11 @@ int	check_input(t_input_output *output)
 	return (1);
 }
 
-int check_two_input_output(t_input_output *output)
+int	check_two_input_output(t_input_output *output)
 {
 	if (check_input(output) == -1)
-		return(-1);
+		return (-1);
 	if (check_output(output) == -1)
 		return (-1);
-	return(1);
+	return (1);
 }

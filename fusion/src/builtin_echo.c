@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 19:36:02 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/02/20 22:33:27 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/22 16:26:30 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	check_option_n(char *str, int *space)
 	if (!str)
 		return (0);
 	i = 2;
-	if (str[1] == '\0')
+	if (str[0] == '\0' || str[1] == '\0')
 		return (0);
 	if ((str[0] && str[1]) && (str[0] != '-' || str[1] != 'n'))
 		return (0);

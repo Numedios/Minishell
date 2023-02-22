@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extra_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbelabba <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 18:29:20 by sbelabba          #+#    #+#             */
-/*   Updated: 2023/02/21 18:29:22 by sbelabba         ###   ########.fr       */
+/*   Updated: 2023/02/22 22:05:18 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	which_builtin(char **env, int i, int cmp, t_garbage *g)
 	if (g->maillons->args[0] && str_cmp(g->maillons->args[0], "unset") == 1)
 	{
 		while (env && g->maillons->args[++i])
-			do_unset(g->maillons->args[i], env, 0, 0);
+			g->new_env = do_unset(g->maillons->args[i], g->new_env, 0, g);//
 		return (0);
 	}
 	return (1);

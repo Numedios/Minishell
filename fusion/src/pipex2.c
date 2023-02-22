@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zakariyahamdouchi <zakariyahamdouchi@st    +#+  +:+       +#+        */
+/*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 11:30:40 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/18 23:29:10 by zakariyaham      ###   ########.fr       */
+/*   Updated: 2023/02/22 17:57:17 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,8 @@ t_maillons	*get_last_maillons(t_maillons *maillons)
 		tmp = tmp->next;
 	return (tmp);
 }
-
-int	is_builtin_parent(t_garbage *data, t_maillons *last, char *cmd)
-{
-	if (!cmd || (last && data->maillons != last))
-		return (0);
-	if (!ft_strcmp(cmd, "exit"))
-		return (1);
-	else if (!ft_strcmp(cmd, "cd"))
-		return (1);
-	else if (!ft_strcmp(cmd, "export"))
-		return (1);
-	else if (!ft_strcmp(cmd, "unset"))
-		return (1);
-	return (0);
-}
-
-static void	catch_child_status(t_garbage *data, int wstatus, \
-t_maillons *command, t_maillons *last)
+/*
+static void	catch_child_status(int wstatus, t_maillons *command, t_maillons *last)
 {
 	int	status_code;
 
@@ -68,11 +52,12 @@ t_maillons *command, t_maillons *last)
 		return ;
 	}
 	else if (WIFEXITED(wstatus))
-		g_exit_code[0] = WEXITSTATUS(wstatus);
-	if (!is_builtin_parent(data, last, command->command))
-		g_exit_code[0] = status_code;
+	{
+		wstatus = WEXITSTATUS(wstatus);
+		g_exit_code[0] = wstatus;
+	}
 }
-
+*/
 static void	call_signal_pipex(void)
 {
 	signal(SIGQUIT, signal_quit_child);
@@ -96,7 +81,9 @@ int	check_access_two(t_maillons *maillons)
 	{
 		g_exit_code[0] = 127;
 		s_fd("bash: ", 2);
+		s_fd(maillons->command, 2);
 		s_fd(": command not found\n", 2);
+		return (1);
 	}
 	return (0);
 }
@@ -108,17 +95,13 @@ int	pipex_multiple(int len, t_garbage *g, int i, int wstatus)
 
 	tmp = g->maillons;
 	g->pipes = create_all_pipes(len - 1);
-	/*dprintf(2, "pipe[0] = %d  \n", g->pipes->pipe[0]);
-	dprintf(2, "pipe[1] = %d  \n", g->pipes->pipe[1]);
-	dprintf(2, "pipe[2] = %d  \n", g->pipes->pipe[2]);
-	dprintf(2, "pipe[3] = %d  \n", g->pipes->pipe[3]);*/
 	while (g->maillons)
 	{
 		pid = fork();
 		if (pid == -1)
 			return (perror("fork"), 1);
 		call_signal_pipex();
-		if (pid == 0 && check_input_output(g->maillons->output) == -1)
+		if (pid == 0 && check_input_output2(&(g->maillons)->output, NULL, NULL, g->maillons->output) == -1)
 		{
 			g->maillons = tmp;
 			free_garbage_env_exit(g, 1);
@@ -127,8 +110,10 @@ int	pipex_multiple(int len, t_garbage *g, int i, int wstatus)
 		{
 			if (check_access_two(g->maillons) == 0)
 			{
-				handle_child_process(i, len, g, g->maillons);
+				handle_child_process(i, len, g, g->maillons, tmp);
 			}
+			g->maillons = tmp;
+			free_garbage_env_exit(g, 1);
 		}
 		pipex_multiple_close_pipe(g, len, i);
 		i++;
@@ -136,7 +121,12 @@ int	pipex_multiple(int len, t_garbage *g, int i, int wstatus)
 	}
 	i = -1;
 	while (++i < len)
-		waitpid(-1, NULL, 0);
+	{
+		waitpid(-1, &wstatus, 0);
+		//g->maillons = tmp;
+		//catch_child_status(wstatus, g->maillons, get_last_maillons(tmp));
+	//	g->maillons = g->maillons->next;
+	}
 	g->maillons = tmp;
 	return (1);
 }
