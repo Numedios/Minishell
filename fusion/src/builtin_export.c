@@ -105,8 +105,7 @@ char	**do_export(char *tab, char **env_copy, int i, t_garbage *g)
 		return (env_copy);
 	new_env = malloc ((str_len_tab(env_copy) + 2) * sizeof(char *));
 	if (new_env == NULL)
-		return (free_garbage_env_exit(g ,1), NULL);
-	i = 0;
+		return (free_garbage_env_exit(g, 1), NULL);
 	while (env_copy && env_copy[i])
 	{
 		new_env[i] = ft_strdup_const(env_copy[i], g);
@@ -114,12 +113,7 @@ char	**do_export(char *tab, char **env_copy, int i, t_garbage *g)
 	}
 	new_env = new_value(i, a, tab, new_env);
 	if (new_env == NULL)
-		return (free_garbage_env_exit(g, 1) ,NULL);
+		return (free_garbage_env_exit(g, 1), NULL);
 	new_env[i + 1] = NULL;
 	return (ft_free_tab(env_copy), new_env);
 }
-
-
-// inishell > export yo=yooo y=yooo yooo=yooo
-// Minishell > unset y
-// Minishell > env

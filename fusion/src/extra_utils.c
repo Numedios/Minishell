@@ -78,7 +78,7 @@ int	which_builtin(char **env, int i, int cmp, t_garbage *g)
 	if (g->maillons->args[0] && str_cmp(g->maillons->args[0], "unset") == 1)
 	{
 		while (env && g->maillons->args[++i])
-			g->new_env = do_unset(g->maillons->args[i], g->new_env, 0, g);//
+			g->new_env = do_unset(g->maillons->args[i], g->new_env, 0, g);
 		return (0);
 	}
 	return (1);

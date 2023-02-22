@@ -110,12 +110,12 @@ static int	check_access_one(t_maillons *maillons)
 {
 	if (check_builtin(maillons->args) == 2)
 	{
-		return(0);
+		return (0);
 	}
 	if (check_echo(maillons->args, 0, 0, 1) == 0
 		|| check_builtin(maillons->args) == 0)
 	{
-		return(0);
+		return (0);
 	}
 	if (maillons->command == NULL)
 		return (0);
@@ -131,7 +131,7 @@ static int	check_access_one(t_maillons *maillons)
 	return (0);
 }
 
-static int condition_access(t_maillons *maillons, char ***env, t_garbage *garbage)
+static int	condition_access(t_maillons *maillons, char ***env, t_garbage *garbage)
 {
 	if (check_access_one(maillons) == 0)
 	{
@@ -139,7 +139,7 @@ static int condition_access(t_maillons *maillons, char ***env, t_garbage *garbag
 		if (check_echo(maillons->args, 0, 0, 1) == 0
 			|| check_builtin(maillons->args) == 0)
 		{
-			check_if_builtin(garbage->new_env, &(garbage->new_env), 0, garbage) ;
+			check_if_builtin(garbage->new_env, &(garbage->new_env), 0, garbage);
 			check_echo(garbage->maillons->args, 0, 0, 0);
 			free_garbage_env_exit(garbage, g_exit_code[0]);
 		}

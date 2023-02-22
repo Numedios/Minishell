@@ -28,7 +28,7 @@ static void	update_pwd(char ***new_env, char *pwd, t_garbage *g)
 		pwd = ft_strjoin("PWD=", dir);
 		if (!pwd)
 		{
-			free_garbage_env_exit(g ,1);
+			free_garbage_env_exit(g, 1);
 			return ;
 		}
 		(*new_env) = do_export(pwd, (*new_env), 0, g);
@@ -69,7 +69,7 @@ int	do_cd(char ***new_env, char *path, t_garbage *g)
 	{
 		oldpwd = ft_strjoin("OLDPWD=", dir);
 		if (!oldpwd)
-			return (free_garbage_env_exit(g ,1), 1);
+			return (free_garbage_env_exit(g, 1), 1);
 	}
 	if (do_cd_change_directory(path, &oldpwd) == 1)
 		return (1);

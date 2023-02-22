@@ -23,7 +23,6 @@ void	s_fd(char *s, int fd)
 	buf = s;
 	if (fd == 1)
 		write(fd, buf, len);
-	//write(fd, buf, len);
 }
 
 int	ft_strlen(char *str)
