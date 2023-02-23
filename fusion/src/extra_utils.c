@@ -51,7 +51,7 @@ char	**new_value(int i, int a, char *tab, char **env)
 		env[i] = ft_strdup(tab);
 		return (env);
 	}
-	if (env[i] && a == 3)
+	if (a == 3)
 	{
 		while (tab && tab[j] != '=')
 			j++;
