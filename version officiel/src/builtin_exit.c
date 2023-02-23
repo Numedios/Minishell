@@ -24,20 +24,15 @@ long long	ft_atoll_capped(const char *nptr, int *flag, int j, int nb)
 			j = j * -1;
 		nptr++;
 	}
-	dprintf(2, "res du exit = %s\n", nptr);
 	while (*nptr >= '0' && *nptr <= '9')
 	{
 		if (j > 0 && (LLONG_MAX - *nptr + '0') / 10 < nb)
-		{
-			dprintf(2, "retour 1\n");
 			return (++*flag, 0);
-		}
 		if (j < 0 && (LLONG_MIN + *nptr - '0') / 10 > -nb)
 			return (++*flag, 0);
 		nb = nb * 10 + *nptr - '0';
 		nptr++;
 	}
-	dprintf(2, "2 res du exit = %d\n", nb * j);
 	return (nb * j);
 }
 
