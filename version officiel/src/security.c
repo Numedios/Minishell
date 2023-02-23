@@ -50,9 +50,9 @@ int	check_builtin(char **args)
 			return (0);
 		else
 		{
-			g_exit_code[0] = 130;
+			g_exit_code[0] = 1;
 			s_fd("exit\nbash: exit: too many arguments\n", 2);
-			return (2);
+			return (2); // faire en sorte qu'il se fassse que 1 fois
 		}
 	}
 	return (1);

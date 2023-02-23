@@ -67,7 +67,8 @@ void	do_exit(char *s, t_garbage *garbage, int flag)
 		{
 			s_fd(s, 2);
 			s_fd(": numeric argument required\n", 2);
-			exit_free(garbage, 2);
+			s_fd("exit\n", 2);
+			free_garbage_env_exit(garbage, 2);
 		}
 	}
 	flag = 0;
