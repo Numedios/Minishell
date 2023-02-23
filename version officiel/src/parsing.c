@@ -24,7 +24,7 @@ int	parenthesis_close_1(char *str);
 //declarer une variable globale en commencant par un chiffre ou $, 
 //pas de caractere speciale, mais on peut mettre un chiffre dedans
 
-extern int	g_exit_code[2];
+extern int	g_exit_code[3];
 
 static int	check_the_line_condition(char *line, int i)
 {

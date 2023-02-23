@@ -17,7 +17,7 @@ echo $hol (hol n'existe pas)        echo $$SYSTEMD_EXEC_PID
 */
 //$"HOME" doit devenir HOME
 
-extern int	g_exit_code[2];
+extern int	g_exit_code[3];
 
 static char	*apply_the_change(char *tab, char **env, t_index *index, int skip)
 {

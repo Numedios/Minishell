@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-extern int	g_exit_code[2];
+extern int	g_exit_code[3];
 
 /* rajouter exit code */
 
@@ -60,14 +60,14 @@ static void	exec_child_pid(t_garbage *g, t_maillons *tmp, int i)
 			NULL, g->maillons->output) == -1)
 	{
 		g->maillons = tmp;
-		free_garbage_env_exit(g, 1);
+		free_garbage_env_exit(g, g_exit_code[0]);
 	}
 	else
 	{
 		if (check_access_two(g->maillons) == 0)
 			handle_child_process(i, g, g->maillons, tmp);
 		g->maillons = tmp;
-		free_garbage_env_exit(g, 1);
+		free_garbage_env_exit(g, g_exit_code[0]);
 	}
 }
 
@@ -76,6 +76,7 @@ int	pipex_multiple(int len, t_garbage *g, int i, int wstatus)
 	pid_t		pid;
 	t_maillons	*tmp;
 
+	wstatus = 0;
 	tmp = g->maillons;
 	g->pipes = create_all_pipes(len - 1);
 	while (g->maillons)
@@ -92,7 +93,11 @@ int	pipex_multiple(int len, t_garbage *g, int i, int wstatus)
 	}
 	i = -1;
 	while (++i < len)
+	{
 		waitpid(-1, &wstatus, 0);
+		if (WIFEXITED(wstatus))
+			g_exit_code[0] = WEXITSTATUS(wstatus);
+	}
 	g->maillons = tmp;
 	return (1);
 }

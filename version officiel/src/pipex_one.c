@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-extern int	g_exit_code[2];
+extern int	g_exit_code[3];
 
 int	find_stdin(t_maillons *maillons)
 {
@@ -165,5 +165,7 @@ int	pipex_one(t_maillons *maillons, char ***env, t_garbage *garbage)
 			return (free_garbage_env_exit(garbage, g_exit_code[0]), 1);
 	}
 	waitpid(-1, &wstatus, 0);
+	if (WIFEXITED(wstatus))
+		g_exit_code[0] = WEXITSTATUS(wstatus);
 	return (0);
 }

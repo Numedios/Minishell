@@ -17,7 +17,7 @@
 *
 */
 
-extern int	g_exit_code[2];
+extern int	g_exit_code[3];
 
 static void	update_pwd(char ***new_env, char *pwd, t_garbage *g)
 {

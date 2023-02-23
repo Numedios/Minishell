@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-extern int	g_exit_code[2];
+extern int	g_exit_code[3];
 
 static int	control_builtin(char **args, int cmp)
 {

@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-extern int	g_exit_code[2];
+extern int	g_exit_code[3];
 
 static int	condition(t_input_output *output, \
 	t_input_output **input_output, t_input_output *first)

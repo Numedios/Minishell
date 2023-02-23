@@ -15,7 +15,7 @@
 /* --suppressions=readline_leaks.txt */
 
 /* Read a string, and return a pointer to it.  Returns NULL on EOF. */
-extern int	g_exit_code[2];
+extern int	g_exit_code[3];
 
 char	*rl_gets(void)
 {

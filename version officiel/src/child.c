@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-extern int	g_exit_code[2];
+extern int	g_exit_code[3];
 
 int	check_access(t_maillons *maillons)
 {

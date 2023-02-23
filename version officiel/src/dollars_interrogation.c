@@ -12,7 +12,7 @@
 
 #include"minishell.h"
 
-extern int	g_exit_code[2];
+extern int	g_exit_code[3];
 
 void	new_in_old(t_for_dollar *var, t_index *index, char **new_env, int *skip)
 {
@@ -47,7 +47,7 @@ char	*interrogation(char *tab, int skip, t_index index)
 
 	var.pos = 0;
 	var.pos_tab = 0;
-	var.value = ft_itoa(g_exit_code[0]);
+	var.value = ft_itoa(g_exit_code[2]);
 	var.len_tab = ft_strlen(tab);
 	var.new_len = var.len_tab - skip;
 	var.len_value = ft_strlen(var.value);

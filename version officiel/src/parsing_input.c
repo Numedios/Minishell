@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+extern int	g_exit_code[3];
+
 /*
 *
 * creer le fichier si il existe et renvoie 1
@@ -55,6 +57,7 @@ int	check_input(t_input_output *output)
 		s_fd("bash :  ", 2);
 		s_fd(output->file_name, 2);
 		s_fd(": No such file or directory\n", 2);
+		g_exit_code[0] = 1;
 		return (-1);
 	}
 	if (fd != -42)

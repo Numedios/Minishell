@@ -17,7 +17,7 @@
 //maillons -> args = a commmand et les options
 //probleme avec le heredoc en premiere commande
 
-extern int	g_exit_code[2];
+extern int	g_exit_code[3];
 //gerer les enfants avec g_exit_code[1] = 2; si g_exit_code[1] == 3
 // alors exit(0) ou faire un if dans les enfants pour directement exit
 // si g_exit_code[1] == 3;

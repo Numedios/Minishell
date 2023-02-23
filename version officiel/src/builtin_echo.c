@@ -18,7 +18,7 @@
 */
 // rajouter echo $? qui imprime le code erreur
 
-extern int	g_exit_code[2];
+extern int	g_exit_code[3];
 
 int	check_option_n(char *str, int *space)
 {
@@ -73,5 +73,4 @@ void	do_echo(char **arg)
 	}
 	if (space == 1)
 		s_fd("\n", 1);
-	g_exit_code[0] = 0;
 }

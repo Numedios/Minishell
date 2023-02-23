@@ -12,15 +12,15 @@
 
 #include "minishell.h"
 
-int	g_exit_code[2];
+int	g_exit_code[3];
 
 static void	first_if(char **line, t_garbage *garbage)
 {
 	g_exit_code[1] = 0;
 	setup_signal_handlers();
 	(*line) = rl_gets();
-	if ((*line) && (*line)[0] == '\0')
-		g_exit_code[0] = 0;
+	g_exit_code[2] = g_exit_code[0];
+	g_exit_code[0] = 0;
 	if ((*line) == NULL && g_exit_code[1] != 8)
 	{
 		s_fd("exit\n", 2);
@@ -36,6 +36,7 @@ int	main(int argc, char **argv, char **env)
 	if (!isatty(0))
 		return (s_fd("Error: Invalid STDIN\n", 2), 0);
 	initialize_garbage(&garbage, argc, argv);
+	g_exit_code[2] = 0;
 	garbage.new_env = my_env(env, &garbage);
 	while (1)
 	{
@@ -45,9 +46,9 @@ int	main(int argc, char **argv, char **env)
 			garbage.line = delete_dollar(line, garbage.new_env, 0);
 			garbage.line = replace_dollar(line, garbage.new_env, 0);
 			loop_create_maillons(garbage.line, &garbage, 0);
-			cmd_to_path(garbage.maillons, garbage.new_env);
 			find_all_heredoc(garbage.maillons);
 			end_quote(&garbage);
+			cmd_to_path(garbage.maillons, garbage.new_env);
 			if (g_exit_code[1] != 7)
 				pipex(garbage.maillons, &garbage.new_env, &garbage);
 			free_garbage(&garbage);
