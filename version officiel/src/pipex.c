@@ -21,13 +21,13 @@ int	dup_fd(int new_stdin, int new_stdout)
 		return (0);
 	return (1);
 }
-
+/*
 static	int	check_no_sep(t_input_output	*output)
 {
 	return (find_if_have_output(output, ">") != 1 && find_if_have_output(output, "<") != 1 && find_if_have_output(output, ">>") != 1 && find_if_have_output(output, "<<") != 1);
 
-}
-
+}*/
+/*
 int	pipex(t_maillons *maillons, char ***env, t_garbage *garbage)
 {
 	int	len;
@@ -47,8 +47,8 @@ int	pipex(t_maillons *maillons, char ***env, t_garbage *garbage)
 	else if (len != 1)
 		pipex_multiple(len, garbage, 0, wstatus);
 	return (0);
-}
-/*
+}*/
+
 int	pipex(t_maillons *maillons, char ***env, t_garbage *garbage)
 {
 	int	len;
@@ -75,4 +75,4 @@ int	pipex(t_maillons *maillons, char ***env, t_garbage *garbage)
 	else if (len != 1)
 		pipex_multiple(len, garbage, 0, wstatus);
 	return (0);
-}*/
+}

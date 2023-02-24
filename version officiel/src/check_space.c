@@ -57,17 +57,23 @@ int	check_error_space(char *line, char c, int i)
 	return (0);
 }
 
-int	check_error_space_4(char *line, char c, int i)
+int    check_error_space_4(char *line, char c, int i)
 {
-	if (line[i] == c)
-	{
-		i++;
-		while (line[i] == ' ')
-			i++;
-		if (line[i] == c && i > 0)
-			return (2);
-		else
-			return (0);
-	}
-	return (0);
+    int    j;
+
+    j = 0;
+    if (line[i] == c)
+    {
+        i++;
+        while (line[i] == ' ')
+        {
+            i++;
+            j++;
+        }
+        if (line[i] == c && j > 0)
+            return (2);
+        else
+            return (0);
+    }
+    return (0);
 }
