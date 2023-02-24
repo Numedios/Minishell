@@ -29,6 +29,20 @@ static int	control_builtin(char **args, int cmp)
 	return (1);
 }
 
+int    only_number_in_string(char *str)
+{
+    int    i;
+
+    i = 0;
+    while (str && str[i])
+    {
+        if (str[i] < '0' || str[i] > '9')
+            return (0);
+        i++;
+    }
+    return (1);
+}
+
 int	check_builtin(char **args)
 {
 	int	cmp;
@@ -46,14 +60,15 @@ int	check_builtin(char **args)
 		return (0);
 	if (args[0] && str_cmp(args[0], "exit") == 1)
 	{
-		if (cmp < 3)
+		if (only_number_in_string(args[1]) == 0 || cmp < 3)
 			return (0);
 		else
-		{
-			g_exit_code[0] = 1;
-			s_fd("exit\nbash: exit: too many arguments\n", 2);
-			return (2); // faire en sorte qu'il se fassse que 1 fois
-		}
+        {
+            if (g_exit_code[0] != 1)
+                s_fd("exit\nbash: exit: too many arguments\n", 2);
+            g_exit_code[0] = 1;
+            return (2); // faire en sorte qu'il se fassse que 1 fois
+        }
 	}
 	return (1);
 }
@@ -94,7 +109,7 @@ int	check_if_builtin(char **env, char ***new_env, int i, t_garbage *g)
 
 	first_loop(&j, &sign, g);
 	if (g->maillons->args[0]
-		&& str_cmp(g->maillons->args[0], "exit") == 1 && j < 3)
+		&& str_cmp(g->maillons->args[0], "exit") == 1)
 	{
 		return (do_exit(g->maillons->args[1], g, 0), 0);
 	}

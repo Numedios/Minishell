@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+extern int	g_exit_code[3];
+
 long long	ft_atoll_capped(const char *nptr, int *flag, int j, int nb)
 {
 	if (nptr == NULL)
@@ -38,7 +40,8 @@ long long	ft_atoll_capped(const char *nptr, int *flag, int j, int nb)
 
 void	exit_free(t_garbage *garbage, long long exit_code)
 {
-	s_fd("exit\n", 2);
+	if (g_exit_code[0] != 1)
+		s_fd("exit\n", 2);
 	free_garbage_and_env(garbage);
 	close (0);
 	close (1);
@@ -65,9 +68,9 @@ void	do_exit(char *s, t_garbage *garbage, int flag)
 			flag++;
 		else
 		{
+			s_fd("exit\n", 2);
 			s_fd(s, 2);
 			s_fd(": numeric argument required\n", 2);
-			s_fd("exit\n", 2);
 			free_garbage_env_exit(garbage, 2);
 		}
 	}

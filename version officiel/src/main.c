@@ -45,12 +45,15 @@ int	main(int argc, char **argv, char **env)
 		{
 			garbage.line = delete_dollar(line, garbage.new_env, 0);
 			garbage.line = replace_dollar(line, garbage.new_env, 0);
-			loop_create_maillons(garbage.line, &garbage, 0);
-			find_all_heredoc(garbage.maillons);
-			end_quote(&garbage);
-			cmd_to_path(garbage.maillons, garbage.new_env);
-			if (g_exit_code[1] != 7)
-				pipex(garbage.maillons, &garbage.new_env, &garbage);
+			if (parse(garbage.line) == 0)
+            {
+                loop_create_maillons(garbage.line, &garbage, 0);
+                find_all_heredoc(garbage.maillons);
+                end_quote(&garbage);
+                cmd_to_path(garbage.maillons, garbage.new_env);
+                if (g_exit_code[1] != 7)
+                    pipex(garbage.maillons, &garbage.new_env, &garbage);
+            }
 			free_garbage(&garbage);
 		}
 	}
