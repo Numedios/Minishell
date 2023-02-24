@@ -34,7 +34,10 @@ char	**my_env(char **env, t_garbage *garbage)
 
 	i = 0;
 	if (!env || env[i] == NULL)
-		return (NULL);
+	{
+		env_copy = malloc(sizeof (char *));
+		return (env_copy);
+	}
 	while (env[i])
 		i++;
 	env_copy = malloc((i + 1) * sizeof(char *));

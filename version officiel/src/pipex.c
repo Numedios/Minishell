@@ -25,7 +25,6 @@ int	dup_fd(int new_stdin, int new_stdout)
 static	int	check_no_sep(t_input_output	*output)
 {
 	return (find_if_have_output(output, ">") != 1 && find_if_have_output(output, "<") != 1 && find_if_have_output(output, ">>") != 1 && find_if_have_output(output, "<<") != 1);
-
 }
 /*
 int	pipex(t_maillons *maillons, char ***env, t_garbage *garbage)
