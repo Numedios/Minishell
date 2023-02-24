@@ -94,6 +94,6 @@ char	**do_unset(char *tab, char **env_copy, int i, t_garbage *garbage)
 			i++;
 		}
 	}
-	new_env[j] = '\0';
+	new_env[j] = 0; // a reverifier
 	return (ft_free_tab(env_copy), new_env);
 }

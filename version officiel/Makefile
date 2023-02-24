@@ -17,7 +17,7 @@ NAME = minishell
 #                                   COMMANDS                                   #
 #==============================================================================#
 
-CC = gcc
+CC = cc
 CFLAGS = -g -Wall -Wextra -Werror
 DFLAGS = -MMD
 MKDIR = mkdir -p
