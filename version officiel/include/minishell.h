@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:49:59 by zakariyaham       #+#    #+#             */
-/*   Updated: 2023/02/23 01:26:10 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/24 13:25:01 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,7 @@ int				check_1(char *line);
 
 int				check_error_2_space(char *line, char c, char c_bis, int i);
 int				check_error_3_space(char *line, char c, char *c_bis, int i);
+int				check_error_space_4(char *line, char c, int i);
 int				check_error_space(char *line, char c, int i);
 
 /* child.c */

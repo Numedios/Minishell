@@ -6,7 +6,7 @@
 /*   By: zhamdouc <zhamdouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 15:30:15 by zhamdouc          #+#    #+#             */
-/*   Updated: 2023/02/20 13:10:06 by zhamdouc         ###   ########.fr       */
+/*   Updated: 2023/02/24 13:24:32 by zhamdouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,12 @@ static int	part_two(char *line, int i)
 				2), 1);
 	if (check_error_space(line, '|', i) == 2)
 		return (s_fd("bash: syntax error near unexpected token `|'\n",
+				2), 1);
+	if (check_error_space_4(line, '>', i) == 2)
+		return (s_fd("bash: syntax error near unexpected token `>'\n",
+				2), 1);
+	if (check_error_space_4(line, '<', i) == 2)
+		return (s_fd("bash: syntax error near unexpected token `<'\n",
 				2), 1);
 	if (line[i] == '&')
 		return (s_fd("bash: syntax error near unexpected token `&'\n",
