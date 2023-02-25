@@ -57,23 +57,37 @@ int	check_error_space(char *line, char c, int i)
 	return (0);
 }
 
-int    check_error_space_4(char *line, char c, int i)
+int	check_error_space_4(char *line, char c, int i)
 {
-    int    j;
+	int	j;
 
-    j = 0;
-    if (line[i] == c)
-    {
-        i++;
-        while (line[i] == ' ')
-        {
-            i++;
-            j++;
-        }
-        if (line[i] == c && j > 0)
-            return (2);
-        else
-            return (0);
-    }
-    return (0);
+	j = 0;
+	if (line[i] == c)
+	{
+		i++;
+		while (line[i] == ' ')
+		{
+			i++;
+			j++;
+		}
+		if (line[i] == c && j > 0)
+			return (2);
+		else
+			return (0);
+	}
+	return (0);
+}
+
+int	only_number_in_string(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str && str[i])
+	{
+		if (str[i] < '0' || str[i] > '9')
+			return (0);
+		i++;
+	}
+	return (1);
 }

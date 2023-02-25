@@ -97,9 +97,6 @@ static int	part_one(char *line, int i)
 
 static int	part_two(char *line, int i)
 {
-	if (line[i] == '<' && line[i + 1] == '<' && line[i + 2] == '<')
-		return (s_fd("bash: syntax error near unexpected token `>>''\n",
-				2), 1);
 	if (line[i] == '<' && line[i + 1] == '>' && line[i + 2] == '>')
 		return (s_fd("bash: syntax error near unexpected token `>'\n",
 				2), 1);
@@ -139,6 +136,9 @@ int	check_1(char *line)
 			return (0);
 		if (part_one(line, i) == 1)
 			return (1);
+		if (line[i] == '<' && line[i + 1] == '<' && line[i + 2] == '<')
+			return (s_fd("bash: syntax error near unexpected token `<<''\n",
+					2), 1);
 		if (part_two(line, i) == 1)
 			return (1);
 		while (line[i] == '"' && line[i + 1] == '"' && line[i + 2] == '"')

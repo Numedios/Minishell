@@ -21,10 +21,10 @@ int	check_access(t_maillons *maillons)
 	tmp = maillons;
 	while (maillons)
 	{
-		if (check_builtin(maillons->args) == 2)
+		if (check_builtin(maillons->args, 0) == 2)
 			return (1);
 		if (check_echo(maillons->args, 0, 0, 1) == 0
-			|| check_builtin(maillons->args) == 0)
+			|| check_builtin(maillons->args, 0) == 0)
 			maillons = maillons->next;
 		if (maillons->command != NULL
 			&& access(maillons->command, F_OK | X_OK) != 0)

@@ -36,10 +36,10 @@ static void	call_signal_pipex(void)
 
 int	check_access_two(t_maillons *maillons)
 {
-	if (check_builtin(maillons->args) == 2)
+	if (check_builtin(maillons->args, 0) == 2)
 		return (0);
 	if (check_echo(maillons->args, 0, 0, 1) == 0
-		|| check_builtin(maillons->args) == 0)
+		|| check_builtin(maillons->args, 0) == 0)
 		return (0);
 	if (maillons->command == NULL)
 		return (0);
@@ -76,9 +76,7 @@ int	pipex_multiple(int len, t_garbage *g, int i, int wstatus)
 	pid_t		pid;
 	t_maillons	*tmp;
 
-	wstatus = 0;
-	tmp = g->maillons;
-	g->pipes = create_all_pipes(len - 1);
+	initvalue(&wstatus, &tmp, g, len);
 	while (g->maillons)
 	{
 		pid = fork();
@@ -98,6 +96,5 @@ int	pipex_multiple(int len, t_garbage *g, int i, int wstatus)
 		if (WIFEXITED(wstatus))
 			g_exit_code[0] = WEXITSTATUS(wstatus);
 	}
-	g->maillons = tmp;
-	return (1);
+	return (g->maillons = tmp, 1);
 }

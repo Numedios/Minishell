@@ -98,15 +98,11 @@ void	catch_status(int wstatus, t_maillons *command)
 
 static int	check_access_one(t_maillons *maillons)
 {
-	if (check_builtin(maillons->args) == 2)
-	{
+	if (check_builtin(maillons->args, 0) == 2)
 		return (0);
-	}
 	if (check_echo(maillons->args, 0, 0, 1) == 0
-		|| check_builtin(maillons->args) == 0)
-	{
+		|| check_builtin(maillons->args, 0) == 0)
 		return (0);
-	}
 	if (maillons->command == NULL)
 		return (0);
 	if (access(maillons->command, F_OK | X_OK) == -1)
@@ -127,7 +123,7 @@ char ***env, t_garbage *garbage)
 	{
 		pipex_one_dup(&maillons);
 		if (check_echo(maillons->args, 0, 0, 1) == 0
-			|| check_builtin(maillons->args) == 0)
+			|| check_builtin(maillons->args, 0) == 0)
 		{
 			check_if_builtin(garbage->new_env, &(garbage->new_env), 0, garbage);
 			check_echo(garbage->maillons->args, 0, 0, 0);

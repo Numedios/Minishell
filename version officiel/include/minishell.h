@@ -116,7 +116,7 @@ void			do_echo(char **arg);
 /*  builtin_env.c */
 
 void			do_env(char **env);
-char			**my_env(char **env, t_garbage *garbage);
+char			**my_env(char **env, t_garbage *garbage, int i);
 
 /*  builtin_exit.c */
 
@@ -152,6 +152,7 @@ int				check_error_2_space(char *line, char c, char c_bis, int i);
 int				check_error_3_space(char *line, char c, char *c_bis, int i);
 int				check_error_space_4(char *line, char c, int i);
 int				check_error_space(char *line, char c, int i);
+int				only_number_in_string(char *str);
 
 /* child.c */
 
@@ -359,7 +360,7 @@ char			*replace_dollar(char *tab, char **new_env, int i);
 
 /* security.c*/
 
-int				check_builtin(char **args);
+int				check_builtin(char **args, int cmp);
 int				check_if_builtin(char **env, \
 	char ***new_env, int i, t_garbage *g);
 
@@ -389,6 +390,8 @@ int				is_inquotes(char *str, int pos);
 int				check_quote2(char c);
 char			*ft_strtab(char *str, int tor, char *sep);
 char			**ft_split2(char *str, char *sep);
+void			initvalue(int *wstatus, t_maillons	**tmp, \
+t_garbage *g, int len);
 
 /* switch_dup.c */
 

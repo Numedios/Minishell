@@ -105,3 +105,10 @@ char	**ft_split2(char *str, char *sep)
 	tab[i] = 0;
 	return (tab);
 }
+
+void	initvalue(int *wstatus, t_maillons	**tmp, t_garbage *g, int len)
+{
+	*wstatus = 0;
+	*tmp = g->maillons;
+	g->pipes = create_all_pipes(len - 1);
+}

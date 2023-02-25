@@ -28,6 +28,14 @@ static void	first_if(char **line, t_garbage *garbage)
 	}
 }
 
+static void	do_main(t_garbage *garbage)
+{
+	loop_create_maillons(garbage->line, garbage, 0);
+	find_all_heredoc(garbage->maillons);
+	end_quote(garbage);
+	cmd_to_path(garbage->maillons, garbage->new_env);
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	char		*line;
@@ -37,7 +45,7 @@ int	main(int argc, char **argv, char **env)
 		return (s_fd("Error: Invalid STDIN\n", 2), 0);
 	initialize_garbage(&garbage, argc, argv);
 	g_exit_code[2] = 0;
-	garbage.new_env = my_env(env, &garbage);
+	garbage.new_env = my_env(env, &garbage, 0);
 	while (1)
 	{
 		first_if(&line, &garbage);
@@ -46,14 +54,11 @@ int	main(int argc, char **argv, char **env)
 			garbage.line = delete_dollar(line, garbage.new_env, 0);
 			garbage.line = replace_dollar(line, garbage.new_env, 0);
 			if (parse(garbage.line) == 0)
-            {
-                loop_create_maillons(garbage.line, &garbage, 0);
-                find_all_heredoc(garbage.maillons);
-                end_quote(&garbage);
-                cmd_to_path(garbage.maillons, garbage.new_env);
-                if (g_exit_code[1] != 7)
-                    pipex(garbage.maillons, &garbage.new_env, &garbage);
-            }
+			{
+				do_main(&garbage);
+				if (g_exit_code[1] != 7)
+					pipex(garbage.maillons, &garbage.new_env, &garbage);
+			}
 			free_garbage(&garbage);
 		}
 	}

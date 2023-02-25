@@ -27,12 +27,10 @@ void	do_env(char **env)
 	}
 }
 
-char	**my_env(char **env, t_garbage *garbage)
+char	**my_env(char **env, t_garbage *garbage, int i)
 {
-	int		i;
 	char	**env_copy;
 
-	i = 0;
 	if (!env || env[i] == NULL)
 	{
 		env_copy = malloc(sizeof (char *));
