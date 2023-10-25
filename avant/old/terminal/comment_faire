@@ -1,5 +1,0 @@
-il doit toujours avoir le prompt qui s'affiche en premier (avec possiblement le dossier courant affiche et le USER) : getcwd, getenv
-
-ensuite le client s'affiche, l'utilisateur ecrit ce qu'il a envie, appuie sur entre, cela envoie toutes les infos au seveur. Au lieu de seulement reecrire ce que le client envoie, je traduis ce que le client envoit bit par vit, on le transmet au parsing qui lancera les commandes puis on ecris les reponses correctement et enfin le serveur envoie un signal au client pour qu'il se relance.
-
-seul le command ctrl + D peut arreter cette boucle
