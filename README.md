@@ -9,7 +9,8 @@ What's a shell? Basically, in an operating system there are two elements:
 - The kernel: which performs the fundamental functions of the operating system, such as managing memory, processes, files...
 
 - The shell: the interface between the user and the kernel, enabling the user to communicate with the operating system with a command language. The user can enter commands in the terminal. Thanks to the command-line interpreter (such as bash or zsh, which are shells), the commands entered are executed.
- --> Let's create our own little shell.
+
+--> Let's create our own little shell.
 
 ## Roadmap
 
