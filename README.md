@@ -14,6 +14,8 @@ What's a shell? Basically, in an operating system there are two elements:
 
 ## Roadmap
 
+[**Subject**](https://cdn.intra.42.fr/pdf/pdf/103837/en.subject.pdf)
+
 Mandatory
 
 - Can only use C 
